@@ -1,0 +1,67 @@
+#!/usr/bin/env zsh
+
+__whatsize_build_query() {
+  local bool="and" query=""
+  for t in "$@"; do
+    query="${query} -${bool} -iname \"*.${t}\""
+    bool="or"
+  done
+  builtin print -n -- "$query"
+}
+
+__whatsize_humanize() {
+  integer -l size=$1
+  if (( $size >= 1073741824 )); then
+    builtin printf "%6.2f%s" $(bc <<< "scale=2;$size/1073741824") G
+  elif (( $size >= 1048576 )); then
+    builtin printf "%6.2f%s" $(bc <<< "scale=2;$size/1048576") M
+  elif (( $size >= 1024 )); then
+    builtin printf "%6.2f%s" $(bc <<< "scale=2;$size/1024") K
+  else
+    builtin printf "%6.2f%s" ${size} b
+  fi
+}
+
+whatsize() {
+  local helpstring="Show file sizes for all files with totals\n-r\treverse sort\n-[0-3]\tlimit depth (default 4 levels, 0=unlimited)\nAdditional arguments limit by file extension\n\nUsage: whatsize [-r[0123]] ext [,ext]"
+  local reverse depth="-maxdepth 4"
+  local OPT OPTIND=1
+  while getopts "hr0123" OPT; do
+    case $opt in
+      r) reverse="-r " ;;
+      0) depth="" ;;
+      1) depth="-maxdepth 1" ;;
+      2) depth="-maxdepth 2" ;;
+      3) depth="-maxdepth 3" ;;
+      h)
+        builtin print -- "$helpstring"
+        return
+        ;;
+      \?)
+        builtin print -- "Invalid option: -$OPTARG" >&2
+        return 64
+        ;;
+    esac
+  done
+  shift $((OPTIND-1))
+
+  local output cmd
+  integer -l size counter totalb
+
+  cmd="find . ${depth} -type f $(__whatsize_build_query "$@")"
+  counter=0 totalb=0
+
+  zmodload -F zsh/stat +b:stat
+  while read -r file; do
+    size=$(builtin stat +size "$file")
+    counter+=1 totalb+=$size
+    builtin print -Pnb -- $'\E[K'"%B%F{green}${counter}:%f %F{red}${file}%f%b (%B%F{red}${size}%f%b)"$'\r' >&2
+    output="${output}${file#*/}*$size*$(__whatsize_humanize $size)\n"
+  done < <(eval $cmd)
+  builtin print -nb -- $'\r\E[K' >&2
+
+  builtin print -- "$output" | sort -t "*" ${reverse}-nk 2 | cut -d "*" -f 1,3 | column -s "*" -t
+  builtin print -P -- "%B%F{yellow}%K{black}Total: %F{green}$(__whatsize_humanize $totalb) %F{yellow}in ${counter} files%k%f%b"
+}
+
+whatsize "$@"

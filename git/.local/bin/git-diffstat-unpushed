@@ -1,0 +1,21 @@
+#!/usr/bin/env zsh
+#
+# Show the diffstat of everything you haven't pushed yet.
+
+git-diffstat-unpushed() {
+  if ! git rev-parse 2> /dev/null; then
+    echo -e "\e[1;41;97m ERROR \e[0m Not a repository: $PWD" >&2
+    return 1
+  fi
+
+  local branch=$(git rev-parse --abbrev-ref HEAD)
+  local count=$(git rev-list --count HEAD origin/$branch...HEAD)
+
+  local s=""
+  (($count)) || s="s"
+
+  git diff --stat origin/$branch..HEAD
+  echo " $count commit$s total"
+}
+
+git-diffstat-unpushed $@

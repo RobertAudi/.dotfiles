@@ -1,0 +1,5 @@
+#autoload
+
+(($# == 2)) || return 1
+
+man $1 | ag "^ +.*$2.*" | grep --color=always -E "${(q)2}|$" | ${PAGER:-less}

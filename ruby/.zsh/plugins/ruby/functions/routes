@@ -1,0 +1,18 @@
+#autoload
+
+# regenerate tmp/routes if it is not already generated or it is older than the routes config file
+if [[ ! -f tmp/routes ]] || [[ ! -s tmp/routes ]] || [[ tmp/routes -ot config/routes.rb ]]; then
+  run_with_bundler rake routes >! tmp/routes 2>/dev/null
+fi
+
+if (($#)); then
+  if type rg >/dev/null; then
+    rg --color always --no-line-number "${(j:|:)@}" tmp/routes
+  elif type ag >/dev/null; then
+    ag --color --nonumbers "${(j:|:)@}" tmp/routes
+  else
+    grep "${(j:|:)@}" tmp/routes
+  fi
+else
+  cat tmp/routes
+fi

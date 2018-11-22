@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# Credits: Suraj N. Kurapati (sunaku)
+# URL: https://github.com/sunaku
+# Source: https://github.com/sunaku/home/blob/24441a94e1bfc5b7eebb1ee81dc62184626b694f/.zsh/config/alias/git.sh#L86-L87
+git stashes | awk -F: '{ print; system("git -c color.diff=always --no-pager stash show -p " $1) }' | git pager

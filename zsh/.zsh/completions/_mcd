@@ -1,0 +1,13 @@
+#compdef mcd=mkdir
+#autoload
+
+#
+# Completes mcd.
+#
+# Authors:
+#   Sorin Ionescu <sorin.ionescu@gmail.com>
+#
+
+local expl
+
+_wanted directories expl 'directory' _path_files -/ || _message 'directory'

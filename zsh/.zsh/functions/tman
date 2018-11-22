@@ -1,0 +1,22 @@
+#autoload
+
+if [[ -z "$TMUX" ]]; then
+  print-error "Not in a tmux session"
+  return 1
+fi
+
+zparseopts -D -E v=vertical h=horizontal
+
+if ! (($#)); then
+  print-error "Argument required!"
+  return 1
+fi
+
+local params
+if (($#vertical)); then
+  params="-h -l 80"
+else
+  params="-v -p 45"
+fi
+
+tmux split-window $=params -- man ${=@}

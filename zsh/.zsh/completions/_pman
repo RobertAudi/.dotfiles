@@ -1,0 +1,4 @@
+#compdef pman=man
+#autoload
+
+_man

@@ -1,0 +1,7 @@
+# Fast and statically typed, compiled language with Ruby-like syntax
+#   https://crystal-lang.org/
+brew "crystal"
+
+# Interactive console for Crystal programming language
+#   https://github.com/crystal-community/icr
+brew "crystal-icr"

@@ -1,0 +1,18 @@
+#autoload
+
+if (($#)); then
+  git push "$@"
+else
+  if ! git push; then
+    root="$(git rev-parse --show-toplevel 2> /dev/null)"
+    branch="$(git current-branch)"
+
+    if ! git ls-remote --exit-code --heads "$root" "origin/${branch}"; then
+      if read -q "?Push new branch to 'origin/${branch}'? [y/n] "; then
+        git push --set-upstream origin "${branch}"
+      fi
+    fi
+  fi
+fi
+
+# vim: ft=zsh

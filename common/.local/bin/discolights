@@ -1,0 +1,6 @@
+#!/bin/bash
+
+echo "WIP" >&2
+return 1
+
+l=$(for i in {10240..10495}; do echo -en \\U$(echo "obase=16;$i"|bc)" "; done); while true; do L=$(echo $l | cut -d" " -f$((RANDOM%255+1))); printf "\e[38;5;$(($(od -d -N 2 -A n /dev/urandom)%$(tput colors)))m$L\e[0m"; done

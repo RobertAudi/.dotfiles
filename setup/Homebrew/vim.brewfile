@@ -1,0 +1,19 @@
+# GUI for vim, made for macOS
+#   https://github.com/macvim-dev/macvim
+brew "macvim", args: ["with-lua"]
+
+# Vi 'workalike' with many additional features
+#   https://www.vim.org/
+brew "vim", args: ["with-override-system-vi", "with-lua", "with-gettext", "with-tcl"]
+
+# Ambitious Vim-fork focused on extensibility and agility
+#   https://neovim.io/
+brew "neovim"
+
+# Use ViM as PAGER
+#   https://github.com/rkitover/vimpager
+brew "vimpager", args: ["with-pandoc"]
+
+# Refined Neovim experience for macOS
+#   http://vimr.org/
+cask "vimr"

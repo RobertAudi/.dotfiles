@@ -1,0 +1,2 @@
+setlocal nosmartindent
+setlocal indentexpr=

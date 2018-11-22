@@ -1,0 +1,10 @@
+#compdef update
+
+local -a arguments
+arguments=(
+  {-h,--help}'[display this text and exit]'
+  {-a,--all}'[execute all commands sets]'
+  {-l,--list}'[list all commands]'
+)
+
+_arguments -s $arguments && ret=0

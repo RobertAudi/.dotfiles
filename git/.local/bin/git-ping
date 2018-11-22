@@ -1,0 +1,15 @@
+#!/usr/bin/env zsh
+
+git-ping() {
+  if ! (($#)); then
+    echo -e "\e[1;41;97m ERROR \e[0m Repo required" >&2
+    return 1
+  fi
+
+  if ! git ls-remote --exit-code --heads "$1" &>/dev/null; then
+    echo -e "\e[1;41;97m ERROR \e[0m Invalid repository! ($1)" >&2
+    return 1
+  fi
+}
+
+git-ping $@

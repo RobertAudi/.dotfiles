@@ -1,0 +1,4 @@
+#compdef tman
+#autoload
+
+_arguments '-v[split vertically]' '-h[split horizontally]' '*: :_man' && ret=0

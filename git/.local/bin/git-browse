@@ -1,0 +1,10 @@
+#!/usr/bin/env zsh
+
+if type git-brws >/dev/null; then
+  git-brws "$@"
+elif type hub >/dev/null; then
+  hub browse "$@"
+else
+  builtin print -P -- "[%F{196}ERROR%f] hub not installed" >&2
+  return 1
+fi

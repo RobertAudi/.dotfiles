@@ -1,0 +1,39 @@
+#autoload
+
+pman-osx() {
+  man -t "$1" | open -f -a "Preview"
+}
+
+pman-linux() {
+  is-callable "ps2pdf" || print-error "Missing requirement: ps2pdf"
+  is-callable "mupdf"  || print-error "Missing requirement: mupdf"
+
+  local manfile="$(mktemp)"
+  man -t $1 | ps2pdf - $manfile
+  mupdf -r 96 $manfile
+  rm -f $manfile
+}
+
+pman() {
+  local page
+  if (( $# > 0 )); then
+    if is_macos ; then
+      for page in "$@"; do
+        pman-osx "$page"
+      done
+    elif is_linux ; then
+      for page in "$@"; do
+        pman-linux "$page"
+      done
+    else
+      unfunction pman &>/dev/null
+      print-error "zsh: command not found: \e[1;4mpman\e[0m"
+      return 127
+    fi
+  else
+    print-error 'What manual page do you want?'
+    return 1
+  fi
+}
+
+pman "$@"

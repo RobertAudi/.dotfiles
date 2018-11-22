@@ -1,0 +1,15 @@
+#!/usr/bin/env zsh
+
+function {
+  local parent_branch="$(git parent-branch)"
+  local current_branch="$(git rev-parse --abbrev-ref HEAD)"
+  local log_range
+
+  if [[ "$current_branch" == "$parent_branch" ]]; then
+    log_range="$current_branch"
+  else
+    log_range="${parent_branch}...${current_branch}"
+  fi
+
+  git log --topo-order --graph --abbrev-commit $log_range
+}

@@ -1,0 +1,10 @@
+cal               Print a calendar for this month
+cal -A1           ... and next month as well
+cal -B2           ... and the 2 months before that as well.
+cal -3            3 months, being last month, this month, and next month
+cal -3B2          ... and the 2 months before that as well.
+cal -y            This year
+cal -yj           This year, with days numbered 1-366
+cal 1966          1966
+cal 9 1966        September 1966
+ncal -e 2016      Display date of Easter Sunday, 2016

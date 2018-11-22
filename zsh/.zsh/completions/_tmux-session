@@ -1,0 +1,4 @@
+#compdef tmux-session
+#autoload
+
+_values "commands" "dump" "restore" "resume" "save" && ret=0

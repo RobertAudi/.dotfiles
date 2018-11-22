@@ -1,0 +1,3 @@
+#autoload
+
+builtin print -P -- "[%F{221}WARN%f] $@"

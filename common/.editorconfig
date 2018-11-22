@@ -1,0 +1,44 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_size = 2
+indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.md]
+max_line_length = 0
+trim_trailing_whitespace = false
+
+[*.yml]
+trim_trailing_whitespace = false
+
+[*.py]
+indent_style = space
+indent_size = 4
+
+[*.snippets]
+indent_style = tab
+indent_size = 4
+
+# The JSON files contain newlines inconsistently
+[*.json]
+insert_final_newline = ignore
+
+# Minified JavaScript files shouldn't be changed
+[**.min.js]
+indent_style = ignore
+insert_final_newline = ignore
+
+[*.swift]
+indent_style = space
+indent_size = 2
+
+[COMMIT_EDITMSG]
+max_line_length = 0
+
+[{m,M}akefile]
+indent_style = tab
+indent_size = 4

@@ -1,0 +1,7 @@
+#compdef mangrep
+#autoload
+
+# FIXME: Don't include the manpage number
+# if ((CURRENT == 2)); then
+#   _arguments '*: :_man' && ret=0
+# fi

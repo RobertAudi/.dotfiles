@@ -1,0 +1,38 @@
+#!/usr/bin/env zsh
+
+if [[ "$(uname -s)" == "Darwin" ]]; then
+  print-error   () { echo "\e[01;37;41m ERROR \e[0m $@" >&2 }
+  print-success () { echo "\e[01;37;46m DONE \e[0m $@"      }
+
+  if (($#)); then
+    directory="$(realpath $1)"
+  else
+    directory="$PWD"
+  fi
+
+  if [[ ! -d "$directory" ]]; then
+    print-error "Not a directory: $directory"
+    return 1
+  fi
+
+  if (( $(echo "$directory" | command grep "$HOME" | wc -l) == 0 )); then
+    print-error "Only directories under the home directory can be visible!!!"
+    return 1
+  fi
+
+  if [[ "$directory" == "$HOME" ]]; then
+    print-error "The home directory is always visible!!!"
+    return 1
+  fi
+
+  if (( $(/bin/ls -Ol $(dirname $directory) | command grep "$(basename $directory)" | command grep "hidden" | wc -l) == 0 )); then
+    chflags nohidden "$directory"
+    print-success "Directory is now visible: $directory"
+  else
+    print-error "Directory already visible: $directory"
+    return 1
+  fi
+else
+  echo "$0 only supported on OS X" >&2
+  return 1
+fi

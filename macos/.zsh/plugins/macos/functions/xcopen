@@ -1,0 +1,12 @@
+#autoload
+
+local proj=$(find . -maxdepth 1 -name "*.xcworkspace" | head -1)
+
+[[ -z "$proj" ]] && proj=$(find . -maxdepth 1 -name "*.xcodeproj" | head -1)
+
+if [[ -z "$proj" ]]; then
+  builtin print -P -- "[%F{196}ERROR%f] No XCode project found!" >&2
+  return 1
+fi
+
+open -a Xcode $proj

@@ -1,0 +1,29 @@
+#autoload
+
+# cat a file in your path
+cat-which() {
+  if (($#)); then
+    if is-command "$1"; then
+      local command_path="$(whence -c "$1")"
+      if file -bL --mime "$command_path" | grep -q "charset=binary"; then
+        print-info "${1} is a binary file: ${command_path}"
+      else
+        if is-callable bat; then
+          bat "$command_path"
+        else
+          cat "$command_path"
+        fi
+      fi
+    elif is-function "$1"; then
+      whence -f "$1"
+    elif is-alias "$1"; then
+      whence "$1"
+    else
+      whence -c "$1"
+    fi
+  else
+    print-error 'Nothing to show...'
+  fi
+}
+
+cat-which "$@"

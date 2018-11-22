@@ -1,0 +1,85 @@
+#!/usr/bin/env zsh
+
+copy() {
+  local copycmd
+  if [[ "$OSTYPE" =~ darwin* ]] || command -v pbcopy >/dev/null; then
+    copycmd="pbcopy"
+  elif type xclip >/dev/null; then
+    copycmd="xclip -selection clipboard -in"
+  elif type xsel >/dev/null; then
+    copycmd="xsel -clipboard -input"
+  else
+    print -P -- "%F{196}ERROR%f -- Missing requirement: pbcopy or xclip or xsel" >&2
+    return 1
+  fi
+
+  zparseopts -D -E -quiet+=quiet q+=quiet -help+=help h+=help
+
+  if ((${#help})); then
+    echo "Intelligently copies command results, text file, or raw text to"
+    echo "the System clipboard."
+    echo
+    echo "Usage: copy [OPTIONS] <COMMAND|TEXT>"
+    echo "       <COMMAND> | copy [OPTIONS]"
+    echo
+    echo "Options:"
+    echo "  -q, --quiet        Suppress non-error messages"
+    echo "  -h, --help         Print this help message"
+    return 64
+  fi
+
+  local output
+  local res=false
+  local tmpfile="${TMPDIR}/copy.$RANDOM.txt"
+  local msg=""
+  local err=""
+
+  if (($#)); then
+    local cmd=""
+    for arg in $@; do
+      cmd+="\"$(echo -en "$arg" | sed -E 's/"/\\"/g')\" "
+    done
+
+    output="$(eval "$cmd" 2> /dev/null)"
+    if [[ $? == 0 ]]; then
+      msg="Results of command are in the clipboard"
+      res=true
+    else
+      if [[ -f "$1" ]]; then
+        output=""
+        for arg in $@; do
+          if [[ -f "$arg" ]]; then
+            if (($(file "$arg" | grep -c "text"))); then
+              output+="$(cat $arg)"
+              msg+="Contents of $arg are in the clipboard.\n"
+              res=true
+            else
+              err+="File \"$arg\" is not plain text.\n"
+            fi
+          fi
+        done
+      else
+        output="$@"
+        msg="Text copied to clipboard"
+        res=true
+      fi
+    fi
+  else
+    output="$(cat)"
+    msg="Input copied to clipboard"
+    res=true
+  fi
+
+  if $res; then
+    echo -ne "$output" | $copycmd
+
+    if (( ${#quiet} == 0 )); then
+      print -P -- "%F{034}SUCCESS%f -- $msg"
+    fi
+  else
+    print -P -- "%F{196}ERROR%f -- $err" >&2
+    return 1
+  fi
+}
+
+copy "$@"

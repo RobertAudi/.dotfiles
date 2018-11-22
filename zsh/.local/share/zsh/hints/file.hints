@@ -1,0 +1,3 @@
+file -b                  Determine file type
+file -b --mime-type      Determine mime type
+file -b --mime-encoding  Determine mime encoding

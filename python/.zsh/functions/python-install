@@ -1,0 +1,10 @@
+#autoload
+
+if ! type pyenv &>/dev/null; then
+  builtin print -- "[$(tput setaf 1)ERROR$(tput sgr0)] pyenv not found" >&2
+  return 1
+fi
+
+CFLAGS="-I$(brew --prefix openssl)/include -I$(brew --prefix readline)/include" \
+  LDFLAGS="-L$(brew --prefix openssl)/lib -L$(brew --prefix readline)/lib" \
+  pyenv install "$@"

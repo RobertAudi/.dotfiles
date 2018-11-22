@@ -1,0 +1,5 @@
+#!/usr/bin/perl
+# Usage:
+#   rule <n>
+# Print a string of <n> characters wide
+print('-' x $ARGV[0] . "\n");

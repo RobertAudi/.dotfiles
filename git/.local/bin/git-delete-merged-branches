@@ -1,0 +1,20 @@
+#!/usr/bin/env zsh
+
+function {
+  if [[ $(command git rev-parse --is-inside-work-tree 2> /dev/null) != 'true' ]]; then
+    builtin print -P -- "[%F{196}ERROR%f] Not in a git repository." >&2
+    return 1
+  fi
+
+  local branches
+  branches="$(command git branch --no-color --merged \
+    | command grep -v "\*" \
+    | command grep -v master \
+    | command grep -v develop \
+    | command grep -v svn)"
+  if [[ -n "$branches" ]]; then
+    builtin print -l -- "$branches" | xargs -n 1 git branch -d
+  else
+    builtin print -P -- "[%F{032}INFO%f] No remote branches were merged."
+  fi
+}

@@ -1,0 +1,24 @@
+#autoload
+
+_within_bundled_project() {
+  local check_dir="$PWD"
+  while [ "$check_dir" != "/" ]; do
+    [ -f "$check_dir/Gemfile" ] && return
+    check_dir="$(dirname $check_dir)"
+  done
+  false
+}
+
+run_with_bundler() {
+  if type bundle >/dev/null 2>&1 && _within_bundled_project; then
+    if [ -f "./bin/${1}" ]; then
+      ./bin/${1} ${@:2}
+    else
+      bundle exec ${1} ${@:2}
+    fi
+  else
+    $=1 ${@:2}
+  fi
+}
+
+run_with_bundler "$@"

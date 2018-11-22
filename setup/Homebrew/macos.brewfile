@@ -1,0 +1,402 @@
+# Send macOS User Notifications from the command-line
+#   https://github.com/julienXX/terminal-notifier
+brew "terminal-notifier"
+
+# Mac App Store command-line interface
+#   https://github.com/mas-cli/mas
+brew "mas"
+
+# Command-line launcher for macOS, in the spirit of `open`
+#   https://sabi.net/nriley/software/#launch
+brew "launch"
+
+# Tool for emulating mouse and keyboard events
+#   https://www.bluem.net/jump/cliclick/
+brew "cliclick"
+
+# Tool for managing dock items
+#   https://github.com/kcrawford/dockutil
+brew "dockutil"
+
+# CLI tool that moves files or folder to the trash
+#   https://hasseg.org/trash/
+brew "trash"
+
+# List USB devices, just like the Linux lsusb command
+#   https://github.com/jlhonora/lsusb
+brew "lsusb"
+
+# Command-line tool to access OSX Reminders.app database
+#   https://github.com/kykim/rem
+brew "rem"
+
+# Create screenshots of webpages from the terminal
+#   http://www.paulhammond.org/webkit2png/
+brew "webkit2png"
+
+# Paste PNG into files
+#   https://github.com/jcsalterego/pngpaste
+brew "pngpaste"
+
+# Show the current WiFi network password
+#   https://github.com/rauchg/wifi-password
+brew "wifi-password"
+
+# Makes it easy to write, run and manage your Swift scripts
+#   https://github.com/JohnSundell/Marathon
+brew "marathon-swift"
+
+# Swift code generator for assets, storyboards, Localizable.strings, …
+#   https://github.com/SwiftGen/SwiftGen
+brew "swiftgen"
+
+# Tool to enforce Swift style and conventions
+#   https://github.com/realm/SwiftLint
+brew "swiftlint"
+
+# Incrementally update your Strings files
+#   https://github.com/Flinesoft/BartyCrouch
+brew "bartycrouch"
+
+# Change macOS audio source from the command-line
+#   https://github.com/deweller/switchaudio-osx/
+brew "switchaudio-osx"
+
+# Get/set bluetooth power and discoverable state
+#   https://github.com/toy/blueutil
+brew "blueutil"
+
+# Command-line tool for getting & setting the default browser
+#   https://github.com/kerma/defaultbrowser
+brew "defaultbrowser"
+
+# Collection of macOS command-line utilities
+#   https://github.com/specious/osxutils
+brew "osxutils"
+
+# Change macOS display brightness from the command-line
+#   https://github.com/nriley/brightness
+brew "brightness"
+
+# Dependency manager that installs and runs Swift command-line tool packages
+#   https://github.com/yonaskolb/Mint
+brew "mint"
+
+# Trigger notifications when a process completes
+#   https://github.com/variadico/noti
+brew "noti"
+
+# Tools for manipulating HTML and XML files
+#   https://www.w3.org/Tools/HTML-XML-utils/
+brew "html-xml-utils"
+
+# Generate your Xcode project from a spec file and your folder structure
+#   https://github.com/yonaskolb/XcodeGen
+brew "xcodegen"
+
+# Keep your Mac's application settings in sync
+#   https://github.com/lra/mackup
+brew "mackup"
+
+# ------------------------------------------------------------------------------
+
+tap "kiliankoe/formulae"
+
+# Search for Swift packages from your command line
+#   https://github.com/kiliankoe/apodidae
+brew "kiliankoe/formulae/apodidae"
+
+# ------------------------------------------------------------------------------
+
+tap "goles/battery"
+
+# Display your Laptop's battery status on the terminal.
+#   https://github.com/Goles/Battery
+brew "goles/battery/battery"
+
+# ------------------------------------------------------------------------------
+
+tap "BackNotGod/localizationCommand"
+
+# Command Line for Objective-C and Swift localization
+#   https://github.com/BackNotGod/localizationCommand
+brew "BackNotGod/localizationCommand/localizationCommand"
+
+# ------------------------------------------------------------------------------
+
+tap "swiftxcode/swiftxcode"
+
+# Build Swift Package Manager from within Xcode.
+#   https://swiftxcode.github.io
+brew "swift-xcode"
+
+# Build Kitura from within Xcode.
+#   https://swiftxcode.github.io
+brew "swift-xcode-kitura"
+# Run this after the installation:
+#   swift xcode link-templates
+
+# ------------------------------------------------------------------------------
+
+tap "kylef/formulae"
+
+# Swift version manager
+#   https://github.com/kylef/swiftenv
+brew "swiftenv"
+
+# ------------------------------------------------------------------------------
+
+tap "keith/formulae"
+
+# A simple CLI for interacting with OS X reminders
+#   https://github.com/keith/reminders-cli
+brew "reminders-cli"
+
+# Zsh completions for Xcode command line tools
+#   https://github.com/keith/zsh-xcode-completions/
+brew "zsh-xcode-completions"
+
+# A CLI for cleaning up after .apps
+#   https://github.com/keith/zap/
+brew "zap"
+
+# ------------------------------------------------------------------------------
+
+tap "koekeishiya/homebrew-formulae"
+
+# Keycode grabber for OSX.
+#   https://github.com/koekeishiya/cev
+brew "cev"
+
+# ------------------------------------------------------------------------------
+
+tap "liftoffcli/formulae"
+
+# CLI for creating and configuring new Xcode projects
+#   https://github.com/liftoffcli/liftoff
+brew "liftoffcli/formulae/liftoff"
+
+# ------------------------------------------------------------------------------
+
+tap "raggi/ale"
+
+# Simple periodic task to sync OSX Keychain certs to Homebrew installed OpenSSL & LibreSSL
+#   https://github.com/raggi/openssl-osx-ca#readme
+#
+# ==> Caveats
+# To have launchd start raggi/ale/openssl-osx-ca now and restart at login:
+#   brew services start raggi/ale/openssl-osx-ca
+brew "openssl-osx-ca", restart_service: :changed
+
+# ------------------------------------------------------------------------------
+
+tap "RobertAudi/formulae", "https://github.com/RobertAudi/homebrew-formulae.git"
+
+# Pretty-prints compiled AppleScript (.scpt) files using ANSI escape sequences.
+#   http://hasseg.org/asprint
+brew "RobertAudi/formulae/asprint", args: ["HEAD"]
+
+# ------------------------------------------------------------------------------
+
+# Homebrew Cask
+# ------------------------------------------------------------------------------
+tap "caskroom/cask"
+tap "caskroom/fonts"
+tap "caskroom/versions"
+
+# Password manager
+#   https://1password.com/
+cask "1password"
+
+# 1Password command-line tool
+#   https://support.1password.com/command-line/
+cask "1password-cli"
+
+cask "alfred"
+cask "base"
+cask "bartender"
+cask "bestres"
+cask "dash"
+cask "default-folder-x"
+cask "firefox"
+cask "gas-mask"
+cask "google-chrome"
+cask "imageoptim"
+cask "iterm2"
+cask "keepingyouawake"
+cask "key-codes"
+cask "ksdiff"
+cask "mailmate"
+cask "spamsieve"
+cask "marked"
+cask "modmove"
+cask "numi"
+cask "osxfuse"
+cask "paw"
+cask "postico"
+cask "postgres"
+cask "sequel-pro"
+cask "textmate"
+cask "the-unarchiver"
+cask "tower"
+cask "mpv"
+
+# A tool for powerful automation of OS X
+#   https://www.hammerspoon.org/
+cask "hammerspoon"
+
+# A powerful and stable keyboard customizer for macOS.
+#   https://pqrs.org/osx/karabiner
+cask "karabiner-elements"
+
+# A simple Timer app for Mac
+#   https://github.com/michaelvillar/timer-app
+cask "michaelvillar-timer"
+
+# A simple utility application to trigger haptic feedback when tapping Touch Bar.
+#   https://github.com/niw/HapticKey
+cask "haptickey"
+
+# Application to generate diagrams.
+#   https://www.yworks.com/products/yed
+cask "yed"
+
+# App/window/tab switcher. For when ⌘-Tab simply doesn't cut it.
+#   https://manytricks.com/witch/
+cask "witch"
+
+# VirtualBox is a general-purpose full virtualizer for x86 hardware
+#   https://www.virtualbox.org/
+cask "virtualbox"
+cask "virtualbox-extension-pack"
+
+if `hostname`.to_s.match?(/\A[a-z]{3}-octo/i)
+  # Team chat
+  #   https://slack.com/
+  cask "slack"
+
+  # Connected space for product teams
+  #   https://zeplin.io/
+  cask "zeplin"
+
+  # Desktop chat client for Google Hangouts
+  #   https://github.com/yakyak/yakyak
+  cask "yakyak"
+else
+  # Back up your computer to the cloud
+  #   https://www.arqbackup.com/
+  cask "arq"
+
+  # Catch is a Mac application that runs in the menu bar, and will automatically
+  # download episodes found in your ShowRSS feed using your favorite BitTorrent client.
+  #   http://giorgiocalderolla.com/catch.html
+  cask "catch"
+
+  # Media server
+  #   https://www.plex.tv/
+  cask "plex-media-server"
+
+  # VLC media player
+  #   https://www.videolan.org/vlc/index.html
+  cask "vlc"
+
+  # Transmission is a cross-platform BitTorrent client
+  #   https://transmissionbt.com/
+  cask "transmission"
+
+  # The open source video transcoder
+  #   https://handbrake.fr/
+  cask "handbrake"
+
+  # X Lossless Decoder: Lossless audio decoder for Mac OS X
+  #   http://tmkk.undo.jp/xld/index_e.html
+  cask "xld"
+end
+
+# QuickLook plugins
+# ------------------------------------------------------------------------------
+cask "provisionql"
+cask "qlimagesize"
+cask "qlprettypatch"
+cask "qlstephen"
+cask "qlvideo"
+cask "quicklook-csv"
+cask "quicklook-json"
+cask "quicklook-pat"
+cask "quicklookase"
+cask "suspicious-package"
+cask "webpquicklook"
+
+# App Store applications
+# ------------------------------------------------------------------------------
+
+# Powerful, full-featured image editor for Mac.
+#   https://www.pixelmator.com/mac/
+mas "Pixelmator", id: 407963104
+
+# Color Palette Editor
+#    http://giantrobot.army/gamut/
+mas "Gamut", id: 1271226665
+
+# Color picker app for designers & developers
+#   https://colorsnapper.com/
+mas "ColorSnapper2", id: 969418666
+
+# The calendar app you won't be able to live without.
+#   https://flexibits.com/fantastical
+mas "Fantastical 2", id: 975937182
+
+# GitStatX is a FREE GUI application for gitstats
+#   https://tickplant.com/gitstatx/
+mas "GitStatX", id: 592679713
+
+# Mind map editor
+#   https://mindnode.com/
+mas "MindNode", id: 1289197285
+
+# Database design tool
+#   https://www.navicat.com/en/products/navicat-data-modeler
+mas "Navicat Data Modeler Ess", id: 532423082
+
+# Presentations editor
+#   https://www.apple.com/keynote/
+mas "Keynote", id: 409183694
+
+# Spreadsheets editor
+#   https://www.apple.com/numbers/
+mas "Numbers", id: 409203825
+
+# Word processor
+#   https://www.apple.com/pages/
+mas "Pages", id: 409201541
+
+# Diff tool
+#   https://www.kaleidoscopeapp.com/
+mas "Kaleidoscope", id: 587512244
+
+# Powerful JSON editor
+#   https://tickplant.com/powerjsoneditor/
+mas "Power JSON Editor", id: 499768540
+
+# HTTP Debugging Proxy
+#   https://proxie.app/
+mas "Proxie", id: 897814548
+
+# Mac app for monitoring the status of cloud services
+#   https://mahdi.jp/apps/stts
+mas "stts", id: 1187772509
+
+# Apple Configurator 2 makes it easy to deploy iPad, iPhone, iPod touch, and Apple TV devices.
+#   https://itunes.apple.com/fr/app/apple-configurator-2/id1037126344?l=en
+mas "Apple Configurator 2", id: 1037126344
+
+# Objective-C to Swift Converter
+#   https://objectivec2swift.com/#/xcode-extension/
+mas "Swiftify for Xcode", id: 1183412116
+
+# Apple IDE
+#   https://developer.apple.com/xcode/
+mas "Xcode", id: 497799835
+
+# ------------------------------------------------------------------------------
+# vim:set foldmethod=marker:

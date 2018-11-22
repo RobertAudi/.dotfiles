@@ -1,0 +1,5 @@
+#autoload
+
+# is_linux returns true if running OS is GNU/Linux
+os_detect
+[[ $PLATFORM == "linux" ]]

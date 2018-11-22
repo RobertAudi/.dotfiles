@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if type aspell >/dev/null ; then
+  set -e
+
+  warnings=$(echo "${1}" | grep -v '^#.*' | aspell list)
+  if [[ -n "${warnings}" ]] ; then
+    echo >&2 "Possible spelling errors in the commit message:"
+    echo -e >&2 "\t"${warnings}"";
+  fi
+fi

@@ -1,0 +1,5 @@
+#autoload
+
+tail -300 log/development.log
+echo "\n"; hr "-"; echo "\n"
+tail -f log/development.log

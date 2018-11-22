@@ -1,0 +1,43 @@
+#!/bin/sh
+
+# df local disk partitions only (excluding tmpfs, loopback mounts etc.)
+
+exclude="-x none -x tmpfs -x devtmpfs -x iso9660"
+
+maybe_color() {
+  if [ -t 1 ]; then
+    perl -lpe '
+      if (/( (\d\d?)% )/) {
+        my $percent = $2;
+        my $color = $percent >= 95 ? "41;1" :
+                    $percent >= 90 ? "31" :
+                    $percent >= 80 ? "33" :
+                    $percent >= 50 ? "32" :
+                                      "0";
+        s/$1/ \e[${color}m${percent}%\e[0m/;
+      }
+    '
+  else
+    cat
+  fi
+}
+
+# When the 1st column gets wide, the remaining columns get split
+# onto a separate line.  For sorting we need to join them back up.
+df -lT $exclude "$@" |
+    perl -0777pe 's!^(/\S+$)\n!$1!gm; s/Mounted on/Mountedon/' |
+    column -t |
+    sed 's/Mountedon/Mounted on/' |
+    csort \
+        1=Filesystem    a \
+        1:/sda/         b \
+        1:/dm-/         c \
+        7=/             d \
+        7=/home         e \
+        7:/^\/home/     f \
+        7:/\/mnt/       h \
+        1:/dev\/mapper/ g \
+        |
+    sort -k1,1 -k6,6nr |
+    cut -c3- |
+    maybe_color

@@ -1,0 +1,54 @@
+# Flush output immediately, even when piped
+--flush
+
+# follow symlinks
+--follow
+
+# only search with case sensitivity if there is mixed case
+--smart-case
+
+--color
+--color-match=red
+--context=1
+--group
+--sort-files
+
+# Custom types and abbreviatinos.
+--type-set=coffee=.coffee
+--type-set=coffeescript=.coffee
+--type-set=javascript=.json
+--type-set=markdown=.markdown,.mdown,.md
+--type-set=nib=.xib
+--type-set=plist=.plist
+--type-set=py=.py
+--type-set=ragel=.rl
+--type-set=rdoc=.rdoc
+--type-set=sass=.sass,.scss
+--type-set=tmstuff=.tmproj,.tm_build_errors
+--type-set=xcode=.pbxproj,.pbxuser,.perspectivev3
+--type-set=xresources=.Xresources,.Xcolor
+
+--type-add=ruby=.builder,.rake,.ru
+--type-add=css=.sass,.scss
+--type-add=js=.coffee
+--type-add=objc=.pch
+
+--ruby
+--css
+--js
+--markdown
+--objc
+
+--ignore-dir=.idea
+--ignore-dir=Pods
+--ignore-dir=_site
+--ignore-dir=coverage
+--ignore-dir=data
+--ignore-dir=log
+--ignore-dir=log/
+--ignore-dir=tmp
+--ignore-dir=vendor/bundle
+--ignore-dir=doc/
+--ignore-dir=public/assets/
+--ignore-dir=bower_components/
+--ignore-dir=node_modules/

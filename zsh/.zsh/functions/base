@@ -1,0 +1,9 @@
+#autoload
+
+# base NUM -- convert between bases
+#
+# Stolen from http://chneukirchen.org/dotfiles
+#   http://chneukirchen.org/dotfiles/.zshrc
+emulate -L zsh
+setopt c_bases octal_zeroes
+printf "%s = %08d %d 0%o 0x%x\n" $1 ${$(([#2] $1))#2\#} $(($1)) $(($1)) $(($1))

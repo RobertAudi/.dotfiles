@@ -1,0 +1,240 @@
+#!/usr/bin/env bash
+#
+# Print memory status.
+#
+#  Usage:
+#    used-mem [Output format]
+#
+#  Default format:
+#    #.1u%(#.2UG/#.2TG)
+#
+#  Format string:
+#    #f : Free memory(%).
+#    #u : Used memory(%).
+#    #F : Free memory(GB).
+#    #U : Used memory(GB).
+#    #T : Total memory(GB).
+#
+#  Example:
+#    $ used-mem
+#    77.5%(6.20G/8.00G)
+#
+#    $ used-mem '#f%(#FG/#TG)'
+#    25%(2G/8G)
+#
+#    $ used-mem 'Free: #.2f % (#.3F GB) | Used: #.2u % (#.3U GB) | Total: #.3T GB'
+#    Free: 38.32 % (3.065 GB) | Used: 61.68 % (4.933 GB) | Total: 7.998 GB
+#
+#  About vm_stat:
+#    Page size: 4096 bytes
+#    http://qz.tsugumi.org/man_vm_stat.html
+#    http://d.hatena.ne.jp/zariganitosh/20110617/free_memory
+#    https://discussionsjapan.apple.com/thread/10093439?start=0&tstart=0
+#    http://support.apple.com/kb/HT1342?viewlocale=ja_JP&locale=ja_JP
+#    http://www.badrit.com/blog/2014/5/1/how-to-calc-memory-usage-in-mavericks-programmatically#.VXKo2lyqpBc
+#    http://www.songmu.jp/riji/entry/2015-05-08-mac-memory.html
+#
+#  Credits:
+#    Written by yonchu
+#    GitHub: https://github.com/yonchu/used-mem
+
+DEFAULT_SCALE=${DEFAULT_SCALE:-'.0'}
+MAX_SCALE=${MAX_SCALE:-3}
+
+# To round off.
+MAX_SCALE=$(($MAX_SCALE + 1))
+
+# This script name.
+PROG=$(basename "$0")
+
+# Usage.
+USAGE=`cat << __EOF__
+Usage:
+  $PROG [Output format]
+Format string:
+  #f : Free memory(%).
+  #u : Used memory(%).
+  #F : Free memory(GB).
+  #U : Used memory(GB).
+  #T : Total memory(GB).
+__EOF__
+`
+
+# Set format.
+if [ -z "$1" ]; then
+  FORMAT='#.1u%(#.2UG/#.2TG)'
+else
+  FORMAT=$1
+fi
+
+# Cache data.
+FREE_MEM=
+USED_MEM=
+TOTAL_MEM=
+
+# Usage.
+exit_usage() {
+  echo "$USAGE" 1>&2
+  exit 1
+}
+
+round_off() {
+  local num=$1
+  local result
+
+  result=$((($num + 5) / 10))
+  result=$(printf "%0${MAX_SCALE}d" $result)
+  echo "$result" | sed -e "s/\(.*\)\([0-9]\{$MAX_SCALE\}\)/\1.\2/" -e 's/^\./0./'
+}
+
+# Calculate $1/$2(%) to $3 decimal place.
+calculate_percent() {
+  local num1=$1
+  local num2=$2
+  local scale=$3
+  local result
+
+  if type bc > /dev/null 2>&1; then
+    result=$(echo "scale=$MAX_SCALE; 100 * $num1 / $num2" | bc)
+  else
+    result=$(round_off $(($num1 * 1000 * 10 ** $MAX_SCALE / $num2)))
+  fi
+  printf "%${scale}f" $result
+}
+
+# Convert $1 KB to GB ($2 decimal place).
+convert_kb_to_gb() {
+  local num=$1
+  local scale=$2
+  local result
+
+  if type bc > /dev/null 2>&1; then
+    result=$(echo "scale=$MAX_SCALE; $num / 1024 / 1024" | bc)
+  else
+    result=$(round_off $(($num * 10 * 10 ** $MAX_SCALE / 1024 / 1024)))
+  fi
+  printf "%${scale}f" $result
+}
+
+# Conert $1 pages to KB.
+convert_pages_to_kb() {
+  echo "$(($1 * 4096 / 1024))"
+}
+
+# Calculate used memory(KB) and total memory(KB).
+calculate_memory() {
+  local free_mem
+  local used_mem
+  local total_mem
+
+  if type vm_stat > /dev/null 2>&1; then
+    local vm_stat
+    vm_stat=$(vm_stat) || return 1
+    local pages_free=$(echo "$vm_stat" | awk '/Pages free/ {print $3}' | tr -d '.')
+    local pages_active=$(echo "$vm_stat" | awk '/Pages active/ {print $3}' | tr -d '.')
+    local pages_inactive=$(echo "$vm_stat" | awk '/Pages inactive/ {print $3}' | tr -d '.')
+    local pages_speculative=$(echo "$vm_stat" | awk '/Pages speculative/ {print $3}' | tr -d '.')
+    local pages_wired=$(echo "$vm_stat" | awk '/Pages wired down/ {print $4}' | tr -d '.')
+    local pages_compressed=$(echo "$vm_stat" | awk '/Pages occupied by compressor/ {print $5}' | tr -d '.')
+    local pages_purgeable=$(echo "$vm_stat" | awk '/Pages purgeable/ {print $3}' | tr -d '.')
+    local pages_file=$(echo "$vm_stat" | awk '/File-backed pages/ {print $3}' | tr -d '.')
+    local pages_app=$(echo "$vm_stat" | awk '/Anonymous pages/ {print $3}' | tr -d '.')
+
+    local used_and_cached_mem=$(($pages_active + $pages_inactive + $pages_speculative + $pages_wired + $pages_compressed))
+    local cached_mem=$(($pages_purgeable + $pages_file))
+
+    if type sysctl > /dev/null 2>&1; then
+      total_mem=$(sysctl -n 'hw.memsize')
+      total_mem=$(($total_mem / 4096))
+    else
+      total_mem=$(($used_and_cached_mem + $pages_free))
+    fi
+    used_mem=$(($used_and_cached_mem - $cached_mem))
+    free_mem=$(($total_mem - $used_mem))
+
+    used_and_cached_mem=$(convert_pages_to_kb $used_and_cached_mem)
+    cached_mem=$(convert_pages_to_kb $cached_mem)
+    used_mem=$(convert_pages_to_kb $used_mem)
+    free_mem=$(convert_pages_to_kb $free_mem)
+    total_mem=$(convert_pages_to_kb $total_mem)
+  elif type free > /dev/null 2>&1; then
+    local free
+    free=$(free) || return 1
+    free_mem=$(echo "$free" | awk '/-\/\+ buffers\/cache/ {print $4}')
+    used_mem=$(echo "$free" | awk '/-\/\+ buffers\/cache/ {print $3}')
+    total_mem=$(($used_mem + $free_mem))
+  else
+    echo 'Error: Requires the command free(Linux) or vm_stat(OSX).' 1>&2
+    exit 1
+  fi
+
+  # Caching data.
+  FREE_MEM=$free_mem
+  USED_MEM=$used_mem
+  TOTAL_MEM=$total_mem
+}
+
+set_up_format() {
+  local sigil=$1
+  local format=$2
+
+  local -a list
+  list=($(echo "$format" | GREP_OPTIONS= grep -o "#[^#${sigil}]*${sigil}"))
+
+  local item
+  local scale
+  local num
+  for item in "${list[@]}"; do
+    scale=$(echo "$item" | sed 's/^#\(.*\).$/\1/')
+    if [ -z "$scale" ]; then
+      scale=$DEFAULT_SCALE
+    fi
+
+    # Check scale.
+    if [ $(echo "$scale" | sed 's/.*\.//') -ge $MAX_SCALE ]; then
+      echo "Error: Illegal scale: $item" 1>&2
+      echo "Specify the value less than ${MAX_SCALE}." 1>&2
+      exit 1
+    fi
+
+    case $sigil in
+      f)
+        num=$(calculate_percent "$FREE_MEM" "$TOTAL_MEM" "$scale") || return 1
+        ;;
+      u)
+        num=$(calculate_percent "$USED_MEM" "$TOTAL_MEM" "$scale") || return 1
+        ;;
+      F)
+        num=$(convert_kb_to_gb "$FREE_MEM" "$scale") || return 1
+        ;;
+      U)
+        num=$(convert_kb_to_gb "$USED_MEM" "$scale") || return 1
+        ;;
+      T)
+        num=$(convert_kb_to_gb "$TOTAL_MEM" "$scale") || return 1
+        ;;
+      *)
+        echo "Error: Illegal sigil: $sigil" 1>&2
+        return 1
+        ;;
+    esac
+    item=$(echo "$item" | sed 's/\./\\./')
+    format=$(echo "$format" | sed "s/$item/$num/g")
+  done
+  echo "$format"
+}
+
+# Main
+main() {
+  calculate_memory || return 1
+
+  local format=$FORMAT
+  local sigil
+  for sigil in f u F U T; do
+    format=$(set_up_format "$sigil" "$format") || return 1
+  done
+
+  echo "$format"
+}
+
+main || exit_usage

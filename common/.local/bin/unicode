@@ -1,0 +1,16 @@
+#!/usr/bin/perl -CAO
+# unicode PATTERN - list unicode symbols matching PATTERN
+
+my $rx = shift || die "Usage: uni PATTERN\n";
+m/$rx/;  # fail early on faulty regexps
+
+my $names = do 'unicore/Name.pl';   # internal data file
+
+for (split /^/, $names) {
+    my ($hex, $desc) = split(/\t/, $_, 2);
+    $hex =~ s/^0//;
+    $char = pack("U", hex($hex));
+    if ($desc =~ /$rx/i || $char eq $rx || lc($hex) eq lc($rx)) {
+        print "$char\t$hex\t$desc";
+    }
+}

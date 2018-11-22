@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby
+
+begin
+  require 'sidekiq/api'
+rescue LoadError
+  $stderr.puts "\e[31mSidekiq not found\e[0m"
+  exit(1)
+end
+
+Sidekiq::RetrySet.new.clear
+puts "\e[32mCleared retry set\e[0m"
+
+Sidekiq::ScheduledSet.new.clear
+puts "\e[32mCleared scheduled jobs\e[0m"
+
+Sidekiq::Stats.new.reset
+puts "\e[32mCleared 'Processed' and 'Failed' jobs\e[0m"
+
+
+Sidekiq::DeadSet.new.clear
+puts "\e[32mCleared 'Dead' jobs statistics\e[0m"
+
+Sidekiq::Queue.all(&:clear)
+puts "\e[32mCleard all queues\e[0m"
+
+# Just to be sure
+Sidekiq.redis { |conn| conn.flushdb }
+puts "\e[32mFlushed the Sidekiq Redis DB\e[0m"

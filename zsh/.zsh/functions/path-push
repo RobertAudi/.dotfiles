@@ -1,0 +1,19 @@
+#autoload
+
+zparseopts -D -E q+=quiet -quiet+=quiet
+
+if ! (($#)); then
+  (($#quiet < 2)) && print-error "Argument required!"
+  return 1
+fi
+
+if ! [[ -d "$1" ]]; then
+  (($#quiet < 2)) && print-error "Directory not found: $1"
+  return 1
+fi
+
+path+=("$1")
+typeset -U path; export PATH
+
+(($#quiet < 1)) && print-success "Added directory to the end of the PATH: $1"
+return 0

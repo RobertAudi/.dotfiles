@@ -1,0 +1,11 @@
+#autoload
+
+# Create Directoy and cd to it
+
+if ! (($#)); then
+  print -- "usage: mcd [new-directory...] <new-directory>"
+  return 64
+fi
+
+mkdir -vp -- "$@" || return $?
+cd -- "${@: -1}"

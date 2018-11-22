@@ -1,0 +1,5 @@
+#!/bin/sh
+#
+# Stolen from https://sanctum.geek.nz/cgit/dotfiles.git
+#   https://sanctum.geek.nz/cgit/dotfiles.git/tree/games/aaf
+curl http://www.asciiartfarts.com/random.cgi | pup -p 'table[cellpadding]' pre text{}

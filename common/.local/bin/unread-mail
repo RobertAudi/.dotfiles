@@ -1,0 +1,13 @@
+#!/usr/bin/env zsh
+
+type fetchmail >/dev/null || { echo "fetchmail not installed" >&2; return 1 }
+
+fetchmail --check 2>/dev/null | while read line; do
+  total=$(echo $line | cut -d" " -f1)
+  read=$(echo $line | cut -d" " -f3 | sed 's/(//')
+  unread=$(echo "$total - $read" | bc)
+
+  # echo $unread > $count_file
+  # notify-send $1 "new mail"
+  echo $unread
+done 2>/dev/null

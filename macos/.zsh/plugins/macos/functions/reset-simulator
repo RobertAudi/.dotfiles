@@ -1,0 +1,4 @@
+#autoload
+
+pkill Simulator
+xcrun simctl erase all

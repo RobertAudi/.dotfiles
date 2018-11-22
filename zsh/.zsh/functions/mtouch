@@ -1,0 +1,8 @@
+#autoload
+
+# Recursively touch, e.g. touch + mkdir -p
+# so files can easily be created at depth
+
+for f in $@; do
+  mkdir -p -- "${f%/*}" && touch -- "$f"
+done

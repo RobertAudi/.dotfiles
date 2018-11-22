@@ -1,0 +1,31 @@
+#!/bin/bash
+set -euf -o pipefail
+
+##
+# brew formula description
+#
+# Fetch brewformulas.com description for a given formula.
+#
+# Syntax:
+#
+#     brew-formula-description <name>
+#
+# Example:
+#
+#     brew-formula-description curl
+#     curl is a command line tool for transferring data with URL syntax ...
+#
+# Requirements:
+#
+#   * `curl`
+#   * `hxselect`
+#   * `sed`
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2016-01-10
+##
+
+curl -s http://brewformulas.org/$1 |
+hxselect -c 'blockquote > p' 2>/dev/null |
+sed '$a\'

@@ -1,0 +1,8 @@
+j  scroll half page down
+k  scroll half page up
+J  scroll one line down
+K  scroll one line up
+sj scroll full page down
+sk scroll full page up
+w  next tab or buffer
+b  prev tab or buffer

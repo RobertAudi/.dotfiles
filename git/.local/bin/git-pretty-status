@@ -1,0 +1,36 @@
+#!/usr/bin/env zsh
+
+emulate -L zsh
+autoload -Uz colors && colors
+
+local branch tracking ahead behind branches output num_changes
+branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"
+tracking="$(git rev-parse --abbrev-ref HEAD@{upstream} 2>/dev/null)"
+output="$(git -c color.status=always status --short $@ 2>/dev/null)"
+
+[[ -n "$output" ]] && num_changes=$(print "$output" | wc -l) || num_changes=0
+
+[[ -n "$branch"   ]] && branches="$fg[green]$branch$fg[default]"
+[[ -n "$tracking" ]] && branches+="...$fg[magenta]$tracking$fg[default]"
+
+if [[ -n "$branch" && -n "$tracking" ]]; then
+  ahead="$(git rev-list $tracking..$branch --count)"
+  behind="$(git rev-list $branch..$tracking --count)"
+  branches+=" "
+
+  if [[ $ahead -ne 0 && $behind -ne 0 ]]; then
+    branches+="($fg[green]$ahead$fg[default] ahead and $fg[red]$behind$fg[default] behind $fg[magenta]$tracking$reset_color)"
+  elif [[ $ahead -ne 0 ]]; then
+    branches+="($fg[green]$ahead$fg[default] ahead $fg[magenta]$tracking$reset_color)"
+  elif [[ $behind -ne 0 ]]; then
+    branches+="($fg[red]$behind$fg[default] behind $fg[magenta]$tracking$reset_color)"
+  fi
+fi
+
+print -P -- "%245F# => %F{yellow}git status: $branches %f"
+
+if (( $num_changes == 0 )); then
+  print "$fg[green]$branch$fg[default] is up to date with $fg[magenta]$tracking$fg[default]"
+else
+  print "$output"
+fi

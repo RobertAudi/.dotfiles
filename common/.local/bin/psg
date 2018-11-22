@@ -1,0 +1,12 @@
+#!/usr/bin/env zsh
+
+if type pgrep >/dev/null; then
+  pgrep -l "$@" | cut -c -$COLUMNS
+else
+  command ps xo pid,command \
+    | command tail -n +2 \
+    | command sed -r "s/  +/ /g;s/^ *//" \
+    | command grep -E -v "System|\-zsh|grep|ps xo pid,command|${(q)$(builtin whence -c "$0")}" \
+    | command grep -E "${(j:|:)${@:-.*}}" \
+    | command cut -c -$COLUMNS
+fi

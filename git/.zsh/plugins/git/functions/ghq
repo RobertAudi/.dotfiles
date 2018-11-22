@@ -1,0 +1,70 @@
+#autoload
+
+is-callable ghq || { print-error "ghq not installed"; return 1 }
+
+# TODO: Fucking do something...
+(($#)) || { command ghq help; return $? }
+
+local repo
+local action="$1"; shift
+case "$action" in
+  "get")
+    (($#)) && repo="$1" || repo="$(pbpaste)"
+    git ping "$repo" || return $?
+    command ghq get --update "$repo"
+    ;;
+  "look")
+    repos=($(ghq list "$1"))
+    if ((${#repos})); then
+      if (( ${#repos} == 1 )); then
+        repo="$repos"
+      elif type fzf >/dev/null; then
+        repo="$(printf -- '%s\n' "${repos[@]}" | fzf)"
+      else
+        command ghq look "$@"
+        return $?
+      fi
+
+      repo="$(echo -n "$repo" | xargs echo -n)"
+      if [[ -n "$repo" ]]; then
+        if [[ -n "$TMUX" && "$PWD" != "$HOME" ]]; then
+          tmux new-window -c "$HOME" \; send-keys -l " cd \"$repo\"" \; send-keys "C-m" "C-l"
+        else
+          cd "$repo"
+          if [[ -n "$TMUX" ]]; then
+            tmux send-keys "C-l"
+          else
+            clear
+          fi
+        fi
+      else
+        print-error "Repo not found"
+        return 1
+      fi
+    elif ghq get "$1"; then
+      repo="$(ghq list "$1" | head -1)"
+      if [[ -n "$TMUX" && "$PWD" != "$HOME" ]]; then
+        tmux new-window -c "$HOME" \; send-keys -l " cd \"$repo\"" \; send-keys "C-m" "C-l"
+      else
+        cd "$repo"
+        if [[ -n "$TMUX" ]]; then
+          tmux send-keys "C-l"
+        else
+          clear
+        fi
+      fi
+    else
+      print-error "Repo not found"
+      return 1
+    fi
+    ;;
+  "list")
+    query="$(echo -n "$1" | sed -E "s/^.*:|\.git\$|\/\$//g" | rev | cut -d/ -f-2 | rev)"
+    command ghq list --full-path "$query"
+    ;;
+  *)
+    command ghq "$action" "$@"
+    ;;
+esac
+
+# vim: ft=zsh

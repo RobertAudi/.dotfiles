@@ -1,0 +1,11 @@
+#autoload
+
+if is-command vidir; then
+  print-deprecated "Use \e[1;4mvidir\e[0m instead\!"
+  return 1
+elif is-command massren; then
+  command massren $@
+else
+  print-error "zsh: command not found: \e[1;4mmassren\e[0m"
+  return 127
+fi

@@ -1,0 +1,26 @@
+#autoload
+
+# Arguments can include a quoted string to define the test string to be repeated
+# If an argument is numbers only, it changes the rate at which to speak (words per minute, default 200)
+
+integer -l rate=200
+local test_string="How are you?"
+
+for arg in "$@"; do
+  if [[ "$arg" = <-> ]]; then
+    rate=$arg
+  else
+    test_string="$arg"
+  fi
+done
+
+builtin print -P -- "%B%F{white}Rate:%f%b %F{magenta}${rate}%f"
+builtin print -P -- "%B%F{white}Message:%f%b %F{cyan}${test_string}%f"
+hr "—"
+
+local -a voices
+voices=($(list-all-voices))
+for voice in ${voices[@]}; do
+  builtin print -- "Playing \"$voice\"..."
+  say -v "$voice" -r $rate "$test_string"
+done

@@ -1,0 +1,3 @@
+#autoload
+
+(( $+builtins[$1] )) &> /dev/null

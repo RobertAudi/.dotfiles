@@ -1,0 +1,5 @@
+#autoload
+
+for keyfile in ~/.ssh/id_*; do
+  ssh-keygen -l -f "${keyfile}"
+done | uniq

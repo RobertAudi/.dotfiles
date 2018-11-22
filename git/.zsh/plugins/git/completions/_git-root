@@ -1,0 +1,4 @@
+#compdef git-root
+#autoload
+
+_arguments '(-r --relative)'{-r,--relative}'[relative path]' && ret=0

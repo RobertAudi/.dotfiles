@@ -1,0 +1,17 @@
+#!/usr/bin/env zsh
+#
+# Sets up your branch to track a remote branch. Assumes you mean
+# `origin/$branch-name`.
+
+git-track() {
+  if ! git rev-parse 2> /dev/null; then
+    echo -e "\e[1;41;97m ERROR \e[0m Not a repository: $PWD" >&2
+    return 1
+  fi
+
+  # FIXME: Don't hardcode the remote
+  local branch=$(git rev-parse --abbrev-ref HEAD)
+  git branch $branch --set-upstream-to origin/$branch
+}
+
+git-track $@

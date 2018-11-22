@@ -1,0 +1,4 @@
+#autoload
+
+# start a program without any output (not even errors!)
+$@ 1> /dev/null 2> /dev/null

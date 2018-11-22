@@ -1,0 +1,31 @@
+#autoload
+
+local interface="$(networksetup -listallhardwareports | grep -A 2 'Hardware Port: Wi-Fi' | grep 'Device:' | awk '{print $2}')"
+
+case "$1" in
+  on) # Turn ON WiFi
+    networksetup -setairportpower "$interface" on
+    ;;
+  off) # Turn OFF WiFi
+    networksetup -setairportpower "$interface" off
+    ;;
+  restart) # Restart WiFi by turning it OFF then ON
+    networksetup -setairportpower "$interface" off
+    sleep 2
+    networksetup -setairportpower "$interface" on
+    ;;
+  status) # Displays whether Wi-Fi power is ON or OFF
+    networksetup -getairportpower "$interface"
+    ;;
+  name) # Print the current WiFi network name (SSID)
+    networksetup -getairportnetwork "$interface" | awk -F": " '{print $2}'
+    ;;
+  password)
+    local name="$(networksetup -getairportnetwork "$interface" | awk -F": " '{print $2}')"
+    security find-generic-password -ga "$name" 2>&1 | grep --color=never 'password:' | awk -F'"' '{print $2}'
+    ;;
+  *)
+    builtin print -- "Usage: ${funcstack[1]} on|off|restart|status|name|password" >&2
+    return 1
+    ;;
+esac

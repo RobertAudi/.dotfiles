@@ -1,0 +1,31 @@
+#!/usr/bin/env zsh
+#
+# This came from Greg V's dotfiles:
+#      https://github.com/myfreeweb/dotfiles
+# Feel free to steal it, but attribution is nice
+#
+# thanks: http://stackoverflow.com/a/7646931/239140
+
+git-submodule-rm() {
+  if ! git rev-parse 2> /dev/null; then
+    echo -e "\e[1;41;97m ERROR \e[0m Not a repository: $PWD" >&2
+    return 1
+  elif ! [[ -e "$PWD/.gitmodules" ]]; then
+    echo -e "\e[1;41;97m ERROR \e[0m Missing '.gitmodules'" >&2
+    return 1
+  fi
+
+  if (($#)); then
+    local submodulepath
+    for submodulepath in $@; do
+      git config -f .git/config --remove-section submodule.$submodulepath
+      git config -f .gitmodules --remove-section submodule.$submodulepath
+      git add .gitmodules
+      git rm --cached $submodulepath
+    done
+  else
+    echo -e "\e[1;44;97m USAGE \e[0m git submodule-rm [path ...]"
+  fi
+}
+
+git-submodule-rm $@

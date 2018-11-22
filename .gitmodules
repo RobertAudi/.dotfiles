@@ -1,0 +1,3 @@
+[submodule "nano/.nano"]
+	path = nano/.nano
+	url = https://github.com/serialhex/nano-highlight.git

@@ -1,0 +1,15 @@
+#autoload
+
+# Colorize the output of cal(1)
+if ! is-callable cal >/dev/null; then
+  print-error "Please install cal before trying to use it!"
+  return 1
+fi
+
+if (($#)); then
+  cal $@ | grep -C 40 --color "\<($(date +%B)|$(date +%e | tr -d ' '))\>"
+else
+  cal | grep -C 40 --color "\<$(date +%e| tr -d ' ')\>"
+fi
+
+# vim:set filetype=zsh:

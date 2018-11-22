@@ -1,0 +1,20 @@
+[credential]
+  helper = osxkeychain
+
+[mergetool "Kaleidoscope"]
+  cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" \"$REMOTE\"
+
+[difftool "Kaleidoscope"]
+  cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+
+[diff "plist"]
+  textconv = plutil -convert xml1 -o -
+
+[diff "provision"]
+  textconv = security cms -D -i
+
+[diff "applescript"]
+  textconv = osadecompile
+
+# Modeline {{{
+# vim: set filetype=gitconfig foldmarker={{{,}}} foldlevel=0 foldmethod=marker : }}}

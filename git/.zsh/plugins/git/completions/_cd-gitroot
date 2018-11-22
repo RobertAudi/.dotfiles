@@ -1,0 +1,4 @@
+#compdef cd-gitroot
+
+_path_files -/ -W $(git root) && ret=0
+_arguments -S -A '-*' '-h[print options help]' && ret=0

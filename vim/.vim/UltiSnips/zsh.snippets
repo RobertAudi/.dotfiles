@@ -1,0 +1,18 @@
+extends sh
+
+snippet #! "shebang" b
+#!/usr/bin/env zsh
+
+endsnippet
+
+snippet fun "function" b
+${1}() {
+	$0
+}
+endsnippet
+
+snippet [ "inline if"
+	[[ ${1:test} ]] && ${0}
+endsnippet
+
+# vim:set noet sts=4 sw=4 ts=4 ft=snippets:

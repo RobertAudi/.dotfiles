@@ -1,0 +1,3 @@
+#autoload
+
+(( $+commands[$1] || $+functions[$1] || $+aliases[$1] || $+builtins[$1] )) &> /dev/null

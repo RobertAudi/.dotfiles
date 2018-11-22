@@ -1,0 +1,6 @@
+#autoload
+
+# Manually remove a downloaded app or file from the quarantine
+xattr -r -d com.apple.metadata:kMDItemDownloadedDate "$@"
+xattr -r -d com.apple.metadata:kMDItemWhereFroms "$@"
+xattr -r -d com.apple.quarantine "$@"

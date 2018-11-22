@@ -1,0 +1,5 @@
+#autoload
+
+curl -L -s https://www.gitignore.io/api/$@
+
+# vim: ft=zsh

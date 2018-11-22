@@ -1,0 +1,133 @@
+snippet "^#!" "#!/usr/bin/env ruby" r
+#!/usr/bin/env ruby
+$0
+endsnippet
+
+snippet "^# ?[uU][tT][fF]-?8" "# encoding: UTF-8" r
+# encoding: UTF-8
+$0
+endsnippet
+
+snippet "^# frozen" "# frozen_string_literal: true" r
+# frozen_string_literal: true
+$0
+endsnippet
+
+snippet def "def <name>..." b
+def ${1:function_name}${2:(${3:*args})}
+	$0
+end
+endsnippet
+
+snippet init "def initialize ..." b
+def initialize${1:(${2:*args})}
+	$0
+end
+endsnippet
+
+snippet do "do |<key>| ... end" i
+do ${1:|${2:args}|}
+	$0
+end
+endsnippet
+
+snippet begin "begin ... rescue ... end" b
+begin
+	$1
+rescue
+	$0
+end
+endsnippet
+
+snippet rescue "rescue nil" i
+rescue ${0:nil}
+endsnippet
+
+snippet rescue "rescue Exception" b
+rescue Exception => e
+	puts e.message
+	puts e.backtrace.inspect
+	${0:# Rescue}
+endsnippet
+
+snippet "\b(case|sw(itch)?)" "case <variable> when <expression> ... end" r
+case ${1:variable}
+when ${2:expression}
+	$0
+end
+endsnippet
+
+snippet when "when (case)"
+when ${1:condition}
+	$0
+endsnippet
+
+snippet "^\s*cla(ss)?" "class <class_name> def initialize ... end end" r
+class ${1:class_name}
+	$0
+end
+endsnippet
+
+snippet "^\s*ccla(ss)?" "class << ${1:self}" r
+class << ${1:self}
+	${0}
+end
+endsnippet
+
+snippet "^\s*mod(ule)?" "module" r
+module ${1:module_name}
+	$0
+end
+endsnippet
+
+snippet req "require" b
+require "$0"
+endsnippet
+
+snippet reqr "require_relative" b
+require_relative "$0"
+endsnippet
+
+snippet if "if...end" b
+if ${1:condition}
+	${0}
+end
+endsnippet
+
+snippet unless "unless...end" b
+unless ${1:condition}
+	${0}
+end
+endsnippet
+
+snippet ife "if...else...end" b
+if ${1:condition}
+	${2}
+else
+	${0}
+end
+endsnippet
+
+snippet else "else..." b
+else
+	${0}
+endsnippet
+
+snippet elsif "elsif..." b
+elsif ${1:condition}
+	${0}
+endsnippet
+
+snippet gem "gem" b
+gem "$1", "~> $2"
+endsnippet
+
+snippet pry "binding.pry" b
+binding.pry
+endsnippet
+
+snippet pry! "require 'pry'; binding.pry" b
+require 'pry'; binding.pry
+endsnippet
+
+# vim:set noet sts=4 sw=4 ts=4 ft=snippets:

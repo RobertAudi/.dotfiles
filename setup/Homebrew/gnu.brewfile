@@ -1,0 +1,248 @@
+# Bourne-Again SHell, a UNIX command interpreter
+#   https://www.gnu.org/software/bash/
+#
+# ==> Caveats
+# In order to use this build of bash as your login shell,
+# it must be added to /etc/shells.
+brew "bash"
+
+# Organize software neatly under a single directory tree (e.g. /usr/local)
+#   https://www.gnu.org/software/stow/
+brew "stow"
+
+# Free (GNU) replacement for the Pico text editor
+#   https://www.nano-editor.org/
+brew "nano"
+
+# GNU awk utility
+#   https://www.gnu.org/software/gawk/
+brew "gawk"
+
+# GNU grep, egrep and fgrep
+#   https://www.gnu.org/software/grep/
+brew "grep", args: %w[with-default-names]
+
+# Apply a diff file to an original
+#   https://savannah.gnu.org/projects/patch/
+brew 'gpatch'
+
+# Popular GNU data compression program
+#   https://www.gnu.org/software/gzip
+brew "gzip"
+
+# GNU version of the tar archiving utility
+#   https://www.gnu.org/software/tar/
+#
+# ==> Caveats
+# gnu-tar has been installed as "gtar".
+#
+# If you really need to use it as "tar", you can add a "gnubin" directory
+# to your PATH from your bashrc like:
+#
+#     PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
+#
+# Additionally, you can access their man pages with normal names if you add
+# the "gnuman" directory to your MANPATH from your bashrc as well:
+#
+#     MANPATH="/usr/local/opt/gnu-tar/libexec/gnuman:$MANPATH"
+brew "gnu-tar"
+
+# GNU implementation of the famous stream editor
+#   https://www.gnu.org/software/sed/
+#
+# ==> Caveats
+# The command has been installed with the prefix "g".
+# If you do not want the prefix, install using the "with-default-names" option.
+#
+# If you need to use these commands with their normal names, you
+# can add a "gnubin" directory to your PATH from your bashrc like:
+#   PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
+#
+# Additionally, you can access their man pages with normal names if you add
+# the "gnuman" directory to your MANPATH from your bashrc as well:
+#   MANPATH="/usr/local/opt/gnu-sed/libexec/gnuman:$MANPATH"
+brew "gnu-sed"
+
+# GNU implementation of time utility
+#   https://www.gnu.org/software/time/
+brew "gnu-time", args: %w[with-default-names]
+
+# GNU Pretty Good Privacy (PGP) package
+#   https://gnupg.org/
+brew "gnupg"
+
+# File comparison utilities
+#   https://www.gnu.org/s/diffutils/
+brew "diffutils"
+
+# Collection of GNU find, xargs, and locate
+#   https://www.gnu.org/software/findutils/
+#
+# ==> Caveats
+# All commands have been installed with the prefix 'g'.
+# If you do not want the prefix, install using the "with-default-names" option.
+#
+# If you need to use these commands with their normal names, you
+# can add a "gnubin" directory to your PATH from your bashrc like:
+#
+#     PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH"
+#
+# Additionally, you can access their man pages with normal names if you add
+# the "gnuman" directory to your MANPATH from your bashrc as well:
+#
+#     MANPATH="/usr/local/opt/findutils/libexec/gnuman:$MANPATH"
+brew "findutils"
+
+# GNU File, Shell, and Text utilities
+#   https://www.gnu.org/software/coreutils
+#
+# ==> Caveats
+# All commands have been installed with the prefix 'g'.
+#
+# If you really need to use these commands with their normal names, you
+# can add a "gnubin" directory to your PATH from your bashrc like:
+#
+#     PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+#
+# Additionally, you can access their man pages with normal names if you add
+# the "gnuman" directory to your MANPATH from your bashrc as well:
+#
+#     MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+brew "coreutils"
+
+# FSF/GNU ld, ar, readelf, etc. for native development
+#   https://www.gnu.org/software/binutils/binutils.html
+#
+# ==> Caveats
+# binutils is keg-only, which means it was not symlinked into /usr/local,
+# because because Apple provides the same tools and binutils is poorly supported on macOS.
+#
+# If you need to have binutils first in your PATH run:
+#   echo 'export PATH="/usr/local/opt/binutils/bin:$PATH"' >> ~/.zshrc
+#
+# For compilers to find binutils you may need to set:
+#   export LDFLAGS="-L/usr/local/opt/binutils/lib"
+#   export CPPFLAGS="-I/usr/local/opt/binutils/include"
+brew "binutils"
+
+# Shell command parallelization utility
+#   https://savannah.gnu.org/projects/parallel/
+brew "parallel"
+
+# GNU internationalization (i18n) and localization (l10n) library
+#   https://www.gnu.org/software/gettext/
+#
+# ==> Caveats
+# gettext is keg-only, which means it was not symlinked into /usr/local,
+# because macOS provides the BSD gettext library & some software gets confused if both are in the library path.
+#
+# If you need to have gettext first in your PATH run:
+#   echo 'export PATH="/usr/local/opt/gettext/bin:$PATH"' >> ~/.zshrc
+#
+# For compilers to find gettext you may need to set:
+#   export LDFLAGS="-L/usr/local/opt/gettext/lib"
+#   export CPPFLAGS="-I/usr/local/opt/gettext/include"
+brew "gettext"
+
+# Internet file retriever
+#   https://www.gnu.org/software/wget/
+brew "wget"
+
+# Display word differences between text files
+#   https://www.gnu.org/software/wdiff/
+brew "wdiff"
+
+# Automatic configure script builder
+#   https://www.gnu.org/software/autoconf
+brew "autoconf"
+
+# Tool for generating GNU Standards-compliant Makefiles
+#   https://www.gnu.org/software/automake/
+brew "automake"
+
+# GNU debugger
+#   https://www.gnu.org/software/gdb/
+#
+# ==> Caveats
+# gdb requires special privileges to access Mach ports.
+# You will need to codesign the binary. For instructions, see:
+#
+#   https://sourceware.org/gdb/wiki/BuildingOnDarwin
+#
+# On 10.12 (Sierra) or later with SIP, you need to run this:
+#
+#   echo "set startup-with-shell off" >> ~/.gdbinit
+brew "gdb", args: %w[with-all-targets with-python]
+
+# Classic UNIX line editor
+#   https://www.gnu.org/software/ed/ed.html
+brew "ed", args: %w[with-default-names]
+
+# C code prettifier
+#   https://www.gnu.org/software/indent/
+brew "gnu-indent", args: %w[with-default-names]
+
+# GNU implementation of which utility
+#   https://savannah.gnu.org/projects/which/
+#   https://carlowood.github.io/which/index.html
+brew "gnu-which", args: %w[with-default-names]
+
+# Terminal multiplexer with VT100/ANSI terminal emulation
+#   https://www.gnu.org/software/screen
+brew "screen"
+
+# Macro processing language
+#   https://www.gnu.org/software/m4
+#
+# ==> Caveats
+# m4 is keg-only, which means it was not symlinked into /usr/local,
+# because macOS already provides this software and installing another version in
+# parallel can cause all kinds of trouble.
+#
+# If you need to have m4 first in your PATH run:
+#   echo 'export PATH="/usr/local/opt/m4/bin:$PATH"' >> ~/.zshrc
+brew "m4"
+
+# Parser generator
+#   https://www.gnu.org/software/bison/
+#
+# ==> Caveats
+# bison is keg-only, which means it was not symlinked into /usr/local,
+# because some formulae require a newer version of bison.
+#
+# If you need to have bison first in your PATH run:
+#   echo 'export PATH="/usr/local/opt/bison/bin:$PATH"' >> ~/.zshrc
+#
+# For compilers to find bison you may need to set:
+#   export LDFLAGS="-L/usr/local/opt/bison/lib"
+brew "bison"
+
+# Utility for directing compilation
+#   https://www.gnu.org/software/make/
+#
+# ==> Caveats
+# All commands have been installed with the prefix 'g'.
+# If you do not want the prefix, install using the "with-default-names" option.
+#
+# If you need to use these commands with their normal names, you
+# can add a "gnubin" directory to your PATH from your bashrc like:
+#
+#     PATH="/usr/local/opt/make/libexec/gnubin:$PATH"
+#
+# Additionally, you can access their man pages with normal names if you add
+# the "gnuman" directory to your MANPATH from your bashrc as well:
+#
+#     MANPATH="/usr/local/opt/make/libexec/gnuman:$MANPATH"
+brew "make"
+
+# Utility to determine file types
+#   https://www.darwinsys.com/file/
+#
+# ==> Caveats
+# file-formula is keg-only, which means it was not symlinked into /usr/local,
+# because macOS already provides this software and installing another version in
+# parallel can cause all kinds of trouble.
+#
+# If you need to have file-formula first in your PATH run:
+#   echo 'export PATH="/usr/local/opt/file-formula/bin:$PATH"' >> ~/.zshrc
+brew "file-formula"

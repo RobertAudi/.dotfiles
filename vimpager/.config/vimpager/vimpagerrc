@@ -1,0 +1,14 @@
+set noloadplugins
+set wrap
+
+let base16colorspace = 256
+colorscheme base16-railscasts
+
+highlight CursorColumn guibg=#333435 ctermbg=237
+highlight CursorLine   guibg=#333435 ctermbg=237
+highlight IncSearch    ctermbg=3   ctermfg=1
+highlight Search       ctermbg=1   ctermfg=3
+highlight Visual       ctermbg=3   ctermfg=0
+
+let g:vimpager = {}
+let g:less     = {}

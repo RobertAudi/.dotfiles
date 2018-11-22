@@ -1,0 +1,10 @@
+set guioptions=rb
+set clipboard=unnamed
+set ignorecase
+set nowrap
+set noerrorbells
+set incsearch
+set gdefault
+set smartcase
+set hlsearch
+set number

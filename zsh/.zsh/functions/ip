@@ -1,0 +1,23 @@
+#autoload
+
+__print_localip() {
+  print "Local IP: $(ipconfig getifaddr en0)"
+}
+
+__print_publicip() {
+  print "Public IP: $(dig +short myip.opendns.com @resolver1.opendns.com)"
+}
+
+ip() {
+  zparseopts -D -E l+=listlocal a+=listall
+  if (( $#listall )); then
+    __print_localip
+    __print_publicip
+  elif (( $#listlocal )); then
+    __print_localip
+  else
+    __print_publicip
+  fi
+}
+
+ip "$@"

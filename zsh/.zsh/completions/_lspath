@@ -1,0 +1,4 @@
+#compdef lspath
+#autoload
+
+_values "commands" "path" "fpath" "manpath" && ret=0

@@ -1,0 +1,9 @@
+#autoload
+
+echo "Please wait.. i'll think about.."
+repeat 3 (echo -ne "."; sleep 0.3)
+if (( $RANDOM > $RANDOM )); then
+  echo "Yes!"
+else
+  echo "No!"
+fi

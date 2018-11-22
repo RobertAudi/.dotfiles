@@ -1,0 +1,19 @@
+#!/bin/sh
+#
+# Display the 256-color palette of bash and zsh
+#
+
+target_shell=$1
+
+if [ -z "$1" ]; then
+    target_shell=$(basename "$SHELL")
+fi
+
+if [ "$target_shell" = "bash" ]; then
+    bash <<< 'for code in {0..255}; do echo -n "[1;38;05;${code}m$(printf %03d $code) [0m"; [ $((${code} % 16)) -eq 15 ] && echo; done'
+elif [ "$target_shell" = "zsh" ]; then
+    zsh  <<< 'for code in {000..255}; do print -nP -- "%B%F{$code}$code %f%b"; [ $((${code} % 16)) -eq 15 ] && echo; done'
+else
+    echo "error: Invalid argument ($target)"
+    echo "Usage: $0 [bash|zsh]"
+fi

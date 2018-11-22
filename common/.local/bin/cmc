@@ -1,0 +1,51 @@
+#!/usr/bin/ruby
+# cmc [-t TABSIZE] [-d DISTANCE] [-c COLUMNS] - compact lines to multiple columns
+
+require "io/console"
+
+def getopt(param, argv=ARGV)
+  opts={}
+  while a = argv.first
+    z = a.chars
+    break if z.shift != "-" || a == "-" || argv.shift == "--"
+
+    while (f = z.shift) && (param =~ /#{f}(:?)/ or abort "invalid flag -#{f}")
+      if $1.empty?
+        opts[f] = (opts[f] ||= 0) + 1
+      else
+        opts[f] = (z.empty? ? argv.shift : z.join) or
+          abort "missing parameter for -#{f}"
+        break
+      end
+    end
+  end
+  opts
+end
+
+FLAGS = getopt("t:c:d:")
+
+TAB = Integer(FLAGS["t"] || 8)
+COLUMNS = Integer(FLAGS["c"] || STDOUT.winsize[1]) rescue 80
+DISTANCE = Integer(FLAGS["d"] || 1)
+
+r = nil
+ARGF.each_line do |line|
+  line.chomp!
+
+  if r
+    pad = " " * (TAB - (r.size % TAB))
+    pad << " " * TAB if pad.size < DISTANCE
+  else
+    pad = ""
+    r = ""
+  end
+
+  if r.to_s.size + pad.size + line.size <= COLUMNS
+    r << pad << line
+  else
+    puts r
+    r = line
+  end
+end
+
+puts r if r

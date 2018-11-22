@@ -1,0 +1,35 @@
+# Powerful, clean, object-oriented scripting language
+#   https://www.ruby-lang.org/
+#
+# ==> Caveats
+# By default, binaries installed by gem will be placed into:
+#   /usr/local/lib/ruby/gems/2.5.0/bin
+#
+# You may want to add this to your PATH.
+#
+# ruby is keg-only, which means it was not symlinked into /usr/local,
+# because macOS already provides this software and installing another version in
+# parallel can cause all kinds of trouble.
+#
+# If you need to have ruby first in your PATH run:
+#   echo 'export PATH="/usr/local/opt/ruby/bin:$PATH"' >> ~/.zshrc
+#
+# For compilers to find ruby you may need to set:
+#   export LDFLAGS="-L/usr/local/opt/ruby/lib"
+#   export CPPFLAGS="-I/usr/local/opt/ruby/include"
+#
+# For pkg-config to find ruby you may need to set:
+#   export PKG_CONFIG_PATH="/usr/local/opt/ruby/lib/pkgconfig"
+brew "ruby"
+
+# Install Ruby, JRuby, Rubinius, TruffleRuby, or mruby
+#   https://github.com/postmodern/ruby-install#readme
+brew "ruby-install"
+
+# Ruby environment tool
+#   https://github.com/postmodern/chruby#readme
+brew "chruby"
+
+# A tool for changing your $GEM_HOME
+#   https://github.com/postmodern/gem_home
+brew "gem_home", args: ["HEAD"]

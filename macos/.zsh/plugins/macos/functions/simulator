@@ -1,0 +1,25 @@
+#autoload
+
+local devfolder
+devfolder="$(xcode-select -p)"
+
+local simulator_path
+
+# Xcode ≤ 5.x
+if [[ -d "${devfolder}/Platforms/iPhoneSimulator.platform/Developer/Applications/iPhone Simulator.app" ]]; then
+  simulator_path="${devfolder}/Platforms/iPhoneSimulator.platform/Developer/Applications/iPhone Simulator.app"
+  # Xcode ≥ 6.x
+elif [[ -d "${devfolder}/Applications/iOS Simulator.app" ]]; then
+  simulator_path="${devfolder}/Applications/iOS Simulator.app"
+  # Xcode ≥ 7.x
+else
+  simulator_path="${devfolder}/Applications/Simulator.app"
+fi
+
+if [[ -a "$simulator_path" ]]; then
+  builtin print -P -- "[%F{032}INFO%f] Launching iOS Simulator..."
+  open "$simulator_path"
+else
+  builtin print -P -- "[%F{196}ERROR%f] Simulator not found" >&2
+  return 1
+fi

@@ -1,0 +1,4 @@
+#compdef unball
+#autoload
+
+_values "Vimballs" *.vba

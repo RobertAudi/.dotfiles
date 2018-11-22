@@ -1,0 +1,62 @@
+#compdef rake
+#autoload
+
+_rake_refresh() {
+  [[ -f .rake_tasks ]] && rm -f .rake_tasks
+  _rake_generate
+  cat .rake_tasks
+}
+
+_rake_does_tasks_list_need_generating() {
+  [[ -f .rake_tasks ]] || return 0
+  if [[ "$OSTYPE" = darwin* ]] && ! type gstat >/dev/null; then
+    accurate=$(stat -f%m .rake_tasks)
+    changed=$(stat -f%m Rakefile)
+  else
+    accurate=$(gstat -c%Y .rake_tasks)
+    changed=$(gstat -c%Y Rakefile)
+  fi
+  return $(expr $accurate '>=' $changed)
+}
+
+_rake_generate() {
+  zle -R "Generating .rake_tasks..."
+
+  local _ret=0 _tmpfile=$(mktemp)
+  run_with_bundler rake --silent --tasks 2>/dev/null >! $_tmpfile
+  _ret=$?
+
+  if [[ $_ret == 0 ]]; then
+    cut -d " " -f 2 < $_tmpfile >! .rake_tasks
+  fi
+
+  return $_ret
+}
+
+_rake() {
+  local _tasks ret=1
+  declare -a tasks
+
+  if [[ -f Rakefile ]]; then
+    if _rake_does_tasks_list_need_generating; then
+      if _rake_generate; then
+        return 1
+      else
+        _message -e "warnings" "()"
+        return 0
+      fi
+    elif [[ -f .rake_tasks ]]; then
+      tasks=($(cat .rake_tasks))
+      _tasks="Tasks:(${tasks})"
+    fi
+  else
+    _message -e "warnings" "()"
+    return 0
+  fi
+
+  _arguments "*:${_tasks}" && ret=0
+
+  return ret
+}
+
+_rake "$@"

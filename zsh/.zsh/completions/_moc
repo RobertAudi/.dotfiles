@@ -1,0 +1,17 @@
+#compdef moc
+#autoload
+
+_values "commands" \
+  "playback-state" \
+  "server-status" \
+  "info" \
+  "play" \
+  "pause" \
+  "stop" \
+  "toggle" \
+  "next" \
+  "previous" \
+  "start" \
+  "quit" \
+  "help" \
+  && ret=0

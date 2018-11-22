@@ -1,0 +1,4 @@
+include "~/.nano/*.nanorc"
+
+# Use auto-indentation.
+set autoindent

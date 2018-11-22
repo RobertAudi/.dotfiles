@@ -1,0 +1,31 @@
+/log/
+/logs/
+bower_components/
+node_modules/
+/public/assets/
+.git/
+.svn/
+.hg/
+.gem/
+*.tmp*
+*.old
+*.log
+.gitkeep
+.keep
+.DS_Store
+
+# Images and Binaries
+*.pdf
+*.svg
+*.woff
+*.ttf
+*.eot
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.ico
+
+# Xcode project files except for the project file
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj

@@ -1,0 +1,11 @@
+#autoload
+
+# os_detect export the PLATFORM variable as you see fit
+export PLATFORM
+case "$(ostype)" in
+  *'solaris'*) PLATFORM='solaris' ;;
+  *'linux'*)   PLATFORM='linux'   ;;
+  *'darwin'*)  PLATFORM='macos'   ;;
+  *'bsd'*)     PLATFORM='bsd'     ;;
+  *)           PLATFORM='unknown' ;;
+esac

@@ -1,0 +1,3 @@
+#!/bin/sh
+# pbfmt: remove formatting from the clipboard content
+pbpaste | pbcopy;

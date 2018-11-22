@@ -1,0 +1,7 @@
+#autoload
+
+# get_os returns OS name of the platform that is running
+local os
+for os in macos linux bsd; do
+  is_$os && echo $os
+done

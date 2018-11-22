@@ -1,0 +1,45 @@
+#!/usr/bin/env zsh
+
+if [[ ! -v DEFAULT_GEMFILE || ! -f "$DEFAULT_GEMFILE" ]]; then
+  builtin print -P -- "[%F{196}ERROR%f] Default gemfile not found" >&2
+  return 1
+elif [[ ! -r "$DEFAULT_GEMFILE" ]]; then
+  builtin print -P -- "[%F{196}ERROR%f] Default gemfile is not readable: '$DEFAULT_GEMFILE'" >&2
+  return 1
+fi
+
+if ! gem list --silent --installed yard; then
+  builtin print -P -- "[%F{032}INFO%f] Installing YARD"
+  gem install yard --env-shebang --no-document --silent
+fi
+
+local -a gem_install_args
+gem_install_args=(--env-shebang --no-document)
+
+local gem_name gem_version
+local -a gem_version_args
+
+local line
+local -a line_parts
+while read -r line; do
+  # Skip empty lines.
+  [[ "$line" =~ [^[:space:]] ]] || continue
+
+  # Skip comment lines that begin with `#`.
+  [[ "$line" =~ ^# ]] && continue
+
+  line_parts=("${(s: :)line}")
+  gem_name="${line_parts[1]}"
+  gem_version="${line_parts[2]}"
+
+  if [[ "$gem_version" == "--pre" ]]; then
+    gem_version_args=("--pre")
+  elif [[ -n "$gem_version" ]]; then
+    gem_version_args=("--version ${gem_version}")
+  else
+    gem_version_args=()
+  fi
+
+  builtin print -P -- "[%F{032}INFO%f] gem install ${=gem_install_args} ${gem_name} ${=gem_version_args}"
+  gem install ${=gem_install_args} "${gem_name}" ${=gem_version_args} 2>/dev/null
+done < "$DEFAULT_GEMFILE"

@@ -1,0 +1,22 @@
+#autoload
+
+local proj=$(find . -maxdepth 1 -name "*.xcworkspace" | head -n 1)
+
+[[ -z "$proj" ]] && proj=$(find . -maxdepth 1 -name "*.xcodeproj" | head -n 1)
+
+if [[ -z "$proj" ]]; then
+  builtin print -P -- "[%F{196}ERROR%f] No XCode project found!" >&2
+  return 1
+fi
+
+osascript 2>/dev/null <<EOF
+tell application "Xcode"
+  set windowCount to number of windows
+  repeat with x from 1 to windowCount
+    set docName to (name of document of front window)
+    if (docName is equal to "$name") then
+      close window x
+    end if
+    end repeat
+end tell
+EOF

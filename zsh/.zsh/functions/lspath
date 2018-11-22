@@ -1,0 +1,27 @@
+#autoload
+
+lspath() {
+  # Pretty print the PATH
+  local path_
+  case "$1" in
+      manpath|MANPATH) path_=$MANPATH  ;;
+          fpath|FPATH) path_=$FPATH    ;;
+     gempath|GEM_PATH) path_=$GEM_PATH ;;
+                    *) path_=$PATH     ;;
+  esac
+
+  local current_user="$(whoami)"
+
+  local awkstr="{ sub(\"/usr\",     \"${fg_no_bold[green]}/usr$reset_color\");"
+  awkstr="${awkstr} sub(\"/bin\",   \"${fg_no_bold[blue]}/bin$reset_color\");"
+  awkstr="${awkstr} sub(\"/opt\",   \"${fg_no_bold[cyan]}/opt$reset_color\");"
+  awkstr="${awkstr} sub(\"/sbin\",  \"${fg_no_bold[magenta]}/sbin$reset_color\");"
+  awkstr="${awkstr} sub(\"/local\", \"${fg_no_bold[yellow]}/local$reset_color\");"
+  awkstr="${awkstr} sub(\"/Users/${current_user}\", \"${fg_no_bold[red]}/Users${fg_no_bold[cyan]}/${current_user}$reset_color\");"
+  awkstr="${awkstr} sub(\"/Users\", \"${fg_no_bold[red]}/Users$reset_color\");"
+  awkstr="${awkstr} print }"
+
+  echo $path_ | tr ":" "\n" | awk "${awkstr}"
+}
+
+lspath "$@"

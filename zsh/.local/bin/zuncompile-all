@@ -1,0 +1,14 @@
+#!/usr/bin/env zsh
+
+emulate -L zsh
+
+setopt extended_glob
+
+local f
+for f in ${HOME}/.zshenv.zwc*(-N.) ${ZDOTDIR}/***/*.zsh.zwc*(-N.) ${ZDOTDIR}/***/{functions,functions/utils,completions}/*.zwc*(-N.) ${ZDOTDIR}/.{zlog{in,out},zprofile,zsh{env,rc}}.zwc*(-N.); do
+  if command rm -f $f; then
+    builtin print -P -- "[%F{032}INFO%f] Removed $f"
+  else
+    builtin print -P -- "[%F{196}ERROR%f] Failed to remove $f" >&2
+  fi
+done

@@ -1,0 +1,7 @@
+#autoload
+
+# clot - fill screen with garbage, as visual separator
+#
+# Stolen from http://chneukirchen.org/dotfiles
+#   http://chneukirchen.org/dotfiles/.zshrc
+head -c $((LINES*COLUMNS)) </dev/urandom | tr '\0-\377' ${(l:256::.*o@:)} | fold -w $COLUMNS

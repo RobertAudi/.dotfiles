@@ -1,0 +1,1 @@
+autocmd BufNewFile,BufRead known_hosts setlocal filetype=known_hosts

@@ -1,0 +1,5 @@
+#autoload
+
+# Ask Yes/No question
+read "?$fg_bold[magenta]${1}$reset_color ? [y/n] "
+is-true "${(L)REPLY}"

@@ -1,0 +1,7 @@
+#autoload
+
+[[ -n "$1" ]] || { print-error "Missing operand"; return $? }
+[[ -s "$1" ]] || { print-error "No such file or directory: '$1'"; return $? }
+
+print "$fg[blue]------->  $fg_bold[cyan]${1:A}$reset_color"
+print -n "${1:A}" | and-pipe copy

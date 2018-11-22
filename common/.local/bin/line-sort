@@ -1,0 +1,7 @@
+#!/usr/bin/perl -s
+# line-sort [-r] - print lines sorted by length, then alphabetically
+#
+# Stolen from http://chneukirchen.org/dotfiles
+#   http://chneukirchen.org/dotfiles/bin/lsort
+#   http://chneukirchen.org/blog/archive/2013/07/summer-of-scripts-lsort.html
+print sort { (length $a <=> length $b)*($r?-1:1) || $a cmp $b } <>;

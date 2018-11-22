@@ -1,0 +1,21 @@
+#!/usr/bin/env zsh
+
+local code message text
+code="$1"; shift
+(($#)) && message="$@" || message="HELLO"
+text="%F{$code}  HELLO  %f    %K{$code}  HELLO  %k    %F{$code}  HELLO  %f    "
+
+print       "  +------------------------------------------------------------------+"
+print       "  |                                             |                    |"
+print -P -- "  |  "      "$text"      "  |  PLAIN            "                   "|"
+print -P -- "  |  "    "%B$text%b"    "  |  BOLD             "                   "|"
+print -P -- "  |  "    "%U$text%u"    "  |  UNDERLINE        "                   "|"
+print -P -- "  |  "  "%B%U$text%u%b"  "  |  BOLD + UNDERLINE "                   "|"
+print       "  |                                             |                    |"
+print       "  +------------------------------------------------------------------+"
+
+print
+print
+print -P -- "   %F{$code}$message%f"
+print
+print

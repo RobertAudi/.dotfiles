@@ -1,0 +1,14 @@
+#autoload
+
+print-last-command | copy -q
+
+local res=$status
+if (( $res > 0 )); then
+  print-error "Failed to copy last command to clipboard."
+  return $res
+fi
+
+print-info "Copied last command to clipboard:"
+print -Pn -- "       %B%F{241}==>%f%b %F{248}"
+print-last-command
+print -P -- "%f"

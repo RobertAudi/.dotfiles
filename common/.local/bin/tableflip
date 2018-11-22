@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Credits:
+#   https://github.com/unixorn/jpb.zshplugin
+#   https://github.com/unixorn/jpb.zshplugin/blob/da7f85104c296ce9cf0b817b8f1043754bc3d2d0/bin/tableflip
+echo -en "( º_º）  ┬─┬     \r"
+sleep .2
+echo -en " ( º_º） ┬─┬     \r"
+sleep .2
+echo -en "  ( ºДº）┬─┬     \r"
+sleep .4
+echo -en "  (╯'Д'）╯︵⊏    \r"
+sleep .2
+echo -en "  (╯'□'）╯︵ ⊏   \r"
+sleep .1
+echo "  (╯°□°）╯︵ ┻━┻ "
+sleep .4

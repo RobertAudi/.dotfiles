@@ -1,0 +1,7 @@
+#autoload
+
+# mcal [MONTH] - show calendar for this year's MONTH
+#
+# Stolen from http://chneukirchen.org/dotfiles
+#   http://chneukirchen.org/dotfiles/.zshrc
+cal "$@" $(date +%Y)

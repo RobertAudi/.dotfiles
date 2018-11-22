@@ -1,0 +1,11 @@
+# Configuration file for bc (https://www.gnu.org/software/bc)
+# ==============================================================================
+#
+# scale defines how some operations use digits after the decimal point.
+# The default value of scale  is  0.
+scale=2
+
+# ibase and obase define the conversion base for input and output numbers.
+# The default for both input and output is base 10.
+ibase=10
+obase=10

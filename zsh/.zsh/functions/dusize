@@ -1,0 +1,3 @@
+#autoload
+
+command du "$@" | command awk '{ fsize += $1 } END { print fsize/1024 " Megabytes" }'

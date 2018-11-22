@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby
+# - encoding: utf-8 -
+#
+# E.g. with: pinget https://feeds.pinboard.in/rss/secret:YOURSECRET/u:YOURUSERNAME/toread/
+
+require 'rss'
+require 'open-uri'
+require 'uri'
+
+WGET = ['wget',
+        '--recursive',
+        '--level=1',
+        '--quiet',
+        '--page-requisites',
+        '--html-extension',
+        '--tries=5',
+        '--convert-links',
+        '--restrict-file-names=windows',
+        '--no-parent']
+
+open(ARGV[0]) do |rss|
+  feed = RSS::Parser.parse(rss)
+  puts "Title: #{feed.channel.title}"
+  feed.items.each do |item|
+    puts "Downloading [#{item.title}](#{item.link})"
+    system(*[WGET, item.link].flatten)
+  end
+end

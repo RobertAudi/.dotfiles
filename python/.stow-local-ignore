@@ -1,0 +1,7 @@
+\.git
+\.gitignore
+\.gitmodules
+\.gitattributes
+\.DS_Store
+setup\.sh
+Brewfile

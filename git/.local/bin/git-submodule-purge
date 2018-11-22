@@ -1,0 +1,71 @@
+#!/bin/sh
+#
+# git-submodule-purge - purges the copies of obsoleted submodule repositories
+#
+# Copyright (c) 2012 Akinori MUSHA
+#
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+# 1. Redistributions of source code must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+# 2. Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the distribution.
+#
+# THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+# ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+# ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+# OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+# HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+# LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+# OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+# SUCH DAMAGE.
+#
+
+main () {
+    if [ ! -d .git ]; then
+        echo 'You need to run this command from the toplevel of the working tree.' >&2
+        exit 1
+    fi
+
+    [ -d .git/modules ] || return 0
+
+    repodir=`pwd -L`/.git/modules
+    git submodule foreach --quiet --recursive '
+        [ -f .git ] && (while read -r key gitdir; do
+            [ "$key" = "gitdir:" ] || continue
+            cd -L -- "$gitdir" 2>/dev/null && pwd -L
+            break
+        done < .git) || :' |
+    while read -r gitdir; do
+        case "$gitdir" in
+            "$repodir/"*)
+                touch -- "$gitdir/.do_not_purge_me"
+                ;;
+        esac
+    done
+
+    find .git/modules -type f -name config -print |
+    while read -r config; do
+        gitdir="${config%/config}"
+        if [ -f "$gitdir/.do_not_purge_me" ]; then
+            rm -- "$gitdir/.do_not_purge_me"
+            continue
+        fi
+        [ -f "$gitdir/index" -a -d "$gitdir/objects" ] || continue
+        printf '%s\n' "$gitdir"
+    done | sort -r |
+    while read -r dir; do
+        echo "Purging $dir"
+        rm -rf -- "$dir"/*
+        rmdir -p -- "$dir" 2>/dev/null || :
+    done
+}
+
+main "$@"

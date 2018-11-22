@@ -1,0 +1,33 @@
+#autoload
+
+emulate -L zsh
+setopt NO_CASE_MATCH
+
+function __find-in-path::filter {
+  local cmd=$1; shift
+  if ! [[ $cmd =~ ^_ ]]; then
+    local query
+    for query in $@; do
+      if [[ "$cmd" =~ ^$query.*\|.*$query\$ ]]; then
+        return 0
+      fi
+    done
+  fi
+  return 1
+}
+
+function __find-in-path::init {
+  local callable
+  local -a callables matches
+  callables=(${(k)aliases} ${(k)functions} ${(k)builtins} ${(k)commands})
+
+  for callable in $callables; do
+    if __find-in-path::filter $callable $@; then
+      matches+=($callable)
+    fi
+  done
+
+  print -r -l -- ${(uo)matches} | grep --color=always -E "${(j:|:)${(q)@}}|$"
+}
+
+__find-in-path::init $@

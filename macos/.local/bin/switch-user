@@ -1,0 +1,73 @@
+#!/bin/bash
+
+#
+# switch-user - Switch users via Mac OS X's Fast User Switching
+#
+# Originally via Schoun Reagan, but later
+# http://www.macosxhints.com/article.php?story=20031102031045417
+#
+# v0.1   2006-10-18 - Morgan Aldridge <morgant@makkintosshu.com>
+#                     Initial release
+# v0.2   2010-12-27 - Morgan Aldridge
+#                     Renamed to 'swuser', added usage instructions, options
+#                     for switching to login window, user by name, or user by ID.
+#
+
+# global variables
+user=$(whoami)
+id=$(id -u $user)
+cgsession="/System/Library/CoreServices/Menu Extras/User.menu/Contents/Resources/CGSession"
+
+# print usage instructions (help)
+function usage() {
+  printf "Usage: switch-user [options [username|useried]]\n"
+  printf "  -h            print these usage instructions\n"
+  printf "  -l            switch to the login window\n"
+  printf "  -n            switch to a different user by user name\n"
+  printf "  -u            switch to a different user by user id\n"
+}
+
+function check_id() {
+  if (( $1 == $2 )); then
+    printf "Sorry, you can't switch to yourself.\n"
+    exit 1;
+  fi
+}
+
+# exit with an error if being run from screen
+if [ "$STY" != "" ]; then
+  printf "Sorry, switch-user doesn't work from within screen. I know, I hate it too!\n"
+  exit 1;
+fi
+
+# see if any arguments were passed in
+if [ $# -gt 0 ]; then
+  # if so, step through them all and process them
+  while [ $# -gt 0 ]; do
+    # see if the user requested help
+    if [ "$1" = "-h" ]; then
+      usage
+      exit;
+    # handle switch to login window
+    elif [ "$1" = "-l" ]; then
+      "$cgsession" -suspend
+      shift
+    # handle switching to another user by name
+    elif [ "$1" = "-n" ]; then
+      shift
+      new_id=$(id -u "$1")
+      check_id $id $new_id
+      "$cgsession" -switchToUserID $(id -u "$1")
+      shift
+    # handle switch to another user by id
+    elif [ "$1" = "-u" ]; then
+      shift
+      check_id $id $1
+      "$cgsession" -switchToUserID $1
+      shift
+    fi
+  done
+else
+  printf "No switch user action specified.\n\n"
+  usage
+fi

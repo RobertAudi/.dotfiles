@@ -1,0 +1,11 @@
+#autoload
+
+is-callable ghq || { print-error "ghq not installed"; return 1 }
+
+local repo="$(pbpaste)"
+
+builtin print -P -- "  %F{240}=>%f ghq look %B${repo}%b"
+
+ghq look "$repo"
+
+# vim: ft=zsh

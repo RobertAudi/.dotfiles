@@ -1,0 +1,19 @@
+#!/usr/bin/env zsh
+
+git-nuke-tag() {
+  if ! git rev-parse 2> /dev/null; then
+    echo -e "\e[1;41;97m ERROR \e[0m Not a repository: $PWD" >&2
+    return 1
+  fi
+
+  if ! (($#)); then
+    echo -e "\e[1;41;97m ERROR \e[0m Missing tag name" >&2
+    return 1
+  fi
+
+  # TODO: Add confirmation
+  # TODO: Do not hardcode the remote
+  git tag -d "$1" && git push origin :refs/tags/"$1"
+}
+
+git-nuke-tag $@

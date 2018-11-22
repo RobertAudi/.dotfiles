@@ -1,0 +1,34 @@
+TM_FULLNAME = "Robert Audi"
+TM_GIT = "/usr/local/bin/git"
+TM_RUBY = "$HOME/.config/textmate/bin/tm_chruby"
+
+# Homebrew tools
+PATH = "$PATH:/usr/local/bin"
+
+excludeDirectories = "{.{git,hg,svn,gem},node_modules,bower_components,doc,.yardoc,tmp,log,}"
+
+fontName = Input
+fontSize = 14
+
+theme = 'F4EC0A38-E8AC-450B-B988-B0E4579FDF94'
+
+softTabs = true
+tabSize  = 2
+showInvisibles = false
+softWrap = false
+saveOnBlur = true
+
+[ text.html.markdown ]
+softWrap = true
+
+[ *.{icns,ico,jpg,jpeg,m4v,nib,pdf,png,psd,pyc,rtf,tif,tiff,xib} ]
+binary = true
+
+[ "{README,INSTALL,LICENSE,TODO}" ]
+fileType = "text.plain"
+
+[ "{Gemfile,Gemfile.lock,Capfile,Rakefile,Podfile,.rvmrc,.bundle/config}"]
+fileType = "source.ruby"
+
+[ "{.gitconfig}"]
+fileType = "source.git-config"

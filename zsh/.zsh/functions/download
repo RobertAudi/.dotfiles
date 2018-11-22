@@ -1,0 +1,21 @@
+#autoload
+
+if (($# == 0)); then
+  print-error "Missing argument"
+  return 1
+fi
+
+local url
+for url in $@; do
+  if echo "$url" | grep "github\|\.git$" &> /dev/null && ! echo "$url" | grep "raw\.github\.com\|githubusercontent\|releases\/download" &> /dev/null; then
+    git clone "$url"
+  elif is-callable aria2c; then
+    aria2c --max-connection-per-server=4 --continue "$url"
+  elif is-callable axel; then
+    axel "$url"
+  elif is-callable curl; then
+    curl --continue-at - --location --progress-bar --remote-name --remote-time "$url"
+  elif is-callable wget; then
+    wget --no-check-certificate --continue --progress=bar --timestamping "$url"
+  fi
+done

@@ -1,0 +1,297 @@
+# Config {{{
+# ------------------------------------------------------------------------------
+
+[include]
+  path = ~/.config/git/config.private
+  path = ~/.config/git/config.local
+
+[core]
+  excludesFile   = ~/.config/git/ignore
+  attributesFile = ~/.config/git/attributes
+  hooksPath      = ~/.config/git/hooks
+
+  # Treat spaces before tabs and all kinds of trailing whitespace as an error
+  # [default] trailing-space: looks for spaces at the end of a line
+  # [default] space-before-tab: looks for spaces before tabs at the beginning of a line
+  whitespace = space-before-tab,-indent-with-non-tab,trailing-space
+
+  # Make `git rebase` safer on macOS
+  # More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
+  trustctime = false
+
+  # Prevent showing files whose names contain non-ASCII symbols as unversioned.
+  # http://michael-kuehnel.de/git/2014/11/21/git-mac-osx-and-german-umlaute.html
+  precomposeUnicode = false
+
+[user]
+  useConfigOnly = true
+
+[pager]
+  diff = diff-so-fancy | smartless
+  show = diff-so-fancy | smartless
+
+[web]
+  browser = open
+
+[advice]
+  statusHints = false
+  detachedHead = false
+
+[rerere]
+  enabled = true
+  autoUpdate = true
+
+[pretty]
+  default  = %Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset
+  detailed = %C(bold)%C(yellow)Commit:%C(reset) %C(yellow)%H%C(red)%d%n%C(bold)%C(yellow)Author:%C(reset) %C(cyan)%an <%ae>%n%C(bold)%C(yellow)Date:%C(reset)   %C(blue)%ai (%ar)%C(reset)%n%+B
+
+[format]
+  pretty = default
+
+# ------------------------------------------------------------------------------ }}}
+
+# Colors {{{
+# ------------------------------------------------------------------------------
+
+[color]
+  branch = auto
+  diff   = auto
+  status = auto
+
+  interactive = auto
+  showBranch  = auto
+
+  grep  = true
+  pager = true
+  ui    = true
+
+[color "branch"]
+  current  = bold reverse yellow
+  local    = yellow
+  upstream = magenta
+  remote   = bold magenta
+
+[color "status"]
+  added     = yellow
+  changed   = green
+  untracked = cyan
+
+[color "diff"]
+  meta = bold yellow
+  frag = bold magenta
+  old  = bold red
+  new  = bold green
+  whitespace = red reverse
+  commit = blue
+
+# ------------------------------------------------------------------------------ }}}
+
+# Commands {{{
+# ------------------------------------------------------------------------------
+
+[status]
+  showUntrackedFiles = all
+  submoduleSummary = true
+
+[branch]
+  autoSetupRebase = always
+
+[commit]
+  template = ~/.config/git/commit.txt
+  verbose = true
+
+[stash]
+  showPatch = true
+
+[fetch]
+  prune = true
+  recurseSubmodules = true
+
+[push]
+  # change to maching for machines with older versions of git 1.x.x
+  default = current
+
+  # Make `git push` push relevant annotated tags when pushing branches out.
+  followTags = true
+
+[pull]
+  prune = true
+  rebase = preserve
+
+[merge]
+  summary = true
+
+  # Include summaries of merged commits in newly created merge commit messages
+  log = true
+  stat = true
+
+[rebase]
+  autoSquash = true
+  autoStash = true
+  stat = true
+
+[submodule]
+  fetchJobs = 8
+
+[blame]
+  date = short
+
+[help]
+  # Automatically correct and execute mistyped commands
+  autoCorrect = 1
+
+# merge {{{
+# ------------------------------------------------------------------------------
+
+[merge]
+  summary = true
+
+  # Include summaries of merged commits in newly created merge commit messages
+  log = true
+  stat = true
+
+[mergetool]
+  keepBackup = true
+  prompt = false
+
+[mergetool "GitDiffTool"]
+  cmd = ~/.local/bin/mergetool --local \"$LOCAL\" --remote \"$REMOTE\" --merged \"$MERGED\" --base \"$BASE\"
+
+# ------------------------------------------------------------------------------ }}}
+
+# diff {{{
+# ------------------------------------------------------------------------------
+
+[diff]
+  # Git diff will use (i)ndex, (w)ork tree, (c)ommit and (o)bject
+  # instead of a/b/c/d as prefixes for patches
+  mnemonicPrefix = true
+  algorithm = histogram
+
+  ignoreSubmodules = all
+
+  # Detect copies as well as renames
+  renames = copies
+
+  tool = GitDiffTool
+
+  indentHeuristic = true
+
+  # https://git-scm.com/docs/git-diff#git-diff---color-movedltmodegt
+  colorMoved = default
+
+[diff "bin"]
+  # Use `hexdump` to diff binary files
+  textconv = hexdump -v -C
+
+[diff "xml"]
+  textconv = xmllint --format --recover
+
+[diff-so-fancy]
+  markEmptyLines = false
+  stripLeadingSymbols = false
+  changeHunkIndicators = true
+  useUnicodeRuler = true
+
+[difftool]
+  prompt = false
+
+[difftool "GitDiffTool"]
+  cmd = ~/.local/bin/difftool --local \"$LOCAL\" --remote \"$REMOTE\" --base \"$BASE\"
+
+# ------------------------------------------------------------------------------ }}}
+
+# External commands {{{
+# ------------------------------------------------------------------------------
+
+[ghq]
+  root = ~/Developer/ghq
+  root = ~/.ghq
+  root = "$GOPATH/src"
+
+[hub]
+  protocol = https
+
+# ------------------------------------------------------------------------------ }}}
+
+# ------------------------------------------------------------------------------ }}}
+
+# Aliases {{{
+# ------------------------------------------------------------------------------
+
+[alias]
+  # log
+  l   = log --topo-order --graph --abbrev-commit
+  la  = log --topo-order --graph --abbrev-commit --branches --tags
+  laa = log --topo-order --graph --abbrev-commit --branches --tags --all
+  ls  = log --topo-order --stat --pretty=detailed
+  ld  = log --topo-order --stat --patch --full-diff --pretty=detailed
+
+  # Stolen from https://github.com/posquit0/dotfiles
+  #   https://github.com/posquit0/dotfiles/blob/ef942a01566abfe7874e99bf6dbbfa3e3611e36d/git/.gitconfig#L48-L53
+  today     = log --topo-order --graph --abbrev-commit --since=midnight
+  yesterday = log --topo-order --graph --abbrev-commit --since=yesterday --until=midnight
+
+  # See only the commits (with diff) that have arrived since the last pull.
+  #
+  # Stolen from http://chneukirchen.org/dotfiles
+  #   http://chneukirchen.org/dotfiles/.gitconfig
+  #   http://chneukirchen.org/blog/archive/2013/01/a-grab-bag-of-git-tricks.html
+  news = log -p @{1}..
+
+  llf = fsck --lost-found
+  todo = grep -E '(FIXME|TODO) '
+
+  a  = add
+  ap = add --patch
+
+  b = branch
+  s = status --short --branch
+  st = status
+
+  co  = checkout
+  cob = checkout -b
+
+  ls-ignored = ls-files --others --i --exclude-standard
+
+  amend     = commit --verbose --amend
+  amend-now = commit --amend --reuse-message HEAD
+
+  shallow-clone = clone --depth=1
+
+  # Show verbose output about tags, branches or remotes
+  tags = tag -n1 --list
+  branches = branch --all --verbose --verbose
+  remotes = remote --verbose
+
+  # Pretty format taken from https://github.com/sunaku/home
+  # Source:
+  #   https://github.com/sunaku/home/blob/24441a94e1bfc5b7eebb1ee81dc62184626b694f/.zsh/config/alias/git.sh#L83-L84
+  stashes = stash list --pretty=\"%C(auto,yellow)%gd%C(auto,reset): %C(auto,green)%ci (%cr)%C(auto,reset):%C(auto,blue)%d%C(auto,reset) %gs\"
+
+  # More readable reflog
+  # Source: https://github.com/sunaku/home/blob/24441a94e1bfc5b7eebb1ee81dc62184626b694f/.zsh/config/alias/git.sh#L339-L340
+  reflogs = reflog --pretty=\"%C(auto,yellow)%h%C(auto,reset): %C(auto,green)%ci (%cr)%C(auto,reset):%C(auto,blue)%d%C(auto,reset) %gs\"
+
+  swag = !git commit -m \"$(curl -s whatthecommit.com/index.txt)\"
+  yolo = !git add -A && git swag
+
+[url "https://github.com/"]
+  insteadOf = "gh:"
+
+[url "git@github.com:"]
+  pushInsteadOf = "gh:"
+  insteadOf = "git://github.com/"
+  insteadOf = "https://github.com/"
+
+[url "https://gist.github.com/"]
+  insteadOf = "gist:"
+
+[url "git@gist.github.com:"]
+  pushInsteadOf = "gist:"
+  pushInsteadOf = "git://gist.github.com/"
+
+# ------------------------------------------------------------------------------ }}}
+
+# Modeline {{{
+# vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker : }}}

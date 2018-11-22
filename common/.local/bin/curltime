@@ -1,0 +1,97 @@
+#!/usr/bin/env bash
+
+set -o nounset
+set -o errexit
+
+function _echo
+{
+    echo -e "$1"
+}
+
+function _echoB
+{
+    _echo "\033[1m$1\033[0m"
+}
+
+function _help
+{
+    _echo ""
+    _echoB "A command line tool to measure HTTP request time with cUrl."
+    _echo "Measure single HTTP request time or average time of multiple requests."
+    _echo ""
+    _echoB "Usage:"
+    _echo "\t./curltime.sh [url] [attempts]"
+    _echo ""
+    _echoB "Example:"
+    _echo "\t./curltime.sh http://www.amazon.com"
+    _echo "\t./curltime.sh http://www.amazon.com 10"
+    _echo ""
+}
+
+scale=3
+function _calc
+{
+    _echo "scale=$scale; $@" | bc -l | sed 's/^\./0./'
+}
+
+width=85
+function _divider
+{
+    divider=---------------------------------------
+    divider=" +"$divider$divider$divider$divider"+"
+    printf "%$width.${width}s+\n" "$divider"
+}
+
+if [[ $# -eq 0 ]]; then
+    _help
+    _echoB "Please pass the url: "
+    read url
+else
+    url="$1"
+fi
+
+attempts=1
+if [ $# -eq 2 ]; then
+    let attempts=$2
+fi
+
+readonly curl="/usr/bin/curl"
+readonly useragent="Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1"
+readonly formatheader=" | %-7s | %40s%31s |\n"
+readonly formatrow=" | %-7s | %7s | %14s | %8s | %10s | %11s | %6s |\n"
+
+count=1;
+total_connect=0
+total_start=0
+total_time=0
+result=""
+
+_echo ""
+_echoB " Url:\t$url"
+_echo ""
+
+_divider
+printf "$formatheader" "#" "Time (seconds)" ""
+_divider
+printf "$formatrow" "Attempt" "Connect" "Start transfer" "Redirect" "Namelookup" "Pretransfer" "Total"
+_divider
+
+while [ $count -le $attempts ]
+do
+    result=$($curl -H "User-Agent: $useragent" -H "Cache-Control: no-cache" -H "Pragma: no-cache" -o /dev/null -i -s -w %{time_connect}:%{time_starttransfer}:%{time_total}:%{time_namelookup}:%{time_appconnect}:%{time_pretransfer}:%{time_redirect} "$url")
+    var=$(echo $result | awk -F":" '{print $1, $2, $3, $4, $5, $6, $7}')
+    set -- $var
+
+    printf "$formatrow" $count"." ${1/,/.} ${2/,/.} ${7/,/.} ${4/,/.} ${6/,/.} ${3/,/.}
+
+    total_connect=$(_calc "${total_connect/,/.} + ${1/,/.}")
+    total_start=$(_calc "${total_start/,/.} + ${2/,/.}")
+    total_time=$(_calc "${total_time/,/.} + ${3/,/.}")
+
+    count=$((count+1))
+done
+
+_divider
+printf "$formatrow" "summary" "$(_calc $total_connect/$attempts)" "$(_calc $total_start/$attempts)" "-" "-" "-" "$(_calc $total_time/$attempts)"
+_divider
+_echo ""

@@ -1,0 +1,10 @@
+#compdef chruby
+#autoload
+
+rubies=($(chruby | tr -d " *") system)
+
+if [[ ${#words[@]} -eq 2 ]]; then
+  if [[ $rubies != "" ]]; then
+    _values "rubies" $rubies
+  fi
+fi

@@ -1,0 +1,9 @@
+#autoload
+
+(($#))        || { print-error "Argument required!";      return $? }
+[[ -d "$1" ]] || { print-error "Directory not found: $1"; return $? }
+
+path=("$1" $path)
+typeset -U path; export PATH
+
+print-success "Added directory to the beginning of the PATH: $1"

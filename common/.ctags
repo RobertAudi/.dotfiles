@@ -1,0 +1,80 @@
+# --tag-relative
+--recurse=yes
+
+--exclude=.git
+--exclude=.svn
+--exclude=.hg
+--exclude=vendor
+--exclude=Vendor
+--exclude=build
+--exclude=db
+--exclude=log
+--exclude=tmp
+--exclude=public
+--exclude=node_modules
+--exclude=bower_components
+--exclude=\*.cache.html
+--exclude=\*.nocache.js
+--exclude=\*.min.\*
+--exclude=\*.map
+--exclude=\*.swp
+--exclude=\*.bak
+--exclude=\*.cache
+--exclude=tags
+--exclude=\*.tar.\*
+
+--langmap=javascript:.js
+--regex-javascript=/([A-Za-z0-9._$]+)[ \t]*[:=][ \t]*[\(]function[ \t]*\(/\1/f,function,Functions/
+--regex-javascript=/^[ \t]*[\(]function[ \t]*([A-Za-z0-9._$]+)/\1/f,function,Functions/
+--regex-javascript=/([A-Za-z0-9._$]+)[ \t]*=[ \t]*\{/\1/o,object,Objects/
+--regex-javascript=/^[ \t]*([A-Za-z0-9._$]+)[ \t]*[:][ \t]*[^\{]/\1/p,property,Properties/
+--regex-javascript=/^[ \t]+(var|let|const)[ \t]*([A-Za-z0-9._$]+)[ \t]*=[ \t]*[\d"'\[]/\2/v,variable,Variables/
+# --regex-javascript=/\/\/[ \t]*(TODO)[ \t]*\:*(.*)/\1/i,TODO/
+# --regex-javascript=/\/\/[ \t]*(FIXME)[ \t]*\:*(.*)/\1/i,FIXME/
+
+# --regex-ruby=/(^|[:;])[ \t]*([A-Z][[:alnum:]_]+) *=/\2/c,class,Constants/
+# --regex-ruby=/(^|;)[ \t]*(has_many|belongs_to|has_one|has_and_belongs_to_many)\(? *:([[:alnum:]_]+)/\3/f,association,Active Record associations/
+# --regex-ruby=/(^|;)[ \t]*(named_)?scope\(? *:([[:alnum:]_]+)/\3/f,scope,ActiveRecord scopes/
+# --regex-ruby=/(^|;)[ \t]*(private|protected|public)(_class_method)?\(? def *(self.)?([[:alnum:]_]+)/\5/f,inline scoped method,Inline scoped methods/
+
+--langdef=scss
+--langmap=scss:.scss
+--regex-scss=/^[ \t]*@mixin ([A-Za-z0-9_-]+)/\1/m,mixin,Mixins/
+--regex-scss=/^[ \t]*\$([A-Za-z0-9_-]+)/\1/v,variable,Variables/
+--regex-scss=/^([A-Za-z0-9_-]*)*\.([A-Za-z0-9_-]+) *[,{]/\2/c,class,Classes/
+--regex-scss=/^[ \t&]+\.([A-Za-z0-9_-]+) *[,{]/\1/c,class,Classes/
+--regex-scss=/^(.*)*\#([A-Za-z0-9_-]+) *[,{]/\2/i,id,IDs/
+--regex-scss=/^[ \t&]*#([A-Za-z0-9_-]+)/\1/i,id,IDs/
+--regex-scss=/(^([A-Za-z0-9_-])*([A-Za-z0-9_-]+)) *[,|\{]/\1/t,tag,Tags/
+--regex-scss=/(^([^\/\/])*)[ \t]+([A-Za-z0-9_-]+)) *[,|\{]/\3/t,tag,Tags/
+--regex-scss=/(^(.*, *)([A-Za-z0-9_-]+)) *[,|\{]/\3/t,tag,Tags/
+--regex-scss=/(^[ \t]+([A-Za-z0-9_-]+)) *[,|\{]/\1/t,tag,Tags/
+--regex-scss=/^[ \t]*@media\s+([A-Za-z0-9_-]+)/\1/d,media,Media queries/
+# --regex-scss=/\/\/[ \t]*(TODO)[ \t]*\:*(.*)/\1/i,TODO/
+# --regex-scss=/\/\/[ \t]*(FIXME)[ \t]*\:*(.*)/\1/i,FIXME/
+
+--langmap=vim:+.vimrc
+--langmap=vim:+.gvimrc
+
+--langdef=objc
+--langmap=objc:.m..mm..h
+--regex-objc=/\@interface[[:space:]]+([[:alnum:]_]+)/\1/i,interface/
+--regex-objc=/\@implementation[[:space:]]+([[:alnum:]_]+)/\1/I,implementation/
+--regex-objc=/\@protocol[[:space:]]+([[:alnum:]_]+)/\1/P,protocol/
+--regex-objc=/\@property[[:space:]]+\([[:alnum:],[:space:]]+\)[[:space:]]+[[:alnum:]_]+[[:space:]]+\*?([[:alnum:]_]+)/\1/p,property/
+--regex-objc=/([-+])[[:space:]]*\([[:alpha:]_][^)]*\)[[:space:]]*([[:alpha:]_:][^;{]+).*/\1\2/M,method definition/
+--regex-objc=/^[^#@[:space:]][^=]*[[:space:]]([[:alpha:]_][[:alnum:]_]*)[[:space:]]*=/\1/c,constant/
+--regex-objc=/^[[:space:]]*typedef[[:space:]][^;]+[[:space:]]([[:alpha:]_][[:alnum:]]*)[[:space:]]*;/\1/t,typedef/
+--regex-objc=/^[[:space:]]*NS_ENUM\([[:alnum:]]+[[:space:]]*,[[:space:]]([[:alnum:]]+)\)/\1/e,enum/
+--regex-objc=/^#pragma[[:space:]]+mark[[:space:]]+-?[[:space:]]+([[:alnum:][:space:]]+)/\1/g,pragma/
+
+--regex-make=/^([^# \t]*):/\1/t,target/
+
+--langdef=swift
+--langmap=swift:.swift
+--regex-swift=/[[:<:]]class[[:>:]][[:space:]]+([[:alnum:]_]+)/\1/c,class/
+--regex-swift=/[[:<:]]enum[[:>:]][[:space:]]+([[:alnum:]_]+)/\1/e,enum/
+--regex-swift=/[[:<:]]func[[:>:]][[:space:]]+([[:alnum:]_]+)/\1/f,function/
+--regex-swift=/[[:<:]]protocol[[:>:]][[:space:]]+([[:alnum:]_]+)/\1/P,protocol/
+--regex-swift=/[[:<:]]struct[[:>:]][[:space:]]+([[:alnum:]_]+)/\1/s,struct/
+--regex-swift=/[[:<:]]typealias[[:>:]][[:space:]]+([[:alnum:]_]+)/\1/t,typealias/

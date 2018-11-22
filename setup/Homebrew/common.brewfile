@@ -1,0 +1,903 @@
+tap "homebrew/core"
+tap "homebrew/bundle"
+tap "homebrew/aliases"
+tap "homebrew/command-not-found"
+tap "homebrew/livecheck"
+
+# Colorize logfiles and command output
+#   https://korpus.juls.savba.sk/~garabik/software/grc.html
+brew "grc"
+
+# Command-line fuzzy finder written in Go
+#   https://github.com/junegunn/fzf
+brew "fzf"
+
+# Create and view interactive cheat sheets for *nix commands
+#   https://github.com/chrisallenlane/cheat
+brew "cheat"
+
+# Scalable distributed version control system
+#   https://mercurial-scm.org/
+brew "mercurial"
+
+# Version control system designed to be a better CVS
+#   https://subversion.apache.org/
+brew "subversion"
+
+# UNIX shell (command interpreter)
+#  https://www.zsh.org/
+brew "zsh", args: ["with-pcre", "with-unicode9"]
+
+# Additional completion definitions for zsh
+#   https://github.com/zsh-users/zsh-completions
+brew "zsh-completions"
+
+# Pager program similar to more
+#   http://www.greenwoodsoftware.com/less/index.html
+brew "less", args: ["with-pcre"]
+
+# Input filter for the pager less
+#   https://www-zeuthen.desy.de/~friebel/unix/lesspipe.html
+brew "lesspipe", args: ["with-syntax-highlighting"]
+
+# pgrep, pkill, and pfind for OpenBSD and Darwin (macOS)
+#   https://proctools.sourceforge.io/
+brew "proctools"
+
+# Show ps output as a tree
+#   http://www.thp.uni-duisburg.de/pstree/
+brew "pstree"
+
+# Collection of tools that nobody wrote when UNIX was young
+#   https://joeyh.name/code/moreutils/
+brew "moreutils", args: ["without-parallel"], link: true
+
+# Tools for file renaming
+#   https://www.nongnu.org/renameutils/
+brew "renameutils"
+
+# Highly capable, feature-rich programming language
+#   https://www.perl.org/
+#
+# ==> Caveats
+# By default non-brewed cpan modules are installed to the Cellar. If you wish
+# for your modules to persist across updates we recommend using `local::lib`.
+#
+# You can set that up like this:
+#   PERL_MM_OPT="INSTALL_BASE=$HOME/perl5" cpan local::lib
+#   echo 'eval "$(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib=$HOME/perl5)"' >> ~/.zshrc
+brew "perl"
+
+# Archival front-end
+#   https://savannah.nongnu.org/projects/atool/
+brew "atool"
+
+# Command-line unarchiving tools supporting multiple formats
+#   https://unarchiver.c3.cx/commandline
+brew "unar"
+
+# Extraction utility for .zip compressed archives
+# https://infozip.sourceforge.io/UnZip.html
+#
+# ==> Caveats
+# unzip is keg-only, which means it was not symlinked into /usr/local,
+# because macOS already provides this software and installing another version in
+# parallel can cause all kinds of trouble.
+#
+# If you need to have unzip first in your PATH run:
+#   echo 'export PATH="/usr/local/opt/unzip/bin:$PATH"' >> ~/.zshrc
+brew "unzip"
+
+# General-purpose data compression with high compression ratio
+#   https://tukaani.org/xz/
+brew "xz"
+
+# POSIX-compliant descendant of NetBSD's ash (the Almquist SHell)
+#   http://gondor.apana.org.au/~herbert/dash/
+brew "dash"
+
+# Implementation of the AT&T Plan 9 shell
+#   http://doc.cat-v.org/plan_9/4th_edition/papers/rc
+brew "rc"
+
+# Library for command-line editing
+#   https://tiswww.case.edu/php/chet/readline/rltop.html
+brew "readline"
+
+# Readline wrapper: adds readline support to tools that lack it
+#   https://github.com/hanslub42/rlwrap
+brew "rlwrap"
+
+# SSL/TLS cryptography library
+#   https://openssl.org/
+#
+# ==> Caveats
+# A CA file has been bootstrapped using certificates from the SystemRoots
+# keychain. To add additional certificates (e.g. the certificates added in
+# the System keychain), place .pem files in
+#   /usr/local/etc/openssl/certs
+#
+# and run
+#   /usr/local/opt/openssl/bin/c_rehash
+#
+# openssl is keg-only, which means it was not symlinked into /usr/local,
+# because Apple has deprecated use of OpenSSL in favor of its own TLS and crypto libraries.
+#
+# If you need to have openssl first in your PATH run:
+#   echo 'export PATH="/usr/local/opt/openssl/bin:$PATH"' >> ~/.zshrc
+#
+# For compilers to find openssl you may need to set:
+#   export LDFLAGS="-L/usr/local/opt/openssl/lib"
+#   export CPPFLAGS="-I/usr/local/opt/openssl/include"
+#
+# For pkg-config to find openssl you may need to set:
+#   export PKG_CONFIG_PATH="/usr/local/opt/openssl/lib/pkgconfig"
+brew "openssl"
+
+# Version of the SSL/TLS protocol forked from OpenSSL
+#   https://www.libressl.org/
+#
+# ==> Caveats
+# A CA file has been bootstrapped using certificates from the SystemRoots
+# keychain. To add additional certificates (e.g. the certificates added in
+# the System keychain), place .pem files in
+#   /usr/local/etc/libressl/certs
+#
+# and run
+#   /usr/local/opt/libressl/bin/openssl certhash /usr/local/etc/libressl/certs
+#
+# libressl is keg-only, which means it was not symlinked into /usr/local,
+# because LibreSSL is not linked to prevent conflict with the system OpenSSL.
+#
+# If you need to have libressl first in your PATH run:
+#   echo 'export PATH="/usr/local/opt/libressl/bin:$PATH"' >> ~/.zshrc
+#
+# For compilers to find libressl you may need to set:
+#   export LDFLAGS="-L/usr/local/opt/libressl/lib"
+#   export CPPFLAGS="-I/usr/local/opt/libressl/include"
+#
+# For pkg-config to find libressl you may need to set:
+#   export PKG_CONFIG_PATH="/usr/local/opt/libressl/lib/pkgconfig"
+brew "libressl"
+
+# OpenBSD freely-licensed SSH connectivity tools
+#   https://www.openssh.com/
+brew "openssh"
+
+# Tail multiple files in one terminal simultaneously
+#   https://vanheusden.com/multitail/
+brew "multitail"
+
+# Executes a program periodically, showing output fullscreen
+#   https://gitlab.com/procps-ng/procps
+brew "watch"
+
+# Improved colored diff
+#   https://github.com/jeffkaufman/icdiff
+brew "icdiff"
+
+# Identify or delete duplicate files
+#   https://github.com/adrianlopezroche/fdupes
+brew "fdupes"
+
+# User-friendly front-end to ssh-agent(1)
+#   https://www.funtoo.org/Keychain
+brew "keychain"
+
+# Multiple Repository management tool
+#   https://myrepos.branchable.com/
+brew "mr"
+
+# Tools to bootstrap CAs, certificate requests, and signed certificates
+#   https://github.com/square/certstrap
+brew "certstrap"
+
+# Utility to examine and validate certificates in a variety of formats
+#   https://github.com/square/certigo
+brew "certigo"
+
+# Cross platform file encryption utility using blowfish
+#   https://bcrypt.sourceforge.io/
+brew "bcrypt"
+
+# Encrypt and decrypt files using memory-hard password function
+#   https://www.tarsnap.com/scrypt.html
+brew "scrypt"
+
+# Arbitrary precision calculator
+#   http://www.isthe.com/chongo/tech/comp/calc/
+brew "calc"
+
+# Search tool like grep, but optimized for programmers
+#   https://beyondgrep.com/
+brew "ack"
+
+# Search tool like grep and The Silver Searcher
+#   https://github.com/BurntSushi/ripgrep
+brew "ripgrep"
+
+# Multi-platform code-search similar to ack and ag
+#   https://github.com/monochromegane/the_platinum_searcher
+brew "the_platinum_searcher"
+
+# Code-search similar to ack
+#   https://github.com/ggreer/the_silver_searcher
+brew "the_silver_searcher"
+
+# Simple, fast and user-friendly alternative to find
+#   https://github.com/sharkdp/fd
+brew "fd"
+
+# Multifunction timer tool
+#   https://launchpad.net/utimer
+brew "utimer"
+
+# Limit a process's absolute execution time
+#   https://devel.ringlet.net/sysutils/timelimit/
+brew "timelimit"
+
+# Banner-like program prints strings as ASCII art
+#   http://www.figlet.org/
+brew "figlet"
+
+# Configurable talking characters in ASCII art
+#   https://github.com/tnalpgge/rank-amateur-cowsay
+brew "cowsay"
+
+# Infamous electronic fortune-cookie generator
+#   https://www.ibiblio.org/pub/linux/games/amusements/fortune/!INDEX.html
+brew "fortune"
+
+# Color-based alternative to figlet (uses libcaca)
+#   http://caca.zoy.org/wiki/toilet
+brew "toilet"
+
+# Rainbows and unicorns in your console!
+#   https://github.com/busyloop/lolcat
+brew "lolcat"
+
+# Sparklines for the shell
+#   https://zachholman.com/spark/
+brew "spark"
+
+# <hr />, for your terminal window
+#   https://github.com/LuRsT/hr
+brew "hr"
+
+# Convert source code to formatted text with syntax highlighting
+#   http://www.andre-simon.de/doku/highlight/en/highlight.php
+brew "highlight"
+
+# Swiss-army knife of markup format conversion
+#   https://pandoc.org/
+brew "pandoc"
+
+# Show markdown documents on text terminals
+#   https://github.com/lunaryorn/mdcat
+brew "mdcat"
+
+# Instant coding answers via the command-line
+#   https://github.com/gleitz/howdoi
+brew "howdoi"
+
+# Suite of tools for inspecting disk usage
+#   https://duc.zevv.nl/
+brew "duc"
+
+# Package manager for C programming
+#   https://github.com/clibs/clib
+brew "clib"
+
+# Graphical system information display for macOS
+#   https://obihann.github.io/archey-osx/
+brew "archey"
+
+# Fast, highly customisable system info script
+#   https://github.com/dylanaraps/neofetch
+brew "neofetch"
+
+# Insanely fast image printing in your terminal
+#   https://github.com/posva/catimg
+brew "catimg"
+
+# Add a public key to a remote machine's authorized_keys file
+#   https://www.openssh.com/
+brew "ssh-copy-id"
+
+# Like cat but displays content with syntax highlighting
+#   https://github.com/jingweno/ccat
+brew "ccat"
+
+# Clone of cat(1) with syntax highlighting and Git integration
+#   https://github.com/sharkdp/bat
+brew "bat"
+
+# Foreman in Go for Procfile-based application management
+#   https://github.com/ddollar/forego
+brew "forego"
+
+# Light UNIX download accelerator
+#   https://github.com/eribertomota/axel
+brew "axel"
+
+# Download with resuming and segmented downloading
+#   https://aria2.github.io/
+brew "aria2"
+
+# Sophisticated file transfer program
+#   https://lftp.yar.ru/
+brew "lftp"
+
+# Text-based web browser
+#   https://invisible-island.net/lynx/
+brew "lynx"
+
+# Tool for browsing source code
+#   https://cscope.sourceforge.io/
+brew "cscope"
+
+# Cross-platform make
+#   https://www.cmake.org/
+brew "cmake"
+
+# Fast Lexical Analyzer, generates Scanners (tokenizers)
+#   https://github.com/westes/flex
+#
+# If you need to have flex first in your PATH run:
+#   echo 'export PATH="/usr/local/opt/flex/bin:$PATH"' >> ~/.zshrc
+#
+# For compilers to find flex you may need to set:
+#   export LDFLAGS="-L/usr/local/opt/flex/lib"
+#   export CPPFLAGS="-I/usr/local/opt/flex/include"
+brew "flex"
+
+# Handy way to save and run project-specific commands
+#   https://github.com/casey/just
+brew "just"
+
+# Execute commands when watched files change
+#   https://github.com/watchexec/watchexec
+brew "watchexec"
+
+# Watch files and take action when they change
+#   https://github.com/facebook/watchman
+brew "watchman"
+
+# Display graphs and colors of file system space/usage
+#   https://projects.gw-computing.net/projects/dfc
+brew "dfc"
+
+# Process YAML documents from the CLI
+#   https://github.com/mikefarah/yq
+brew "yq"
+
+# Lightweight and flexible command-line JSON processor
+#   https://stedolan.github.io/jq/
+brew "jq"
+
+# Json incremental digger
+#   https://github.com/simeji/jid
+brew "jid"
+
+# Command-line JSON pretty-printer
+#   https://jmhodges.github.io/jsonpp/
+brew "jsonpp"
+
+# JSON output from a shell
+#   https://github.com/jpmens/jo
+brew "jo"
+
+# Make JSON greppable
+#   https://github.com/tomnomnom/gron
+brew "gron"
+
+# Programs for dealing with numbers from the command-line
+#   https://suso.suso.org/programs/num-utils/
+brew "num-utils"
+
+# Graph visualization software from AT&T and Bell Labs
+#   https://www.graphviz.org/
+brew "graphviz"
+
+# Convert text between DOS, UNIX, and Mac formats
+#   https://waterlan.home.xs4all.nl/dos2unix.html
+brew "dos2unix"
+
+# Powerful paging program
+#   https://www.jedsoft.org/most/
+brew "most"
+
+# CLI tool for quick access to files and directories
+#   https://github.com/clvv/fasd
+brew "fasd"
+
+# CLI program that accepts piped input and presents files for selection
+#   https://facebook.github.io/PathPicker/
+brew "fpp"
+
+# UNIX filter which outputs the filepaths found in stdin
+#   https://github.com/edi9999/path-extractor
+brew "path-extractor"
+
+# NCurses Disk Usage
+#   https://dev.yorhel.nl/ncdu
+brew "ncdu"
+
+# Display directories as trees (with optional color/HTML output)
+#   http://mama.indstate.edu/users/ice/tree/
+brew "tree"
+
+# Official Amazon AWS command-line interface
+#   https://aws.amazon.com/cli/
+brew "awscli"
+
+# Fast, simple fuzzy text selector with an advanced scoring algorithm
+#   https://github.com/jhawthorn/fzy
+brew "fzy"
+
+# Load/unload environment variables based on $PWD
+#   https://direnv.net/
+brew "direnv"
+
+# Spell checker with better logic than ispell
+#   http://aspell.net/
+brew "aspell", args: ["without-lang-de", "without-lang-es"]
+
+# Command-line outline and bitmap font editor/converter
+#   https://fontforge.github.io
+brew "fontforge", args: ["with-extra-tools", "with-giflib"]
+
+# Fast CSV toolkit written in Rust
+#   https://github.com/BurntSushi/xsv
+brew "xsv"
+
+# Program that allows you to count code, quickly
+#   https://github.com/Aaronepower/tokei
+brew "tokei"
+
+# Statistics utility to count lines of code
+#   https://github.com/AlDanial/cloc/
+brew "cloc"
+
+# Local webserver for developers
+#   https://github.com/cortesi/devd
+brew "devd"
+
+# Modern replacement for 'ls'
+#   https://the.exa.website
+brew "exa"
+
+# Bash and zsh history suggest box
+#   https://github.com/dvorka/hstr
+brew "hh"
+
+# Check your project for common sources of contributor friction
+#   https://github.com/pengwynn/flint
+brew "flint-checker"
+
+# Secure your credentials in environment variables
+#   https://github.com/sorah/envchain
+brew "envchain"
+
+# Display user-friendly message boxes from shell scripts
+#   https://invisible-island.net/dialog/
+brew "dialog"
+
+# Free, fast, friendly file browser
+#   https://github.com/jarun/nnn
+brew "nnn"
+
+# Copy terminal output to clipboard
+#   https://github.com/mptre/yank
+brew "yank"
+
+# Utility to replace problematic characters in filenames
+#   https://detox.sourceforge.io/
+brew "detox"
+
+# Extremely fast tool to remove dupes and other lint from your filesystem
+#   https://github.com/sahib/rmlint
+brew "rmlint", args: ["with-json-glib", "with-libelf"]
+
+# Non-validating SQL parser
+#   https://github.com/andialbrecht/sqlparse
+brew "sqlparse"
+
+# Slice and dice log files on the command-line
+#   https://github.com/rcoh/angle-grinder
+brew "angle-grinder"
+
+# CLI for Postgres with auto-completion and syntax highlighting
+#   https://pgcli.com/
+brew "pgcli"
+
+# Web-based PostgreSQL database browser
+#   https://sosedoff.github.io/pgweb/
+brew "pgweb"
+
+# Serve a RESTful API from any PostgreSQL database
+#   https://github.com/prest/prest
+brew "prest"
+
+# Web and API based SMTP testing tool
+#   https://github.com/mailhog/MailHog
+brew "mailhog"
+
+# Download YouTube videos from the command-line
+#   https://rg3.github.io/youtube-dl/
+brew "youtube-dl"
+
+# Play, record, convert, and stream audio and video
+#   https://ffmpeg.org/
+brew "ffmpeg"
+
+# Fast, simple and clean video downloader
+#   https://github.com/iawia002/annie
+brew "annie"
+
+# User interface to the TELNET protocol (built from macOS Sierra sources)
+#   https://opensource.apple.com/
+brew "telnet"
+
+# Utility that provides fast incremental file transfer
+#   https://rsync.samba.org/
+brew "rsync"
+
+# Utility for managing network connections
+#   https://netcat.sourceforge.io/
+brew "netcat"
+
+# Interface bandwidth monitor
+#   https://github.com/tgraf/bmon
+brew "bmon"
+
+# 'traceroute' and 'ping' in a single tool
+#   https://www.bitwizard.nl/mtr/
+brew "mtr"
+
+# Port scanning utility for large networks
+#   https://nmap.org/
+brew "nmap"
+
+# Wrapper to colorize and simplify ping's output
+#   https://denilsonsa.github.io/prettyping/
+brew "prettyping"
+
+# Scriptable ping program for checking if multiple hosts are up
+#   https://fping.org/
+brew "fping"
+
+# User-friendly cURL replacement (command-line HTTP client)
+#   https://httpie.org/
+brew "httpie"
+
+# B2 Cloud Storage Command-Line Tools
+#   https://github.com/Backblaze/B2_Command_Line_Tool
+brew "b2-tools"
+
+# HTTP load testing tool and library
+#   https://github.com/tsenart/vegeta
+brew "vegeta"
+
+# Curses-based tool for viewing and analyzing log files
+#   https://github.com/tstack/lnav
+brew "lnav", args: ["with-curl"]
+
+# Copy/paste anything over the network
+#   https://github.com/jedisct1/piknik
+brew "piknik"
+
+# Open source programming language to build simple/reliable/efficient software
+#   https://golang.org
+brew "go"
+
+# Go dependency management tool
+#   https://github.com/golang/dep
+brew "dep"
+
+# Powerful, lightweight programming language
+#   https://www.lua.org/
+brew "lua"
+
+# Just-In-Time Compiler (JIT) for the Lua programming language
+#   https://luajit.org/luajit.html
+brew "luajit"
+
+# Interpreted, interactive, object-oriented programming language
+#   https://www.python.org/
+brew "python"
+
+# Platform built on V8 to build network applications
+#   https://nodejs.org/
+brew "node"
+
+# JavaScript package manager
+#   https://yarnpkg.com/
+brew "yarn", args: %w[without-node]
+
+# A command-line benchmarking tool
+#   https://github.com/sharkdp/hyperfine
+brew "hyperfine"
+
+# Simple tool to make locally trusted development certificates
+#   https://github.com/FiloSottile/mkcert
+brew "mkcert"
+
+# Libraries for security-enabled client and server applications
+#   https://developer.mozilla.org/docs/NSS
+#
+# ==> Caveats
+# nss is keg-only, which means it was not symlinked into /usr/local,
+# because Firefox can pick this up instead of the built-in library, resulting in
+# random crashes without meaningful explanation.
+#
+# Please see https://bugzilla.mozilla.org/show_bug.cgi?id=1142646 for details.
+#
+# If you need to have nss first in your PATH run:
+#   echo 'export PATH="/usr/local/opt/nss/bin:$PATH"' >> ~/.zshrc
+#
+# For compilers to find nss you may need to set:
+#   export LDFLAGS="-L/usr/local/opt/nss/lib"
+#   export CPPFLAGS="-I/usr/local/opt/nss/include"
+#
+# For pkg-config to find nss you may need to set:
+#   export PKG_CONFIG_PATH="/usr/local/opt/nss/lib/pkgconfig"
+brew "nss"
+
+def work_env?
+  `hostname`.to_s.match?(/\A[a-z]{3}-octo/i)
+end
+
+if work_env?
+  # Tools and libraries to manipulate images in many formats
+  #   https://www.imagemagick.org/
+  brew "imagemagick@6", link: true
+end
+
+# Tools and libraries to manipulate images in many formats
+#   https://www.imagemagick.org/
+brew "imagemagick", link: !work_env?
+
+# Object-relational database system
+#   https://www.postgresql.org/
+brew "postgresql"
+
+# Persistent key-value database, with built-in net interface
+#   https://redis.io/
+brew "redis"
+
+# Command-line interface for SQLite
+#   https://sqlite.org/
+brew "sqlite"
+
+# Open source relational database management system
+#   https://dev.mysql.com/doc/refman/8.0/en/
+brew "mysql"
+
+# ------------------------------------------------------------------------------
+
+tap "heroku/brew"
+
+# Everything you need to get started with Heroku
+#   https://cli.heroku.com
+#
+#
+# ==> Caveats
+# To use the Heroku CLI's autocomplete, run:
+#   $ heroku autocomplete --refresh-cache
+brew "heroku"
+
+# ------------------------------------------------------------------------------
+
+tap "chrokh/tap"
+
+# A command line tool to install base16 templates and set themes globally.
+#   https://github.com/AuditeMarlow/base16-manager
+brew "base16-manager"
+
+# ------------------------------------------------------------------------------
+
+tap "universal-ctags/universal-ctags"
+
+# Maintained ctags implementation
+#   https://github.com/universal-ctags/ctags
+brew "universal-ctags/universal-ctags/universal-ctags", args: %w[with-jansson with-libyaml HEAD]
+
+# ------------------------------------------------------------------------------
+
+tap "timothyye/tap"
+
+# A simple and powerful SSH Keys Manager
+#   https://github.com/TimothyYe/skm
+brew "timothyye/tap/skm"
+
+# A command line domain query tool
+#   https://github.com/TimothyYe/namebeta
+brew "timothyye/tap/namebeta"
+
+# ------------------------------------------------------------------------------
+
+tap "aybabtme/tap"
+
+# Logs for humans to read.
+#   https://github.com/aybabtme/humanlog
+brew "aybabtme/tap/humanlog"
+
+# ------------------------------------------------------------------------------
+
+tap "dtan4/tools"
+
+# List & Describe GitHub Releases
+#   https://github.com/dtan4/ghrls
+brew "dtan4/tools/ghrls"
+
+# ------------------------------------------------------------------------------
+
+tap "knqyf263/pet"
+
+# Simple command-line snippet manager
+#   https://github.com/knqyf263/pet
+brew "knqyf263/pet/pet"
+
+# ------------------------------------------------------------------------------
+
+tap "Code-Hex/pget"
+
+# The fastest file download client
+#   https://github.com/Code-Hex/pget
+brew "Code-Hex/pget/pget"
+
+# ------------------------------------------------------------------------------
+
+tap "cristianoliveira/tap"
+
+# Ergo Proxy - The local multiple services development made easy.
+#   https://github.com/cristianoliveira/ergo
+brew "ergo"
+
+# ------------------------------------------------------------------------------
+
+tap "keith/formulae"
+
+# A CLI for interacting with CircleCI
+#   https://github.com/keith/circle-cli
+brew "circle-cli"
+
+# ------------------------------------------------------------------------------
+
+tap "bfontaine/utils"
+
+# Interactive wc(1)
+#   https://github.com/bfontaine/iwc
+brew "bfontaine/utils/iwc"
+
+# Print the uncompressed size of a GZip file
+#   https://bfontaine.github.io/gzsize/
+brew "bfontaine/utils/gzsize"
+
+# Sorted grep
+#   https://sgrep.sourceforge.io/
+brew "bfontaine/utils/sgrep"
+
+# ------------------------------------------------------------------------------
+
+tap "soveran/tools"
+
+# Read from stdin and prepend a string to each line while preserving identation.
+#   https://github.com/soveran/prep
+brew "prep"
+
+# Read from stdin and remove a prefix from each line
+#   https://github.com/soveran/trim
+brew "trim"
+
+# Change directory entries with your text editor
+#   https://github.com/soveran/chen
+brew "chen"
+
+# Map lines from stdin to commands
+#   https://github.com/soveran/map
+brew "map"
+
+# ------------------------------------------------------------------------------
+
+tap "mingrammer/flog", "https://github.com/mingrammer/flog.git"
+
+# A fake log generator for common log formats
+#  https://github.com/mingrammer/flog
+brew "flog"
+
+# ------------------------------------------------------------------------------
+
+tap "httpu/httpu"
+
+# The terminal-first http client
+#   https://github.com/hazbo/httpu
+brew "httpu/httpu/httpu"
+
+# ------------------------------------------------------------------------------
+
+tap "octavore/tools"
+
+# Diff tool with browser-based GUI
+#   https://github.com/octavore/delta
+brew "octavore/tools/delta"
+
+# ------------------------------------------------------------------------------
+
+tap "xwjdsh/tap"
+
+# Manage your ssh alias configs easily
+#   https://github.com/xwjdsh/manssh
+brew "manssh"
+
+# ------------------------------------------------------------------------------
+
+tap "tavianator/tap"
+
+# Breadth-first version of find.
+#   https://github.com/tavianator/bfs
+brew "bfs"
+
+# ------------------------------------------------------------------------------
+
+tap "rs/tap"
+
+# iTerm2 expvar/JSON monitoring tool
+#   https://github.com/rs/jplot
+brew "rs/tap/jplot"
+
+# JSON Aggregation CLI
+#   https://github.com/rs/jaggr
+brew "rs/tap/jaggr"
+
+# DNS resolution tracing tool
+#   https://github.com/rs/dnstrace
+brew "rs/tap/dnstrace"
+
+# The power of curl, the ease of use of httpie.
+#   https://github.com/rs/curlie
+brew "rs/tap/curlie"
+
+# ------------------------------------------------------------------------------
+
+tap "moul/moul"
+
+# retry: repeat shell commands
+#   https://github.com/moul/retry
+brew "retry"
+
+# number-to-words: convert number into words
+#   https://github.com/moul/number-to-words
+brew "number-to-words"
+
+# Draw a beautiful christmas tree in ascii
+#   https://github.com/moul/sapin
+brew "sapin", args: ["HEAD"]
+
+# ------------------------------------------------------------------------------
+
+tap "RobertAudi/formulae", "https://github.com/RobertAudi/homebrew-formulae.git"
+
+# list files, recursively
+#   https://github.com/chneukirchen/lr
+brew "RobertAudi/formulae/lr", args: ["HEAD"]
+
+# simple xargs and apply replacement
+#   https://github.com/chneukirchen/xe
+brew "RobertAudi/formulae/xe", args: ["HEAD"]
+
+# Angular commits minus scope and stuff.
+#   https://github.com/RobertAudi/cnsc
+brew "RobertAudi/formulae/cnsc", args: ["HEAD"]
+
+# Get an executable's path from a pid
+#   https://github.com/jb55/pidpath
+brew "RobertAudi/formulae/pidpath", args: ["HEAD"]
+
+# Check directory for licenses and list what license(s) a file is under
+#   https://github.com/boyter/lc
+brew "RobertAudi/formulae/lc"
+
+# Modeline {{{
+# vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker : }}}

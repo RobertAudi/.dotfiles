@@ -1,0 +1,13 @@
+#!/usr/bin/env zsh
+
+# Explanation:
+#
+#   \033[2J         Erase Screen (ANSI/VT100)
+#   \033[3J         Erase Screen (Terminal.app)
+#   \033[1;1H       Move cursor to the home position (same as clear)
+#
+# Resources:
+#
+# http://www.termsys.demon.co.uk/vtansi.htm
+# http://wiki.bash-hackers.org/scripting/terminalcodes
+printf '\033[2J\033[3J\033[1;1H'

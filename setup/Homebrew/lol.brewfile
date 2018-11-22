@@ -1,0 +1,19 @@
+# Animated pipes terminal screensaver
+#   https://github.com/pipeseroni/pipes.sh
+brew "pipes-sh"
+
+# Renders an animated, color, ANSI-text loop of the Poptart Cat
+#   https://github.com/klange/nyancat
+brew "nyancat"
+
+# Console Matrix
+#   https://www.asty.org/cmatrix/
+brew "cmatrix"
+
+# Prints a steam locomotive if you type sl instead of ls
+#   https://github.com/mtoyoda/sl
+brew "sl"
+
+# ASCII-art displaying typo-corrector for commands
+#   http://r-wos.org/hacks/gti
+brew "gti"

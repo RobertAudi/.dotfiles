@@ -1,0 +1,17 @@
+#autoload
+
+# Set count=0
+integer -l count=0
+
+# loop and continuously check internet connection, at a gap of 60s (1 min)
+while true; do
+  count+=1
+  print "\nCount=$count ($(date +%r)). Checking internet connectivity..."
+  sleep 2
+  if ping -c 1 google.com; then
+    alert "Internet Available"
+    break
+  fi
+
+  sleep 60
+done

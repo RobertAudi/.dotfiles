@@ -1,0 +1,34 @@
+#!/bin/sh
+#
+# About
+# -----
+# Repeat the command until it succeeds - always run at least once.
+#
+#
+# License
+# -------
+#
+# Copyright (c) 2013 by Steve Kemp.  All rights reserved.
+#
+# This script is free software; you can redistribute it and/or modify it under
+# the same terms as Perl itself.
+#
+# The LICENSE file contains the full text of the license.
+#
+#
+
+
+#
+#  Run the first time.
+#
+"$@"
+
+
+#
+#  If the status code was not zero then repeat.
+#
+while [ $? -ne 0 ]; do
+    "$@"
+done
+
+

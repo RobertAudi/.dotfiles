@@ -1,0 +1,32 @@
+#autoload
+
+case "$1" in
+  cleanup)
+    (builtin cd "$(brew --repo)" &>/dev/null && git prune && git gc)
+    command brew cleanup
+    command brew prune
+    rm -rf "$(brew --cache)"
+    ;;
+  bump)
+    command brew update
+    command brew upgrade
+    brew cleanup
+    ;;
+  relink)
+    command brew unlink "$@"
+    command brew link "$@"
+    ;;
+  bundle-all)
+    local f
+    for f in $DOT_DIR/setup/Homebrew/*.brewfile(:A); do
+      builtin print -P -- "%F{032}==>%f brew bundle file: %B${f:t}%b"
+      command brew bundle install --file="$f"
+    done
+    ;;
+  show-env)
+    show-brew-env "$@"
+    ;;
+  *)
+    command brew "$@"
+    ;;
+esac

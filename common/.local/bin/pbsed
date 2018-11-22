@@ -1,0 +1,5 @@
+#! /bin/bash
+# :: sed in your clipboard
+# Usage:
+#   pbsed 's/foo/bar/g'
+pbpaste | sed $1 | pbcopy

@@ -1,0 +1,13 @@
+---
+gem: --document=yri
+install: --document=yri
+update: --document=yri
+search: --remote
+list: --local
+:update_sources: true
+:bulk_threshold: 3000
+:benchmark: false
+:backtrace: false
+:verbose: true
+:sources:
+- https://rubygems.org

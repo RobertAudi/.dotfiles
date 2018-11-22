@@ -1,0 +1,1 @@
+./git-escape-magic.plugin.zsh

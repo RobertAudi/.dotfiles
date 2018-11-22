@@ -1,0 +1,70 @@
+#autoload
+
+[[ $(jack status) == "RUNNING" ]] || { jack start || return $? }
+
+mocp --info &>/dev/null || mocp --server &>/dev/null
+
+case "$1" in
+  server-status)
+    if pgrep -iq mocp; then
+      print "RUNNING"
+    else
+      print "STOPPED"
+    fi
+    ;;
+  playback-state)
+    if [[ "$(moc server-status)" == "RUNNING" ]]; then
+      mocp --info | grep "State: " | cut -d' ' -f2 |  tr '[[:lower:]]' '[[:upper:]]'
+    else
+      print-error "MOC server is not running"
+      return 1
+    fi
+    ;;
+  info)
+    state="$(moc playback-state)" || return $?
+    if [[ "$state" == "STOP" ]]; then
+      print "NOT PLAYING..." ; return 0
+    fi
+    while IFS=: read -r field value; do
+      case $field in
+        Artist)      artist=$value ;;
+        Album)       album=$value ;;
+        SongTitle)   song_title=$value ;;
+        TotalTime)   total_time=$value ;;
+        CurrentTime) current_time=$value ;;
+      esac
+    done <<< "$(mocp --info)"
+    printf "${fg_bold[default]}%-10s${reset_color} %s\n" "Artist:" "$(trim "${artist:-???}")"
+    printf "${fg_bold[default]}%-10s${reset_color} %s\n" "Song:"   "$(trim "${song_title:-???}")"
+    printf "${fg_bold[default]}%-10s${reset_color} %s\n" "Album:"  "$(trim "${album:-???}")"
+    printf "${fg_bold[default]}%-10s${reset_color} %s\n" "Time:"   "$(trim "${current_time:-???}") / $(trim "${total_time:-???}")"
+    ;;
+  play)
+    state="$(moc playback-state)" || return $?
+    case "$state" in
+      PLAY)  print-info "Already playing" ; print ; moc info ;;
+      PAUSE) mocp --unpause && moc info ;;
+      STOP)  mocp --play    && moc info ;;
+      *)     moc info ; return 1 ;;
+    esac
+    ;;
+  pause)         mocp --pause ;;
+  stop)          mocp --stop ;;
+  toggle)        mocp --toggle-pause && moc info ;;
+  next)          mocp --next && moc info ;;
+  prev|previous) mocp --previous && moc info ;;
+  open)          mocp ;;
+  start)
+    [[ "$(jack status)" == "RUNNING" ]] || { jack start || return $? }
+    [[ "$(moc server-status)" == "RUNNING" ]] || { mocp --server &>/dev/null || return $? }
+    return 0
+    ;;
+  quit|exit)     mocp --exit ;;
+  help)
+    print "usage: jack status|playback-state|info|play|pause|stop|toggle|next|prev|previous|help|quit|exit" >&2
+    return 127
+    ;;
+  *)
+    mocp "$@"
+    ;;
+esac

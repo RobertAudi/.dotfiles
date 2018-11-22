@@ -1,0 +1,7 @@
+#autoload
+
+if (($# > 1)); then
+  sudo find / $@
+else
+  sudo find / -iname "*$1*"
+fi

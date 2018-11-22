@@ -1,0 +1,32 @@
+{
+  /*
+   * |         Keybindings           |
+   * | Shortcut | Code | Description |
+   * | -------- | ---- | ----------- |
+   * | a        | a    | -           |
+   * | ⌃ a      | ^a   | Control-a   |
+   * | ⌥ a      | ~a   | Option-a    |
+   * | ⇧ a      | A    | Shift-a     |
+   * | ⌘ a      | @a   | Command-a   |
+   */
+
+  /*
+   * Key Binding Selectors:
+   *   https://manual.mailmate-app.com/key_binding_selectors
+   */
+
+  // Sending Message
+  "@\U000A" = "send:"; // Command+Return
+  "@\U000D" = "send:"; // Command+Enter
+
+  "^z" = "archive:";
+  "^d" = "deleteMessage:";
+  "@\U007F" = "deleteMessage:"; // Command+Backspace
+
+  "^r" = "toggleReadState:"; // Mark as Read/Unread
+
+  "~"  = ( "goToMailbox:", "INBOX" );
+  "@!" = ( "goToMailbox:", "INBOX" ); // Command+Shift+1
+}
+
+// vim:set ft= syntax=c:

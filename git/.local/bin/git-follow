@@ -1,0 +1,11 @@
+#!/usr/bin/env zsh
+
+__git_folow() {
+  local remote
+  for remote in $@; do
+    git-add-remote "$remote" &&
+      { git remote set-url --push "$remote" no-pushing ; git fetch "$remote" }
+  done
+}
+
+__git_folow "$@"

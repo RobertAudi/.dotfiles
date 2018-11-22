@@ -1,0 +1,39 @@
+#autoload
+
+# Lifted from https://github.com/lukaszkorecki/DotFiles/blob/master/bins/faces
+
+faces=(
+  'ಠ_ಠ'
+  'ಠ_ರೃ'
+  '﴾͡๏̯͡๏﴿'
+  '๏_๏'
+  'ಠ▃ಠ'
+  '(•‿•)'
+  'Ծ_Ծ'
+  '¯\(°_o)/¯'
+  '(✌ﾟ∀ﾟ)☞'
+  '╚(•⌂•)╝'
+  't(-_-t)t'
+  '(ツ)_/¯'
+  '¯\_(ツ)_/¯'
+  '◔_◔'
+  '◎⃝ _◎⃝'
+  ';ლ(ಠ_ಠლ)'
+  '༼ つ ◕_◕ ༽つ'
+  '(╯°□°）╯︵ ┻━┻'
+  '┻━┻ ︵ \(°□°)/ ︵ ┻━┻'
+  'ᶘ ᵒᴥᵒᶅ'
+)
+
+if [[ -z $1 ]]; then
+  echo 'Usage: faces [NUM]'
+  i=1
+  for f in ${faces[@]}
+  do
+    echo $i $f
+    i=`expr $i + 1`
+  done
+else
+  echo -n ${faces[$1]} | pbcopy
+  echo "Copied face to clipboard: ${faces[$1]}"
+fi

@@ -1,0 +1,7 @@
+#autoload
+
+(($#)) || { print-error "Argument required!"; return $? }
+
+path=("${(@)path:#$1}")
+
+print-success "Removed directory from the PATH: $1"

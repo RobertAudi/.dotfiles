@@ -1,0 +1,23 @@
+#!/usr/bin/env zsh
+
+[[ "$(uname)" == "Darwin" ]] || { echo "This script only works on macOS" >&2 ; exit 1 }
+
+cmd="$1"
+widget_id="$2"
+widgets_dir="$XDG_CONFIG_HOME/uebersicht/widgets"
+script_string='tell application "Übersicht" to set hidden of widget id'
+
+if [[ -f "${widgets_dir}/${widget_id}.coffee" ]]; then
+  widget_id="${widget_id}-coffee"
+elif [[ -f "${widgets_dir}/${widget_id}.js" ]]; then
+  widget_id="${widget_id}-js"
+fi
+script_string="${script_string} \"${widget_id}\" to"
+
+case "$cmd" in
+  show) script_string="${script_string} false" ;;
+  hide) script_string="${script_string} true"  ;;
+  *) echo "usage: uber show|hide <widget>" >&2 ; exit 1 ;;
+esac
+
+osascript -e "$script_string" &>/dev/null

@@ -1,0 +1,7 @@
+if [[ -n "$TMUX" ]]; then
+  fzf-tmux "$@"
+else
+  command fzf "$@"
+fi
+
+# vim: ft=zsh

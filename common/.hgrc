@@ -1,0 +1,7 @@
+[color]
+mode = auto
+
+[subrepos]
+allowed = true
+hg:allowed = true
+git:allowed = true

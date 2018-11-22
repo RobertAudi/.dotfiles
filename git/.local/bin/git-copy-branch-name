@@ -1,0 +1,16 @@
+#!/usr/bin/env zsh
+#
+# Copy the current branch name to the clipboard.
+
+git-copy-branch-name() {
+  if ! git rev-parse 2> /dev/null; then
+    echo -e "\e[1;41;97m ERROR \e[0m Not a repository: $PWD" >&2
+    return 1
+  fi
+
+  local branch=$(git rev-parse --abbrev-ref HEAD)
+  echo $branch
+  echo $branch | tr -d '\n' | tr -d ' ' | pbcopy
+}
+
+git-copy-branch-name $@

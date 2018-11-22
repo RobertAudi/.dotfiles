@@ -1,0 +1,13 @@
+#autoload
+
+# Waits for a key to be pressed.
+#
+# @param text Optional. The text to print, defaults to a simple "press a key"
+#             text.
+local text="$@"
+
+if [[ -z "$text" ]]; then
+  text="Please press a key to continue..."
+fi
+
+read -se "?$text"

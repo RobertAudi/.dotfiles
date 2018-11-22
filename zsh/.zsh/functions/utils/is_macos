@@ -1,0 +1,5 @@
+#autoload
+
+# is_macos returns true if running OS is Macintosh
+os_detect
+[[ $PLATFORM == "macos" ]]

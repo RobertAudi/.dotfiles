@@ -1,0 +1,5 @@
+#autoload
+
+# Checks if a file can be autoloaded by trying to load it in a subshell.
+unfunction $1 &> /dev/null
+autoload -U +X $1 &> /dev/null

@@ -1,0 +1,32 @@
+#autoload
+
+if ! is-callable jackd || ! is-callable jack_wait; then
+  print-error "JACK server not found"
+  print "not found"
+  return 127
+fi
+
+case "$1" in
+  status)
+      jack_wait -c 2>/dev/null | tr '[[:lower:]]' '[[:upper:]]'
+    ;;
+  start)
+    if [[ $(jack_wait -c 2>/dev/null) == "RUNNING" ]]; then
+      print-error "JACK server already running"
+      return 1
+    else
+      ds jackd -d coreaudio && print-info "JACK server started"
+    fi
+    ;;
+  stop)
+    pkill -i jack >/dev/null && print-info "JACK server stopped"
+    ;;
+  help)
+    print "usage: jack status|start|stop|help" >&2
+    return 127
+    ;;
+  *)
+    jack help
+    return 1
+    ;;
+esac

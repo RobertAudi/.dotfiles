@@ -1,0 +1,5 @@
+#autoload
+
+nocorrect noglob builtin fc -l +1 |
+  ag --invert-match "[hp ]grep" | \
+  ag --ignore-case "$1"

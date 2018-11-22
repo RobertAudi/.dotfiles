@@ -1,0 +1,1 @@
+../../../../zsh/.zsh/plugins/spectrum/init.zsh

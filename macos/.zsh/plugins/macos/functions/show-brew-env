@@ -1,0 +1,49 @@
+#autoload
+
+function __show-brew-env::info {
+  builtin print -P -- "%F{032}==>%f $@"
+}
+
+function __show-brew-env::hr {
+  builtin print -Pn -- "%B%F{019}"
+  hr "━"
+  builtin print -Pn -- "%f%b"
+}
+
+function show-brew-env {
+  if (($#)); then
+    builtin print -P -- "[%F{221}WARN%f] Arguments ignored: $@" >&2
+  fi
+
+  __show-brew-env::info "brew --config"
+  command brew --config
+  __show-brew-env::hr
+
+  __show-brew-env::info "brew --env"
+  command brew --env
+  __show-brew-env::hr
+
+  __show-brew-env::info "brew info"
+  command brew info
+  __show-brew-env::hr
+
+  __show-brew-env::info "brew list"
+  command brew list
+  __show-brew-env::hr
+
+  __show-brew-env::info "brew tap"
+  command brew tap
+  __show-brew-env::hr
+
+  __show-brew-env::info "brew doctor"
+  command brew doctor
+  __show-brew-env::hr
+
+  __show-brew-env::info "brew outdated"
+  command brew outdated
+  __show-brew-env::hr
+
+  builtin print
+}
+
+show-brew-env

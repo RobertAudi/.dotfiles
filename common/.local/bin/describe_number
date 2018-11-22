@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+as_binary() {
+    [[ $1 =~ ^([0#]?b)?([0-1]+)$ ]] || return
+    local bin=${BASH_REMATCH[2]}
+    local dec=$(bc -l <<< "ibase=2; $bin")
+    printf '[\033[34m#b%d\033[m #o%o %d #x%X]\n' $bin $dec $dec $dec
+}
+
+as_octal() {
+    [[ $1 =~ ^([0#]?o)?([0-7]+)$ ]] || return
+    local dec=$(bc -l <<< "ibase=8; ${BASH_REMATCH[2]}")
+    local bin=$(bc -l <<< "obase=2; $dec")
+    printf '[#b%d \033[34m#o%o\033[m %d #x%X]\n' $bin $dec $dec $dec
+}
+
+as_decimal() {
+    [[ $1 =~ ^([0-9]+)$ ]] || return
+    local dec=${BASH_REMATCH[1]}
+    local bin=$(bc -l <<< "obase=2; $dec")
+    printf '[#b%d #o%o \033[34m%d\033[m #x%X]\n' $bin $dec $dec $dec
+}
+
+as_hexadecimal() {
+    [[ $1 =~ ^([0#]?x)?([0-9a-fA-F]+)$ ]] || return
+    local dec=$(bc -l <<< "ibase=16; ${BASH_REMATCH[2]^^}")
+    local bin=$(bc -l <<< "obase=2; $dec")
+    printf '[#b%d #o%o %d \033[34m#x%X\033[m]\n' $bin $dec $dec $dec
+}
+
+describe_number() {
+    as_binary $1
+    as_octal $1
+    as_decimal $1
+    as_hexadecimal $1
+}
+
+while (( $# )); do
+    describe_number $1
+    shift
+done

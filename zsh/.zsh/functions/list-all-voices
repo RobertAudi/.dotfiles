@@ -1,0 +1,11 @@
+#autoload
+
+# Arguments can include a quoted string to define the test string to be repeated
+# If an argument is numbers only, it changes the rate at which to speak (words per minute, default 200)
+
+if is_macos ; then
+  say -v \? | awk '{print $1}' | sort
+else
+  print-error "$0 only supported on OS X"
+  return 1
+fi

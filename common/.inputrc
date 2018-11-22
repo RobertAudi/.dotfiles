@@ -1,0 +1,56 @@
+# Readline library configuration options
+# http://ss64.com/bash/syntax-inputrc.html
+
+# mappings for Ctrl-left-arrow and Ctrl-right-arrow for word moving
+# mappings for Alt-left-arrow and Alt-right-arrow for line end moving
+#
+# Bash
+"\e[1;5D": backward-word
+"\e[1;5C": forward-word
+"\e[1;3D": beginning-of-line
+"\e[1;3C": end-of-line
+
+# macOS
+"\e[3D": backward-word
+"\e[3C": forward-word
+"\e[5D": beginning-of-line
+"\e[5C": end-of-line
+
+# Use the text that has already been typed as the prefix for searching through
+# commands (basically more intelligent Up/Down behavior)
+"\C-p":history-search-backward
+"\C-n":history-search-forward
+
+# Flip through autocompletion matches with Shift-Tab
+"\e[Z": menu-complete
+
+set colored-stats on
+
+# Disable beeping and window flashing
+set bell-style none
+
+# Make Tab autocomplete regardless of filename case (cd ~/dow<Tab> => cd ~/Downloads/)
+set completion-ignore-case on
+
+set completion-prefix-display-length 3
+
+# Immediately add a trailing slash when autocompleting symlinks to directories
+set mark-symlinked-directories on
+
+# Auto list all TAB possible completions (use instead of TAB-cycling)
+set show-all-if-ambiguous on
+set show-all-if-unmodified on
+
+# If there are more than 200 possible completions for a word, ask to show them all
+set completion-query-items 200
+
+# Show all autocomplete results at once
+set page-completions off
+
+# Show extra file information when completing, like `ls -F` does
+set visible-stats on
+
+# Allow UTF-8 input and output, instead of showing stuff like $'\0123\0456'
+set input-meta on
+set output-meta on
+set convert-meta off

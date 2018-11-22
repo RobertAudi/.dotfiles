@@ -1,0 +1,14 @@
+#autoload
+
+# If marked is called without an argument, open Marked
+# If marked is passed a file, open it in Marked
+if osascript -e 'id of application "Marked 2"' &>/dev/null; then
+  if (($#)); then
+    open -a "Marked 2.app" "$1"
+  else
+    open -a "Marked 2.app"
+  fi
+else
+  builtin print -P -- "[%F{196}ERROR%f] Marked not installed!" >&2
+  return 1
+fi

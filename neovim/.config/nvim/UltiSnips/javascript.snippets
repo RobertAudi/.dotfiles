@@ -1,0 +1,111 @@
+snippet for "for (...) {...} (counting up)" b
+for (var ${1:i} = 0, ${2:len} = ${3:Things.length}; $1 < $2; $1++) {
+	${VISUAL}$0
+}
+endsnippet
+
+snippet ford "for (...) {...} (counting down, faster)" b
+for (var ${2:i} = ${1:Things.length} - 1; $2 >= 0; $2--) {
+	${VISUAL}$0
+}
+endsnippet
+
+snippet fun "function (fun)" b
+function ${1:function_name}(${2:argument}) {
+	${VISUAL}$0
+}
+endsnippet
+
+snippet f "anonymous function" w
+function(${3}) { $0 }
+endsnippet
+
+snippet vf "Function assigned to var" b
+${1:var }${2:function_name} = function $2(${3}) {
+	${VISUAL}$0
+};
+endsnippet
+
+snippet timeout "setTimeout function" b
+setTimeout(function() {
+	${VISUAL}$0
+}${2:.bind(${3:this})}, ${1:10});
+endsnippet
+
+snippet forin "for prop in obj using hasOwnProperty" b
+for (${1:prop} in ${2:obj}){
+	$0
+}
+endsnippet
+
+snippet log "console.log" b
+console.log($0);
+endsnippet
+
+snippet if "if ..." b
+if (${1:true}) {
+	${0}
+}
+endsnippet
+
+snippet ife "if ... else" b
+if (${1:true}) {
+	${2}
+} else {
+	${0}
+}
+endsnippet
+
+snippet else "else ..." b
+else {
+	${0}
+}
+endsnippet
+
+snippet ?: "Ternary" w
+${1:/* condition */} ? ${2:/* if true */} : ${0:/* if false */}
+endsnippet
+
+snippet switch "switch statement" b
+switch (${1:expression}) {
+	case "${3:case}":
+		${4}
+		break;
+	${0}
+	default:
+		${2}
+}
+endsnippet
+
+snippet case "case (switch)" b
+case "${1:case}":
+	${2}
+	break;
+${0}
+endsnippet
+
+snippet try "try ... catch" b
+try {
+	${1}
+} catch (${2:e}) {
+	${0:/* handle error */}
+}
+endsnippet
+
+snippet ret "return" b
+return${0: result};
+endsnippet
+
+snippet ready "document ready" b
+$(document).on("ready", function() {
+	$0
+});
+endsnippet
+
+snippet ff "Immediately-Invoked Function Expression (IIFE)" b
+(function(win, doc, $) {
+	$0
+})(window, document, jQuery);
+endsnippet
+
+# vim:set noet sts=4 sw=4 ts=4 ft=snippets:
