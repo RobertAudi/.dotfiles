@@ -899,5 +899,9 @@ brew "RobertAudi/formulae/pidpath", args: ["HEAD"]
 #   https://github.com/boyter/lc
 brew "RobertAudi/formulae/lc"
 
+# Simple command line tool for unit conversions
+#   https://xiny.sh/
+brew "RobertAudi/formulae/xiny"
+
 # Modeline {{{
 # vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker : }}}
