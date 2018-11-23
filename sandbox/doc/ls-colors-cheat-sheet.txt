@@ -1,0 +1,130 @@
+### LSCOLORS and LS_COLORS ###
+
+BSD LSCOLORS
+------------
+
+position                        colors
+--------                        ------
+1 - directory                   a - black
+2 - system_link                 b - red
+3 - socket                      c - green
+4 - pipe                        d - brown
+5 - executable                  e - blue
+6 - block_special               f - magenta
+7 - char_special                g - cyan
+8 - exe_setuid                  h - light grey
+9 - exe_setgid                  A - bold black, usually shows up as dark grey
+a - dir_writeothers_sticky      B - bold red
+b - dir_writeothers_NOsticky    C - bold green
+                                D - bold brown, usually shows up as yellow
+                                E - bold blue
+                                F - bold magenta
+                                G - bold cyan
+                                H - bold light grey; looks like bright white
+                                x - default foreground or background
+
+For example, for LSCOLORS='ExFxCxDxbxegedabagacad':
+
+                     directory  Ex  BLUE
+                   system_link  Fx  MAGENTA
+                        socket  Cx  GREEN
+                          pipe  Dx  BROWN
+                    executable  bx  red
+                 block_special  eg  blue on cyan
+                  char_special  ed  blue on brown
+                    exe_setuid  ab  black on red
+                    exe_setgid  ag  black on cyan
+        dir_writeothers_sticky  ac  black on green
+      dir_writeothers_NOsticky  ad  black on brown
+
+
+
+GNU LS_COLORS
+-------------
+
+keys
+----
+no  NORMAL, NORM                Global default, although everything should
+                                be something
+fi  FILE                        Normal file
+di  DIR                         Directory
+ln  SYMLINK, LINK, LNK          Symbolic link. If you set this to `target`
+                                instead of a numerical value, the color is as
+                                for the file pointed to
+pi  FIFO, PIPE                  Named pipe
+do  DOOR                        Door
+bd  BLOCK, BLK                  Black device
+cd  CHAR, CHR                   Character device
+or  ORPHAN                      Symbolic link pointing to a non-existent file
+so  SOCK                        Socket
+su  SETUID                      File that is setuid (u+s)
+sg  SETGID                      File that is setgid (g+s)
+tw  STICKY_OTHER_WRITABLE       Directory that is sticky and other-writable
+                                (+t,o+w)
+ow  OTHER_WRITABLE              Directory that is other-writable (o+w) and
+                                not sticky
+st  STICKY                      Directory with the sticky bit set (+t) and
+                                not other-writable
+ex  EXEC                        Executable file (i.e. has `x` set
+                                in permissions)
+mi  MISSING                     Non-existent file pointed to by a symbolic link
+                                (visible when you type ls -l)
+lc  LEFTCODE, LEFT              Opening terminal code
+rc  RIGHTCODE, RIGHT            Closing terminal code
+ec  ENDCODE, END                Non-filename text
+*.extension                     Every file using this extension e.g. *.jpg
+
+effects
+-------
+00  Default colour
+01  Bold
+04  Underlined
+05  Flashing text
+07  Reversetd
+08  Concealed
+
+colours                         backgrounds
+-------                         -----------
+30  Black                       40      Black background
+31  Red                         41      Red background
+32  Green                       42      Green background
+33  Orange                      43      Orange background
+34  Blue                        44      Blue background
+35  Purple                      45      Purple background
+36  Cyan                        46      Cyan background
+37  Grey                        47      Grey background
+
+extra colours
+-------------
+90  Dark grey
+91  Light red
+92  Light green
+93  Yellow
+94  Light blue
+95  Light purple
+96  Turquoise
+100 Dark grey background
+101 Light red background
+102 Light green background
+103 Yellow background
+104 Light blue background
+105 Light purple background
+106 Turquoise background
+
+
+Thus, to get the same output as the BSD LSCOLORS variable,
+
+LS_COLORS="di=01;34:ln=01;35:so=01;32:pi=01;33:ex=31:bd=34;46\
+:cd=34;43:su=30;41:sg=30;46:ow=30;42:tw=30;43"
+
+                     directory  di=01;34  BLUE
+                   system_link  ln=01;35  MAGENTA
+                        socket  so=01;32  GREEN
+                          pipe  pi=01;33  BROWN
+                    executable  ex=31     red
+                 block_special  bd=34;46  blue on cyan
+                  char_special  cd=34;43  blue on brown
+                    exe_setuid  su=30;41  black on red
+                    exe_setgid  sg=30;46  black on cyan
+        dir_writeothers_sticky  ow=30;42  black on green
+      dir_writeothers_NOsticky  tw=30;43  black on brown

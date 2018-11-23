@@ -1,0 +1,47 @@
+printf() usage   -   formatted printing
+
+  printf ( "format-expression", args )                  # parens optional
+  printf ("Total: %d bytes (%d files)\n", n1, n2)       # awk example
+  Each %specifier in "quoted part" must have a corresponding parameter in
+  the arg list. Most common %specifiers are %s(tring) and %d(ecimal).
+
+SPECIFIERS:                                    FLAGS, WIDTH, & PRECISION
+==================                             =========================
+ c   ASCII character                           %[flag][width][.precis]specif
+ d   decimal integer (converts to integer!)
+ i   decimal integer (same; POSIX addition)    FLAGS....
+ e   floating point ([-]d.precisione[+-]dd)     nil  |    print flush right|
+ E   floating point ([-]d.precisionE[+-]dd)      -   |print flush left     |
+ f   floating point ([-]6digit.precision)        SP  prefix %d with SPACE
+ g   e or f, shortest, trailing 0's removed      +   prefix nums with + or -
+ G   E or f, shortest, trailing 0's removed      0   prefix nums with zeroes
+ o   unsigned octal value
+ s   string                                    WIDTH: width of total field
+ x   unsigned hex num, uses a-f for 10-15
+ X   unsigned hex num, uses A-F for 10-15      PRECIS: num of decimal places
+ %   literal percent sign                      if %f; num of digits if %d,%i
+
+In the following examples, let %S be length(%s) and %D be length(%d or %i)
+
+If WIDTH   > (%S|%D), the output will be padded with spaces.
+If WIDTH  <= (%S|%D), the output will be printed in full (not truncated).
+If PRECIS => (%S|%D), the output will be printed in full (not truncated).
+
+If PRECIS  < %S, the string will be truncated on the right.
+If PRECIS  < %D, the digits will NOT be truncated
+
+Ex:  printf("[%-7s] [%8.3f] [%+8.3i]", "foo", "12.9", "12.9") ==
+     [foo    ] [  12.900] [    +012] ==> %f(loating pt), %i(nteger truncated)
+         ^^^^   ^^         ^^^^
+
+Ex:  printf("[%8.3s] [%8.6s]", "abcde", "fghij") ==
+     [     abc] [   fghij] ==> WIDTH provides padding, PREC limits chars
+      ^^^^^      ^^^
+Ex:  printf("[%8.3i] [%8.6i]", "12345.67", "123456789") =
+     [   12345] [123456789] ==> integers printed in full, decimals truncated
+      ^^^
+
+Ex:  printf("%+*.*f", var1, var2, $3)
+     Using the * inserts the value of var1 and var2 for width and precision.
+--
+Summary by pemente@northpark.edu

@@ -1,0 +1,86 @@
+IF/ELSE TESTING IN SED
+
+----------
+This message was originally posted on the seders mailing list in 1998.
+It has been lightly edited for general readers. In answer to the
+question:
+
+> Are there any standard/short-cuts for
+>
+>     if (test) then action1 else action2
+
+Yes, there are several ways of expressing IF/ELSE logic. For example:
+
+  # -------------------------------------------
+  # one-line actions, for if (test) then action1, else action2
+  # -------------------------------------------
+  /test/s/$/ action1/;     # if /test/ is found, append action1 to EOL
+  /test/!s/$/ action2/;    # if /test/ not found, append action2
+
+  /test2/d;                # if /test2/ is found, delete line. The
+                           # implied ELSE is to print the line.
+
+  /test3/!y/ABCDE/abcde/;  # if /test3/ is missing, lowercase A-E.
+                           # The implied ELSE is leave A-E alone.
+
+  # -------------------------------------------
+  # multi-line actions showing IF/ELSE usage
+  # -------------------------------------------
+  /test4/{                 # if /test4/ is found, ...
+     s/$/aaa/;             # ... perform these actions
+     s/[0-9]/number/;
+     s/test5/YYY/;         # Boolean /test4/ && /test5/
+  }
+
+  /test4/!{                # if /test4/ is missing, ...
+     s/^/bbb/;             # ... perform these instead
+     s/[a-f]/letter/;
+     s/test6/ZZZ/;         # Boolean /test4/! && /test6/
+  }
+
+  /test7/b next            # if /test7/ is found, skip the next cmds
+    s/$/new tail/;         # else: 1) add a new ending to each line
+    /^/a\                  #       2) and append new line after each
+    APPENDED WORDS AFTER EACH LINE
+
+    /test8/d;              #       3) and delete each line with /test8/
+  : next
+
+  # Next routine will fail under GNU sed 2.05, due to a bug
+  s/test9/&/6;             # if /test9/ appears 6 times or more,
+  t next2                  # ... jump to label :next2 for commands
+  cmd1;cmd2;cmd3;          # else, do these 3 commands
+  b next3                  # the ELSE stops here
+  : next2                  # the next 3 commands are executed only
+  cmd4;cmd5;cmd6;          # ... if /test9/ was found 6 times
+  : next3                  # this corresponds to ENDIF
+
+
+  /test9/ { /test10/ {     # Boolean IF /test9/ && /test10/ are true,
+    cmd1; cmd2; cmd3;      # ... do these 3 commands
+    b next4
+    }                      # ELSEIF /test9/ && /test10/! are true,
+    cmd4; cmd5; cmd6;      # ... do cmd4, cmd5, and cmd6
+    b next4
+  }                        # ELSE,
+  cmd7; cmd8; cmd9;        # ... do cmd7, cmd8, and cmd9
+  : next4                  # This corresponds to ENDIF
+
+
+   I have liberally added comments to explain these commands. Normally,
+comments are only supported in GNU sed, HHsed, and HP-UX sed, and they
+should be preceded by the semicolon after the command and before the
+pound sign (#). Further, comments are almost NEVER supported after
+commands which take a word argument (b,t,r,w), after :labels, or after
+a,i,c commands. I have put comments after labels and branch commands to
+make the explanation easier to follow, but don't use them in real sed
+scripts. Hope this helps.
+
+Kind regards,
+
+Eric Pement
+--
+Eric Pement <pemente@bnorthpark.edu>
+maintainer of the sed FAQ file
+sed FAQ file:  http://www.faqs.org/faqs/editor-faq/sed
+sed for DOS:   http://student.northpark.edu/pemente/sed/

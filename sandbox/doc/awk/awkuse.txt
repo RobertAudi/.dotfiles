@@ -1,0 +1,186 @@
+AWK syntax:
+ awk [-Fs] "program" [file1 file2...]   # commands come from DOS cmdline
+ awk 'program{print "foo"}' file1       # single quotes around double quotes
+  # NB: Don't use single quotes alone if the embedded info will contain the
+  # vertical bar or redirection arrows! Either use double quotes, or (if
+  # using 4DOS) use backticks around the single quotes:  `'NF>1'`
+
+  # NB: since awk will accept single quotes around arguments from the
+  # DOS command line, this means that DOS filenames which contain a
+  # single quote cannot be found by awk, even though they are legal names
+  # under MS-DOS. To get awk to find a file named foo'bar, the name must
+  # be entered as foo"'"bar.
+
+ awk [-Fs] -f pgmfile [file1 file2...]   # commands come from DOS file
+
+ If file1 is omitted, input comes from stdin (console).
+ Option -Fz sets the field separator FS to letter "z".
+
+AWK notes:
+ "pattern {action}"
+    if {action} is omitted, {print $0} is assumed
+    if "pattern" is omitted, each line is selected for {action}.
+
+ Fields are separated by 1 or more spaces or tabs: "field1   field2"
+ If the commands come from a file, the quotes below can be omitted.
+
+ Basic AWK commands:
+ -------------------
+ "NR == 5" file             show rec. no. (line) 5.  NB: "==" is equals.
+ {FOO = 5}                  single = assigns "5" to the variable FOO
+ "$2 == 0 {print $1}"       if 2d field is 0, print 1st field
+ "$3 < 10"                  if 3d field < 10, numeric comparison; print line
+ '$3 < "10" '               use single quotes for string comparison!, or
+ -f pgmfile [$3 < "10"]     use "-f pgmfile"  for string comparison
+ "$3 ~ /regexp/"            if /regexp/ matches 3d field, print the line
+ '$3 ~ "regexp" '           regexp can appear in double-quoted string*
+                 # * If double-quoted, 2 backslashes for every 1 in regexps
+                 # * Double-quoted strings require the match (~) character.
+ "NF > 4"                   print all lines with 5 or more fields
+ "$NF > 4"                  print lines where the last field is 5 or more
+ "{print NF}"               tell us how many fields (words) are on each line
+ "{print $NF}"              print last field of each line
+
+ "/regexp/"                 Only print lines containing "regexp"
+ "/text|file/"              Lines containing "text" or "file" (CASE SENSITIVE!)
+
+ "/foo/{print "za", NR}"    FAILS on DOS/4DOS command line!!
+ '/foo/{print "za", NR}'    WORKS on DOS/4DOS command line!!
+                            If lines matches "foo", print word and line no.
+ `"/foo/{print \"za\",NR}"` WORKS on 4DOS cmd line: escape internal quotes with
+                            slash and backticks; for historical interest only.
+
+ "$3 ~ /B/ {print $2,$3}"   If 3d field contains "B", print 2d + 3d fields
+ "$4 !~ /R/"                Print lines where 4th field does NOT contain "R"
+
+ '$1=$1'                    Del extra white space between fields & blank lines
+ '{$1=$1;print}'            Del extra white space between fields, keep blanks
+ 'NF'                       Del all blank lines
+
+ AND(&&), OR(||), NOT(!)
+ -----------------------
+ "$2 >= 4 || $3 <= 20"      lines where 2d field >= 4 .OR. 3d field <= 20
+ "NR > 5 && /with/"         lines containing "with" for lines 6 or beyond
+ "/x/ && NF > 2"            lines containing "x" with more than 2 fields
+
+ "$3/$2 != 5"               not equal to "value" or "string"
+ "$3 !~ /regexp/"           regexp does not match in 3d field
+ "!($3 == 2 && $1 ~ /foo/)" print lines that do NOT match condition
+
+ "{print NF, $1, $NF}"      print no. of fields, 1st field, last field
+ "{print NR, $0}"           prefix a line number to each line
+ '{print NR ": " $0}'       prefix a line number, colon, space to each line
+
+ "NR == 10, NR == 20"       print records (lines) 10 - 20, inclusive
+ "/start/, /stop/"          print lines between "start" and "stop"
+
+ "length($0) > 72"          print all lines longer than 72 chars
+ "{print $2, $1}"           invert first 2 fields, delete all others
+ "{print substr($0,index($0,$3))}"  print field #3 to end of the line
+
+
+ END{...} usage
+ ---------------     END reads all input first.
+
+1) END { print NR }               # same output as "wc -l"
+
+2) {s = s + $1 }                  # print sum, ave. of all figures in col. 1
+  END {print "sum is", s, "average is", s/NR}
+
+3) {names=names $1 " " }          # converts all fields in col 1 to
+  END { print names }             # concatenated fields in 1 line, e.g.
+        +---Beth   4.00 0         #
+  input |   Mary   3.75 0         # infile is converted to:
+   file |   Kathy  4.00  10       #   "Beth Mary Kathy Mark" on output
+        +---Mark   5.00  30       #
+
+4)  { field = $NF }               # print the last field of the last line
+  END { print field }
+
+
+PRINT, PRINTF:   print expressions, print formatted
+print expr1, expr2, ..., exprn    # parens() needed if the expression contains
+print(expr1, expr2, ..., exprn)   # any relational operator: <, <=, ==, >, >=
+
+print                             # an abbreviation for {print $0}
+print ""                          # print only a blank line
+printf(expr1,expr2,expr3,\n}      # add newline to printf statements
+
+ FORMAT CONVERSION:
+ ------------------
+ BEGIN{ RS="";    FS="\n";        # takes records sep. by blank lines, fields
+       ORS="\n"; OFS="," }        # sep. by newlines, and converts to records
+ {$1=$1; print }                  # sep. by newlines, fields sep. by commas.
+
+ PARAGRAPHS:
+ -----------
+ 'BEGIN{RS="";ORS="\n\n"};/foo/'  # print paragraph if 'foo' is there.
+ 'BEGIN{RS="";ORS="\n\n"};/foo/&&/bar/'  # need both
+                         ;/foo|bar/'     # need either
+
+ PASSING VARIABLES:
+ ------------------
+ gawk -v var="/regexp/" 'var{print "Here it is"}'   # var is a regexp
+ gawk -v var="regexp" '$0~var{print "Here it is"}'  # var is a quoted string
+ gawk -v num=50 '$5 == num'                         # var is a numeric value
+
+Built-in variables:
+ ARGC       number of command-line arguments
+ ARGV       array of command-line arguments (ARGV[0...ARVC-1])
+ FILENAME   name of current input file
+ FNR        input record number in current file
+ FS         input field separator (default blank)
+ NF         number of fields in current input record
+ NR         input record number since beginning
+ OFMT       output format for numbers (default "%.6g")
+ OFS        output field separator (default blank)
+ ORS        output record separator (default newline)
+ RLENGTH    length of string matched by regular expression in match
+ RS         input record separator (default newline)
+ RSTART     beginning position of string matched by match
+ SUBSEP     separator for array subscripts of form [i,j,...] (default ^\)
+
+Escape sequences:
+ \b       backspace (^H)
+ \f       formfeed (^L)
+ \n       newline (DOS, CR/LF; Unix, LF)
+ \r       carriage return
+ \t       tab (^I)
+ \ddd     octal value `ddd', where `ddd' is 1-3 digits, from 0 to 7
+ \c       any other character is a literal, eg, \" for " and \\ for \
+
+Awk string functions:
+ `r' is a regexp, `s' and `t' are strings, `i' and `n' are integers
+ `&' in replacement string in SUB or GSUB is replaced by the matched string
+
+ gsub(r,s,t)    globally replace regex r with string s, applied to data t;
+                return no. of substitutions; if t is omitted, $0 is used.
+ gensub(r,s,h,t) replace regex r with string s, on match number h, applied
+                to data t; if h is 'g', do globally; if t is omitted, $0 is
+                used. Return the converted pattern, not the no. of changes.
+ index(s,t)     return the index of t in s, or 0 if s does not contain t
+ length(s)      return the length of s
+ match(s,r)     return index of where s matches r, or 0 if there is no
+                  match; set RSTART and RLENGTH
+ split(s,a,fs)  split s into array a on fs, return no. of fields; if fs is
+                  omitted, FS is used in its place
+ sprintf(fmt,expr-list)     return expr-list formatted according to fmt
+ sub(r,s,t)     like gsub but only the first matched substring is replaced
+ substr(s,i,n)  return the n-character substring of s starting at i; if n
+                  is omitted, return the suffix of s starting at i
+
+Arithmetic functions:
+ atan2(y,x)     arctangent of y/x in radians in the range of -ã to ã
+ cos(x)         cosine (angle in radians)
+ exp(n)         exponential eü (n need not be an integer)
+ int(x)         truncate to integer
+ log(x)         natural logarithm
+ rand()         pseudo-random number r, 0 ó r ó 1
+ sin(x)         sine (angle in radians)
+ sqrt(x)        square root
+ srand(x)       set new seed for random number generator; uses time of day
+                  if no x given
+
+[end-of-file]
+
+

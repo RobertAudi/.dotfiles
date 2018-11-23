@@ -1,0 +1,77 @@
+Chart of similar operations with sed and awk
+--------------------------------------------
+
+string
+======
+
+sed "s/from/to/"        awk '{sub("from","to"); print}'
+
+sed "s/from/to/g"       awk '{gsub("from","to"); print}'
+
+sed "s/from/to/3"       awk '{$0=gensub("from","to",3); print}'
+
+
+regex
+=====
+
+sed "s/reg.*$/_&_/"     awk '{sub(/reg.*$/, "_&_"); print}'
+
+sed "s/reg[ex]/YY/g"    awk '{gsub(/reg[ex]/, "YY"); print}'
+
+sed "s/reg[ex]/ZZ/4"    awk '{$0=gensub(/reg[ex]/, "ZZ", 4); print}'
+
+
+awk variable "var"
+==================
+
+sed "s/bang/boom/"      awk -v var="bang" '{sub(var,"boom");print}'
+
+sed "s/.*=/equ/5"       awk -v var=".*=" '{$0=gensub(var,"equ",5);print}'
+
+
+
+DOS variable "XY" with awk variable "z"
+=======================================
+
+[DOSPROMPT] C:\path> set xy=bangg*
+
+sed "s/%XY%/boom/"     awk -v z="%XY" '{sub(z,"boom"); print}'
+
+sed "s/%XY%/boom/g"    awk -v z="%XY" '{gsub(z,"boom"); print}'
+
+sed "s/%XY%/boom/5"    awk -v z="%XY" '{$0=gensub(z,"boom",5); print}'
+
+
+interval expression, \{M,N\}
+============================
+
+sed "s/fo\{3,8\}/bar/"   awk --re-interval '{sub(/fo{3,8}/, "bar");print}'
+
+sed "s/fo\{3,8\}/bar/g"
+
+               awk --re-interval -v a="fo{3,8}" '{gsub(a,"bar");print}'
+       or
+               awk --re-interval -v a="fo\{3,8\}" '{gsub(a,"bar");print}'
+
+
+
+DOS variable "HI", awk variable "j" with interval expression
+============================================================
+
+[DOSPROMPT] C:\path> set hi=Whe\{2,7\}!*
+
+sed "s/%hi%/Zow!/"     awk --re-interval -v j="%hi" '{sub(j,"Zow!"); print}'
+
+sed "s/%hi%/Zow!/g"    awk --re-interval -v j="%hi" '{gsub(j,"Zow!");print}'
+
+[DOSPROMPT] C:\path> REM ... using a disk file ...
+[DOSPROMPT] C:\path> echo {$0=gensub(j,"Zow!",5); print} >myfile.awk
+
+sed "s/%hi%/Zow!/5"    awk --re-interval -v j="%hi" -f myfile.awk
+
+
+--
+compiled by Eric Pement
+on 03/20/2001 07:11pm
+
+[end-of-file]

@@ -1,0 +1,36 @@
+### Symmetric Encryption
+
+openssl aes-256-cbc < plain > secret
+openssl aes-256-cbc -d < secret > plain
+
+### Certificates
+
+# Generate a private key:
+openssl genrsa 4096
+
+# Generate an encrypted private key:
+openssl genrsa -aes256 4096
+
+# Decrypt an encrypted private key:
+openssl rsa < secrets_rsa
+
+# Generate a self-signed X509 certificate:
+openssl req -new \
+            -utf8 \
+            -x509 \
+            -days $((365*3)) \
+            -key secrets_rsa \
+            -subj "/C=US/O=Secrets LLC/OU=Rubber Hose Division/CN=Secret Root Certification Authority/"
+
+# Generate a Certificate Signing Request:
+openssl req -new \
+            -utf8 \
+            -key user_rsa \
+            -subj "/C=US/O=Secrets LLC/OU=Rubber Hose Division/CN=*.secrets/"
+
+# Generate a signed X509 certificate from a CSR:
+openssl x509 -req \
+             -days $((365*3)) \
+             -CA cacert.pem \
+             -CAkey secrets_rsa \
+             -CAcreateserial < my.csr > my.cert
