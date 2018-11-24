@@ -1,3 +1,25 @@
+Homebrew
+--------
+
+Dependencies are managed using [Homebrew Bundle][brew-bundle] and are organized in multiple ["bundles"](./Homebrew) (files with the `.brewfile` extension).
+
+To install a bundle, you need to specify its file to the `brew bundle` command:
+
+```console
+$ brew bundle install --file="./Homebrew/common.brewfile"
+```
+
+Or you can install all bundles:
+
+```zsh
+# In ZSH:
+for f in ./Homebrew/*.brewfile(:A); do
+  brew bundle install --file="$f"
+done
+```
+
+[brew-bundle]: https://github.com/Homebrew/homebrew-bundle
+
 Rust
 ----
 

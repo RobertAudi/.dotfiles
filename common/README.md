@@ -1,14 +1,9 @@
-## `remote`
+Scripts
+-------
 
-Generate remote repository strings.
+### [`used-mem`](.local/bin/used-mem)
 
-- GitHub: https://github.com/casey/remote
-
----
-
-## `used-mem`
-
-Print memory status for Mac OSX and Linux.
+Print memory status for macOS and Linux.
 
 ```console
 $ used-mem
@@ -21,29 +16,33 @@ $ used-mem 'Free: #.2f % (#.3F GB) | Used: #.2u % (#.3U GB) | Total: #.3T GB'
 Free: 38.32 % (3.065 GB) | Used: 61.68 % (4.933 GB) | Total: 7.998 GB
 ```
 
-### Usage
+#### Usage
 
 ```
 used-mem [Output format]
 ```
 
-Default format:
+##### Default format
 
 - ``#.1u%(#.1UG/#.1TG)``
 
-Format string:
+##### Format string
 
-- ``#f`` : Free memory(%).
-- ``#u`` : Used memory(%).
-- ``#F`` : Free memory(GB).
-- ``#U`` : Used memory(GB).
-- ``#T`` : Total memory(GB).
+- `#f`: Free memory (%)
+- `#u`: Used memory (%)
+- `#F`: Free memory (GB)
+- `#U`: Used memory (GB)
+- `#T`: Total memory (GB)
 
-- GitHub: https://github.com/yonchu/used-mem
+#### Credits
+
+- Author: [@yonchu](https://github.com/yonchu)
+- GitHub: [yonchu/used-mem](https://github.com/yonchu/used-mem)
 
 ---
 
-## Slack colors
+Slack colors
+------------
 
 Themes can be found on [Slack Themes](https://slackthemes.net/) website and must be saved under `$XDG_CONFIG_HOME/Slack/<theme>.colors`.
 
