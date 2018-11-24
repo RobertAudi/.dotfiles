@@ -15,15 +15,6 @@ Requirements
 [stow]: https://www.gnu.org/software/stow/
 [fasd]: https://github.com/clvv/fasd
 
-Bootstrapping
--------------
-
-Perl: install the `local::lib` module:
-
-```sh
-cpan install local::lib
-```
-
 License
 -------
 
