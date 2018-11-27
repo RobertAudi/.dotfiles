@@ -223,7 +223,11 @@ cask "bestres"
 cask "dash"
 cask "default-folder-x"
 cask "firefox"
+
+# Hosts file editor for OS X
+#   http://clockwise.ee/
 cask "gas-mask"
+
 cask "google-chrome"
 cask "imageoptim"
 cask "iterm2"
@@ -233,10 +237,21 @@ cask "ksdiff"
 cask "mailmate"
 cask "spamsieve"
 cask "marked"
+
+# Move/Resize windows using modifiers and the mouse
+#   https://github.com/keith/modmove
 cask "modmove"
+
+# Beautiful calculator app for Mac
+#   https://numi.io/
 cask "numi"
 cask "osxfuse"
+# The most advanced API tool for Mac
+#   https://paw.cloud/
 cask "paw"
+
+# A Modern PostgreSQL Client for the Mac
+#   https://eggerapps.at/postico/
 cask "postico"
 cask "postgres"
 cask "sequel-pro"
