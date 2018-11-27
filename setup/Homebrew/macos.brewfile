@@ -98,6 +98,10 @@ brew "xcodegen"
 #   https://github.com/lra/mackup
 brew "mackup"
 
+# Manage the desktop wallpaper on macOS
+#   https://github.com/sindresorhus/macos-wallpaper
+brew "wallpaper"
+
 # ------------------------------------------------------------------------------
 
 tap "kiliankoe/formulae"
