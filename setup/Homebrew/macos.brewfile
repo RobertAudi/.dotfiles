@@ -216,26 +216,71 @@ cask "1password"
 #   https://support.1password.com/command-line/
 cask "1password-cli"
 
+# Alfred is an application launcher and productivity
+# application for macOS
+#   https://www.alfredapp.com/
 cask "alfred"
-cask "base"
+
+# Organize your menu bar icons
+#   https://www.macbartender.com/
 cask "bartender"
+
+# Quickly change your screen resolution from the menubar
+#   https://bestres.wojtek.im/
 cask "bestres"
+
+# Dash is an API Documentation Browser and Code Snippet Manager
+#   https://kapeli.com/dash
 cask "dash"
+
+# Default Folder X enhances the Open and Save dialogs
+#   https://www.stclairsoft.com/DefaultFolderX/
 cask "default-folder-x"
+
+# Web browser
+#   https://www.google.com/chrome/
+cask "google-chrome"
+
+# Better web browser
+#   https://www.mozilla.org/firefox/
 cask "firefox"
 
 # Hosts file editor for OS X
 #   http://clockwise.ee/
 cask "gas-mask"
 
-cask "google-chrome"
+# ImageOptim makes images load faster
+#   https://imageoptim.com/mac
 cask "imageoptim"
+
+# Terminal emulator for macOS
+#   https://www.iterm2.com/
 cask "iterm2"
+
+# Prevents your Mac from going to sleep
+#   https://github.com/newmarcel/KeepingYouAwake
 cask "keepingyouawake"
+
+# Key Codes is an utility that displays the key code,
+# unicode value, and modifier keys state for any key
+# combination you press
+#   https://manytricks.com/keycodes/
 cask "key-codes"
+
+# Command-line tool to seamlessly integrate Kaleidoscope
+#   https://www.kaleidoscopeapp.com/ksdiff2
 cask "ksdiff"
+
+# MailMate is an IMAP email client for macOS
+#   https://freron.com/
 cask "mailmate"
+
+# Spam filter for mail clients on macOS
+#   https://c-command.com/spamsieve/
 cask "spamsieve"
+
+# Marked is a previewer for Markdown files.
+#   http://marked2app.com/
 cask "marked"
 
 # Move/Resize windows using modifiers and the mouse
@@ -245,7 +290,12 @@ cask "modmove"
 # Beautiful calculator app for Mac
 #   https://numi.io/
 cask "numi"
+
+# FUSE for macOS allows you to extend macOS's native
+# file handling capabilities via third-party file systems
+#   https://osxfuse.github.io/
 cask "osxfuse"
+
 # The most advanced API tool for Mac
 #   https://paw.cloud/
 cask "paw"
@@ -253,11 +303,34 @@ cask "paw"
 # A Modern PostgreSQL Client for the Mac
 #   https://eggerapps.at/postico/
 cask "postico"
+
+# Postgres.app is a full-featured PostgreSQL installation
+# packaged as a standard Mac app
+#   https://postgresapp.com/
 cask "postgres"
+
+# SQLite 3 client
+#   https://menial.co.uk/base/
+cask "base"
+
+# Sequel Pro is a MySQL database management application
+#   https://www.sequelpro.com/
 cask "sequel-pro"
+
+# Powerful and customizable text editor
+#   https://macromates.com/
 cask "textmate"
+
+# Open any archive in seconds
+#   https://theunarchiver.com/
 cask "the-unarchiver"
+
+# The most powerful Git client
+#   https://www.git-tower.com/mac
 cask "tower"
+
+# A free, open source, and cross-platform media player
+#   https://mpv.io/
 cask "mpv"
 
 # A tool for powerful automation of OS X
@@ -334,15 +407,49 @@ end
 
 # QuickLook plugins
 # ------------------------------------------------------------------------------
+
+# Quick Look plugin for apps and provisioning profile files
+#   https://github.com/ealeksandrov/ProvisionQL
 cask "provisionql"
+
+# QuickLook plugin to display the dimensions and
+# size of an image in the title bar instead of
+# the filename.
+#   https://github.com/Nyx0uf/qlImageSize
 cask "qlimagesize"
+
+# QuickLook generator for patch files
+#   https://github.com/atnan/QLPrettyPatch
 cask "qlprettypatch"
+
+# A QuickLook plugin that lets you view
+# plain text files without a file extension
+#   https://whomwah.github.io/qlstephen/
 cask "qlstephen"
+
+# Display thumbnails, static QuickLook previews,
+# cover art and metadata for most types of video files.
+#   https://github.com/Marginal/QLVideo
 cask "qlvideo"
+
+# A QuickLook plugin for CSV files
+#   https://github.com/p2/quicklook-csv
 cask "quicklook-csv"
+
+# Quick look plugin to preview JSON files.
+#   http://www.sagtau.com/quicklookjson.html
 cask "quicklook-json"
+
+# Quicklook plugin to view Adobe Photoshop pattern files
+#   https://github.com/pixelrowdies/quicklook-pat
 cask "quicklook-pat"
+
+# Mac quicklook for ASE files (Adobe Swatch Exchange)
+#   https://github.com/rsodre/QuickLookASE
 cask "quicklookase"
+
+# An Application for Inspecting macOS Installer Packages
+#   https://www.mothersruin.com/software/SuspiciousPackage/
 cask "suspicious-package"
 
 # App Store applications
