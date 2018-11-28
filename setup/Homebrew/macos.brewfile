@@ -344,7 +344,6 @@ cask "quicklook-json"
 cask "quicklook-pat"
 cask "quicklookase"
 cask "suspicious-package"
-cask "webpquicklook"
 
 # App Store applications
 # ------------------------------------------------------------------------------
