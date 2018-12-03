@@ -469,7 +469,7 @@ brew "exa"
 
 # Bash and zsh history suggest box
 #   https://github.com/dvorka/hstr
-brew "hh"
+brew "hstr"
 
 # Check your project for common sources of contributor friction
 #   https://github.com/pengwynn/flint
