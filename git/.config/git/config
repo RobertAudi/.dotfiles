@@ -224,7 +224,6 @@
   l   = log --topo-order --graph --abbrev-commit
   la  = log --topo-order --graph --abbrev-commit --branches --tags
   laa = log --topo-order --graph --abbrev-commit --branches --tags --all
-  ls  = log --topo-order --stat --pretty=detailed
   ld  = log --topo-order --stat --patch --full-diff --pretty=detailed
 
   # Stolen from https://github.com/posquit0/dotfiles
@@ -252,6 +251,7 @@
   co  = checkout
   cob = checkout -b
 
+  ls = ls-files
   ls-ignored = ls-files --others --i --exclude-standard
 
   amend     = commit --verbose --amend
