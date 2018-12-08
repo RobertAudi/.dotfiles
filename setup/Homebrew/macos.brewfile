@@ -271,6 +271,10 @@ cask "key-codes"
 #   https://www.kaleidoscopeapp.com/ksdiff2
 cask "ksdiff"
 
+# Software Update Checker
+#   https://max.codes/latest
+cask "latest"
+
 # MailMate is an IMAP email client for macOS
 #   https://freron.com/
 cask "mailmate"
