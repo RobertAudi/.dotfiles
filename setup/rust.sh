@@ -12,5 +12,6 @@ if ! type rustup >/dev/null; then
   unset rustupScript
 fi
 
+rustup self update
 rustup override set stable
 rustup update stable
