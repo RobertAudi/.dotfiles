@@ -1,7 +1,7 @@
 # fs [FUZZY PATTERN] - Select selected tmux session
 #   - Bypass fuzzy finder if there's only one match (--select-1)
 #   - Exit if there's no match (--exit-0)
-local session=$(tmux list-sessions -F "#{session_name}" | fzf-tmux --query="$1" --select-1 --exit-0) || return $?
+local session=$(tmux list-sessions -F "#{session_name}" | fzf --query="$1" --select-1 --exit-0) || return $?
 
 if [[ -z "$session" ]]; then
   (($#)) && builtin print -P -- "[%F{196}ERROR%f] No session found" >&2
