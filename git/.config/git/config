@@ -273,6 +273,23 @@
   # Source: https://github.com/sunaku/home/blob/24441a94e1bfc5b7eebb1ee81dc62184626b694f/.zsh/config/alias/git.sh#L339-L340
   reflogs = reflog --pretty=\"%C(auto,yellow)%h%C(auto,reset): %C(auto,green)%ci (%cr)%C(auto,reset):%C(auto,blue)%d%C(auto,reset) %gs\"
 
+  # Source:
+  #   https://github.com/macmade/dotfiles/blob/8a19658ed7007a91bb33aa7c69582614344f143c/gitaliases#L362-L369
+  #
+  # Find all objects that aren't referenced by any other object (orphans).
+  # To help an orphan, we create a new branch with the orphan's commit hash,
+  # then merge it into our current branch:
+  #
+  #    git branch foo <commit>
+  #    git merge foo
+  #
+  orphans = fsck --full
+
+  # Source:
+  #   https://github.com/macmade/dotfiles/blob/8a19658ed7007a91bb33aa7c69582614344f143c/gitaliases#L321-L322
+  #   https://gist.github.com/492227
+  head = log -n1
+
   swag = !git commit -m \"$(curl -s whatthecommit.com/index.txt)\"
   yolo = !git add -A && git swag
 
