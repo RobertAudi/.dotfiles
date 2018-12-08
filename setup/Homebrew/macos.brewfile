@@ -362,6 +362,10 @@ cask "witch"
 cask "virtualbox"
 cask "virtualbox-extension-pack"
 
+# FiScript lets you execute custom scripts on your files/folders from the context menu in Finder.
+#   https://github.com/Mortennn/FiScript
+cask "https://raw.githubusercontent.com/Mortennn/FiScript/master/fiscript.rb", args: %w[no-quarantine]
+
 if `hostname`.to_s.match?(/\A[a-z]{3}-octo/i)
   # Team chat
   #   https://slack.com/
