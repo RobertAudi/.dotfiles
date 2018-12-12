@@ -644,19 +644,9 @@ brew "mkcert"
 #   export PKG_CONFIG_PATH="/usr/local/opt/nss/lib/pkgconfig"
 brew "nss"
 
-def work_env?
-  `hostname`.to_s.match?(/\A[a-z]{3}-octo/i)
-end
-
-if work_env?
-  # Tools and libraries to manipulate images in many formats
-  #   https://www.imagemagick.org/
-  brew "imagemagick@6", link: true
-end
-
 # Tools and libraries to manipulate images in many formats
 #   https://www.imagemagick.org/
-brew "imagemagick", link: !work_env?
+brew "imagemagick"
 
 # Object-relational database system
 #   https://www.postgresql.org/
