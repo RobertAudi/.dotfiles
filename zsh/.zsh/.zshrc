@@ -17,58 +17,6 @@ if brew command command-not-found-init > /dev/null; then
   { eval "$(brew command-not-found-init)" } &!
 fi
 
-# LDFLAGS / CPPFLAGS / PKG_CONFIG_PATH
-# ------------------------------------------------------------------------------ {{{
-
-# Tie PKG_CONFIG_PATH and pkg_config_path together
-typeset -T PKG_CONFIG_PATH pkg_config_path
-
-# Flex
-# ------------------------------------------------------------------------------
-if [[ -d "/usr/local/opt/flex/lib" ]]; then
-  export LDFLAGS="$LDFLAGS -L/usr/local/opt/flex/lib"
-fi
-
-if [[ -d "/usr/local/opt/flex/include" ]]; then
-  export CPPFLAGS="$CPPFLAGS -I/usr/local/opt/flex/include"
-fi
-
-# Bison
-# ------------------------------------------------------------------------------
-if [[ -d "/usr/local/opt/bison/lib" ]]; then
-  export LDFLAGS="$LDFLAGS -L/usr/local/opt/bison/lib"
-fi
-
-# LibreSSL / OpenSSL
-# ------------------------------------------------------------------------------
-if [[ -d "/usr/local/opt/libressl" ]]; then
-  if [[ -d "/usr/local/opt/libressl/lib" ]]; then
-    export LDFLAGS="$LDFLAGS -L/usr/local/opt/libressl/lib"
-  fi
-
-  if [[ -d "/usr/local/opt/libressl/include" ]]; then
-    export CPPFLAGS="$CPPFLAGS -I/usr/local/opt/libressl/include"
-  fi
-
-  if [[ -d "/usr/local/opt/libressl/lib/pkgconfig" ]]; then
-    pkg_config_path=(/usr/local/opt/libressl/lib/pkgconfig(N-/) ${(@)pkg_config_path:#/usr/local/opt/openssl/lib/pkgconfig})
-  fi
-elif [[ -d "/usr/local/opt/openssl" ]]; then
-  if [[ -d "/usr/local/opt/openssl/lib" ]]; then
-    export LDFLAGS="$LDFLAGS -L/usr/local/opt/openssl/lib"
-  fi
-
-  if [[ -d "/usr/local/opt/openssl/include" ]]; then
-    export CPPFLAGS="$CPPFLAGS -I/usr/local/opt/openssl/include"
-  fi
-
-  if [[ -d "/usr/local/opt/openssl/lib/pkgconfig" ]]; then
-    pkg_config_path=(/usr/local/opt/openssl/lib/pkgconfig(N-/) ${(@)pkg_config_path:#/usr/local/opt/libressl/lib/pkgconfig})
-  fi
-fi
-
-# ------------------------------------------------------------------------------ }}}
-
 if [[ ! -v LESSOPEN ]] && [[ -f "/usr/local/bin/lesspipe.sh" ]]; then
   export LESSOPEN="|/usr/local/bin/lesspipe.sh %s"
   export LESS_ADVANCED_PREPROCESSOR=1
@@ -116,8 +64,7 @@ typeset -gU sudo_path
 typeset -gU manpath
 typeset -gU infopath
 typeset -gU fpath
-typeset -gU pkg_config_path
 
-export PATH SUDO_PATH MANPATH INFOPATH FPATH PKG_CONFIG_PATH
+export PATH SUDO_PATH MANPATH INFOPATH FPATH
 
 [ -n "$PROFILE_INIT" ] && zprof
