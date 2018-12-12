@@ -18,7 +18,7 @@ fi
 
 command ruby-install --latest
 command ruby-install \
-  --jobs $number_of_cores \
+  --jobs=$number_of_cores \
   --src-dir $src_dir \
   --cleanup \
   --no-reinstall \
