@@ -8,7 +8,6 @@ gem install yard --env-shebang --no-document
 #   https://bundler.io/
 gem install bundler --env-shebang --no-document
 bundler plugin install extended_bundler-errors
-bundler plugin install bundler-console
 
 if type install-default-gems; then
   install-default-gems
