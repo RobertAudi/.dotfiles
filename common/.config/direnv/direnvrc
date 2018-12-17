@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+
+use_chruby() {
+  if ! has chruby && [[ -f /usr/local/share/chruby/chruby.sh ]]; then
+    source /usr/local/share/chruby/chruby.sh || return $?
+  fi
+
+  return 0
+}
+
+use_gem_home() {
+  if ! has gem_home && [[ -f /usr/local/share/gem_home/gem_home.sh ]]; then
+    source /usr/local/share/gem_home/gem_home.sh || return $?
+  fi
+
+  return 0
+}
+
+layout_ruby() {
+  if use chruby; then
+    [[ -f "$PWD/.ruby-version" ]] && chruby `cat "$PWD/.ruby-version"`
+  fi
+
+  if use gem_home; then
+    gem_home $PWD
+  else
+    # ----------------------------------------------------------------------
+    # The following code was taken from gem_home:
+    #   https://github.com/postmodern/gem_home                           {{{
+    #   https://github.com/postmodern/gem_home/blob/b15be402dad4e1521ca1ca2a48b1c11643f002b7/share/gem_home/gem_home.sh#L4-L15
+    local ruby_engine ruby_version gem_dir
+
+    eval "$(ruby - <<EOF
+puts "ruby_engine=#{defined?(RUBY_ENGINE) ? RUBY_ENGINE : 'ruby'};"
+puts "ruby_version=#{RUBY_VERSION};"
+EOF
+)"
+
+    gem_dir="$PWD/.gem/$ruby_engine/$ruby_version"
+
+    [[ "$GEM_HOME" == "$gem_dir" ]] && return
+
+    export GEM_HOME="$gem_dir"
+    # }}}
+    # ----------------------------------------------------------------------
+
+    path_add GEM_PATH "$gem_dir"
+    PATH_add "$gem_dir/bin"
+  fi
+}
+
+use_ruby() {
+  layout ruby
+}
+
+# Modeline {{{
+# vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker : }}}
