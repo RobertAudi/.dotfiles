@@ -252,7 +252,7 @@
   cob = checkout -b
 
   ls = ls-files
-  ls-ignored = ls-files --others --i --exclude-standard
+  ls-ignored = ls-files --others --ignored --exclude-standard
 
   amend     = commit --verbose --amend
   amend-now = commit --amend --reuse-message HEAD
