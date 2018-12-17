@@ -1,11 +1,11 @@
 #autoload
 
-local _UPDATE_DEFAULT_PACKAGES_DIR
-local -a _UPDATE_CUSTOM_ENV_VARIABLES
+typeset -g _UPDATE_DEFAULT_PACKAGES_DIR
+typeset -ga _UPDATE_CUSTOM_ENV_VARIABLES
 
 _UPDATE_DEFAULT_PACKAGES_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/update/packages"
 
-local -A _UPDATE_PACKAGE_MANAGERS
+typeset -gA _UPDATE_PACKAGE_MANAGERS
 _UPDATE_PACKAGE_MANAGERS[gem]="gem\tUpdate RubyGems and outdated gems"
 _UPDATE_PACKAGE_MANAGERS[pip]="pip\tUpdate outdated pip2 and pip3 packages"
 _UPDATE_PACKAGE_MANAGERS[npm]="npm\tUpdate outdated npm packages"
@@ -27,12 +27,12 @@ if is_linux; then
   _UPDATE_PACKAGE_MANAGERS[arch]="arch\tUpdate pacman packages"
 fi
 
-local -A _UPDATE_SUBCOMMANDS
+typeset -gA _UPDATE_SUBCOMMANDS
 _UPDATE_SUBCOMMANDS[all]="all\tUpdate everything"
 _UPDATE_SUBCOMMANDS[list]="list\tList all commands"
 _UPDATE_SUBCOMMANDS[help]="help\tDisplay this text and exit"
 
-local -A _UPDATE_OPTIONS
+typeset -gA _UPDATE_OPTIONS
 _UPDATE_OPTIONS[all]="-a, --all\tExecute all commands sets"
 _UPDATE_OPTIONS[list]="-l, --list\tList all commands"
 _UPDATE_OPTIONS[help]="-h, --help\tDisplay this text and exit"
