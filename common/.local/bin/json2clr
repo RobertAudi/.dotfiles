@@ -27,16 +27,16 @@ func printUsage() {
 // MARK: - classes
 
 class Color {
-    
+
     var name: String?
     var color: NSColor?
-    
+
     init?(dictionary: NSDictionary) {
         var name: String?
         var color: NSColor?
-        
+
         name = dictionary["name"] as? String
-        
+
         if let hex = dictionary["hex"] as? String {
             color = Color.colorFromHexString(value: hex)
         } else {
@@ -46,7 +46,7 @@ class Color {
             let alpha = dictionary["a"] as? String
             color = Color.colorFromStrings(red: red, green: green, blue: blue, alpha: alpha)
         }
-        
+
         if nil == name || nil == color {
             return nil
         } else {
@@ -54,18 +54,18 @@ class Color {
             self.color = color
         }
     }
-    
+
     class func colorFromHexString(value: String) -> NSColor? {
         var cString: String = value.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
-        
+
         if cString.hasPrefix("#") {
             cString = (cString as NSString).substring(from: 1)
         }
-        
+
         if cString.characters.count != 6 {
             return nil
         }
-        
+
         var rgbValue : UInt32 = 0
         Scanner(string: cString).scanHexInt32(&rgbValue)
         return NSColor(
@@ -75,16 +75,16 @@ class Color {
             alpha: CGFloat(1.0)
         )
     }
-    
+
     class func colorFromStrings(red: String?, green: String?, blue: String?, alpha: String?) -> NSColor? {
         let r = Color.floatValueFromString(value: red) ?? 0.0
         let g = Color.floatValueFromString(value: green) ?? 0.0
         let b = Color.floatValueFromString(value: blue) ?? 0.0
         let a = Color.floatValueFromString(value: alpha) ?? 1.0
-        
+
         return NSColor(calibratedRed: r, green: g, blue: b, alpha: a)
     }
-    
+
     class func floatValueFromString(value: String?) -> CGFloat? {
         if let string = value {
             if let integer = Int(string) {
@@ -95,7 +95,7 @@ class Color {
         }
         return nil
     }
-    
+
 }
 
 // MARK: - options
