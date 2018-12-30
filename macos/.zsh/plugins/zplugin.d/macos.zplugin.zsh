@@ -1,7 +1,9 @@
-# command completion for homebrew services
+# Command completion for homebrew services
+#   https://github.com/vasyharan/zsh-brew-services/
 zplugin light vasyharan/zsh-brew-services
 
-# flushes the DNS cache on macOS without pain
+# Flushes the DNS cache on macOS without pain
+#   https://github.com/eventi/noreallyjustfuckingstopalready
 zplugin light eventi/noreallyjustfuckingstopalready
 
 # local plugins
