@@ -70,3 +70,7 @@ ___install du-dup
 # A more intuitive version of du in rust
 #   https://github.com/bootandy/dust
 ___install du-dust
+
+# A tool to analyze file system usage written in Rust
+#   https://github.com/nachoparker/dutree
+___install dutree
