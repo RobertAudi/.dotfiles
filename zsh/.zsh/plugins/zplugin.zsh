@@ -7,7 +7,7 @@ zplugin light b4b4r07/httpstat
 zplugin ice pick"tipz.zsh"
 zplugin light molovo/tipz
 
-zplugin light RobertAudi/zsh-hooks
+zplugin light willghatch/zsh-hooks
 zplugin light RobertAudi/zshmarks
 zplugin light zsh-users/zsh-history-substring-search
 zplugin light RobertAudi/tsm
