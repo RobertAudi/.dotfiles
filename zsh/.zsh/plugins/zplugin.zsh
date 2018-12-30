@@ -4,12 +4,6 @@ zplugin snippet OMZ::plugins/safe-paste/safe-paste.plugin.zsh
 zplugin ice as"command" cp"httpstat.sh -> httpstat" pick"httpstat"
 zplugin light b4b4r07/httpstat
 
-zplugin ice as"command" pick"git-open"
-zplugin light paulirish/git-open
-
-zplugin ice as"command" pick"git-foresta"
-zplugin light takaaki-kasai/git-foresta
-
 zplugin ice pick"tipz.zsh"
 zplugin light molovo/tipz
 
