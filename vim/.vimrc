@@ -8,7 +8,6 @@ let g:loaded_spellfile_plugin  = 1
 let g:loaded_tarPlugin = 1
 let g:loaded_tar = 1
 let g:loaded_tutor_mode_plugin = 1
-let g:loaded_tarPlugin = 1
 let g:loaded_2html_plugin = 1
 let g:loaded_vimballPlugin = 1
 let g:loaded_vimball = 1
