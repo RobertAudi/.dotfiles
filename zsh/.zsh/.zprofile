@@ -302,6 +302,9 @@ unset DISPLAY
 # ripgrep (rg) config file path
 export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
 
+# cURL config file assuming XDG Base Directory setup
+export CURL_HOME="$XDG_CONFIG_HOME/curl"
+
 # Homebrew {{{
 # ---------------------------------------------------------------------
 # Text printed before the installation summary of each successful build.
