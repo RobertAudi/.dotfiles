@@ -2,7 +2,7 @@ if !has('gui_running') && !has('gui_macvim')
   finish
 endif
 
-set guifont=Input:h14
+set guifont=Hack:h12
 set antialias
 
 " " Enable <M- mappings (?)

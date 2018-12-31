@@ -2,7 +2,7 @@ if !has('gui_running') && !(has('gui_gtk') && has('gui_gtk2'))
   finish
 endif
 
-set guifont=Input\ 11
+set guifont=Hack\ 12
 
 " Disable the menu bar
 set guioptions-=m

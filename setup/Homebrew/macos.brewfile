@@ -205,7 +205,6 @@ brew "RobertAudi/formulae/asprint", args: ["HEAD"]
 # Homebrew Cask
 # ------------------------------------------------------------------------------
 tap "caskroom/cask"
-tap "caskroom/fonts"
 tap "caskroom/versions"
 
 # Password manager

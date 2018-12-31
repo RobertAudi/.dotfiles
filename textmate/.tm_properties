@@ -7,8 +7,8 @@ PATH = "$PATH:/usr/local/bin"
 
 excludeDirectories = "{.{git,hg,svn,gem},node_modules,bower_components,doc,.yardoc,tmp,log,}"
 
-fontName = Input
-fontSize = 14
+fontName = Hack
+fontSize = 12
 
 theme = 'F4EC0A38-E8AC-450B-B988-B0E4579FDF94'
 
