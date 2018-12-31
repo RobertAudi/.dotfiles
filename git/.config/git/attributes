@@ -3,6 +3,9 @@
 # text and leave all files detected as binary untouched.
 # This will handle all files NOT defined below.
 #   http://davidlaing.com/2012/09/19/customise-your-gitattributes-to-become-a-git-ninja/
+#
+# To unset this attribute (eg: on a per-repo basis) use:
+#   * -text
 * text=auto
 
 # Source code

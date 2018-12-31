@@ -1,6 +1,8 @@
 Conifg
 ------
 
+### Configuration files
+
 There are three configuration files under `$XDG_CONFIG_HOME/git`:
 
 #### `config`
