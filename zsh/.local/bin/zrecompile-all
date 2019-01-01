@@ -7,6 +7,13 @@ setopt extended_glob
 autoload -Uz zrecompile
 
 local f
-for f in ${HOME}/.zshenv(-N.) ${ZDOTDIR}/***/*.zsh(-N.) ${ZDOTDIR}/***/{functions,functions/utils,completions}/*(-N.) ${ZDOTDIR}/.{zlog{in,out},zprofile,zsh{env,rc}}(-N.) ; do
-  zrecompile -p $f && command rm -fv $f.zwc.old
+
+for f in ${ZDOTDIR}/***/{functions,functions/utils,completions}/*(-N.) ; do
+  zrecompile -p -U $f && \
+    command rm -fv $f.zwc.old
+done
+
+for f in ${HOME}/.zshenv(-N.) ${ZDOTDIR}/***/*.zsh(-N.) ${ZDOTDIR}/.{zlog{in,out},zprofile,zsh{env,rc}}(-N.) ; do
+  zrecompile -p $f && \
+    command rm -fv $f.zwc.old
 done
