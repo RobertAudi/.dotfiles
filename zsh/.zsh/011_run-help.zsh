@@ -6,5 +6,6 @@ unalias run-help 2> /dev/null
 # Authoload them BEFORE autoloading run-help
 autoload -Uz run-help-git
 autoload -Uz run-help-openssl
+autoload -Uz run-help-ssh
 autoload -Uz run-help-sudo
 autoload -Uz run-help
