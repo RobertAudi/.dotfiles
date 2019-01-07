@@ -13,10 +13,6 @@ stty stop undef
 
 export SSH_PUBLIC_KEY=$(<$HOME/.ssh/id_rsa.pub)
 
-if brew command command-not-found-init > /dev/null; then
-  { eval "$(brew command-not-found-init)" } &!
-fi
-
 if [[ ! -v LESSOPEN ]] && [[ -f "/usr/local/bin/lesspipe.sh" ]]; then
   export LESSOPEN="|/usr/local/bin/lesspipe.sh %s"
   export LESS_ADVANCED_PREPROCESSOR=1

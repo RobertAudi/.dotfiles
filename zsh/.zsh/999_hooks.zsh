@@ -1,3 +1,8 @@
+command_not_found_handler() {
+  print -- "୧( ಠ Д ಠ )୨ command not found: $1" >&2
+  return 127
+}
+
 _chpwd-show-pwd-info() {
   print -P -- "%F{245}In: %F{yellow}%~%f"
 }
