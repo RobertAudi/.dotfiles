@@ -10,19 +10,19 @@ let g:lightline.colorscheme = 'eighties'
 let g:readmode_mode_map = { 'mode': 'passive' }
 
 let g:lightline.component_function = {
-      \   'gitbranch':    'RAGitBranch',
-      \   'readonly':     'RAReadonly',
-      \   'modified':     'RAModified',
-      \   'filename':     'RAFilename',
-      \   'filetype':     'RAFiletype',
-      \   'mode':         'RAMode',
-      \   'inactivemode': 'RAInactiveMode',
-      \   'ctrlpmark':    'RACtrlPMark',
+      \   'gitbranch':    'x2a#lightline#GitBranch',
+      \   'readonly':     'x2a#lightline#Readonly',
+      \   'modified':     'x2a#lightline#Modified',
+      \   'filename':     'x2a#lightline#Filename',
+      \   'filetype':     'x2a#lightline#Filetype',
+      \   'mode':         'x2a#lightline#Mode',
+      \   'inactivemode': 'x2a#lightline#InactiveMode',
+      \   'ctrlpmark':    'x2a#lightline#ctrlp#CtrlPMark',
       \ }
 
 let g:lightline.component_expand = {
-      \   'lineinfo': 'RALineInfo',
-      \   'percent':  'RAPercent',
+      \   'lineinfo': 'x2a#lightline#LineInfo',
+      \   'percent':  'x2a#lightline#Percent',
       \ }
 
 let g:lightline.component_type = {
@@ -48,113 +48,7 @@ let g:lightline.subseparator = {
       \   'right': '|'
       \ }
 
-" ---------------------------------------------------------------------- {{{
-
-function! RAFuckingFiletype()
-  let l:filetypes = ['help', 'qf', 'man']
-  return index(l:filetypes, &filetype) >= 0
-endfunction
-
-function! RAFuckingFilename()
-  let l:filename  = expand('%:t')
-  let l:filenames = ['ControlP', 'NERD', '__CtrlSF']
-  for l:f in l:filenames
-    if l:filename =~? l:f
-      return 1
-    endif
-  endfor
-  return 0
-endfunction
-
-function! RALineInfo()
-  if RAFuckingFiletype() || RAFuckingFilename()
-    return ''
-  else
-    return '%3l:%-2v'
-  endif
-endfunction
-
-function! RAPercent()
-  if RAFuckingFiletype() || RAFuckingFilename()
-    return ''
-  else
-    return '%3p%%'
-  endif
-endfunction
-
-function! RAModified()
-  if &readonly
-    return ''
-  elseif &filetype =~# 'help' || !&modifiable
-    return "\ue0a2"
-  elseif &modified
-    return "\u25cb"
-  else
-    return ''
-  endif
-endfunction
-
-function! RAReadonly()
-  return &filetype !~? 'help' && &readonly ? "\ue0a2" : ''
-endfunction
-
-function! RAFilename()
-  let l:filename = expand('%:t')
-  return  l:filename ==? 'ControlP' && has_key(g:lightline, 'ctrlp_item') ? g:lightline.ctrlp_item :
-        \ l:filename =~? 'NERD\|__CtrlSF' ? '' :
-        \ ('' !=# RAReadonly() ? RAReadonly() . ' ' : '') .
-        \ ('' !=# l:filename   ? l:filename         : '[No Name]') .
-        \ ('' !=# RAModified() ? ' ' . RAModified() : '')
-endfunction
-
-function! RAGitBranch()
-  let l:symbol = '±'
-  let l:branch = gitbranch#name()
-  if RAFuckingFiletype() || RAFuckingFilename() || !strlen(l:branch)
-    return ''
-  else
-    return l:symbol . ' ' . l:branch
-  endif
-endfunction
-
-function! RAFiletype()
-  if RAFuckingFilename() || winwidth(0) <= 60
-    return ''
-  else
-    return strlen(&filetype) ? '[' . &filetype . ']' : 'no ft'
-  endif
-endfunction
-
-function! RAMode()
-  if RAFuckingFiletype()
-    return ''
-  endif
-
-  let l:filename = expand('%:t')
-  return  l:filename ==? 'ControlP'   ? 'CtrlP'    :
-        \ l:filename ==? '__CtrlSF__' ? 'CtrlSF'   :
-        \ l:filename =~? 'NERD_tree'  ? 'NERDTree' :
-        \ winwidth(0) > 60 ? lightline#mode() : ''
-endfunction
-
-function! RAInactiveMode()
-  return RAFuckingFilename() ? RAMode() : ''
-endfunction
-
-function! RACtrlPMark()
-  if expand('%:t') =~? 'ControlP' && has_key(g:lightline, 'ctrlp_item')
-    call lightline#link('iR'[g:lightline.ctrlp_regex])
-    return lightline#concatenate([
-          \   g:lightline.ctrlp_prev,
-          \   g:lightline.ctrlp_item,
-          \   g:lightline.ctrlp_next
-          \ ], 0)
-  else
-    return ''
-  endif
-endfunction
-
-" ---------------------------------------------------------------------- }}}
+" ----------------------------------------------------------------------
 
 let g:ctrlp_status_func = {
   \   'main': 'CtrlPStatusFunc_1',
