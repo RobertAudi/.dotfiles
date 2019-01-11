@@ -1,6 +1,12 @@
 Homebrew
 --------
 
+The `brew.sh` script will update `brew` or install it if needed:
+
+```console
+$ ./brew.sh
+```
+
 Dependencies are managed using [Homebrew Bundle][brew-bundle] and are organized in multiple ["bundles"](./Homebrew) (files with the `.brewfile` extension).
 
 To install a bundle, you need to specify its file to the `brew bundle` command:
