@@ -33,7 +33,7 @@ Rust
 
 The `rust.sh` script will install Rust using [rustup.rs][]:
 
-```sh
+```console
 $ ./rust.sh
 ```
 
@@ -41,7 +41,7 @@ $ ./rust.sh
 
 ### Packages
 
-```sh
+```console
 $ ./cargo-packages.sh
 ```
 
@@ -76,7 +76,7 @@ $ ./cargo-packages.sh
 Alacritty
 ---------
 
-```sh
+```console
 $ ./rust.sh
 $ ./alacritty.sh
 ```
