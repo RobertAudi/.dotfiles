@@ -278,24 +278,9 @@ function __update::commands::brew {
   command brew cask upgrade
 
   builtin print
-  __update::utils::log::info "(builtin cd \"$(command brew --repo)\" && git prune && git gc)"
-  __update::utils::log::separator "⋅"
-  (builtin cd "$(command brew --repo)" &>/dev/null && git prune && git gc)
-
-  builtin print
   __update::utils::log::info "command brew cleanup"
   __update::utils::log::separator "⋅"
   command brew cleanup
-
-  builtin print
-  __update::utils::log::info "command brew prune"
-  __update::utils::log::separator "⋅"
-  command brew prune
-
-  builtin print
-  __update::utils::log::info "rm -vrf \"$(command brew --cache)\""
-  __update::utils::log::separator "⋅"
-  rm -vrf "$(command brew --cache)"
 
   builtin print
 }

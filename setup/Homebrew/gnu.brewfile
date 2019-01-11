@@ -20,7 +20,17 @@ brew "gawk"
 
 # GNU grep, egrep and fgrep
 #   https://www.gnu.org/software/grep/
-brew "grep", args: %w[with-default-names]
+#
+# ==> Caveats
+# All commands have been installed with the prefix "g".
+# If you need to use these commands with their normal names, you
+# can add a "gnubin" directory to your PATH from your bashrc like:
+#   PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
+
+# Additionally, you can access their man pages with normal names if you add
+# the "gnuman" directory to your MANPATH from your bashrc as well:
+#   MANPATH="/usr/local/opt/grep/libexec/gnuman:$MANPATH"
+brew "grep"
 
 # Apply a diff file to an original
 #   https://savannah.gnu.org/projects/patch/
@@ -65,7 +75,14 @@ brew "gnu-sed"
 
 # GNU implementation of time utility
 #   https://www.gnu.org/software/time/
-brew "gnu-time", args: %w[with-default-names]
+#
+# ==> Caveats
+# GNU "time" has been installed as "gtime".
+# If you need to use it as "time", you can add a "gnubin" directory
+# to your PATH from your bashrc like:
+#
+#     PATH="/usr/local/opt/gnu-time/libexec/gnubin:$PATH"
+brew "gnu-time"
 
 # GNU Pretty Good Privacy (PGP) package
 #   https://gnupg.org/
@@ -172,20 +189,54 @@ brew "automake"
 # On 10.12 (Sierra) or later with SIP, you need to run this:
 #
 #   echo "set startup-with-shell off" >> ~/.gdbinit
-brew "gdb", args: %w[with-all-targets with-python]
+brew "gdb"
 
 # Classic UNIX line editor
 #   https://www.gnu.org/software/ed/ed.html
-brew "ed", args: %w[with-default-names]
+#
+# ==> Caveats
+# All commands have been installed with the prefix "g".
+# If you need to use these commands with their normal names, you
+# can add a "gnubin" directory to your PATH from your bashrc like:
+#   PATH="/usr/local/opt/ed/libexec/gnubin:$PATH"
+#
+# Additionally, you can access their man pages with normal names if you add
+# the "gnuman" directory to your MANPATH from your bashrc as well:
+#   MANPATH="/usr/local/opt/ed/libexec/gnuman:$MANPATH"
+brew "ed"
 
 # C code prettifier
 #   https://www.gnu.org/software/indent/
-brew "gnu-indent", args: %w[with-default-names]
+#
+# ==> Caveats
+# GNU "indent" has been installed as "gindent".
+# If you need to use it as "indent", you can add a "gnubin" directory
+# to your PATH from your bashrc like:
+#
+#     PATH="/usr/local/opt/gnu-indent/libexec/gnubin:$PATH"
+#
+# Additionally, you can access its man page with normal name if you add
+# the "gnuman" directory to your MANPATH from your bashrc as well:
+#
+#     MANPATH="/usr/local/opt/gnu-indent/libexec/gnuman:$MANPATH"
+brew "gnu-indent"
 
 # GNU implementation of which utility
 #   https://savannah.gnu.org/projects/which/
 #   https://carlowood.github.io/which/index.html
-brew "gnu-which", args: %w[with-default-names]
+#
+# ==> Caveats
+# GNU "which" has been installed as "gwhich".
+# If you need to use it as "which", you can add a "gnubin" directory
+# to your PATH from your bashrc like:
+#
+#     PATH="/usr/local/opt/gnu-which/libexec/gnubin:$PATH"
+#
+# Additionally, you can access its man page with normal name if you add
+# the "gnuman" directory to your MANPATH from your bashrc as well:
+#
+#     MANPATH="/usr/local/opt/gnu-which/libexec/gnuman:$MANPATH"
+brew "gnu-which"
 
 # Terminal multiplexer with VT100/ANSI terminal emulation
 #   https://www.gnu.org/software/screen

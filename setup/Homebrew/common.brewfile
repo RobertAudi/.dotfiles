@@ -26,7 +26,7 @@ brew "subversion"
 
 # UNIX shell (command interpreter)
 #  https://www.zsh.org/
-brew "zsh", args: ["with-pcre", "with-unicode9"]
+brew "zsh"
 
 # Additional completion definitions for zsh
 #   https://github.com/zsh-users/zsh-completions
@@ -34,11 +34,15 @@ brew "zsh-completions"
 
 # Pager program similar to more
 #   http://www.greenwoodsoftware.com/less/index.html
-brew "less", args: ["with-pcre"]
+brew "less"
 
 # Input filter for the pager less
 #   https://www-zeuthen.desy.de/~friebel/unix/lesspipe.html
-brew "lesspipe", args: ["with-syntax-highlighting"]
+#
+# ==> Caveats
+# Append the following to your ~/.zshrc:
+# export LESSOPEN="|/usr/local/bin/lesspipe.sh %s" LESS_ADVANCED_PREPROCESSOR=1
+brew "lesspipe"
 
 # pgrep, pkill, and pfind for OpenBSD and Darwin (macOS)
 #   https://proctools.sourceforge.io/
@@ -50,7 +54,12 @@ brew "pstree"
 
 # Collection of tools that nobody wrote when UNIX was young
 #   https://joeyh.name/code/moreutils/
-brew "moreutils", args: ["without-parallel"], link: true
+#
+# Conflicts with:
+#   parallel (because Both install a `parallel` executable.)
+#   pwntools (because Both install an `errno` executable.)
+#   task-spooler (because Both install a `ts` executable.)
+brew "moreutils", link: true
 
 # Tools for file renaming
 #   https://www.nongnu.org/renameutils/
@@ -445,7 +454,16 @@ brew "aspell", args: ["without-lang-de", "without-lang-es"]
 
 # Command-line outline and bitmap font editor/converter
 #   https://fontforge.github.io
-brew "fontforge", args: ["with-extra-tools", "with-giflib"]
+#
+# ==> Caveats
+# This formula only installs the command line utilities.
+#
+# FontForge.app can be downloaded directly from the website:
+#   https://fontforge.github.io
+#
+# Alternatively, install with Homebrew Cask:
+#   brew cask install fontforge
+brew "fontforge", args: ["with-extra-tools"]
 
 # Fast CSV toolkit written in Rust
 #   https://github.com/BurntSushi/xsv
@@ -497,7 +515,7 @@ brew "detox"
 
 # Extremely fast tool to remove dupes and other lint from your filesystem
 #   https://github.com/sahib/rmlint
-brew "rmlint", args: ["with-json-glib", "with-libelf"]
+brew "rmlint"
 
 # Non-validating SQL parser
 #   https://github.com/andialbrecht/sqlparse
@@ -581,7 +599,7 @@ brew "vegeta"
 
 # Curses-based tool for viewing and analyzing log files
 #   https://github.com/tstack/lnav
-brew "lnav", args: ["with-curl"]
+brew "lnav"
 
 # Copy/paste anything over the network
 #   https://github.com/jedisct1/piknik

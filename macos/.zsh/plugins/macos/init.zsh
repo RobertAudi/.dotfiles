@@ -10,7 +10,6 @@ alias -s {md,mmd,markdown}="marked"
 
 # Misc (random shit really...)
 alias brews="brew list -1"
-alias cask="brew cask"
 
 # Alias gvim to mvim
 type gvim  >/dev/null || alias gvim="mvim"

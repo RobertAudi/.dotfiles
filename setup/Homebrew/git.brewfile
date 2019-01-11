@@ -1,6 +1,6 @@
 # Distributed revision control system
 #   https://git-scm.com
-brew "git", args: ["with-blk-sha1", "with-curl", "with-gettext", "with-pcre2", "with-perl", "with-subversion", "without-completions"]
+brew "git", args: ["with-curl"]
 
 # Add GitHub support to git on the command-line
 #   https://hub.github.com/

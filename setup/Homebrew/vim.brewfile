@@ -8,7 +8,11 @@ brew "neovim"
 
 # Use ViM as PAGER
 #   https://github.com/rkitover/vimpager
-brew "vimpager", args: ["with-pandoc"]
+#
+# ==> Caveats
+# To use vimpager as your default pager, add `export PAGER=vimpager` to your
+# shell configuration.
+brew "vimpager"
 
 # GUI for vim, made for macOS
 #   https://github.com/macvim-dev/macvim
