@@ -594,24 +594,24 @@ defaults write com.google.Chrome PMPrintingExpandedStateForPrint2 -bool true
 # ------------------------------------------------------------------------------
 ___section "MacVim"
 
-___describe "Disable software auto-update (Sparkle)"
-defaults write org.vim.MacVim SUEnableAutomaticChecks -bool false
+___describe "Enable software auto-update (Sparkle)"
+defaults write org.vim.MacVim SUEnableAutomaticChecks -bool true
 (( $status == 0 )) && ___done || ___error
 
-___describe "Do not check for software updates when MacVim launches"
-defaults write org.vim.MacVim SUCheckAtStartup -bool false
+___describe "Check for software updates when MacVim launches"
+defaults write org.vim.MacVim SUCheckAtStartup -bool true
 (( $status == 0 )) && ___done || ___error
 
 ___describe "Quit MacVim after last window closes"
 defaults write org.vim.MacVim MMLastWindowClosedBehavior -int 2
 (( $status == 0 )) && ___done || ___error
 
-___describe "Use Core Text renderer"
-defaults write org.vim.MacVim MMRenderer -int 1
+___describe "Do not use the Core Text renderer"
+defaults write org.vim.MacVim MMRenderer -int 0
 (( $status == 0 )) && ___done || ___error
 
-___describe "Draw marked text inline"
-defaults write org.vim.MacVim MMUseInlineIm -bool true
+___describe "Do not draw marked text inline"
+defaults write org.vim.MacVim MMUseInlineIm -bool false
 (( $status == 0 )) && ___done || ___error
 
 ___describe "Disable Quickstart"
