@@ -24,10 +24,6 @@ brew "mercurial"
 #   https://subversion.apache.org/
 brew "subversion"
 
-# UNIX shell (command interpreter)
-#  https://www.zsh.org/
-brew "zsh"
-
 # Additional completion definitions for zsh
 #   https://github.com/zsh-users/zsh-completions
 brew "zsh-completions"
@@ -51,15 +47,6 @@ brew "proctools"
 # Show ps output as a tree
 #   http://www.thp.uni-duisburg.de/pstree/
 brew "pstree"
-
-# Collection of tools that nobody wrote when UNIX was young
-#   https://joeyh.name/code/moreutils/
-#
-# Conflicts with:
-#   parallel (because Both install a `parallel` executable.)
-#   pwntools (because Both install an `errno` executable.)
-#   task-spooler (because Both install a `ts` executable.)
-brew "moreutils", link: true
 
 # Tools for file renaming
 #   https://www.nongnu.org/renameutils/
@@ -910,6 +897,17 @@ brew "RobertAudi/formulae/lc"
 # Simple command line tool for unit conversions
 #   https://xiny.sh/
 brew "RobertAudi/formulae/xiny"
+
+# Collection of tools that nobody wrote when UNIX was young
+#   https://joeyh.name/code/moreutils/
+#
+# Conflicts with:
+#   task-spooler (because Both install a `ts` executable.)
+brew "RobertAudi/formulae/moreutils"
+
+# UNIX shell (command interpreter)
+#  https://www.zsh.org/
+brew "RobertAudi/formulae/zsh"
 
 # Modeline {{{
 # vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker : }}}
