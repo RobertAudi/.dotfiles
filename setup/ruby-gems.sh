@@ -4,9 +4,12 @@
 #   http://yardoc.org/
 gem install yard --env-shebang --no-document
 
-# Manages an application's dependencies
-#   https://bundler.io/
-gem install bundler --env-shebang --no-document
+# Bundler is shipped with Ruby 2.6+
+if ruby -e "exit(Gem::Version.new(RUBY_VERSION) < Gem::Version.new('2.6') ? 0 : 1)" &> /dev/null ; then
+  # Manages an application's dependencies
+  #   https://bundler.io/
+  gem install bundler --env-shebang --no-document
+fi
 
 # A Bundler plugin that makes gem installation errors more
 # actionable, educative, and all around easier to understand
