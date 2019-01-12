@@ -1,0 +1,13 @@
+--langdef=scss
+--langmap=scss:.scss
+--regex-scss=/^[ \t]*@mixin ([A-Za-z0-9_-]+)/\1/m,mixin,Mixins/
+--regex-scss=/^[ \t]*\$([A-Za-z0-9_-]+)/\1/v,variable,Variables/
+--regex-scss=/^([A-Za-z0-9_-]*)*\.([A-Za-z0-9_-]+) *[,{]/\2/c,class,Classes/
+--regex-scss=/^[ \t&]+\.([A-Za-z0-9_-]+) *[,{]/\1/c,class,Classes/
+--regex-scss=/^(.*)*\#([A-Za-z0-9_-]+) *[,{]/\2/i,id,IDs/
+--regex-scss=/^[ \t&]*#([A-Za-z0-9_-]+)/\1/i,id,IDs/
+--regex-scss=/(^([A-Za-z0-9_-])*([A-Za-z0-9_-]+)) *[,|\{]/\1/t,tag,Tags/
+--regex-scss=/(^([^\/\/])*)[ \t]+([A-Za-z0-9_-]+)) *[,|\{]/\3/t,tag,Tags/
+--regex-scss=/(^(.*, *)([A-Za-z0-9_-]+)) *[,|\{]/\3/t,tag,Tags/
+--regex-scss=/(^[ \t]+([A-Za-z0-9_-]+)) *[,|\{]/\1/t,tag,Tags/
+--regex-scss=/^[ \t]*@media\s+([A-Za-z0-9_-]+)/\1/d,media,Media queries/
