@@ -11,8 +11,13 @@ set mousehide
 " Disable visual tabs
 set guioptions-=e
 
+" Disable the toolbar
+set guioptions-=T
+
 " Disable ALL scrollbars
 set guioptions-=r
+set guioptions-=R
+set guioptions-=l
 set guioptions-=L
 
 " Use console dialogs instead of popups
