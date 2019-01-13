@@ -200,6 +200,10 @@ tap "RobertAudi/formulae", "https://github.com/RobertAudi/homebrew-formulae.git"
 #   http://hasseg.org/asprint
 brew "RobertAudi/formulae/asprint", args: ["HEAD"]
 
+# Switch, hide, show, quit, kill or list macOS applications from the command line or scripts.
+#   https://sabi.net/nriley/software/#appswitch
+brew "RobertAudi/formulae/appswitch"
+
 # ------------------------------------------------------------------------------
 
 # Homebrew Cask
