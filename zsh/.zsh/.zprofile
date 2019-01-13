@@ -414,6 +414,7 @@ manpath=(
   /usr/local/opt/make/libexec/gnuman(N-/)
   /usr/local/opt/unzip/share/man(N-/)
   /usr/local/share/man(N-/)
+  /Applications/Xcode.app/Contents/Developer/usr/share/man(N-/)
   /usr/share/man(N-/)
   $manpath
 )
