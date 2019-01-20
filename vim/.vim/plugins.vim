@@ -91,7 +91,7 @@ Plug 'fcpg/vim-navmode'
 Plug 'kana/vim-niceblock'
 Plug 'andymass/vim-matchup'
 
-Plug 'Konfekt/vim-smartbraces'
+Plug 'RobertAudi/vim-smartbraces'
 Plug 'vim-scripts/loremipsum'
 Plug 'Olical/vim-expand'
 
