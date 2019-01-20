@@ -2,7 +2,7 @@
 " ==============================================================================
 
 let g:x2a#lightline#ignored_filetypes = ['help', 'qf', 'man']
-let g:x2a#lightline#ignored_plugin_filetypes = ['ctrlp', 'nerdtree', 'ctrlsf']
+let g:x2a#lightline#ignored_plugin_filetypes = ['ctrlp', 'nerdtree', 'ctrlsf', 'fzf']
 
 let g:x2a#lightline#special_filetypes =
       \ {
@@ -15,6 +15,7 @@ let g:x2a#lightline#plugin_filetypes =
       \   'ctrlp':    'CtrlP',
       \   'nerdtree': 'NERDTree',
       \   'ctrlsf':   'CtrlSF',
+      \   'fzf':      'FZF',
       \ }
 
 " ============================================================================== }}}

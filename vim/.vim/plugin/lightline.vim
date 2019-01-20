@@ -66,3 +66,9 @@ endfunction
 function! CtrlPStatusFunc_2(str)
   return lightline#statusline(0)
 endfunction
+
+function! s:fzf_statusline()
+  return lightline#statusline(0)
+endfunction
+
+autocmd! User FzfStatusLine call <SID>fzf_statusline()

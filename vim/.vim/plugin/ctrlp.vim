@@ -37,11 +37,11 @@ endif
 
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 
+let g:ctrlp_map = '<Nop>'
+
 nnoremap <silent> <C-b> :CtrlPBuffer<CR>
 
 if has('gui_running') && has('gui_macvim')
-  nnoremap <D-p> :CtrlP<CR>
-  inoremap <D-p> <Esc>:CtrlP<CR>
   nnoremap <D-b> :CtrlPBuffer<CR>
   inoremap <D-b> <Esc>:CtrlPBuffer<CR>
 endif

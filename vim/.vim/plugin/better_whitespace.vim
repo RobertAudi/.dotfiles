@@ -7,6 +7,7 @@ let g:better_whitespace_filetypes_blacklist =
       \   'qf',
       \   'man',
       \   'nerdtree',
+      \   'fzf',
       \   'diff',
       \   'gitcommit',
       \   'gitrebase'

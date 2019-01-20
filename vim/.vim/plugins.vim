@@ -115,6 +115,9 @@ Plug 'jasoncodes/ctrlp-modified.vim'
 Plug 'naquad/ctrlp-filetype'
 Plug 'SpaceVim/vim-ctrlp-help'
 
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
+
 Plug 'rhysd/committia.vim', { 'for': 'gitcommit' }
 
 Plug 'dahu/vim-foist'
