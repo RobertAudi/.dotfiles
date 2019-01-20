@@ -5,7 +5,7 @@ zmodload zsh/mathfunc
 zmodload zsh/parameter
 zmodload zsh/param/private
 zmodload zsh/pcre
-zmodload zsh/stat
+zmodload -F zsh/stat b:zstat
 zmodload zsh/system
 zmodload zsh/attr
 zmodload zsh/datetime
