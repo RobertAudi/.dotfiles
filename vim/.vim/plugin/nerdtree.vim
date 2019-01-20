@@ -37,15 +37,15 @@ let g:NERDTreeIgnore = [
       \ ]
 
 let g:NERDTreeIndicatorMapCustom = {
-      \ "Modified"  : "✹",
-      \ "Staged"    : "✚",
-      \ "Untracked" : "✭",
+      \ "Modified"  : "○",
+      \ "Staged"    : "●",
+      \ "Untracked" : "⁇",
       \ "Renamed"   : "➜",
-      \ "Unmerged"  : "═",
-      \ "Deleted"   : "✖",
-      \ "Dirty"     : "✗",
-      \ "Clean"     : "✔︎",
-      \ 'Ignored'   : '☒',
+      \ "Unmerged"  : "‼",
+      \ "Deleted"   : "×",
+      \ "Dirty"     : "◌",
+      \ "Clean"     : "√",
+      \ 'Ignored'   : "╳",
       \ "Unknown"   : "?"
       \ }
 
