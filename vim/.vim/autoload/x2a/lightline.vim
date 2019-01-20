@@ -1,6 +1,9 @@
 " Variables {{{
 " ==============================================================================
 
+let g:x2a#lightline#lock_symbol = "\ue0a2" " 
+let g:x2a#lightline#modified_symbol = "\u25cb" " ○
+
 let g:x2a#lightline#ignored_filetypes = ['help', 'qf', 'man']
 let g:x2a#lightline#ignored_plugin_filetypes = ['ctrlp', 'nerdtree', 'ctrlsf', 'fzf']
 
@@ -61,16 +64,16 @@ function! x2a#lightline#Modified()
   if &readonly
     return ''
   elseif &filetype =~# 'help' || !&modifiable
-    return "\ue0a2"
+    return g:x2a#lightline#lock_symbol
   elseif &modified
-    return "\u25cb"
+    return g:x2a#lightline#modified_symbol
   else
     return ''
   endif
 endfunction
 
 function! x2a#lightline#Readonly()
-  return &filetype !~? 'help' && &readonly ? "\ue0a2" : ''
+  return &filetype !~? 'help' && &readonly ? g:x2a#lightline#lock_symbol : ''
 endfunction
 
 function! x2a#lightline#Filename()
