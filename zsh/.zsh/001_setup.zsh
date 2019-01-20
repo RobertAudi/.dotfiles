@@ -1,15 +1,36 @@
 # Modules {{{
 # ------------------------------------------------------------------------------
-zmodload zsh/complist
-zmodload zsh/mathfunc
-zmodload zsh/parameter
-zmodload zsh/param/private
-zmodload zsh/pcre
-zmodload -F zsh/stat b:zstat
-zmodload zsh/system
+
+# Builtins for manipulating extended attributes (xattr).
 zmodload zsh/attr
+
+# Completion listing extensions.
+zmodload zsh/complist
+
+# Some date/time commands and parameters.
 zmodload zsh/datetime
+
+# Standard scientific functions for use in mathematical evaluations.
+zmodload zsh/mathfunc
+
+# Access to internal hash tables via special associative arrays.
+zmodload zsh/parameter
+
+# Builtins for managing private-scoped parameters in function context.
+zmodload zsh/param/private
+
+# Interface to the PCRE library.
+zmodload zsh/pcre
+
+# A builtin interface to various low-level system features.
+zmodload zsh/system
+
+# Interface to the terminfo database.
 zmodload zsh/terminfo
+
+# A builtin command interface to the stat system call.
+zmodload -F zsh/stat b:zstat
+
 # ------------------------------------------------------------------------------ }}}
 
 # Options {{{
