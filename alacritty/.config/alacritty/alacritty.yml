@@ -34,23 +34,22 @@ window:
     x: 2
     y: 2
 
-  # Window decorations
-  #
-  # Available values:
-  # - `full`: Window with title bar and title bar buttons
-  # - `none`: Window without title bar, rounded corners, or drop shadow
-  # - `transparent`: Window with title bar with transparent background and title
-  #   bar buttons
-  # - `buttonless`: Window with title bar with transparent background and no
-  #   title bar buttons
+  # Spread additional padding evenly around the terminal content.
+  dynamic_padding: false
+
   # Window decorations
   #
   # Values for `decorations`:
   #     - full: Borders and title bar
   #     - none: Neither borders nor title bar
+  #
+  # Values for `decorations` (macOS only):
   #     - buttonless: Title bar, transparent background and title bar buttons
   #     - transparent: Title bar, transparent background, but no title bar buttons
   decorations: none
+
+  # When true, alacritty starts maximized.
+  start_maximized: true
 
 scrolling:
   # Maximum number of lines in the scrollback buffer.
@@ -88,19 +87,19 @@ font:
   normal:
     family: Hack
     # The `style` can be specified to pick a specific face.
-    # style: Regular
+    style: Regular
 
   # Bold font face
   bold:
     family: Hack
     # The `style` can be specified to pick a specific face.
-    # style: Bold
+    style: Bold
 
   # Italic font face
   italic:
     family: Hack
     # The `style` can be specified to pick a specific face.
-    # style: Italic
+    style: Italic
 
   # Point size
   size: 12.0
@@ -118,23 +117,27 @@ font:
     x: 0
     y: 0
 
-  # Scale the font size based on the monitor's DPI. This will lead to bigger text on HiDPI
-  # screens and make reading text a little easier.
-  scale_with_dpi: true
-
-  # Thin stroke font rendering (OS X only)
+  # Thin stroke font rendering (macOS only)
   #
   # Thin strokes are suitable for retina displays, but for non-retina screens
   # it is recommended to set `use_thin_strokes` to `false`
+  #
+  # macOS >= 10.14.x:
+  #
+  # If the font quality on non-retina display looks bad then set
+  # `use_thin_strokes` to `true` and enable font smoothing by running the
+  # following command:
+  #   `defaults write -g CGFontRenderingFontSmoothingDisabled -bool NO`
+  #
+  # This is a global setting and will require a log out or restart to take
+  # effect.
   use_thin_strokes: true
 
 # Display the time it takes to redraw each frame.
 render_timer: false
 
-# Use custom cursor colors. If `true`, the `colors.cursor.foreground` and
-# `colors.cursor.background` colors will be used to display the cursor.
-# Otherwise the cell colors are inverted for the cursor.
-custom_cursor_colors: true
+# Keep the log file after quitting Alacritty.
+persistent_logging: false
 
 # If `true`, bold text is drawn using the bright color variants.
 draw_bold_text_with_bright_colors: true
@@ -152,11 +155,13 @@ colors:
     # The dimmed foreground color is calculated automatically if it is not present.
     # If the bright foreground color is not set, or `draw_bold_text_with_bright_colors`
     # is `false`, the normal foreground color will be used.
-    #
     dim_foreground: '0x212121'
     bright_foreground: '0xffffff'
 
-  # Colors the cursor will use if `custom_cursor_colors` is true
+  # Cursor colors
+  #
+  # Colors which should be used to draw the terminal cursor. If these are unset,
+  # the cursor color will be the inverse of the cell color.
   cursor:
     text: '0x2b2b2b'
     cursor: '0xe6e1dc'
@@ -197,15 +202,18 @@ colors:
   #   cyan:    '0x66cccc'
   #   white:   '0xdddddd'
 
-  # # Indexed Colors
-  # #
-  # # The indexed colors include all colors from 16 to 256.
-  # # When these are not set, they're filled with sensible defaults.
-  # #
-  # indexed_colors:
-  #   - { index: 16, color: '0x000000' }
+  # Indexed Colors
+  #
+  # The indexed colors include all colors from 16 to 256.
+  # When these are not set, they're filled with sensible defaults.
+  #
+  # Example:
+  #   `- { index: 16, color: '0xff00ff' }`
+  #
+  indexed_colors: []
 
-# Visual Bell
+# Visual Bell {{{
+# ------------------------------------------------------------------------------
 #
 # Any time the BEL code is received, Alacritty "rings" the visual bell. Once
 # rung, the terminal background will be set to white and transition back to the
@@ -229,14 +237,17 @@ colors:
 visual_bell:
   animation: EaseOutExpo
   duration: 0
+  color: '0xffffff'
+# ------------------------------------------------------------------------------ }}}
 
 # Background opacity
 #
 # Window opacity as a floating point number from `0.0` to `1.0`.
 # The value `0.0` is completely transparent and `1.0` is opaque.
-background_opacity: 1.0
+background_opacity: 0.9
 
-# # Mouse bindings
+# # Mouse bindings {{{
+# # ------------------------------------------------------------------------------
 # #
 # # Available fields:
 # # - mouse
@@ -253,7 +264,10 @@ background_opacity: 1.0
 # # section.
 # mouse_bindings:
 #   - { mouse: Middle, action: PasteSelection }
+# # ------------------------------------------------------------------------------ }}}
 
+# Mouse {{{
+# ------------------------------------------------------------------------------
 mouse:
   # Click settings
   #
@@ -263,32 +277,54 @@ mouse:
   double_click: { threshold: 300 }
   triple_click: { threshold: 300 }
 
+  # If this is `true`, the cursor is temporarily hidden when typing.
+  hide_when_typing: false
+
+  url:
+    # URL launcher
+    #
+    # This program is executed when clicking on a text which is recognized as a URL.
+    # The URL is always added to the command as the last parameter.
+    launcher: open
+
+    # URL modifiers
+    #
+    # These are the modifiers that need to be held down for opening URLs when clicking
+    # on them. The available modifiers are documented in the key binding section.
+    modifiers: None
+    # ------------------------------------------------------------------------------ }}}
+
+# Selection {{{
+# ------------------------------------------------------------------------------
 selection:
   semantic_escape_chars: ",│`|:\"' ()[]{}<>"
 
   # When set to `true`, selected text will be copied to the primary clipboard.
   save_to_clipboard: false
+# ------------------------------------------------------------------------------ }}}
 
+# Cursor style {{{
+# ------------------------------------------------------------------------------
+cursor:
+  # Values for 'style':
+  #   - ▇ Block
+  #   - _ Underline
+  #   - | Beam
+  style: Block
+
+  # If this is `true`, the cursor will be rendered as a hollow box when the
+  # window is not focused.
+  unfocused_hollow: true
+# ------------------------------------------------------------------------------ }}}
+
+# Allow terminal applications to change Alacritty's window title.
 dynamic_title: true
-
-hide_cursor_when_typing: true
-
-# Cursor style
-#
-# Values for 'cursor_style':
-# - Block
-# - Underline
-# - Beam
-cursor_style: Block
-
-# If this is `true`, the cursor will be rendered as a hollow box when the
-# window is not focused.
-unfocused_hollow_cursor: true
 
 # Live config reload (changes require restart)
 live_config_reload: false
 
-# Shell
+# Shell {{{
+# ------------------------------------------------------------------------------
 #
 # You can set `shell.program` to the path of your favorite shell, e.g. `/bin/fish`.
 # Entries in `shell.args` are passed unmodified as arguments to the shell.
@@ -302,8 +338,13 @@ shell:
  args:
    - --login
    - --interactive
+# ------------------------------------------------------------------------------ }}}
 
-# Key bindings
+# Key bindings {{{
+# ------------------------------------------------------------------------------
+#
+# Documentation: {{{
+# ------------------
 #
 # Key bindings are specified as a list of objects. Each binding will specify
 # a key and modifiers required to trigger it, terminal modes where the binding
@@ -329,9 +370,16 @@ shell:
 #   A full list with available key codes can be found here:
 #   https://docs.rs/glutin/*/glutin/enum.VirtualKeyCode.html#variants
 #
+#   Instead of using the name of the keys, the `key` field also supports using
+#   the scancode of the desired key. Scancodes have to be specified as a
+#   decimal number.
+#   This command will allow you to display the hex scancodes for certain keys:
+#     `showkey --scancodes`
+#
 # Values for `mods`:
 #   - Command
 #   - Control
+#   - Super
 #   - Shift
 #   - Alt
 #
@@ -361,6 +409,9 @@ shell:
 #   - ClearHistory
 #   - Hide
 #   - Quit
+#   - ClearLogNotice
+#   - SpawnNewInstance
+#   - None
 #
 # Values for `command`:
 #   The `command` field must be a map containing a `program` string and
@@ -374,23 +425,28 @@ shell:
 #   - AppCursor
 #   - ~AppKeypad
 #   - AppKeypad
+# }}}
 key_bindings:
-  - { key: V,        mods: Command, action: Paste                        }
-  - { key: C,        mods: Command, action: Copy                         }
-  - { key: Paste,                   action: Paste                        }
-  - { key: Copy,                    action: Copy                         }
-  - { key: H,        mods: Command, action: Hide                         }
-  - { key: Q,        mods: Command, action: Quit                         }
-  - { key: W,        mods: Command, action: Quit                         }
-  - { key: Home,                    chars: "\x1bOH",   mode: AppCursor   }
-  - { key: Home,                    chars: "\x1b[H",   mode: ~AppCursor  }
-  - { key: End,                     chars: "\x1bOF",   mode: AppCursor   }
-  - { key: End,                     chars: "\x1b[F",   mode: ~AppCursor  }
+  # (macOS only)
   - { key: Key0,     mods: Command, action: ResetFontSize                }
   - { key: Equals,   mods: Command, action: IncreaseFontSize             }
   - { key: Minus,    mods: Command, action: DecreaseFontSize             }
   - { key: K,        mods: Command, action: ClearHistory                 }
   - { key: K,        mods: Command, chars: "\x0c"                        }
+  - { key: V,        mods: Command, action: Paste                        }
+  - { key: C,        mods: Command, action: Copy                         }
+  - { key: H,        mods: Command, action: Hide                         }
+  - { key: Q,        mods: Command, action: Quit                         }
+  - { key: W,        mods: Command, action: Quit                         }
+
+  - { key: Paste,                   action: Paste                        }
+  - { key: Copy,                    action: Copy                         }
+  - { key: L,        mods: Control, action: ClearLogNotice               }
+  - { key: L,        mods: Control, chars: "\x0c"                        }
+  - { key: Home,                    chars: "\x1bOH",   mode: AppCursor   }
+  - { key: Home,                    chars: "\x1b[H",   mode: ~AppCursor  }
+  - { key: End,                     chars: "\x1bOF",   mode: AppCursor   }
+  - { key: End,                     chars: "\x1b[F",   mode: ~AppCursor  }
   - { key: PageUp,   mods: Shift,   chars: "\x1b[5;2~"                   }
   - { key: PageUp,   mods: Control, chars: "\x1b[5;5~"                   }
   - { key: PageUp,                  chars: "\x1b[5~"                     }
@@ -470,19 +526,20 @@ key_bindings:
   - { key: F10,      mods: Alt,     chars: "\x1b[21;6~"                  }
   - { key: F11,      mods: Alt,     chars: "\x1b[23;6~"                  }
   - { key: F12,      mods: Alt,     chars: "\x1b[24;6~"                  }
-  - { key: F1,       mods: Command, chars: "\x1b[1;3P"                   }
-  - { key: F2,       mods: Command, chars: "\x1b[1;3Q"                   }
-  - { key: F3,       mods: Command, chars: "\x1b[1;3R"                   }
-  - { key: F4,       mods: Command, chars: "\x1b[1;3S"                   }
-  - { key: F5,       mods: Command, chars: "\x1b[15;3~"                  }
-  - { key: F6,       mods: Command, chars: "\x1b[17;3~"                  }
-  - { key: F7,       mods: Command, chars: "\x1b[18;3~"                  }
-  - { key: F8,       mods: Command, chars: "\x1b[19;3~"                  }
-  - { key: F9,       mods: Command, chars: "\x1b[20;3~"                  }
-  - { key: F10,      mods: Command, chars: "\x1b[21;3~"                  }
-  - { key: F11,      mods: Command, chars: "\x1b[23;3~"                  }
-  - { key: F12,      mods: Command, chars: "\x1b[24;3~"                  }
+  - { key: F1,       mods: Super,   chars: "\x1b[1;3P"                   }
+  - { key: F2,       mods: Super,   chars: "\x1b[1;3Q"                   }
+  - { key: F3,       mods: Super,   chars: "\x1b[1;3R"                   }
+  - { key: F4,       mods: Super,   chars: "\x1b[1;3S"                   }
+  - { key: F5,       mods: Super,   chars: "\x1b[15;3~"                  }
+  - { key: F6,       mods: Super,   chars: "\x1b[17;3~"                  }
+  - { key: F7,       mods: Super,   chars: "\x1b[18;3~"                  }
+  - { key: F8,       mods: Super,   chars: "\x1b[19;3~"                  }
+  - { key: F9,       mods: Super,   chars: "\x1b[20;3~"                  }
+  - { key: F10,      mods: Super,   chars: "\x1b[21;3~"                  }
+  - { key: F11,      mods: Super,   chars: "\x1b[23;3~"                  }
+  - { key: F12,      mods: Super,   chars: "\x1b[24;3~"                  }
   - { key: NumpadEnter,             chars: "\n"                          }
+
   - { key: A,         mods: Alt,       chars: "\x1ba"                       }
   - { key: B,         mods: Alt,       chars: "\x1bb"                       }
   - { key: C,         mods: Alt,       chars: "\x1bc"                       }
@@ -558,3 +615,4 @@ key_bindings:
   - { key: Key6,      mods: Alt|Shift, chars: "\x1b^"                       } # Alt + ^
   - { key: Backslash, mods: Alt,       chars: "\x1b\\"                      } # Alt + \
   - { key: Backslash, mods: Alt|Shift, chars: "\x1b|"                       } # Alt + |
+# ------------------------------------------------------------------------------ }}}
