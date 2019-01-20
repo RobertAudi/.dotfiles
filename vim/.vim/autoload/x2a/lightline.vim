@@ -1,21 +1,47 @@
-function! x2a#lightline#Filetype()
-  let l:filetypes = ['help', 'qf', 'man']
-  return index(l:filetypes, &filetype) >= 0
+" Variables {{{
+" ==============================================================================
+
+let g:x2a#lightline#ignored_filetypes = ['help', 'qf', 'man']
+let g:x2a#lightline#ignored_plugin_filetypes = ['ctrlp', 'nerdtree', 'ctrlsf']
+
+let g:x2a#lightline#special_filetypes =
+      \ {
+      \   'help': 'Help',
+      \   'man':  'Man',
+      \ }
+
+let g:x2a#lightline#plugin_filetypes =
+      \ {
+      \   'ctrlp':    'CtrlP',
+      \   'nerdtree': 'NERDTree',
+      \   'ctrlsf':   'CtrlSF',
+      \ }
+
+" ============================================================================== }}}
+
+" Predicates {{{
+" ==============================================================================
+
+function! x2a#lightline#IgnoreFiletype()
+  return index(g:x2a#lightline#ignored_filetypes, &filetype) >= 0
 endfunction
 
-function! x2a#lightline#Filename()
-  let l:filename  = expand('%:t')
-  let l:filenames = ['ControlP', 'NERD', '__CtrlSF']
-  for l:f in l:filenames
-    if l:filename =~? l:f
-      return 1
-    endif
-  endfor
-  return 0
+function! x2a#lightline#IgnorePluginFiletype()
+  return index(g:x2a#lightline#ignored_plugin_filetypes, &filetype) >= 0
 endfunction
+
+function! x2a#lightline#IsSpecialFiletype()
+  return has_key(g:x2a#lightline#special_filetypes, &filetype)
+endfunction
+
+function! x2a#lightline#IsPluginFiletype()
+  return has_key(g:x2a#lightline#plugin_filetypes, &filetype)
+endfunction
+
+" ============================================================================== }}}
 
 function! x2a#lightline#LineInfo()
-  if x2a#lightline#Filetype() || x2a#lightline#Filename()
+  if x2a#lightline#IgnoreFiletype() || x2a#lightline#IgnorePluginFiletype()
     return ''
   else
     return '%3l:%-2v'
@@ -23,7 +49,7 @@ function! x2a#lightline#LineInfo()
 endfunction
 
 function! x2a#lightline#Percent()
-  if x2a#lightline#Filetype() || x2a#lightline#Filename()
+  if x2a#lightline#IgnoreFiletype() || x2a#lightline#IgnorePluginFiletype()
     return ''
   else
     return '%3p%%'
@@ -48,8 +74,8 @@ endfunction
 
 function! x2a#lightline#Filename()
   let l:filename = expand('%:t')
-  return  l:filename ==? 'ControlP' && has_key(g:lightline, 'ctrlp_item') ? g:lightline.ctrlp_item :
-        \ l:filename =~? 'NERD\|__CtrlSF' ? '' :
+  return  &filetype ==# 'ctrlp' && has_key(g:lightline, 'ctrlp_item') ? g:lightline.ctrlp_item :
+        \ x2a#lightline#IgnorePluginFiletype() ? '' :
         \ ('' !=# x2a#lightline#Readonly() ? x2a#lightline#Readonly() . ' ' : '') .
         \ ('' !=# l:filename   ? l:filename         : '[No Name]') .
         \ ('' !=# x2a#lightline#Modified() ? ' ' . x2a#lightline#Modified() : '')
@@ -58,7 +84,7 @@ endfunction
 function! x2a#lightline#GitBranch()
   let l:symbol = '±'
   let l:branch = gitbranch#name()
-  if x2a#lightline#Filetype() || x2a#lightline#Filename() || !strlen(l:branch)
+  if x2a#lightline#IgnoreFiletype() || x2a#lightline#IgnorePluginFiletype() || !strlen(l:branch)
     return ''
   else
     return l:symbol . ' ' . l:branch
@@ -66,7 +92,7 @@ function! x2a#lightline#GitBranch()
 endfunction
 
 function! x2a#lightline#Filetype()
-  if x2a#lightline#Filename() || winwidth(0) <= 60
+  if x2a#lightline#IsPluginFiletype() || x2a#lightline#IsSpecialFiletype() || winwidth(0) <= 60
     return ''
   else
     return strlen(&filetype) ? '[' . &filetype . ']' : 'no ft'
@@ -74,18 +100,19 @@ function! x2a#lightline#Filetype()
 endfunction
 
 function! x2a#lightline#Mode()
-  if x2a#lightline#Filetype()
-    return ''
-  endif
-
-  let l:filename = expand('%:t')
-  return  l:filename ==? 'ControlP'   ? 'CtrlP'    :
-        \ l:filename ==? '__CtrlSF__' ? 'CtrlSF'   :
-        \ l:filename =~? 'NERD_tree'  ? 'NERDTree' :
+  return  x2a#lightline#IsPluginFiletype() ? g:x2a#lightline#plugin_filetypes[&filetype] :
+        \ x2a#lightline#IsSpecialFiletype() ? g:x2a#lightline#special_filetypes[&filetype] :
+        \ x2a#lightline#IgnoreFiletype() ? '' :
         \ winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
 
 function! x2a#lightline#InactiveMode()
-  return x2a#lightline#Filename() ? x2a#lightline#Mode() : ''
+  if x2a#lightline#IsPluginFiletype() || x2a#lightline#IsSpecialFiletype()
+    return x2a#lightline#Mode()
+  else
+    return ''
+  endif
 endfunction
 
+" Modeline {{{
+" vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker : }}}
