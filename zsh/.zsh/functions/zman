@@ -1,0 +1,8 @@
+#autoload
+
+if [[ -n "$1" ]]; then
+  # Make it easier to search ZSH documentation
+  MANPAGER="less -g -s -p '^ *$1'" man zshall
+else
+  man zshall
+fi
