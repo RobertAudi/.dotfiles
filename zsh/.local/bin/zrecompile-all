@@ -8,12 +8,12 @@ autoload -Uz zrecompile
 
 local f
 
-for f in ${ZDOTDIR}/***/{functions,functions/utils,completions}/*(-N.) ; do
+for f in ${ZDOTDIR}/***/{functions,functions/utils,completions}/*(-N.:A) ; do
   zrecompile -p -U $f && \
     command rm -fv $f.zwc.old
 done
 
-for f in ${HOME}/.zshenv(-N.) ${ZDOTDIR}/***/*.zsh(-N.) ${ZDOTDIR}/.{zlog{in,out},zprofile,zsh{env,rc}}(-N.) ; do
+for f in ${HOME}/.zshenv(-N.:A) ${ZDOTDIR}/***/*.zsh(-N.:A) ${ZDOTDIR}/.{zlog{in,out},zprofile,zsh{env,rc}}(-N.:A) ; do
   zrecompile -p $f && \
     command rm -fv $f.zwc.old
 done

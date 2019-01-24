@@ -1,7 +1,6 @@
 \.DS_Store
 Brewfile
 ^/AUTHORS.*
-.*\.zwc
 \.keep
 
 # Below is the default list
