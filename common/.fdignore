@@ -9,6 +9,7 @@ node_modules/
 .gem/
 *.tmp*
 *.old
+*.zwc
 *.log
 .gitkeep
 .keep

@@ -7,6 +7,9 @@
 !*.log
 
 --glob
+!*.zwc
+
+--glob
 !public/assets/
 
 --glob

@@ -19,6 +19,7 @@ i18n/translations.js
 *.tsv
 *.tmp*
 *.old
+*.zwc
 *.xml
 *.log
 .gitkeep
