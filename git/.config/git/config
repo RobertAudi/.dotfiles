@@ -309,9 +309,6 @@
   #   https://gist.github.com/492227
   head = log -n1
 
-  swag = !git commit -m \"$(curl -s whatthecommit.com/index.txt)\"
-  yolo = !git add -A && git swag
-
 [url "https://github.com/"]
   insteadOf = "gh:"
 
