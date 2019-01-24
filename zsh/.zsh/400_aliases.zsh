@@ -41,29 +41,6 @@ for mod in x w r; do
   done
 done
 
-if [[ "$TERM" != dumb ]] && is-callable grc; then
-  alias colourify="grc -es --colour=auto"
-  alias env="colourify env"
-  alias diff="colourify diff"
-  alias df="colourify df"
-  alias du="colourify du"
-  alias make="colourify make"
-  alias gcc="colourify gcc"
-  alias g++="colourify g++"
-  alias lsof="colourify lsof"
-  alias ping="colourify ping"
-  alias netstat="colourify netstat"
-  alias nmap="colourify nmap"
-  alias traceroute="colourify traceroute"
-  alias traceroute6="colourify traceroute6"
-  alias mtr="colourify mtr"
-  alias dig="colourify dig"
-  alias head="colourify head"
-  alias tail="colourify tail"
-  alias ps="colourify ps"
-  alias ifconfig="colourify ifconfig"
-fi
-
 # Resource Usage
 alias df="df -kh"
 alias du='du -d1 -kh'
