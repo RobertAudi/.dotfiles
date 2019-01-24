@@ -16,7 +16,6 @@ go get -u -v github.com/sgreben/tcp-time/cmd/tcp-time
 go get -u -v github.com/sgreben/url/cmd/url
 go get -u -v github.com/nomad-software/meme
 go get -u -v github.com/syossan27/kirimori
-go get -u -v github.com/iawia002/annie
 go get -u -v github.com/Rican7/define
 go get -u -v github.com/keith/ghs
 go get    -v github.com/matcornic/subify # It fails with -u
