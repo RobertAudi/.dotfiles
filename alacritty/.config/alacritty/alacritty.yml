@@ -150,13 +150,13 @@ colors:
     background: '0x2b2b2b'
     foreground: '0xe6e1dc'
 
-    # Bright and dim foreground colors
-    #
-    # The dimmed foreground color is calculated automatically if it is not present.
-    # If the bright foreground color is not set, or `draw_bold_text_with_bright_colors`
-    # is `false`, the normal foreground color will be used.
-    dim_foreground: '0x212121'
-    bright_foreground: '0xffffff'
+    # # Bright and dim foreground colors
+    # #
+    # # The dimmed foreground color is calculated automatically if it is not present.
+    # # If the bright foreground color is not set, or `draw_bold_text_with_bright_colors`
+    # # is `false`, the normal foreground color will be used.
+    # dim_foreground: '0x212121'
+    # bright_foreground: '0xffffff'
 
   # Cursor colors
   #
@@ -180,13 +180,13 @@ colors:
   # Bright colors
   bright:
     black:   '0x5a647e'
-    red:     '0xcc7833'
-    green:   '0x272935'
-    yellow:  '0x3a4055'
-    blue:    '0xd4cfc9'
-    magenta: '0xf4f1ed'
-    cyan:    '0xbc9458'
-    white:   '0xe6e1dc'
+    red:     '0xda4939'
+    green:   '0xa5c261'
+    yellow:  '0xffc66d'
+    blue:    '0x6d9cbe'
+    magenta: '0xb6b3eb'
+    cyan:    '0x519f50'
+    white:   '0xf9f7f3'
 
   # # Dim colors
   # #
