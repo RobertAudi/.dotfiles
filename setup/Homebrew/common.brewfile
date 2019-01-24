@@ -903,7 +903,7 @@ brew "RobertAudi/formulae/xiny"
 #
 # Conflicts with:
 #   task-spooler (because Both install a `ts` executable.)
-brew "RobertAudi/formulae/moreutils"
+brew "RobertAudi/formulae/moreutils", args: ["with-errno"]
 
 # UNIX shell (command interpreter)
 #  https://www.zsh.org/
