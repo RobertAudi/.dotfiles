@@ -323,7 +323,7 @@ defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 (( $status == 0 )) && ___done || ___error
 
 ___describe "Set a fast keyboard repeat rate"
-defaults write NSGlobalDomain KeyRepeat -int 6
+defaults write NSGlobalDomain KeyRepeat -int 2
 defaults write NSGlobalDomain InitialKeyRepeat -int 15
 (( $status == 0 )) && ___done || ___error
 
