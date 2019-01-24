@@ -36,6 +36,8 @@ function {
   "
 }
 
+[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+
 fpath=("$ZSH_HOME/plugins/fzf/functions" $fpath)
 function {
   emulate -L zsh
