@@ -1,8 +1,57 @@
+#autoload
 # fco - checkout git branch/tag
-local tags branches target
-tags=$(git tag | awk '{print "\x1b[31;1mtag\x1b[m\t" $1}') || return
-branches=$(git branch --all | grep -v HEAD | sed "s/.* //" | sed "s#remotes/[^/]*/##" | sort -u | awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}') || return
-target=$(echo "$branches\n$tags" | fzf --no-hscroll --ansi +m -d "\t" -n 2) || return
-git checkout $(echo "$target" | awk '{print $2}')
 
-# vim: ft=zsh
+if [[ "$1" == "-" ]]; then
+  git checkout "$@"
+  return $status
+fi
+
+local args="$@"
+local query=""
+local fileargs
+
+while (( $# > 0 )); do
+  if [[ "$1" =~ "^-.*" ]]; then
+    [[ "$1" == "--" ]] && fileargs="$@"
+    break
+  else
+    query+=" $1"
+    shift
+  fi
+done
+
+query="${query# }"
+
+local tags branches target
+tags=$(
+  git tag | awk '{print "\x1b[31;1mtag\x1b[m\t" $1}'
+) || return $status
+
+branches=$(
+  git branch --all \
+    | grep -v HEAD \
+    | sed "s/.* //" \
+    | sed "s#remotes/[^/]*/##" \
+    | sort -u \
+    | awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}'
+) || return $status
+
+target=$(
+  echo "$branches\n$tags" \
+    | fzf --exit-0 --no-hscroll --ansi --no-multi --delimiter="\t" --nth=2 --query="$query"
+)
+
+# Script terminated by Control-C
+(( $status == 130 )) && return 130
+
+local branch=$(echo "$target" | awk '{print $2}')
+
+if [[ -z "$branch" && "$(git cat-file -t "$query" 2>/dev/null)" == "commit" ]]; then
+  branch="$query"
+fi
+
+if [[ -n "$branch" ]]; then
+  git checkout "$branch" $=fileargs
+else
+  git checkout $=args
+fi
