@@ -1,5 +1,5 @@
 #autoload
-# fco - checkout git branch/tag
+# fzf-git-checkout - checkout git branch/tag
 
 if [[ "$1" == "-" ]]; then
   git checkout "$@"

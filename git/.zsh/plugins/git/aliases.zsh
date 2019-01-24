@@ -7,9 +7,6 @@ compdef _git gc=git-commit
 alias gac="git add --all; git commit"
 compdef _git gac=git-commit
 
-alias gco="git checkout"
-compdef _git gco=git-checkout
-
 alias gb="git branch"
 compdef _git gb=git-branch
 
