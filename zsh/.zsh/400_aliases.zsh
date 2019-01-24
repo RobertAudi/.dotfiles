@@ -20,7 +20,6 @@ alias :{Q,Qa,QA,Wa,WA,Wq,WQ,Wqa,WQa,WQA}{,!}='echo "This is $SHELL:t and not Vi(
 if is-callable ag; then
   # Make ag pretty
   alias ag="ag --smart-case --color-match='30;31' --color-line-number='31;35' --color-path='31;34'"
-  function _ag() { _the_silver_searcher "$@" }
 fi
 
 # Usefull globals

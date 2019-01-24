@@ -1,0 +1,4 @@
+#compdef ag
+#autoload
+
+_the_silver_searcher "$@"
