@@ -1,3 +1,12 @@
+# Remove the crappy zsh completion shipped by Homebrew git.
+# I prefer zsh's builtin git completion.
+# https://github.com/Homebrew/homebrew-core/issues/33275
+#
+# Credits to Alexander Groß (@agross)
+#   https://github.com/agross/dotfiles/commit/4938bc8987a5b4ef0c7411a2c4b988d89a3ade11
+[[ -f /usr/local/share/zsh/site-functions/_git ]] && \
+  rm -f /usr/local/share/zsh/site-functions/_git
+
 export GITHUB_EDITOR="$EDITOR"
 
 # Make sure git uses the macOS supplied openSSH.
