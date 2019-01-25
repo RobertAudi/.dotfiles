@@ -1,15 +1,3 @@
-#
-# git-update-tag
-#
-#   > git nuke-tag <tag-name> && \
-#   > GIT_AUTHOR_NAME="" \
-#   > GIT_AUTHOR_EMAIL="" \
-#   > GIT_AUTHOR_DATE="" \
-#   > GIT_COMMITTER_NAME="" \
-#   > GIT_COMMITTER_EMAIL="" \
-#   > GIT_COMMITTER_DATE="" \
-#   > git tag -a -m "<message>" <tag-name> [commit]
-#
 export GITHUB_EDITOR="$EDITOR"
 
 # Make sure git uses the macOS supplied openSSH.
