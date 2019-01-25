@@ -39,6 +39,7 @@ function {
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
 
 alias gco="fzf-git-checkout"
+compdef _git fzf-git-checkout=git-checkout
 
 fpath=("$ZSH_HOME/plugins/fzf/functions" $fpath)
 function {
