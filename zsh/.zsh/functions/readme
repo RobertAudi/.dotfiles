@@ -5,10 +5,17 @@
 local files=(./(#i)*readme*(ND))
 if (($#files)); then
   if is_macos && type marked >/dev/null; then
-    local markdown_files="${(@M)files:#*.md}"
-    local other_files="${(@)files:#*.md}"
-    (($#markdown_files)) && marked $markdown_files
-    (($#other_files)) && $PAGER $other_files
+    local -a markdown_extensions
+    markdown_extensions=(markdown mdown mkd mkdn md)
+
+    local ext markdown_files
+    for ext in $markdown_extensions; do
+      markdown_files="${markdown_files} ${(@M)files:#*.${ext}}"
+      files=("${(@)files:#*.${ext}}")
+    done
+
+    (($#markdown_files)) && marked ${=markdown_files}
+    (($#files)) && $PAGER ${(j: :)files}
   else
     $PAGER $files
   fi
