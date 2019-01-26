@@ -24,8 +24,11 @@ fi
 # Reload functions.
 refunc() {
   while (($#)); do
-    unfunction $1
-    autoload -Uz $1
+    if unfunction $1; then
+      autoload -Uz $1
+      print-success "Function reloaded: $1"
+    fi
+
     shift
   done
 }
@@ -38,7 +41,7 @@ reload-shell() {
   else
     clear-buffer
     # Remove leading dash if login shell
-    exec ${SHELL#-} --login --interactive
+    exec ${SHELL#-}
   fi
 }
 

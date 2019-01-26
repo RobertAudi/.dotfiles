@@ -1,3 +1,8 @@
 #autoload
 
-(( $+functions[$1] )) &> /dev/null
+(( $+1 )) || {
+  print-error 'is-function: not enough arguments'
+  return 1
+}
+
+(( $+functions[$1] )) &>/dev/null
