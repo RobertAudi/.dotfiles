@@ -214,7 +214,6 @@ Plug 'tpope/vim-rake'
 Plug 'tpope/vim-bundler'
 Plug 'rlue/vim-fold-rspec'
 Plug 'killphi/vim-ruby-refactoring', { 'branch': 'refactor' }
-Plug 'victormours/ruby-memoize.vim'
 Plug 'joker1007/vim-ruby-heredoc-syntax'
 Plug 'mikepjb/vim-chruby'
 Plug 'ngmy/vim-rubocop', { 'on': ['RuboCop'] }
