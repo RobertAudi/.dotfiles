@@ -253,7 +253,6 @@ Plug 'SirVer/ultisnips'
 Plug 'Shougo/context_filetype.vim'
 Plug 'Shougo/echodoc.vim'
 Plug 'chrisbra/vim_faq'
-Plug 'fcpg/vim-complimentary'
 
 Plug 'vim-utils/vim-man'
 Plug 'vim-utils/vim-troll-stopper'
