@@ -130,7 +130,7 @@ Plug 'machakann/vim-highlightedyank'
 Plug 'AaronLasseigne/yank-code'
 Plug 'jsfaint/purge_undodir.vim'
 
-Plug 'troydm/zoomwintab.vim'
+Plug 'troydm/zoomwintab.vim', { 'on': ['ZoomWinTabIn', 'ZoomWinTabOut', 'ZoomWinTabToggle'] }
 Plug 'moll/vim-bbye'
 
 Plug 'farmergreg/vim-lastplace'
@@ -169,7 +169,7 @@ Plug 't9md/vim-quickhl'
 " Land on window you chose like tmux's 'display-pane'
 Plug 't9md/vim-choosewin'
 Plug 't9md/vim-textmanip'
-Plug 'wesleyche/SrcExpl'
+Plug 'wesleyche/SrcExpl', { 'on': ['SrcExpl', 'SrcExplClose', 'SrcExplToggle'] }
 
 " Base16 for Vim
 Plug 'chriskempson/base16-vim'
@@ -217,14 +217,14 @@ Plug 'killphi/vim-ruby-refactoring', { 'branch': 'refactor' }
 Plug 'victormours/ruby-memoize.vim'
 Plug 'joker1007/vim-ruby-heredoc-syntax'
 Plug 'mikepjb/vim-chruby'
-Plug 'ngmy/vim-rubocop'
+Plug 'ngmy/vim-rubocop', { 'on': ['RuboCop'] }
 Plug 'lucerion/vim-i18n-rails', { 'for': ['ruby', 'eruby', 'haml', 'slim', 'javascript', 'coffee'] }
 Plug 'janko-m/vim-test'
 Plug 'aliou/sql-heredoc.vim'
 Plug 'b4b4r07/vim-sqlfmt'
 
 Plug 'mattn/sonictemplate-vim'
-Plug 'sk1418/blockit'
+Plug 'sk1418/blockit', { 'on': ['Block', 'BlockitVersion', '<Plug>BlockitVisual'] }
 
 " Calculates the sum, average, min, and max for a visual region containing numbers.
 Plug 'nixon/vim-vmath'
@@ -244,7 +244,7 @@ Plug 'guns/xterm-color-table.vim'
 " dircolors in your vidir session
 Plug 'trapd00r/vim-syntax-vidir-ls'
 
-Plug 'junegunn/vim-easy-align', { 'on': [ '<Plug>(EasyAlign)', 'EasyAlign' ] }
+Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'ntpeters/vim-better-whitespace'
 
 Plug 'jiangmiao/auto-pairs'
@@ -254,7 +254,7 @@ Plug 'Shougo/context_filetype.vim'
 Plug 'Shougo/echodoc.vim'
 Plug 'chrisbra/vim_faq'
 
-Plug 'vim-utils/vim-man'
+Plug 'vim-utils/vim-man', { 'on': ['Man', 'Sman', 'Vman', 'Tman', 'Mangrep', '<Plug>(Man)', '<Plug>(Sman)', '<Plug>(Vman)', '<Plug>(Tman)'] }
 Plug 'vim-utils/vim-troll-stopper'
 Plug 'vim-utils/vim-vertical-move'
 Plug 'tyru/open-browser.vim'
