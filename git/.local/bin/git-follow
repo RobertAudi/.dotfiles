@@ -1,11 +1,27 @@
 #!/usr/bin/env zsh
 
-__git_folow() {
-  local remote
-  for remote in $@; do
-    git-add-remote "$remote" &&
-      { git remote set-url --push "$remote" no-pushing ; git fetch "$remote" }
-  done
-}
+if ! { command git symbolic-ref HEAD || command git rev-parse --short HEAD } &>/dev/null; then
+  builtin print -P -- "[%F{196}ERROR%f] Not in a git repository." >&2
+  return 1
+fi
 
-__git_folow "$@"
+local origin_remote_url
+origin_remote_url="$(git config --get remote.origin.url)"
+
+if ! [[ "$origin_remote_url" =~ "github.com" ]]; then
+  builtin print -P -- "[%F{196}ERROR%f] The remote URL doesn't point to a GitHub repository: $origin_remote" >&2
+  return 1
+fi
+
+local repo_name="${origin_remote_url:t}"
+
+local remote
+for remote in $@; do
+  if git config --get remote.$remote.url > /dev/null 2>&1; then
+    builtin print -P -- "[%F{196}ERROR%f] A remote called '$remote' already exist." >&2
+    continue
+  fi
+
+  git remote add "$remote" "git@github.com:$remote/$repo_name.git" \
+    && { git remote set-url --push "$remote" no-pushing ; git fetch "$remote" }
+done
