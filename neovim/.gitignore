@@ -1,7 +1,0 @@
-.local/share/nvim/backup/*
-.local/share/nvim/swap/*
-.local/share/nvim/undo/*
-
-!.local/share/nvim/backup/.keep
-!.local/share/nvim/swap/.keep
-!.local/share/nvim/undo/.keep
