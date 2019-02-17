@@ -32,24 +32,6 @@ function! x2a#utils#page(command) abort
   call append(1, split(l:output, "\n"))
 endfunction
 
-" Description: Diff open windows, specifying which windows by their number
-"
-" Example:
-"   With 3 windows in the top row and 1 in the bottom, diff the top left and top right windows:
-"
-"     :DiffThese 1, 3
-function! x2a#utils#DiffThese(...) abort
-  let l:windows = a:000
-  if len(a:000) == 0
-    " Default to diffing the top 3 windows (assuming vimdiff)
-    let l:windows = [1, 2, 3]
-  endif
-
-  let l:start_i = winnr()
-  windo diffthis | if index(l:windows, winnr()) == -1 | set nodiff | endif
-  execute l:start_i . 'wincmd w'
-endfunction
-
 " Description: Open in secondary editor.
 function! x2a#utils#OpenInGUIEditor() abort
   if exists('g:gui_editor')

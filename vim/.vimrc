@@ -884,20 +884,6 @@ call x2a#abolish#commands('BufDeleteAll',
       \ 'Bdall', 'Bdal', 'Bda',
       \ 'bdall', 'bdal', 'bda')
 
-" Diff
-" ------------------------------------------------------------------------------
-command! -n=? -bar DiffThese :call x2a#utils#DiffThese(<args>)
-command! -n=0 -bar DiffLeft :call x2a#utils#DiffThese(1, 2)
-command! -n=0 -bar DiffRight :call x2a#utils#DiffThese(2, 3)
-command! -n=0 -bar DiffChanges :call x2a#utils#DiffThese(1, 3)
-command! -n=0 -bar DiffAll :call x2a#utils#DiffThese(1, 2, 3, 4)
-command! -n=1 -bar DiffWith :call x2a#utils#DiffThese(winnr(), <args>)
-command! -n=0 -bar DiffOff diffoff!
-
-" Convenient command to see the difference between the current buffer and the
-" file it was loaded from, thus the changes you made.
-command! DiffOrig vert new | set buftype=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
-
 " Drawing
 " ------------------------------------------------------------------------------
 command! -range=% BoxIn call x2a#drawing#BoxIn()
