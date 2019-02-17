@@ -1,0 +1,15 @@
+#!/usr/bin/env zsh
+
+if (( $(\ls -AUC --width=$COLUMNS | wc -l) > 15 )); then
+  # Testing out exa hoping to have better perfomance.
+  # ls alternative (GNU coreutils):
+  #     \ls -ABCv --group-directories-first --color=always --width=$COLUMNS | head --lines=8
+
+  # COLUMNS=$COLUMNS is a hack to force entries to be displayed as a grid after the pipe
+  COLUMNS=$COLUMNS \exa -aG --group-directories-first --color=always | head --lines=8
+  print -P -- "%245F... ($(\ls -fqA1 | wc -l) files)%f"
+else
+  # ls alternative (GNU coreutils):
+  #     \ls -ABv --group-directories-first --color=always
+  \exa -aG --group-directories-first --color=always
+fi
