@@ -1,3 +1,7 @@
+if !executable('mate')
+  finish
+endif
+
 function! x2a#TextMate#mate(...) abort
   call system('mate ' . join(a:000, ' '))
 endfunction
