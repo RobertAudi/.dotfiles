@@ -16,6 +16,5 @@ local project_root=$(command ghq list --exact --full-path github.com/jwilm/alacr
   gzip -c alacritty.man | tee /usr/local/share/man/man1/alacritty.1.gz > /dev/null
   cp -v alacritty-completions.zsh ~/.dotfiles/alacritty/.zsh/completions/_alacritty
   cp -v alacritty-completions.bash ~/.dotfiles/alacritty/.bash/alacritty-completions.bash
-  sudo tic -e alacritty,alacritty-direct alacritty.info
   make clean
 )
