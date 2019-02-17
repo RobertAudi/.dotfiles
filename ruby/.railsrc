@@ -1,1 +1,4 @@
 --skip-bundle
+--skip-test
+--skip-coffee
+--skip-spring
