@@ -9,28 +9,28 @@ endfunction
 
 function! x2a#NERDTree#chmod#addExecutableBits() abort
   let l:node = g:NERDTreeFileNode.GetSelected()
-  let l:arg = input("chmod: ", "+x")
-  let l:cmd = "chmod " . l:arg . " " . l:node.path.str({ "escape": 1 })
+  let l:arg = input('chmod: ', '+x')
+  let l:cmd = 'chmod ' . l:arg . ' ' . l:node.path.str({ 'escape': 1 })
 
-  if l:cmd != ""
+  if l:cmd !=# ''
     let l:success = system(l:cmd)
     call l:node.refresh()
     call NERDTreeRender()
   else
-    echo "Aborted"
+    echo 'Aborted'
   endif
 endfunction
 
 function! x2a#NERDTree#chmod#removeExecutableBits() abort
   let l:node = g:NERDTreeFileNode.GetSelected()
-  let l:arg = input("chmod: ", "-x")
-  let l:cmd = "chmod " . l:arg . " " . l:node.path.str({ "escape": 1 })
+  let l:arg = input('chmod: ', '-x')
+  let l:cmd = 'chmod ' . l:arg . ' ' . l:node.path.str({ 'escape': 1 })
 
-  if l:cmd != ""
+  if l:cmd !=# ''
     let l:success = system(l:cmd)
     call l:node.refresh()
     call NERDTreeRender()
   else
-    echo "Aborted"
+    echo 'Aborted'
   endif
 endfunction

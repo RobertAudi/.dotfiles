@@ -3,7 +3,7 @@ if exists('g:loaded_nerdtree_macos')
 endif
 let g:loaded_nerdtree_macos = 1
 
-if !has("gui_mac") && !has("gui_macvim") && !has("mac")
+if !has('gui_mac') && !has('gui_macvim') && !has('mac')
   finish
 endif
 

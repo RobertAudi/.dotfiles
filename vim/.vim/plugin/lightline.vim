@@ -1,3 +1,7 @@
+" Plugin: lightline.vim
+" Description: A light and configurable statusline/tabline plugin for Vim
+" URL: https://github.com/itchyny/lightline.vim
+
 scriptencoding utf-8
 
 " Don't show the current mode
@@ -6,8 +10,6 @@ set noshowmode
 
 let g:lightline = {}
 let g:lightline.colorscheme = 'eighties'
-
-let g:readmode_mode_map = { 'mode': 'passive' }
 
 let g:lightline.component_function = {
       \   'gitbranch':    'x2a#lightline#GitBranch',

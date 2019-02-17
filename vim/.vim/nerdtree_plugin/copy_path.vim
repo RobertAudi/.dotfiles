@@ -11,24 +11,24 @@
 "
 " ============================================================================
 
-if exists("g:loaded_nerdtree_copy_path")
+if exists('g:loaded_nerdtree_copy_path')
   finish
 endif
 let g:loaded_nerdtree_copy_path = 1
 
 " Add menu item to NERDTree to copy selected item's path to clipboard.
-if has("clipboard")
+if has('clipboard')
   call NERDTreeAddMenuItem({
-        \   "scope":    "Node",
-        \   "shortcut": "y",
-        \   "callback": "x2a#NERDTree#CopyPath",
-        \   "text":     "(y)copy path to clipboard"
+        \   'scope':    'Node',
+        \   'shortcut': 'y',
+        \   'callback': 'x2a#NERDTree#CopyPath',
+        \   'text':     '(y)copy path to clipboard'
         \ })
 
   call NERDTreeAddKeyMap({
-        \   "scope":         "Node",
-        \   "key":           "yy",
-        \   "callback":      "x2a#NERDTree#CopyNodePath",
-        \   "quickhelpText": "copy path to clipboard"
+        \   'scope':         'Node',
+        \   'key':           'yy',
+        \   'callback':      'x2a#NERDTree#CopyNodePath',
+        \   'quickhelpText': 'copy path to clipboard'
         \ })
 endif

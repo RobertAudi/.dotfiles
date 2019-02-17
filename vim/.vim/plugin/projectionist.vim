@@ -1,3 +1,10 @@
+" Plugin: vim-projectionist
+" Description: Granular project configuration
+" URL: https://github.com/tpope/vim-projectionist
+
+" Rails {{{
+" ------------------------------------------------------------------------------
+
 " Prefere *_spec.rb rather than *_test.rb with :A
 let g:rails_projections = {
       \   'app/*.rb': {
@@ -22,15 +29,17 @@ let g:rails_projections = {
       \ }
 
 let g:rails_gem_projections = {
-      \   "activeadmin": {
-      \     "app/admin/*.rb": {
-      \       "command": "admin",
-      \       "affinity": "model",
-      \       "alternate": "app/models/{}.rb",
-      \       "template": "ActiveAdmin.register {} do\nend"
+      \   'activeadmin': {
+      \     'app/admin/*.rb': {
+      \       'command': 'admin',
+      \       'affinity': 'model',
+      \       'alternate': 'app/models/{}.rb',
+      \       'template': 'ActiveAdmin.register {} do\nend'
       \     }
       \   }
       \ }
+
+" ------------------------------------------------------------------------------ }}}
 
 let g:projectionist_heuristics = {
       \   'Podfile': {
@@ -51,29 +60,5 @@ let g:projectionist_heuristics = {
       \   }
       \ }
 
-" Vim: stuff
-call extend(g:projectionist_heuristics, {
-\   "*.vim|*/*.vim|_(vim)": {
-\     "autoload/*.vim": {
-\       "type": "autoload"
-\     },
-\     "UltiSnips/*.snippets": {
-\       "type": "ultisnip"
-\     },
-\     "colors/*.vim": {
-\       "type": "colorscheme"
-\     },
-\     "plugin/*.vim": {
-\       "type": "plugin"
-\     },
-\     "ftdetect/*.vim": {
-\       "type": "ftdetect"
-\     },
-\     "doc/*.txt": {
-\       "type": "doc"
-\     },
-\     "ftplugin/*.vim": {
-\       "type": "ftplugin"
-\     }
-\   }
-\ })
+" Modeline {{{
+" vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker : }}}

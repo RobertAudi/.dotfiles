@@ -27,6 +27,7 @@ endfunction
 function! x2a#TitleString#filename() abort
   let l:ftype = &filetype
   let l:filename = expand('%')
+
   if l:filename ==# ''
     return '[No Name]'
   elseif l:ftype ==# 'help'

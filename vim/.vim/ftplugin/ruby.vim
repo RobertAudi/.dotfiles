@@ -1,3 +1,6 @@
+" vim-ruby/vim-ruby
+" ------------------------------------------------------------------------------
+
 " Syntax
 let ruby_no_expensive = 1
 let ruby_space_errors = 1

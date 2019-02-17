@@ -15,7 +15,7 @@ function! s:TabFocusPrevious()
   let s:prevtabnumfocused = tabpagenr()
 endfunction
 
-augroup RAPluginVimCloser
+augroup RAPluginsVimCloser
   autocmd!
   autocmd TabEnter * call <SID>TabFocusPrevious()
 augroup END

@@ -1,9 +1,9 @@
-"=============================================================================
-" File: autoload/AwesomeFoldText.vim
+" Plugin: AwesomeFoldText
+" Description: FoldText improved for Vim
 " Author: Enrico Ghirardi <i@choco.me>
 " URL: https://github.com/choco/AwesomeFoldText
-" Last Change: 2016-09-15
-"=============================================================================
+
+scriptencoding utf-8
 
 function! s:GetSignsCount() abort
   let lang = v:lang

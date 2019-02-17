@@ -52,8 +52,8 @@ endfunction
 
 " Description: Open in secondary editor.
 function! x2a#utils#OpenInGUIEditor() abort
-  if exists("g:gui_editor")
-    let l:buf = bufname("%")
+  if exists('g:gui_editor')
+    let l:buf = bufname('%')
     call system(join([g:gui_editor, l:buf], ' '))
   else
     call x2a#utils#helpers#Warn('g:gui_editor is not set')

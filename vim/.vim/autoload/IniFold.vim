@@ -1,9 +1,8 @@
-" =============================================================================
-" File: plugin/IniFold.vim
+" Plugin: vim-ini-fold
 " Description: Provide foldexpr for ini-like files
 " Author: Matthias Vogelgesang <github.com/matze>
+" License: MIT license
 " URL: https://github.com/matze/vim-ini-fold
-" =============================================================================
 
 function! IniFold#foldexpr(lnum) abort
   let l:line = getline(a:lnum)

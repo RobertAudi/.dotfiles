@@ -1,11 +1,10 @@
-if has('gui_vimr')
-  finish
-endif
+" Plugin: nerdtree
+" Description: File system explorer
+" URL: https://github.com/scrooloose/nerdtree
 
 scriptencoding utf-8
 
 nnoremap <silent> -  :NERDTreeToggle<CR>
-nnoremap <silent> g-  :NERDTreeFocus<CR>
 nnoremap <silent> gF :silent! NERDTreeFind<CR>
 
 let g:NERDTreeHighlightCursorline = 0
@@ -36,6 +35,12 @@ let g:NERDTreeIgnore = [
       \   '.zwc$[[file]]', '.zwc.old$[[file]]',
       \ ]
 
+" ------------------------------------------------------------------------------
+" Plugin: nerdtree-git-plugin
+" Description: A plugin of NERDTree showing git status
+" URL: https://github.com/Xuyuanp/nerdtree-git-plugin
+" ------------------------------------------------------------------------------
+
 let g:NERDTreeIndicatorMapCustom = {
       \ "Modified"  : "○",
       \ "Staged"    : "●",
@@ -48,6 +53,8 @@ let g:NERDTreeIndicatorMapCustom = {
       \ 'Ignored'   : "╳",
       \ "Unknown"   : "?"
       \ }
+
+" ------------------------------------------------------------------------------
 
 " Stolen from https://github.com/roryokane/dotvim
 "   https://github.com/roryokane/dotvim/blob/fcccf7016d74aa7d077d7df96d0ca5651b3837e0/vimrc#L912-L926

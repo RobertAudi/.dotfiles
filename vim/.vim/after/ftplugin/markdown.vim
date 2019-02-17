@@ -6,8 +6,8 @@ setlocal wrap
 setlocal linebreak
 setlocal textwidth=0
 setlocal wrapmargin=0
-setlocal formatoptions-=t
-setlocal formatoptions+=l
+setlocal formatoptions-=t " Don't auto-wrap text using textwidth
+setlocal formatoptions+=l " Don't format long lines automatically
 
 " vim-surround
 let b:surround_{char2nr('*')} = "*\r*"

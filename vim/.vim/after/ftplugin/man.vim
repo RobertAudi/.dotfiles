@@ -9,9 +9,9 @@ setlocal keywordprg=:help
 
 nmap <buffer> <silent> <CR> <C-]>
 
-nmap     <buffer> <silent> <CR>      :nohlsearch<Bar>:echo<CR>
-nnoremap <buffer> <silent> <Space>   :nohlsearch<Bar>:echo<CR>
-nnoremap <buffer> <silent> <S-Space> :nohlsearch<Bar>:echo<CR>
+nmap     <buffer> <silent> <CR>      :nohlsearch<Bar>echo<CR>
+nnoremap <buffer> <silent> <Space>   :nohlsearch<Bar>echo<CR>
+nnoremap <buffer> <silent> <S-Space> :nohlsearch<Bar>echo<CR>
 
 noremap <buffer> <silent> d <C-d>
 noremap <buffer> <silent> u <C-u>

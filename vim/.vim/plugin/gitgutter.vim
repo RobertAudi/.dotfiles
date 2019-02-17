@@ -1,9 +1,16 @@
-let g:gitgutter_enabled = v:true
+" Plugin: vim-gitgutter
+" Description: A Vim plugin which shows a git diff in the gutter (sign column)
+"              and stages/undoes hunks.
+" URL: https://github.com/airblade/vim-gitgutter
 
-let g:gitgutter_sign_added = "\u258F"
+scriptencoding utf-8
+
+let g:gitgutter_enabled = 1
+
+let g:gitgutter_sign_added = "\u258F" " ▏
 let g:gitgutter_sign_modified = g:gitgutter_sign_added
-let g:gitgutter_sign_removed = "\u2581"
-let g:gitgutter_sign_removed_first_line = "\u2594"
+let g:gitgutter_sign_removed = "\u2581" " ▁
+let g:gitgutter_sign_removed_first_line = "\u2594" " ▔
 let g:gitgutter_sign_modified_removed = g:gitgutter_sign_added
 
 let g:gitgutter_map_keys = 0

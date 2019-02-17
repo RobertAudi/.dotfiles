@@ -1,3 +1,7 @@
+" Plugin: vim-gitbranch
+" Description: Provides the branch name of the current git repository
+" URL: https://github.com/itchyny/vim-gitbranch
+
 " Show git branch with ctrl-g info
 function! s:ctrl_g(cnt) abort
   redir => msg | silent execute "norm! 1\<c-g>" | redir END

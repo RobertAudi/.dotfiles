@@ -10,23 +10,23 @@
 
 " ============================================================================
 
-if exists("g:loaded_nerdtree_chmod_menuitem")
+if exists('g:loaded_nerdtree_chmod_menuitem')
   finish
 endif
 let g:loaded_nerdtree_chmod_menuitem = 1
 
 call NERDTreeAddMenuItem({
-      \   "text":             "(x)chmod -x",
-      \   "shortcut":         "x",
-      \   "callback":         "x2a#NERDTree#chmod#removeExecutableBits",
-      \   "isActiveCallback": "x2a#NERDTree#chmod#isExecutable"
+      \   'text':             '(x)chmod -x',
+      \   'shortcut':         'x',
+      \   'callback':         'x2a#NERDTree#chmod#removeExecutableBits',
+      \   'isActiveCallback': 'x2a#NERDTree#chmod#isExecutable'
       \ })
 
 call NERDTreeAddMenuItem({
-      \   "text":             "(x)chmod +x",
-      \   "shortcut":         "x",
-      \   "callback":         "x2a#NERDTree#chmod#addExecutableBits",
-      \   "isActiveCallback": "x2a#NERDTree#chmod#isNotExecutable"
+      \   'text':             '(x)chmod +x',
+      \   'shortcut':         'x',
+      \   'callback':         'x2a#NERDTree#chmod#addExecutableBits',
+      \   'isActiveCallback': 'x2a#NERDTree#chmod#isNotExecutable'
       \ })
 
 

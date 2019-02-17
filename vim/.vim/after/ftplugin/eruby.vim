@@ -1,7 +1,6 @@
 " Don't scan included files
 setlocal complete-=i
 
-setlocal foldmethod=manual
 setlocal matchpairs-=<:>
 
 " vim-surround

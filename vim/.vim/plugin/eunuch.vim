@@ -1,3 +1,7 @@
+" Plugin: vim-eunuch
+" Description: Helpers for UNIX
+" URL: https://github.com/tpope/vim-eunuch
+
 " Make scripts executable on save
 function! s:MakeScriptExecutable()
   let file = expand('%:p')

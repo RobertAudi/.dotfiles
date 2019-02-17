@@ -1,3 +1,7 @@
+" Plugin: switch.vim
+" Description: A simple Vim plugin to switch segments of text with predefined replacements
+" URL: https://github.com/AndrewRadev/switch.vim
+
 " Definitions {{{
 " ==============================================================================
 
@@ -246,6 +250,8 @@ let s:switch_filetype_definitions.gitrebase =
 
 " ------------------------------------------------------------------------------ }}}
 
+" ============================================================================== }}}
+
 augroup RAPluginsSwitch
   autocmd!
 
@@ -258,8 +264,6 @@ augroup RAPluginsSwitch
   autocmd FileType slim       let b:switch_custom_definitions = s:switch_filetype_definitions.slim
   autocmd FileType vim        let b:switch_custom_definitions = s:switch_filetype_definitions.vim
 augroup END
-
-" ============================================================================== }}}
 
 " Modeline {{{
 " vim: set foldmarker={{{,}}} foldlevel=1 foldmethod=marker : }}}

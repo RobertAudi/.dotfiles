@@ -1,4 +1,4 @@
-function! x2a#lightline#ctrlp#CtrlPMark()
+function! x2a#lightline#ctrlp#CtrlPMark() abort
   if &filetype ==# 'ctrlp' && has_key(g:lightline, 'ctrlp_item')
     call lightline#link('iR'[g:lightline.ctrlp_regex])
     return lightline#concatenate([

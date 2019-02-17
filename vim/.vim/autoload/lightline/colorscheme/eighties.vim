@@ -1,8 +1,10 @@
-" ==============================================================================
-" File: autoload/lightline/colorscheme/eighties.vim
+" Plugin: lightline.vim
+" Description: Base16 Eighties lightline colorscheme
 " Author: Robert Audi
-" Last Modified: December 06, 2016
-" ==============================================================================
+" URL: https://github.com/itchyny/lightline.vim
+
+" Color definitions {{{
+" ------------------------------------------------------------------------------
 
 " GUI color definitions
 let s:gui00 = '#2d2d2d'
@@ -65,10 +67,9 @@ let s:cyan    = [s:gui0C, s:cterm0C]
 let s:blue    = [s:gui0D, s:cterm0D]
 let s:magenta = [s:gui0E, s:cterm0E]
 
-"                                                                            }}}
-" ------------------------------------------------------------------------------
+" ------------------------------------------------------------------------------ }}}
 
-" Components                                                                 {{{
+" Components {{{
 " ------------------------------------------------------------------------------
 
 let s:p = { 'normal': {}, 'inactive': {}, 'insert': {}, 'replace': {}, 'visual': {}, 'tabline': {}}
@@ -93,7 +94,9 @@ let s:p.tabline.middle  = [ [ s:base01,  s:base0   ]                            
 let s:p.tabline.right   = [ [ s:base02,  s:base0   ],    [ s:base2,   s:base01 ] ]
 let s:p.tabline.tabsel  = [ [ s:base3,   s:base02  ]                             ]
 
-"                                                                            }}}
-" ------------------------------------------------------------------------------
+" ------------------------------------------------------------------------------ }}}
 
 let g:lightline#colorscheme#eighties#palette = lightline#colorscheme#flatten(s:p)
+
+" Modeline {{{
+" vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker : }}}

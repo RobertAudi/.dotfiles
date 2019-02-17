@@ -1,43 +1,43 @@
 " TODO: Check the difference between `&l:wrap` && `v:count == 0`
 
 function! x2a#movements#line#Zero() abort
-  return v:count == 0 ? "g0" :  "0"
+  return v:count == 0 ? 'g0' :  '0'
 endfunction
 
 function! x2a#movements#line#gZero() abort
-  return v:count == 0 ?  "0" : "g0"
+  return v:count == 0 ?  '0' : 'g0'
 endfunction
 
 function! x2a#movements#line#Caret() abort
-  return v:count == 0 ? "g^" :  "^"
+  return v:count == 0 ? 'g^' :  '^'
 endfunction
 
 function! x2a#movements#line#gCaret() abort
-  return v:count == 0 ?  "^" : "g^"
+  return v:count == 0 ?  '^' : 'g^'
 endfunction
 
 function! x2a#movements#line#Dollar() abort
-  return v:count == 0 ? "g$" :  "$"
+  return v:count == 0 ? 'g$' :  '$'
 endfunction
 
 function! x2a#movements#line#gDollar() abort
-  return v:count == 0 ?  "$" : "g$"
+  return v:count == 0 ?  '$' : 'g$'
 endfunction
 
 function! x2a#movements#line#Down() abort
-  return v:count == 0 ? "gj" :  "j"
+  return v:count == 0 ? 'gj' :  'j'
 endfunction
 
 function! x2a#movements#line#gDown() abort
-  return v:count == 0 ?  "j" : "gj"
+  return v:count == 0 ?  'j' : 'gj'
 endfunction
 
 function! x2a#movements#line#Up() abort
-  return v:count == 0 ? "gk" :  "k"
+  return v:count == 0 ? 'gk' :  'k'
 endfunction
 
 function! x2a#movements#line#gUp() abort
-  return v:count == 0 ?  "k" : "gk"
+  return v:count == 0 ?  'k' : 'gk'
 endfunction
 
 function! x2a#movements#line#Home() abort

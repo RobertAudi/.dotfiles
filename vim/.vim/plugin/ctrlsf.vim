@@ -1,3 +1,7 @@
+" Plugin: ctrlsf.vim
+" Description: An ack.vim alternative mimics Ctrl-Shift-F on Sublime Text 2
+" URL: https://github.com/dyng/ctrlsf.vim
+
 let g:ctrlsf_position       = 'bottom'
 let g:ctrlsf_default_root   = 'project'
 let g:ctrlsf_winsize        = '30%'
