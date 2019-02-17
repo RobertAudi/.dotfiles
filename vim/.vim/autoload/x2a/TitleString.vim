@@ -1,27 +1,17 @@
-scriptencoding utf-8
-
-function! x2a#TitleString#readOnlySign() abort
-  let l:ftype = &filetype
-  let l:filename = expand('%')
-  if l:filename ==# '' && l:ftype ==# ''
-    return ' ☃ '
-  elseif l:ftype ==# 'help'
-    return ' ℹ︎ '
-  elseif l:ftype ==# 'nerdtree'
-    return ' ❖ '
-  elseif buflisted(bufnr('%')) && (&readonly || !&modifiable)
-    return ' ✖︎ '
+function! x2a#TitleString#helpSign() abort
+  if &filetype ==# 'help' || &filetype ==# 'man'
+    return ' ' . g:x2a#TitleString#help_symbol . ' '
   else
     return ''
   endif
 endfunction
 
 function! x2a#TitleString#modifiedSign() abort
-  return &modified ? ' ◉ ' : ''
+  return &modified ? ' ' . g:x2a#TitleString#modified_symbol . ' ' : ''
 endfunction
 
 function! x2a#TitleString#workingDirectory() abort
-  return substitute(getcwd(), $HOME, '~', '')
+  return fnamemodify(getcwd(), ':t')
 endfunction
 
 function! x2a#TitleString#filename() abort
@@ -44,12 +34,14 @@ function! x2a#TitleString#filename() abort
 endfunction
 
 function! x2a#TitleString#build() abort
-  let l:readonly_sign = x2a#TitleString#readOnlySign()
+  let l:help_sign = x2a#TitleString#helpSign()
   let l:modified_sign = x2a#TitleString#modifiedSign()
   let l:working_dir   = x2a#TitleString#workingDirectory()
   let l:filename      = x2a#TitleString#filename()
-  return       '' . l:readonly_sign . ''
-        \ .    '' . l:working_dir   . ''
-        \ . ' - ' . l:filename      . ''
-        \ .    '' . l:modified_sign . ''
+
+  return    l:help_sign
+        \ . l:modified_sign
+        \ . l:filename
+        \ . ' ' . g:x2a#TitleString#separator . ' '
+        \ . l:working_dir
 endfunction

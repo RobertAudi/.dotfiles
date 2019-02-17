@@ -2,4 +2,5 @@
 " Description: Incremental search improved
 " URL: https://github.com/haya14busa/is.vim
 
-let g:is#do_default_mappings = 0
+map n  <Plug>(is-n)zv
+map N  <Plug>(is-N)zv

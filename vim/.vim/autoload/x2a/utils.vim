@@ -115,15 +115,3 @@ function! x2a#utils#UnfuckWhitespace() abort
   " 3. Strip empty line from end of file
   %substitute/\n\+\%$//e
 endfunction
-
-function! x2a#utils#setFileType(...) abort
-  if a:0
-    let &l:filetype = a:1
-  else
-    if x2a#utils#plugins#isInstalled('ctrlp-filetype') && exists(":CtrlPFileType")
-      CtrlPFileType
-    else
-      throw 'E471: Argument required'
-    endif
-  endif
-endfunction

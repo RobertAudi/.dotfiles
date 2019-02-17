@@ -7,6 +7,10 @@ setlocal nolist
 setlocal wrap
 setlocal keywordprg=:help
 
+if getbufvar('%', '&timeoutlen') != 0
+  set timeoutlen=0
+endif
+
 nmap <buffer> <silent> <CR> <C-]>
 
 nmap     <buffer> <silent> <CR>      :nohlsearch<Bar>echo<CR>
@@ -19,5 +23,5 @@ noremap <buffer> <silent> u <C-u>
 map <buffer> <silent> <Space>   <C-d>
 map <buffer> <silent> <S-Space> <C-u>
 
-nnoremap <buffer> <silent> q :quit<CR>
-nnoremap <buffer> <silent> Q :quit<CR>
+nnoremap <buffer> <silent> q :bwipeout<CR>
+nnoremap <buffer> <silent> Q :bwipeout<CR>

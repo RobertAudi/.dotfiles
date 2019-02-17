@@ -92,28 +92,15 @@ end
 " Settings {{{
 " ------------------------------------------------------------------------------
 
-" Assume POSIX by default, not original Bourne shell
-let g:is_posix = 1
-
-" Make sure that the shell scripts are properly highlighted.
-let g:bash_is_sh = 1
-
-" syntax/sh.vim adds `.` to iskeyword(verify with :verbose set iskeyword?).
-" So `w` jumps past it. see :h g:sh_isk
-let g:sh_noisk = 1
-
-" Shell script syntax highlighting craps out on some closing parentheses etc?
-let g:sh_no_error = 1
-
 " default shell
 set shell=$SHELL
 
-" Display an incomplete command in the
-" lower right corner of the Vim window
-set showcmd
-
 " Use the System Clipboard
-set clipboard^=unnamed,unnamedplus
+if has('unnamedplus')
+  set clipboard^=unnamed,unnamedplus
+else
+  set clipboard^=unnamed
+endif
 
 " Disable all the fucking beeps, bells and flashes, ALL THE FUCKING TIME!
 set noerrorbells
@@ -123,123 +110,33 @@ if exists('+belloff')
   set belloff=all
 endif
 
-set nomore
-set hidden
-set switchbuf=useopen,usetab
-set hlsearch
-set ignorecase
-set smartcase
-set incsearch
-set gdefault
-set ttyfast
-set lazyredraw
-set cmdwinheight=3
-set tags+=./tags,./.git/tags
-set dictionary=/usr/share/dict/words
-set viminfo='33,<50,s10,h
+" Always tell me the number of lines changed by a command
+set report=0
 
-set timeout
-set timeoutlen=1000
-set ttimeout
-set ttimeoutlen=50
-let g:default_timeoutlen = &timeoutlen
-let g:default_ttimeoutlen = &ttimeoutlen
+" Keep plenty of command and search history, because disk space is cheap
+set history=2000
 
-" Window title
-set title
-set titlelen=95
-set titlestring=%{x2a#TitleString#build()}
+" Number format to use. Unsetting bascially only allows decimal.
+" Octal and hex may make trouble if tried to increment/decrement
+" certain numberformats
+" (e.g. 007 will be incremented to 010, because vim thinks its octal)
+set nrformats=
+
+set iskeyword+=_,$,@,%,#,-
+
+" Automatically update buffers when the
+" filesystem file changes
+set autoread
 
 " Disable hover tooltips
 set noballooneval
 let g:netrw_nobeval = 1
 
-" Show more information while completing tags.
-set showfulltag
-
-if executable('rg')
-  set grepprg=rg\ --smart-case\ --vimgrep
-  set grepformat=%f:%l:%c:%m
-  cnoreabbrev <expr> rg grep
-elseif executable('ag')
-  set grepprg=ag\ --smart-case\ --vimgrep
-  set grepformat=%f:%l:%c:%m
-  cnoreabbrev <expr> ag grep
-endif
-
-" Specify the spelling language Spelling
-" is disabled globally, but when I do
-" enable it the language will be already
-" set.
-set nospell
-
-" prefer a slight higher line height
-set linespace=2
-
-" Always show status line.
-set laststatus=2
-
-" Show open tabs. Always.
-set showtabline=2
-
-" Show matching brackets.
-set showmatch
-set matchpairs=(:),[:],{:}
-
-" Match multibyte pairs if Vim supports it.
-"   https://github.com/lilydjwg/dotvim/commit/880fc3b
-try
-  set matchpairs+=《:》,〈:〉,［:］,（:）,｛:｝,「:」,『:』,‘:’,“:”
-catch /^Vim\%((\a\+)\)\=:E474/
-endtry
-
-" Make j/k respect the columns
-set nostartofline
-
-" Wrapping shit
-set nowrap
-
-" Setup automatic text formatting/wrapping (formatoptions) {{{
+" Buffers and splits {{{
 " ------------------------------------------------------------------------------
-set formatoptions=
-set formatoptions+=c   " Automatically wrap comment lines
-set formatoptions+=j   " Remove comment string when joining lines
-set formatoptions+=r   " Automatically continue comments
-set formatoptions+=2   " Indent based on second line of para, not first
-set formatoptions+=o   " Automatically continue comments when hitting 'o' or 'O'
-set formatoptions+=q   " Allow formating of comments with 'gq'
-set formatoptions+=n   " Automatically indent numbered lists
-set formatoptions+=l   " Don't break long lines that were already there
-set formatoptions+=B   " Don't insert space between multi-byte characters when joining lines
-set formatoptions+=1   " Don't break a line after a one-letter word
-" ------------------------------------------------------------------------------ }}}
 
-" Short message settings {{{
-" ------------------------------------------------------------------------------
-set shortmess=
-set shortmess+=a  " Use short version of stuff (Same as filmnrwx)
-set shortmess+=tT " Truncate long messages in the middle
-set shortmess+=I  " Skip the intro
-set shortmess+=oO " Overwrite subsequent messages
-set shortmess+=W  " Don't give "written" or "[w]" when writing a file
-set shortmess+=c  " Shut off completion messages
-" ------------------------------------------------------------------------------ }}}
-
-" Don't try to lines highlight
-" longer than 256 characters.
-set synmaxcol=256
-
-" Use markers for folds
-set foldmethod=marker
-
-" Size of the fold column
-set foldcolumn=0
-
-" Start will all folds open
-set foldlevelstart=99
-
-" Better fold text
-set foldtext=AwesomeFoldText#foldtext()
+set hidden
+set switchbuf=useopen,usetab
 
 " Don't force all windows to have the same
 " size when creating new splits
@@ -251,19 +148,30 @@ set splitbelow
 " New windows goes right
 set splitright
 
-" I hate line numbers
-set nonumber
-set norelativenumber
+" ------------------------------------------------------------------------------ }}}
 
-" Automatically update buffers when the
-" filesystem file changes
-set autoread
+" Looks {{{
+" ------------------------------------------------------------------------------
 
-" Time of inactivity to trigger CursorHold
-set updatetime=1000
+" UI {{{
+" ------------------------------------------------------------------------------
 
-" Highlight the current line
-set cursorline
+" A slightly higher command-line window reduces
+" the chance of "window jumping" if more than one
+" line of text is displayed.
+set cmdheight=2
+set cmdwinheight=3
+set nomore
+
+" Always show status line.
+set laststatus=2
+
+" Show open tabs. Always.
+set showtabline=2
+
+" Display an incomplete command in the
+" lower right corner of the Vim window
+set showcmd
 
 " Pop-up menu's line height
 set pumheight=20
@@ -274,102 +182,76 @@ set helpheight=12
 " Completion preview height
 set previewheight=8
 
-" Height of the command line
-set cmdheight=2
+" Window title
+set title
+set titlelen=95
+set titlestring=%{x2a#TitleString#build()}
 
-" When the page starts to scroll, keep the
-" cursor 4 lines from the top and 4 lines
-" from the bottom
-set scrolloff=4
+" I hate line numbers
+set nonumber
+set norelativenumber
 
-" Line to scroll when cursor leaves screen
-set scrolljump=4
-
-" Same as above but for horizontal
-" scrolling
-set sidescrolloff=12
-
-" Number of cols to scroll at a time
-set sidescroll=1
-
-set textwidth=121
-set colorcolumn=121
-
-" Allow backspace beyond insertion point
-set backspace=2 " Same as backspace=indent,eol,start
-
-" Do not fucking move the cursor for no
-" fucking reason!!!
-set whichwrap=
-
-" Enable to select past the end of line in
-" blockwise visual mode
-set virtualedit=block
-
-" Only insert single space after a '.',
-" '?' and '!' with a join command.
-set nojoinspaces
-
-" Keep plenty of command and search history, because disk space is cheap
-set history=2000
-
-" Always tell me the number of lines changed by a command
-set report=0
-
-" Numberformat to use, unsetting bascially only allows decimal
-" octal and hex may make trouble if tried to increment/decrement
-" certain numberformats
-" (e.g. 007 will be incremented to 010, because vim thinks its octal)
-set nrformats=
-
-set iskeyword+=_,$,@,%,#,-
-
-" Swaps, backups, and shit {{{
-" ------------------------------------------------------------------------------
-set backup
-set writebackup
-
-" Keep backups with a .bak extension
-set backupext=.bak
-
-if empty($SUDO_USER) || $USER ==# $SUDO_USER
-  set undofile
-
-  " => $HOME/.tmp/vim/swap/%path%to%orig
-  set directory=$HOME/.tmp/vim/swap//,.,/var/tmp
-  set backupdir=$HOME/.tmp/vim/backup//,.,/var/tmp
-  set undodir=$HOME/.tmp/vim/undo//,.,/var/tmp
-
-  set undolevels=1000
-  set undoreload=10000
-
-  " Make important directories if they don't exist
-  for dir in [&backupdir, &directory, &undodir, &viewdir]
-    if empty(finddir(dir))
-      call mkdir(dir, 'p', 0700)
-    endif
-  endfor
-else
-  set viminfo=
-  set directory-=$HOME/.tmp/vim/swap//
-  set directory-=~/tmp
-  set backupdir-=$HOME/.tmp/vim/backup//
-  set backupdir-=~/tmp
-  set undodir=
-  set viewdir=
-  set noundofile
-endif
 " ------------------------------------------------------------------------------ }}}
 
-" Don't save terminal windows in sessions
-set sessionoptions-=terminal
-" Don't save help pages in sessions
-set sessionoptions-=help
-" Don't save hidden buffers -- only save the visible ones.
-set sessionoptions-=buffers
+" Stop highlighting lines midway
+" if they're too long
+set synmaxcol=1200
+set colorcolumn=121
 
-" Tab completion {{{
+" prefer a slight higher line height
+set linespace=2
+
+" Highlight the current line
+set cursorline
+
+" Show matching brackets.
+set showmatch
+set matchpairs=(:),[:],{:}
+
+" Match multibyte pairs if Vim supports it.
+"   https://github.com/lilydjwg/dotvim/commit/880fc3b
+try
+  set matchpairs+=《:》,〈:〉,「:」,『:』,‘:’,“:”
+catch /^Vim\%((\a\+)\)\=:E474/
+endtry
+
+set list
+set listchars=tab:\⋮\ ,extends:…,precedes:…,trail:·,nbsp:⦸
+set fillchars=vert:│,fold:-,diff:⣿
+
+let &showbreak = '↳  '
+set ambiwidth=single
+
+" Whitespace {{{
 " ------------------------------------------------------------------------------
+
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
+set shiftround
+set expandtab
+set autoindent           " carry over indenting from previous line
+set copyindent           " make autoindent use the same characters to indent
+set breakindent
+set smartindent
+set smarttab
+
+" ------------------------------------------------------------------------------ }}}
+
+" Color scheme
+set background=dark
+
+" ------------------------------------------------------------------------------ }}}
+
+" Completion {{{
+" ------------------------------------------------------------------------------
+
+set tags+=./tags,./.git/tags
+set dictionary=/usr/share/dict/words
+
+" Show more information while completing tags.
+set showfulltag
+
 set wildmenu
 set wildignorecase
 set wildmode=longest,full
@@ -487,28 +369,200 @@ set completeopt+=menuone  " Show menu even if only 1 item long
 set completeopt+=noselect " Do not select a match in the menu, force the user to select one
 
 set suffixes+=.log,.out
+
 " ------------------------------------------------------------------------------ }}}
 
-" Whitespace {{{
+" Timeouts {{{
 " ------------------------------------------------------------------------------
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
-set shiftround
-set expandtab
-set autoindent           " carry over indenting from previous line
-set copyindent           " make autoindent use the same characters to indent
-set smartindent
-set smarttab
+
+set timeout
+set timeoutlen=1000
+set ttimeout
+set ttimeoutlen=50
+let g:default_timeoutlen = &timeoutlen
+let g:default_ttimeoutlen = &ttimeoutlen
+
+" Time of inactivity to trigger CursorHold
+set updatetime=1000
+
 " ------------------------------------------------------------------------------ }}}
 
-set list
-set listchars=tab:\⋮\ ,extends:›,precedes:‹,trail:·,nbsp:_
-set fillchars=vert:│,fold:-,diff:⣿
+" Search {{{
+" ------------------------------------------------------------------------------
 
-let &showbreak = '↳  '
-set breakindent
-set ambiwidth=single
+set hlsearch
+set ignorecase
+set smartcase
+set incsearch
+set gdefault
+
+if executable('rg')
+  set grepprg=rg\ --smart-case\ --vimgrep
+  set grepformat=%f:%l:%c:%m
+  cnoreabbrev <expr> rg grep
+elseif executable('ag')
+  set grepprg=ag\ --smart-case\ --vimgrep
+  set grepformat=%f:%l:%c:%m
+  cnoreabbrev <expr> ag grep
+endif
+
+" ------------------------------------------------------------------------------ }}}
+
+" Movements {{{
+" ------------------------------------------------------------------------------
+
+" Make j/k respect the columns
+set nostartofline
+
+" When the page starts to scroll, keep the
+" cursor 4 lines from the top and 4 lines
+" from the bottom
+set scrolloff=4
+
+" Line to scroll when cursor leaves screen
+set scrolljump=4
+
+" Same as above but for horizontal
+" scrolling
+set sidescrolloff=12
+
+" Number of cols to scroll at a time
+set sidescroll=1
+
+" Allow backspace beyond insertion point
+set backspace=indent,eol,start
+
+" Enable to select past the end of line in
+" blockwise visual mode
+set virtualedit=block
+
+" Do not fucking move the cursor for no
+" fucking reason!!!
+set whichwrap=
+
+" ------------------------------------------------------------------------------ }}}
+
+" Formatting {{{
+" ------------------------------------------------------------------------------
+
+" Wrapping shit
+set nowrap
+
+" Setup automatic text formatting/wrapping (formatoptions) {{{
+" ------------------------------------------------------------------------------
+
+set formatoptions=
+set formatoptions+=c   " Automatically wrap comment lines
+set formatoptions+=j   " Remove comment string when joining lines
+set formatoptions+=r   " Automatically continue comments
+set formatoptions+=2   " Indent based on second line of para, not first
+set formatoptions+=o   " Automatically continue comments when hitting 'o' or 'O'
+set formatoptions+=q   " Allow formating of comments with 'gq'
+set formatoptions+=n   " Automatically indent numbered lists
+set formatoptions+=l   " Don't break long lines that were already there
+set formatoptions+=B   " Don't insert space between multi-byte characters when joining lines
+set formatoptions+=1   " Don't break a line after a one-letter word
+
+" ------------------------------------------------------------------------------ }}}
+
+" Only insert single space after a '.',
+" '?' and '!' with a join command.
+set nojoinspaces
+
+set textwidth=121
+
+" ------------------------------------------------------------------------------ }}}
+
+" Short message settings ('shortmess') {{{
+" ------------------------------------------------------------------------------
+
+set shortmess=
+set shortmess+=a  " Use short version of stuff (Same as filmnrwx)
+set shortmess+=tT " Truncate long messages in the middle
+set shortmess+=I  " Skip the intro
+set shortmess+=oO " Overwrite subsequent messages
+set shortmess+=W  " Don't give "written" or "[w]" when writing a file
+set shortmess+=c  " Shut off completion messages
+
+" ------------------------------------------------------------------------------ }}}
+
+" Folding {{{
+" ------------------------------------------------------------------------------
+
+" Use markers for folds
+set foldmethod=marker
+set foldmarker={{{,}}}
+
+" Size of the fold column
+set foldcolumn=0
+
+" Start will all folds closed
+set foldlevelstart=0
+
+" Better fold text
+set foldtext=AwesomeFoldText#foldtext()
+
+" ------------------------------------------------------------------------------ }}}
+
+" Swaps, backups, and undos {{{
+" ------------------------------------------------------------------------------
+
+set backup
+set writebackup
+
+" Keep backups with a .bak extension
+set backupext=.bak
+
+if empty($SUDO_USER) || $USER ==# $SUDO_USER
+  set noswapfile
+  set undofile
+
+  " => $HOME/.tmp/vim/swap/%path%to%orig
+  set directory=$HOME/.tmp/vim/swap//,.,/var/tmp
+  set backupdir=$HOME/.tmp/vim/backup//,.,/var/tmp
+  set undodir=$HOME/.tmp/vim/undo//,.,/var/tmp
+
+  set undolevels=1000
+  set undoreload=10000
+
+  " Make important directories if they don't exist
+  for dir in [&backupdir, &directory, &undodir, &viewdir]
+    if empty(finddir(dir))
+      call mkdir(dir, 'p', 0700)
+    endif
+  endfor
+else
+  set viminfo=
+  set directory-=$HOME/.tmp/vim/swap//
+  set directory-=~/tmp
+  set backupdir-=$HOME/.tmp/vim/backup//
+  set backupdir-=~/tmp
+  set undodir=
+  set viewdir=
+  set noundofile
+endif
+
+" ------------------------------------------------------------------------------ }}}
+
+" Sessions {{{
+" ------------------------------------------------------------------------------
+
+" :h viminfo
+set viminfo=!,'300,<50,s10,h
+
+" Don't save terminal windows in sessions
+set sessionoptions-=terminal
+
+" Don't save help pages in sessions
+set sessionoptions-=help
+
+" Don't save hidden buffers -- only save the visible ones.
+set sessionoptions-=buffers
+
+" ------------------------------------------------------------------------------ }}}
+
+" Diff {{{
+" ------------------------------------------------------------------------------
 
 " Ignore changes in amount of white space
 set diffopt+=iwhite
@@ -521,27 +575,21 @@ if has('patch-8.1.0360')
   set diffopt+=internal,algorithm:patience
 endif
 
+" ------------------------------------------------------------------------------ }}}
+
+" Mouse {{{
+" ------------------------------------------------------------------------------
+
 " Use the mouse only in normal mode and for hit-enter and more-prompt prompts
 set mouse=nr
+
+" Hide the mouse when typing
+set mousehide
 
 " Disable the right click
 set mousemodel=
 
-" Disable modelines in favor of Secure Modelines (see the plugin)
-set modelines=0
-
-" Color scheme
-set background=dark
-
-" Credits: Suraj N. Kurapati (sunaku)
-" URL: https://github.com/sunaku
-" Source: https://github.com/sunaku/.vim/blob/7e004686e4a7f8d66e79572eb477976a40f552a3/plugin/color.vim#L16-L21
-if &term =~ '256color'
-  " disable Background Color Erase (BCE) so that color schemes
-  " render properly when inside 256-color tmux and GNU screen.
-  " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
-  set t_ut=
-endif
+" ------------------------------------------------------------------------------ }}}
 
 " ------------------------------------------------------------------------------ }}}
 
@@ -555,95 +603,270 @@ let g:plug_shallow = 1
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'junegunn/vim-plug'
+" Base16 for Vim (colorsheme)
+Plug 'chriskempson/base16-vim'
 
 " FileType plugins {{{
 " ------------------------------------------------------------------------------
-Plug 'pangloss/vim-javascript'
-Plug 'briancollins/vim-jst', { 'for': ['javascript', 'html', 'eruby'] }
-Plug 'leafgarland/typescript-vim'
-Plug 'kchmck/vim-coffee-script'
 
-Plug 'elzr/vim-json'
-Plug 'stephpy/vim-yaml'
-Plug 'cespare/vim-toml', { 'for': 'toml' }
-Plug 'noprompt/vim-yardoc'
-Plug 'othree/jsdoc-syntax.vim'
+" Context filetype library for Vim script
+Plug 'Shougo/context_filetype.vim'
 
-Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
-Plug 'fatih/vim-go'
-Plug 'rust-lang/rust.vim'
-Plug 'vim-perl/vim-perl', { 'for': 'perl' }
-Plug 'vim-python/python-syntax', { 'for': 'python' }
-Plug 'rhysd/vim-crystal'
-Plug 'tbastos/vim-lua', { 'for': ['lua'] }
-Plug 'exu/pgsql.vim'
+" Vim {{{
+" ------------------------------------------------------------------------------
 
-Plug 'othree/html5.vim'
-Plug 'tpope/vim-haml'
-Plug 'mustache/vim-mustache-handlebars'
+" Better VimL syntax highlighting
+Plug 'vim-jp/syntax-vim-ex'
 
-Plug 'hail2u/vim-css3-syntax'
-Plug 'cakebaker/scss-syntax.vim'
+" A Vim plugin for Vim plugins
+Plug 'tpope/vim-scriptease'
 
-Plug 'ekalinin/Dockerfile.vim'
-Plug 'CH-DanReif/haproxy.vim'
-Plug 'chr4/nginx.vim'
-Plug 'chr4/sslsecure.vim'
-Plug 'dzeban/vim-log-syntax'
-Plug 'fcpg/vim-weblogs'
+" Better completion for Vim builtins
+Plug 'fcpg/vim-complimentary', { 'for': 'vim' }
 
-Plug 'vim-ruby/vim-ruby'
-Plug 'keith/rspec.vim'
+" Jump to the definition of variables or functions in VimL code.
+Plug 'mhinz/vim-lookup', { 'for': 'vim' }
 
-Plug 'vim-scripts/applescript.vim'
-Plug 'keith/swift.vim'
-Plug 'keith/xcconfig.vim'
+" Display vim version numbers in docs
+Plug 'tweekmonster/helpful.vim', { 'for': 'vim' }
 
-Plug 'chrisbra/vim-sh-indent'
+" Show syntax highlighting attributes of character under cursor.
+Plug 'inkarkat/SyntaxAttr.vim', { 'on': 'ShowSyntax' }
 
-" Official Vim Runtime Files for Zsh
-Plug 'chrisbra/vim-zsh', { 'for': 'zsh' }
-
-Plug 'Clavelito/indent-awk.vim'
-Plug 'Clavelito/indent-sh.vim'
-Plug 'dag/vim-fish'
-Plug 'ericpruitt/tmux.vim'
-Plug 'tpope/vim-git'
-Plug 'xu-cheng/brew.vim'
 " ------------------------------------------------------------------------------ }}}
 
-" Toggle, display and navigate marks
-Plug 'kshenoy/vim-signature'
+" Syntax highlighting for AppleScript
+Plug 'RobertAudi/applescript.vim'
 
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-rhubarb'
-Plug 'tommcdo/vim-fugitive-blame-ext'
+" Apple Official swift vim plugin
+Plug 'bumaociyuan/vim-swift'
+
+" Vim runtime files for xcconfigs
+Plug 'keith/xcconfig.vim'
+
+" Vim syntax for TOML
+Plug 'cespare/vim-toml', { 'for': 'toml' }
+
+" Vim Syntax for Homebrew formulae
+Plug 'xu-cheng/brew.vim'
+
+" Vim support for editing fish scripts
+Plug 'dag/vim-fish', { 'for': 'fish' }
+
+" CSS {{{
+" ------------------------------------------------------------------------------
+
+" CSS3 syntax support
+Plug 'hail2u/vim-css3-syntax'
+
+" Vim syntax file for scss
+Plug 'cakebaker/scss-syntax.vim'
+
+" ------------------------------------------------------------------------------ }}}
+
+" Read and browse info files in Vim
+Plug 'HiPhish/info.vim', { 'for': 'info' }
+
+" Vim filetype and tools support for Crystal language.
+Plug 'rhysd/vim-crystal', { 'for': 'crystal' }
+
+" Improved Lua 5.3 syntax and indentation support for Vim
+Plug 'tbastos/vim-lua', { 'for': ['lua'] }
+
+" Python syntax highlighting for Vim (enhanced version)
+Plug 'vim-python/python-syntax', { 'for': 'python' }
+
+" Support for Perl 5 in Vim
+Plug 'vim-perl/vim-perl', { 'for': 'perl' }
+
+" Vim configuration for Rust.
+Plug 'rust-lang/rust.vim'
+
+" Go development plugin for Vim
+Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoUpdateBinaries' }
+
+" SQL {{{
+" ------------------------------------------------------------------------------
+
+" Postgresql syntax
+Plug 'exu/pgsql.vim', { 'for': ['sql', 'pgsql'] }
+
+" A plugin for SQL formatter like gofmt
+Plug 'b4b4r07/vim-sqlfmt'
+
+" Syntax highlighting for SQL heredocs
+Plug 'aliou/sql-heredoc.vim'
+
+" ------------------------------------------------------------------------------ }}}
+
+" HTML5 omnicomplete and syntax
+Plug 'othree/html5.vim'
+
+" Override vim syntax for yaml files (faster)
+Plug 'stephpy/vim-yaml'
+
+" A better JSON for Vim
+Plug 'elzr/vim-json'
+
+" Javascript {{{
+" ------------------------------------------------------------------------------
+
+" Vastly improved Javascript indentation and syntax support in Vim.
+Plug 'pangloss/vim-javascript'
+
+" Typescript syntax files for Vim
+Plug 'leafgarland/typescript-vim'
+
+" CoffeeScript support for vim
+Plug 'kchmck/vim-coffee-script', { 'for': ['coffee', 'litcoffee'] }
+
+" A vim plugin for highlighting and indenting JST/EJS syntax
+Plug 'briancollins/vim-jst'
+
+" Standalone JSDoc syntax for vim
+Plug 'othree/jsdoc-syntax.vim'
+
+" ------------------------------------------------------------------------------ }}}
+
+" Mustache and Handlebars mode for vim
+Plug 'mustache/vim-mustache-handlebars'
+
+" Markdown {{{
+" ------------------------------------------------------------------------------
+
+" A vim 7.4+ plugin to generate table of contents for Markdown files.
+Plug 'mzlogin/vim-markdown-toc', { 'for': 'markdown' }
+
+" GitHub Flavored Markdown syntax highlight extension for Vim
+Plug 'rhysd/vim-gfm-syntax', { 'for': 'markdown' }
+
+" Open the current Markdown buffer in Marked.app
+Plug 'itspriddle/vim-marked', { 'for': 'markdown' }
+
+" ------------------------------------------------------------------------------ }}}
+
+" Asciidoc syntax and configuration for Vim
+Plug 'mjakl/vim-asciidoc', { 'for': 'asciidoc' }
+
+" Vim syntax for log highlighting
+Plug 'dzeban/vim-log-syntax'
+
+" Vim syntax file & snippets for Docker's Dockerfile
+Plug 'ekalinin/Dockerfile.vim'
+
+" Improved nginx vim plugin (incl. syntax highlighting)
+Plug 'chr4/nginx.vim'
+
+" Git {{{
+" ------------------------------------------------------------------------------
+
+" Vim Git runtime files
+Plug 'tpope/vim-git'
+
+" Provides the branch name of the current git repository
+Plug 'itchyny/vim-gitbranch'
+
+" A Vim plugin which shows a git diff in the gutter (sign column) and stages/undoes hunks.
+Plug 'airblade/vim-gitgutter'
+
+" Weapon to fight against conflicts in Vim.
+Plug 'rhysd/conflict-marker.vim'
+
+" A Vim plugin for more pleasant editing on commit messages
+Plug 'rhysd/committia.vim'
+
+" ------------------------------------------------------------------------------ }}}
+
+" Vim configuration files for Nix
+"   http://nixos.org/nix
+Plug 'LnL7/vim-nix', { 'for': 'nix' }
+
+" Ruby {{{
+" ------------------------------------------------------------------------------
+
+" Vim/Ruby Configuration Files
+Plug 'vim-ruby/vim-ruby'
+
+" Ruby on Rails power tools
+Plug 'tpope/vim-rails', { 'for': ['ruby', 'eruby'] }
+
+" It's like rails.vim without the rails
+Plug 'tpope/vim-rake'
+
+" Lightweight support for Ruby's Bundler
+Plug 'tpope/vim-bundler'
+
+" Vim plugin for highliting code in ruby here document
+Plug 'joker1007/vim-ruby-heredoc-syntax', { 'for': ['ruby'] }
+
+" Better rspec syntax highlighting for Vim
+Plug 'keith/rspec.vim'
+
+" Ruby syntax extensions for highlighting YARD documentation.
+Plug 'noprompt/vim-yardoc'
+
+" The Vim RuboCop plugin runs RuboCop and displays the results in Vim
+Plug 'ngmy/vim-rubocop', { 'on': ['RuboCop'] }
+
+" ------------------------------------------------------------------------------ }}}
+
+" Tmux {{{
+" ------------------------------------------------------------------------------
+
+" Vim plugin for tmux.conf
+Plug 'tmux-plugins/vim-tmux'
+
+" Vim plugin to interact with tmux
+Plug 'benmills/vimux'
+
+" Seamless navigation between tmux panes and vim splits
+Plug 'christoomey/vim-tmux-navigator', has('gui_vimr') ? { 'on': [] } : {}
+
+" ------------------------------------------------------------------------------ }}}
+
+" ------------------------------------------------------------------------------ }}}
+
+" A Plugin to show a diff, whenever recovering a buffer
+Plug 'chrisbra/Recover.vim'
+
+" Quoting/parenthesizing made simple
 Plug 'tpope/vim-surround'
+
+" Comment stuff out
 Plug 'tpope/vim-commentary'
+
+" Unicode character metadata
 Plug 'tpope/vim-characterize'
+
+" Wisely add "end" in ruby, endfunction/endif/more in vim script, etc
 Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-eunuch'
-Plug 'tpope/vim-scriptease'
-Plug 'tpope/vim-dispatch'
-Plug 'tpope/vim-unimpaired'
+
+" Ghetto HTML/XML mappings
 Plug 'tpope/vim-ragtag'
+
+" Granular project configuration
 Plug 'tpope/vim-projectionist'
-Plug 'tpope/vim-obsession'
-Plug 'tpope/vim-abolish'
+
+" Set the 'path' option for miscellaneous file types
 Plug 'tpope/vim-apathy'
-Plug 'tpope/vim-dotenv'
+
+" Continuously updated session files
+Plug 'tpope/vim-obsession'
+
+" Enable repeating supported plugin maps with "."
 Plug 'tpope/vim-repeat'
+
+" Create repeat.vim mappings with one simple "Repeatable" command
 Plug 'kreskij/Repeatable.vim', { 'on': 'Repeatable' }
 
-Plug 'jordwalke/VimSplitBalancer'
-Plug 'fcpg/vim-navmode'
-Plug 'kana/vim-niceblock'
-Plug 'andymass/vim-matchup'
+" The ultimate snippet solution for Vim
+Plug 'SirVer/ultisnips'
 
-Plug 'RobertAudi/vim-smartbraces'
-Plug 'vim-scripts/loremipsum'
-Plug 'Olical/vim-expand'
+" Easy and high speed coding method
+Plug 'mattn/sonictemplate-vim'
+
+" Completion {{{
+" ------------------------------------------------------------------------------
 
 " Async completion framework made ease.
 Plug 'maralla/completor.vim'
@@ -660,48 +883,134 @@ Plug 'kyouryuukunn/completor-necovim'
 " omnicompletion via zsh's completion engine
 Plug 'Valodim/vim-zsh-completion'
 
-Plug 'itchyny/vim-gitbranch'
-Plug 'airblade/vim-gitgutter'
-Plug 'rhysd/conflict-marker.vim'
+" Complete whole lines from any partial therein
+Plug 'dahu/vim-foist'
 
-Plug 'vim-scripts/ingo-library'
-Plug 'vim-scripts/CountJump'
-Plug 'vim-scripts/help_movement'
+" ------------------------------------------------------------------------------ }}}
+
+" File management and manipulation {{{
+" ------------------------------------------------------------------------------
+
+" CtrlP {{{
+" ------------------------------------------------------------------------------
+
+" Fuzzy file, buffer, mru, tag, etc finder.
+Plug 'ctrlpvim/ctrlp.vim'
+
+" Fast vim CtrlP matcher based on python
+Plug 'FelikZ/ctrlp-py-matcher'
+
+" Easily open locally modified files in your git-versioned projects.
+Plug 'jasoncodes/ctrlp-modified.vim'
+
+" CtrlP extension for vim help keywords.
+Plug 'zeero/vim-ctrlp-help', { 'on': 'CtrlPHelp' }
+
+" ------------------------------------------------------------------------------ }}}
+
+" Plugin for vim to enabling opening a file in a given line
+Plug 'bogado/file-line'
+
+" Helpers for UNIX
+" Provides commands (among others):
+"   :Delete
+"   :Rename
+"   :Chmod
+Plug 'tpope/vim-eunuch'
+
+" Automatically create missing directories when saving a (new) file
+Plug 'haya14busa/vim-auto-mkdir'
+
+" NERDTree {{{
+" ------------------------------------------------------------------------------
+
+" File system explorer
+Plug 'scrooloose/nerdtree', { 'on': ['NERDTree', 'NERDTreeToggle', 'NERDTreeFocus', 'NERDTreeFind'] }
+
+" A plugin of NERDTree showing git status
+Plug 'Xuyuanp/nerdtree-git-plugin'
+
+" ------------------------------------------------------------------------------ }}}
+
+" ------------------------------------------------------------------------------ }}}
+
+" Distributes available space among vertical splits, and plays nice with NERDTree.
+Plug 'jordwalke/VimSplitBalancer'
+
+" A light and configurable statusline/tabline plugin for Vim
+Plug 'itchyny/lightline.vim'
+
+" An ack.vim alternative mimics Ctrl-Shift-F on Sublime Text 2
+Plug 'dyng/ctrlsf.vim'
+
+" Incremental search improved
+Plug 'haya14busa/is.vim'
+
+" *-Improved
+Plug 'haya14busa/vim-asterisk'
+
+" Range, pattern and substitute preview for Vim
+Plug 'markonm/traces.vim'
+
+" Vim plugin, insert or delete brackets, parens, quotes in pair
+Plug 'jiangmiao/auto-pairs'
+
+" A Vim alignment plugin
+Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
+
+" Print documents in echo area.
+Plug 'Shougo/echodoc.vim'
+
+" The Vim FAQ
+Plug 'chrisbra/vim_faq'
+
+" Toggle, display and navigate marks
+Plug 'kshenoy/vim-signature'
+
+" Create temporary file for memo, testing, etc.
+Plug 'RobertAudi/junkfile.vim', { 'on': ['JunkfileOpen', 'JunkfileVsplitOpen', 'JunkfileSplitOpen'] }
+
+" Modern matchit and matchparen replacement
+Plug 'andymass/vim-matchup'
+
+" Make blockwise Visual mode more useful
+Plug 'kana/vim-niceblock'
+
+" Vimscript library of common functions
+Plug 'inkarkat/vim-ingo-library'
+
+" Enhanced jump and change list navigation commands.
+Plug 'inkarkat/vim-EnhancedJumps'
+
+" Repeat command extended to visual mode.
 Plug 'vim-scripts/visualrepeat'
-Plug 'vim-scripts/EnhancedJumps'
 
+" Preserve missing EOL at the end of text files.
 Plug 'vim-scripts/PreserveNoEOL'
 
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'FelikZ/ctrlp-py-matcher'
-Plug 'jasoncodes/ctrlp-modified.vim'
-Plug 'naquad/ctrlp-filetype'
-Plug 'SpaceVim/vim-ctrlp-help'
-
-Plug '/usr/local/opt/fzf'
-Plug 'junegunn/fzf.vim'
-
-Plug 'rhysd/committia.vim', { 'for': 'gitcommit' }
-
-Plug 'dahu/vim-foist'
-Plug 'dahu/vim-lotr'
-
-" Better completion for Vim builtins
-Plug 'fcpg/vim-complimentary'
-
+" Make the yanked region apparent!
 Plug 'machakann/vim-highlightedyank'
-Plug 'AaronLasseigne/yank-code'
-Plug 'jsfaint/purge_undodir.vim'
 
+" A vim plugin to yank code.
+Plug 'AaronLasseigne/yank-code', { 'on': ['YankCode', '<plug>YankCode'] }
+
+" Navigation mode for Vim
+Plug 'fcpg/vim-navmode'
+
+" Zoom in/out of windows
 Plug 'troydm/zoomwintab.vim', { 'on': ['ZoomWinTabIn', 'ZoomWinTabOut', 'ZoomWinTabToggle'] }
-Plug 'moll/vim-bbye'
 
+" Delete buffers and close files in Vim without closing your windows or messing up your layout.
+Plug 'moll/vim-bbye', { 'on': ['Bdelete', 'Bwipeout'] }
+
+" Land on window you chose like tmux's 'display-pane'
+Plug 't9md/vim-choosewin', { 'on': ['<Plug>(choosewin)', 'ChooseWin', 'ChooseWinSwap', 'ChooseWinSwapStay'] }
+
+" Intelligently reopen files at your last edit position in Vim.
 Plug 'farmergreg/vim-lastplace'
-Plug 'haya14busa/vim-auto-mkdir'
-Plug 'direnv/direnv.vim'
 
-Plug 'benmills/vimux'
-Plug 'christoomey/vim-tmux-navigator', has('gui_running') ? { 'on': [] } : {}
+" Vim plugin for direnv support
+Plug 'direnv/direnv.vim'
 
 " Enhanced terminal integration for Vim
 " Includes:
@@ -714,125 +1023,85 @@ Plug 'wincent/terminus'
 " Pasting in Vim with indentation adjusted to destination context
 Plug 'sickill/vim-pasta'
 
-Plug 'haya14busa/vim-asterisk'
-Plug 'markonm/traces.vim'
-Plug 'ciaranm/securemodelines'
+" A secure alternative to Vim modelines
+Plug 'RobertAudi/securemodelines'
 
-Plug 'tweekmonster/helpful.vim', { 'for': 'vim' }
-
-" Show syntax highlighting attributes of character under cursor.
-Plug 'inkarkat/SyntaxAttr.vim'
-
-Plug 'scrooloose/nerdtree', { 'on': ['NERDTree', 'NERDTreeToggle', 'NERDTreeFocus', 'NERDTreeFind'] }
-Plug 'Xuyuanp/nerdtree-git-plugin'
-
-" Quickly highlight <cword> or visually selected word
-Plug 't9md/vim-quickhl'
-
-" Land on window you chose like tmux's 'display-pane'
-Plug 't9md/vim-choosewin'
+" Easy text manupilation for vim
 Plug 't9md/vim-textmanip'
-Plug 'wesleyche/SrcExpl', { 'on': ['SrcExpl', 'SrcExplClose', 'SrcExplToggle'] }
-
-" Base16 for Vim
-Plug 'chriskempson/base16-vim'
-
-Plug 'godlygeek/tabular'
-Plug 'itspriddle/vim-marked', { 'for': 'markdown' }
-Plug 'dkarter/bullets.vim'
-Plug 'mzlogin/vim-markdown-toc', { 'for': 'markdown' }
-Plug 'rhysd/vim-gfm-syntax', { 'for': 'markdown' }
-Plug 'KabbAmine/lazyList.vim'
-Plug 'unblevable/quick-scope'
-
-Plug 'mjakl/vim-asciidoc'
-Plug 'bkad/CamelCaseMotion'
-
-Plug 'kana/vim-gf-user'
-Plug 'sgur/vim-gf-autoload', { 'for': 'vim' }
-
-Plug 'will133/vim-dirdiff'
-Plug 'duggiefresh/vim-easydir'
-Plug 'bogado/file-line'
-
-" Plugin for opening selected content in https://carbon.now.sh.
-Plug 'kristijanhusak/vim-carbon-now-sh', { 'on': 'CarbonNowSh' }
-
-Plug 'itchyny/lightline.vim'
-Plug 'dyng/ctrlsf.vim'
-Plug 'rhysd/accelerated-jk'
-Plug 'AndrewRadev/splitjoin.vim'
-Plug 'AndrewRadev/switch.vim'
-Plug 'AndrewRadev/bufferize.vim'
-Plug 'sk1418/Join'
-
-" Better VimL syntax highlighting
-Plug 'vim-jp/syntax-vim-ex'
-
-" Jump to the definition of variables or functions in VimL code.
-Plug 'mhinz/vim-lookup', { 'for': 'vim' }
-
-Plug 'tpope/vim-rails', { 'for': ['ruby', 'eruby', 'haml', 'slim'] }
-Plug 'tpope/vim-rake'
-Plug 'tpope/vim-bundler'
-Plug 'rlue/vim-fold-rspec'
-Plug 'killphi/vim-ruby-refactoring', { 'branch': 'refactor' }
-Plug 'joker1007/vim-ruby-heredoc-syntax'
-Plug 'mikepjb/vim-chruby'
-Plug 'ngmy/vim-rubocop', { 'on': ['RuboCop'] }
-Plug 'lucerion/vim-i18n-rails', { 'for': ['ruby', 'eruby', 'haml', 'slim', 'javascript', 'coffee'] }
-Plug 'janko-m/vim-test'
-Plug 'aliou/sql-heredoc.vim'
-Plug 'b4b4r07/vim-sqlfmt'
-
-Plug 'mattn/sonictemplate-vim'
-Plug 'sk1418/blockit', { 'on': ['Block', 'BlockitVersion', '<Plug>BlockitVisual'] }
 
 " Calculates the sum, average, min, and max for a visual region containing numbers.
 Plug 'nixon/vim-vmath'
 
-Plug 'thinca/vim-ft-help_fold', { 'for': ['help'] }
-Plug 'thinca/vim-ft-diff_fold', { 'for': ['diff'] }
-Plug 'thinca/vim-ft-markdown_fold', { 'for': ['markdown'] }
+" Automated bullet lists.
+Plug 'dkarter/bullets.vim'
 
+" A vim plugin to accelerate up-down moving
+Plug 'rhysd/accelerated-jk'
+
+" A vim plugin that simplifies the transition between multiline and single-line code
+Plug 'AndrewRadev/splitjoin.vim'
+
+" A simple Vim plugin to switch segments of text with predefined replacements
+Plug 'AndrewRadev/switch.vim'
+
+" Run your tests at the speed of thought
+Plug 'janko-m/vim-test'
+
+" Asynchronous linting and make framework for Neovim/Vim
+Plug 'neomake/neomake'
+
+" Preview colours in source code while editing
 Plug 'ap/vim-css-color'
 
 " Highlights terminal color code numbers (0-255)
 Plug 'sunaku/vim-hicterm', { 'on': ['HiCterm', 'HiCtermFg', 'HiCtermBg'] }
 
-" Table of all 256 xterm colors with their RGB equivalents
-Plug 'guns/xterm-color-table.vim'
-
 " dircolors in your vidir session
 Plug 'trapd00r/vim-syntax-vidir-ls'
 
-Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
+" Better whitespace highlighting for Vim
 Plug 'ntpeters/vim-better-whitespace'
 
-Plug 'jiangmiao/auto-pairs'
-Plug 'SirVer/ultisnips'
+" Quickly highlight <cword> or visually selected word
+Plug 't9md/vim-quickhl'
 
-Plug 'Shougo/context_filetype.vim'
-Plug 'Shougo/echodoc.vim'
-Plug 'chrisbra/vim_faq'
-
-Plug 'vim-utils/vim-man', { 'on': ['Man', 'Sman', 'Vman', 'Tman', 'Mangrep', '<Plug>(Man)', '<Plug>(Sman)', '<Plug>(Vman)', '<Plug>(Tman)'] }
-Plug 'vim-utils/vim-troll-stopper'
-Plug 'vim-utils/vim-vertical-move'
-Plug 'tyru/open-browser.vim'
-Plug 'tyru/open-browser-github.vim', { 'on': ['OpenGithubFile', 'OpenGithubIssue', 'OpenGithubPullReq', 'OpenGithubProject'] }
-Plug 'tyru/open-browser-unicode.vim', { 'on': ['OpenBrowserUnicode'] }
-Plug 'tyru/capture.vim', { 'on': ['Capture'] }
-Plug 'chrisbra/Recover.vim'
+" Better Diff options for Vim
 Plug 'chrisbra/vim-diff-enhanced', has('patch-8.1.0360') ? { 'on': [] } : {}
 
+" Highlight insecure SSL configuration in Vim
+Plug 'chr4/sslsecure.vim'
+
+" Stop Unicode trolls from messing with your code.
+Plug 'vim-utils/vim-troll-stopper'
+
+" Open URI with your favorite browser from your most favorite editor
+Plug 'tyru/open-browser.vim'
+
+" ANSI escape sequences concealed, but highlighted as specified (conceal)
 Plug 'powerman/vim-plugin-AnsiEsc'
 
-Plug 'RobertAudi/junkfile.vim'
+" Lord of the Registers displays a persistent view of your Vim :registers in a sidebar window.
+Plug 'dahu/vim-lotr', { 'on': ['LOTROpen', 'LOTRClose', 'LOTRToggle', '<Plug>LOTRToggle'] }
+
+" Open GitHub URL of current file, etc. from Vim editor
+Plug 'tyru/open-browser-github.vim', { 'on': ['OpenGithubFile', 'OpenGithubIssue', 'OpenGithubPullReq', 'OpenGithubProject'] }
+
+" Open fileformat.info page about character on current cursor / given character
+Plug 'tyru/open-browser-unicode.vim', { 'on': ['OpenBrowserUnicode'] }
+
+" View and grep man pages in vim
+Plug 'vim-utils/vim-man'
+
+" A Vim plugin for typing accented characters without remembering their pseudo versions.
 Plug 'RobertAudi/vim-accent'
-Plug 'RobertAudi/BlockQuote.vim'
+
+" Insert block quotes
+Plug 'RobertAudi/BlockQuote.vim', { 'on': ['BlockQuote', 'BlockQuoteFile', 'BlockUnQuote'] }
+
+" Create banners
 Plug 'RobertAudi/bannerizor.vim'
 
+" Initialize plugin system
 call plug#end()
 
 " ------------------------------------------------------------------------------ }}}
@@ -845,9 +1114,6 @@ highlight! link txtBold Identifier
 
 " Set "TODO" & "FIXME" strings to be bold and standout as hell.
 highlight Todo term=standout ctermfg=196 ctermbg=226 guifg=#ff4500 guibg=#eeee00
-
-" Show deleted plugins after a :PlugClean[!]
-highlight! link plugDeleted plugName
 
 " ------------------------------------------------------------------------------ }}}
 
@@ -862,17 +1128,6 @@ iabbrev #! #!/usr/bin/env
 " Commands {{{
 " ------------------------------------------------------------------------------
 
-" Save and make executable
-command! -bang -nargs=? WX silent write<bang> <args> | Chmod +x
-
-" Change the filetype of the current buffer
-command! -complete=filetype -nargs=? FT call x2a#utils#setFileType(<f-args>)
-
-if has("gui_mac") || has("gui_macvim") || has("mac")
-  command! -nargs=0 RevealInFinder call x2a#macos#RevealInFinder(expand('%:p'))
-  command! -nargs=? -complete=file TextMate silent! call x2a#TextMate#Open(<f-args>)
-endif
-
 call x2a#abolish#commands('e', 'E')
 call x2a#abolish#commands('w', 'W')
 call x2a#abolish#commands('q', 'Q')
@@ -883,16 +1138,11 @@ call x2a#abolish#commands('qa', 'Qa', 'QA')
 call x2a#abolish#commands('tabc', 'Tabc')
 call x2a#abolish#commands('tabnew', 'Tabnew', 'Tnew', 'TNew', 'tnew')
 
-" Buffers
+" Buffers {{{
 " ------------------------------------------------------------------------------
+
 command! -nargs=0 ReindentBuffer silent! call x2a#utils#helpers#Preserve('x2a#buffers#Reindent')
 command! -nargs=0 YankBuffer silent! call x2a#utils#helpers#Preserve('x2a#buffers#Yank')
-
-" Copy (to the system clipboard) the path to current file
-command! -nargs=0 CopyFilePath call x2a#buffers#CopyFullPath()
-command! -nargs=0 CopyFullFilePath call x2a#buffers#CopyFullPath()
-command! -nargs=0 CopyRelativeFilePath call x2a#buffers#CopyRelativePath()
-command! -nargs=0 CopyRelativeFilePathWithLineNumber call x2a#buffers#CopyRelativePathWithLineNumber()
 
 " Golden Ratio
 command! -nargs=0 GoldenRatio execute 'vertical resize' &columns * 5 / 8
@@ -900,13 +1150,6 @@ command! -nargs=0 GoldenRatio execute 'vertical resize' &columns * 5 / 8
 command! -bang -nargs=0 BufOnly silent! call x2a#buffers#BufOnly(<bang>0)
 command! -bang -nargs=0 BufDeleteInactive silent! call x2a#buffers#BufDeleteInactive(<bang>0)
 command! -bang -nargs=0 BufDeleteAll silent! call x2a#buffers#BufDeleteAll(<bang>0)
-
-" Command ':Bclose' executes ':bd' to delete buffer in current window.
-" The window will show the alternate buffer (Ctrl-^) if it exists,
-" or the previous buffer (:bp), or a blank buffer if no previous.
-" Command ':Bclose!' is the same, but executes ':bd!' (discard changes).
-" An optional argument can specify which buffer to close (name or number).
-command! -bang -complete=buffer -nargs=? Bclose call x2a#buffers#Bclose('<bang>', '<args>')
 
 call x2a#abolish#commands('BufOnly',
       \ 'BOnly', 'BOnl', 'BOn', 'BO',
@@ -923,36 +1166,64 @@ call x2a#abolish#commands('BufDeleteAll',
       \ 'Bdall', 'Bdal', 'Bda',
       \ 'bdall', 'bdal', 'bda')
 
-" Drawing
-" ------------------------------------------------------------------------------
-command! -range=% BoxIn call x2a#drawing#BoxIn()
+" ------------------------------------------------------------------------------ }}}
 
-" Help
+" Files {{{
 " ------------------------------------------------------------------------------
-command! -bang -nargs=? -complete=help Help call x2a#hhhhelp#alternate('<bang>', <f-args>)
+
+" Copy (to the system clipboard) the path to current file
+command! -nargs=0 CopyFilePath call x2a#file#CopyFullPath()
+command! -nargs=0 CopyFullFilePath call x2a#file#CopyFullPath()
+command! -nargs=0 CopyRelativeFilePath call x2a#file#CopyRelativePath()
+command! -nargs=0 CopyRelativeFilePathWithLineNumber call x2a#file#CopyRelativePathWithLineNumber()
+
+" ------------------------------------------------------------------------------ }}}
+
+" Help {{{
+" ------------------------------------------------------------------------------
+
+command! -bang -nargs=? -complete=help Help call x2a#help#alternate('<bang>', <f-args>)
 
 call x2a#abolish#commands('Help', 'H')
 
-" Misc
+" ------------------------------------------------------------------------------ }}}
+
+" Drawing {{{
 " ------------------------------------------------------------------------------
+
+command! -range=% BoxIn call x2a#drawing#BoxIn()
+
+" ------------------------------------------------------------------------------ }}}
+
+" Filetype {{{
+" ------------------------------------------------------------------------------
+
+" Change the filetype of the current buffer
+command! -bang -complete=filetype -nargs=? FT call x2a#filetypes#setFileType(<bang>0, <f-args>)
 command! -nargs=0 ReloadFiletype call x2a#utils#ReloadFiletype()
+
+" ------------------------------------------------------------------------------ }}}
+
+" macOS {{{
+" ------------------------------------------------------------------------------
+
+if has('gui_mac') || has('gui_macvim') || has('mac')
+  command! -nargs=0 RevealInFinder call x2a#macos#RevealInFinder(expand('%:p'))
+
+  if executable('mate')
+    command! -nargs=? -complete=file TextMate silent! call x2a#TextMate#Open(<f-args>)
+  endif
+endif
+
+" ------------------------------------------------------------------------------ }}}
+
 command! -nargs=+ -complete=command Page call x2a#utils#page(<q-args>)
-command! -nargs=0 -range Append <line1>,<line2>call x2a#utils#Append()
 command! -nargs=0 NormalizeWhitespace call x2a#utils#helpers#Preserve('x2a#utils#UnfuckWhitespace')
 command! -nargs=0 WhatSyntax call x2a#utils#WhatSyntax()
 
 " Unfuck my screen
 " Source: https://bitbucket.org/sjl/dotfiles/src/26d3b19a08938930b576cedb18bc6fca706be6c5/vim/vimrc#vimrc-443
 command! -nargs=0 UnfuckScreen syntax sync fromstart | :redraw!
-
-if executable('lr')
-  " :Lr <lr-args> to browse lr(1) results in a new window,
-  "               press return to open file in new window.
-  command! -nargs=* -complete=file Lr new
-        \ | setlocal buftype=nofile noswapfile
-        \ | silent execute "0r!lr -Q " <q-args>
-        \ | 0 | resize | map <buffer> <C-M> $<C-W>F<C-W>_
-endif
 
 " ------------------------------------------------------------------------------ }}}
 
@@ -1001,10 +1272,7 @@ augroup RAVimAutocommands
   endif
 
   " Open new tabs at the end
-  autocmd BufNew *
-        \ if &showtabline && winnr('$') == 1
-        \ | tabmove |
-        \ endif
+  autocmd TabNew * tabmove
 
   " Set timeoutlen to 0 for help and man buffers only
   " The conditionnal is required because timeoutlen is
@@ -1025,59 +1293,20 @@ augroup END
 
 " ------------------------------------------------------------------------------ }}}
 
-" Mappings
+" Maps {{{
 " ------------------------------------------------------------------------------
 
-" Map leaders
-let mapleader        = ','
-let g:mapleader      = ','
+let mapleader = ','
+
+" Disabled keys {{{
+" ------------------------------------------------------------------------------
 
 " No Help, please
 inoremap <F1> <Esc>
 nnoremap <F1> <Esc>
 vnoremap <F1> <Esc>
 
-" Command Mode maps
-cnoremap <C-p> <Up>
-cnoremap <C-n> <Down>
-cnoremap <C-b> <Left>
-cnoremap <C-f> <Right>
-cnoremap <C-d> <Del>
-cnoremap <C-a> <Home>
-cnoremap <C-e> <End>
-cnoremap <C-y> <C-r>+
-
-if has('gui_running') && has('gui_macvim')
-  cnoremap ∫ <S-Left>
-  cnoremap ƒ <S-Right>
-  cnoremap ∂ <S-Right><C-w>
-elseif !has('gui_running')
-  cmap <Esc>f <S-Right>
-  cmap <Esc>b <S-Left>
-  cmap <Esc>d <S-Right><C-w>
-  cnoremap <nowait> <Esc> <C-c>
-endif
-
-" Disable Ex mode
-" Instead use Q to reapeat the last macro
-nnoremap Q @@
-
-" . in visual mode
-vnoremap . :normal .<CR>
-
-" Uppercase/Lowercase word under the cursor.
-nnoremap gU gUiw`]
-nnoremap gu guiw`]
-
-" Repeats macro on every line
-vnoremap @ :normal @
-
-" Reapeat the last macro on every line
-vnoremap Q :normal @@<CR>
-
-" Get more information from ctrl-g:
-nnoremap <C-g> 2<C-g>
-
+" Disable arrow keys
 noremap  <Left>  <Nop>
 noremap  <Right> <Nop>
 noremap  <Up>    <Nop>
@@ -1086,6 +1315,67 @@ inoremap <Left>  <Nop>
 inoremap <Right> <Nop>
 inoremap <Up>    <Nop>
 inoremap <Down>  <Nop>
+
+" Remap U to nothing, I hate U!
+nnoremap U <Nop>
+
+" Disable ZZ.
+nnoremap ZZ  <Nop>
+
+" ------------------------------------------------------------------------------ }}}
+
+" Improvements and overrides {{{
+" ------------------------------------------------------------------------------
+
+" match 'Y' behavior with 'C' and 'D' : Y = yy -> y$
+nmap Y y$
+
+" move cursor to the end of selected area after yank
+xmap gy y`>
+xmap Y y`>
+xmap y y`<
+
+" Keep cursor position when pasting
+nnoremap p p`[
+nnoremap P P`]
+
+" Get more information from ctrl-g:
+nnoremap <C-g> 2<C-g>
+
+" Alternate buffer
+nnoremap <C-e> <C-^>
+
+" Keep cursor joining lines
+nnoremap J mzJ`z
+
+" Universal opposite of J
+nnoremap <silent> S :call x2a#breakhere#BreakHere()<CR>
+
+" Stay in the center!!
+nnoremap <C-d> <C-d>zz
+nnoremap <C-u> <C-u>zz
+
+" Do not exit visual mode when shifting
+vnoremap <silent> > >gv
+vnoremap <silent> < <gv
+
+" ------------------------------------------------------------------------------ }}}
+
+" Movements {{{
+" ------------------------------------------------------------------------------
+
+" Movement through splits
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" Movement through splits in visual
+" mode (but not in select mode)
+xnoremap <C-h> <C-w>h
+xnoremap <C-j> <C-w>j
+xnoremap <C-k> <C-w>k
+xnoremap <C-l> <C-w>l
 
 " Linewise movement should work on screen lines
 nnoremap <expr>  $ x2a#movements#line#Dollar()
@@ -1113,136 +1403,6 @@ nnoremap <expr> gj x2a#movements#line#gDown()
 vnoremap <expr>  j x2a#movements#line#Down()
 vnoremap <expr> gj x2a#movements#line#gDown()
 
-" Open closed fold on the current line
-nnoremap <expr> h foldclosed('.') > -1 ? 'zo' : 'h'
-nnoremap <expr> l foldclosed('.') > -1 ? 'zo' : 'l'
-
-" see Vertical Text Shifting functions.vim
-nnoremap <S-Left>  <<
-nnoremap <S-Right> >>
-inoremap <S-Left>  <C-d>
-inoremap <S-Right> <C-t>
-
-" Don't make a # force column zero.
-inoremap # x<BS>#
-
-" Add new line below without leaving insert mode
-inoremap <S-Enter> <C-o>o
-
-" Do not exit visual mode when shifting
-vnoremap <silent> > >gv
-vnoremap <silent> < <gv
-
-" Stolen from: https://github.com/godlygeek/vim-files
-"   https://github.com/godlygeek/vim-files/blob/26aafb044895f778710bbc507310f5598019fa96/.vimrc#L268-L274
-"
-" Make [[ and ]] work even if the { is not in the first column
-nnoremap <silent> [[ :call search('^\S\@=.*{\s*$', 'besW')<CR>
-nnoremap <silent> ]] :call search('^\S\@=.*{\s*$', 'esW')<CR>
-onoremap <expr> [[ (search('^\S\@=.*{\s*$', 'ebsW') && (setpos("''", getpos('.')) <Bar><Bar> 1) ? "''" : "\<Esc>")
-onoremap <expr> ]] (search('^\S\@=.*{\s*$', 'esW') && (setpos("''", getpos('.')) <Bar><Bar> 1) ? "''" : "\<Esc>")
-
-" In VISUAL mode:
-"   v switches to VISUAL BLOCK mode
-" In VISUAL BLOCK mode:
-"   v switches to VISUAL mode
-" In any VISUAL mode:
-"   <C-v> goes back to NORMAL mode
-vnoremap <expr> v mode() == "v" ? '<C-v>' : 'v'
-vnoremap <C-v> <Esc>
-
-" Select, reindent or yank the entire file
-nnoremap <silent> <Leader>a :call x2a#buffers#Select()<CR>
-nnoremap <Leader>= :ReindentBuffer<CR>
-nnoremap <Leader>y :YankBuffer<CR>
-
-" match 'Y' behavior with 'C' and 'D' : Y = yy -> y$
-nmap Y y$
-
-" move cursor to the end of selected area after yank
-xmap gy y`>
-xmap Y y`>
-xmap y y`<
-
-" Keep cursor position when pasting
-nnoremap p p`[
-nnoremap P P`]
-
-" Remap U to nothing, I hate U!
-nnoremap U <Nop>
-
-" Disable ZZ.
-nnoremap ZZ  <Nop>
-
-" Stay in the center!!
-nnoremap <C-d> <C-d>zz
-nnoremap <C-u> <C-u>zz
-
-" Keep cursor joining lines
-nnoremap J mzJ`z
-
-" Movement through splits
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-
-" Next/Previous tab
-nnoremap gt :tabnext<CR>
-nnoremap gT :tabprevious<CR>
-
-" Next/Previous buffer
-nnoremap gb :bnext<CR>
-nnoremap gB :bprevious<CR>
-
-" Alternate buffer
-nnoremap <C-e> <C-^>
-
-" Change the filetype of the current buffer
-nnoremap <Leader>ff :FT<Space>
-
-" Browse Help
-nnoremap <Leader>hh :Help<Space>
-
-" use c* to change current word. than can use . to repeat action
-nnoremap c* *Ncgn
-
-" Easier search
-nnoremap <Leader>s :%s//<Left>
-xnoremap <Leader>s :s//<Left>
-xnoremap s :s//<Left>
-nnoremap <Leader>S :%s/<C-r>=expand("<cword>")<CR>//<Left>
-
-" Use aesthetic middle of screen for "zz"
-nnoremap zz :call x2a#movements#window#CenterCursorAesthetically()<CR>
-
-" Universal opposite of J
-nnoremap <silent> S :call x2a#breakhere#BreakHere()<CR>
-
-" Increment/Decrement numbers in visual selection
-xnoremap <silent> <C-a> :<C-u>let vcount = v:count1 <Bar> '<,'>s/\%V\d\+/\=submatch(0) + vcount<CR>gv
-xnoremap <silent> <C-x> :<C-u>let vcount = v:count1 <Bar> '<,'>s/\%V\d\+/\=submatch(0) - vcount<CR>gv
-
-" Sequentially increment numbers in visual selection
-" Starting with the first number
-xnoremap <silent> <Leader>i :<C-u>let vcount = v:count<CR>gv:call x2a#incr#Incr(vcount)<CR>
-
-" Resize splits automatically
-nnoremap <silent> <C-w>r :call x2a#utils#Splitresize()<CR>
-
-" Same as */# but in a new split
-nnoremap <C-w>*  <C-w>s*
-nnoremap <C-w>#  <C-w>s#
-
-" Remove search highlight and
-" clear any message already displayed.
-nnoremap <silent> <CR>       :nohlsearch<Bar>:match<Bar>:echo<CR>
-nnoremap <silent> <Esc><Esc> :nohlsearch<Bar>:match<Bar>:echo<CR>
-
-" Select the contents of the current line,
-" excluding indentation.
-nnoremap vv ^vg_
-
 " Remap H and L to beggining and end of
 " the line (Smart Home/End)
 nnoremap <expr> H x2a#movements#line#Home()
@@ -1255,27 +1415,144 @@ nnoremap gzh H
 nnoremap gzm M
 nnoremap gzl L
 
-" Complete whole line
-inoremap <C-l> <C-x><C-l>
-
 " gi already moves to "last place you exited insert mode", so we'll map gI to
 " something similar: move to last change
 nnoremap gI `.i
 
-" sort
-vnoremap \s :sort u<CR>
+" Stolen from: https://github.com/godlygeek/vim-files
+"   https://github.com/godlygeek/vim-files/blob/26aafb044895f778710bbc507310f5598019fa96/.vimrc#L268-L274
+"
+" Make [[ and ]] work even if the { is not in the first column
+nnoremap <silent> [[ :call search('^\S\@=.*{\s*$', 'besW')<CR>
+nnoremap <silent> ]] :call search('^\S\@=.*{\s*$', 'esW')<CR>
+onoremap <expr> [[ (search('^\S\@=.*{\s*$', 'ebsW') && (setpos("''", getpos('.')) <Bar><Bar> 1) ? "''" : "\<Esc>")
+onoremap <expr> ]] (search('^\S\@=.*{\s*$', 'esW') && (setpos("''", getpos('.')) <Bar><Bar> 1) ? "''" : "\<Esc>")
 
-" Matchit!
-map <BS> %
+" ------------------------------------------------------------------------------ }}}
+
+" Folding {{{
+" ------------------------------------------------------------------------------
+
+" Open fold
+nnoremap <expr> h x2a#folding#can_close_fold('.') ? 'zc' : 'h'
+
+" Toggle fold
+nnoremap <expr> <Space> x2a#folding#can_toggle_fold('.') ? 'za' : "\<Space>"
+
+" ------------------------------------------------------------------------------ }}}
+
+" Visual mode {{{
+" ------------------------------------------------------------------------------
+
+" In VISUAL mode:
+"   v switches to VISUAL BLOCK mode
+" In VISUAL BLOCK mode:
+"   v switches to VISUAL mode
+" In any VISUAL mode:
+"   <C-v> goes back to NORMAL mode
+vnoremap <expr> v mode() == "v" ? '<C-v>' : 'v'
+vnoremap <C-v> <Esc>
+
+" Select the contents of the current line,
+" excluding indentation.
+nnoremap vv ^vg_
 
 " select last paste in visual mode
 nnoremap <expr> gv '`[' . strpart(getregtype(), 0, 1) . '`]'
 
-" Insert current date. Choice of format in dropdown
-inoremap <silent> <C-g><C-t> <C-R>=repeat(complete(col('.'),map(["%Y-%m-%d %H:%M:%S","%a, %d %b %Y %H:%M:%S %z","%Y %b %d","%d-%b-%y","%a %b %d %T %Z %Y"],'strftime(v:val)')+[localtime()]),0)<CR>
+" ------------------------------------------------------------------------------ }}}
 
-" Drawing
+" Command mode {{{
 " ------------------------------------------------------------------------------
+
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
+cnoremap <C-b> <Left>
+cnoremap <C-f> <Right>
+cnoremap <C-d> <Del>
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+cnoremap <C-y> <C-r>+
+
+if has('gui_running') && has('gui_macvim')
+  cnoremap ∫ <S-Left>
+  cnoremap ƒ <S-Right>
+  cnoremap ∂ <S-Right><C-w>
+elseif !has('gui_running')
+  cmap <Esc>f <S-Right>
+  cmap <Esc>b <S-Left>
+  cmap <Esc>d <S-Right><C-w>
+  cnoremap <nowait> <Esc> <C-c>
+endif
+
+" ------------------------------------------------------------------------------ }}}
+
+" Remove search highlight and
+" clear any message already displayed.
+nnoremap <silent> <CR>       :nohlsearch<Bar>match<Bar>echo<CR>
+nnoremap <silent> <Esc><Esc> :nohlsearch<Bar>match<Bar>echo<CR>
+
+" Easier search
+nnoremap <Leader>s :%s//<Left>
+xnoremap <Leader>s :s//<Left>
+
+" Same as */# but in a new split
+nnoremap <C-w>*  <C-w>s*
+nnoremap <C-w>#  <C-w>s#
+
+" use c* to change current word. than can use . to repeat action
+nnoremap c* *Ncgn
+
+" Select, reindent or yank the entire file
+nnoremap <silent> <Leader>a :call x2a#buffers#Select()<CR>
+nnoremap <Leader>= :ReindentBuffer<CR>
+nnoremap <Leader>y :YankBuffer<CR>
+
+" Complete whole line
+inoremap <C-l> <C-x><C-l>
+
+" Matchit!
+map <BS> %
+
+" Uppercase/Lowercase word under the cursor.
+nnoremap gU gUiw`]
+nnoremap gu guiw`]
+
+" Change the filetype of the current buffer
+nnoremap <Leader>ff :FT<Space>
+
+if !has('gui_running')
+  " backgrounding in insert mode
+  inoremap <C-z> <C-o>:stop<CR>
+endif
+
+" Next/Previous tab
+nnoremap gt :<C-u>call x2a#tabs#TabForward(v:count1)<CR>
+nnoremap gT :<C-u>call x2a#tabs#TabBaward(v:count1)<CR>
+
+" Next/Previous buffer
+nnoremap gb :bnext<CR>
+nnoremap gB :bprevious<CR>
+
+" Macros {{{
+" ------------------------------------------------------------------------------
+
+" Disable Ex mode
+" Instead use Q to reapeat the last macro
+nnoremap Q @@
+
+" Repeats macro on every line
+vnoremap @ :normal @
+
+" Reapeat the last macro on every line
+vnoremap Q  :normal @@<CR>
+vnoremap @@ :normal @@<CR>
+
+" ------------------------------------------------------------------------------ }}}
+
+" Drawing {{{
+" ------------------------------------------------------------------------------
+
 nnoremap <silent> \-  :silent call x2a#drawing#Underline(x2a#drawing#delimiters.superdash)<CR>
 nnoremap <silent> \_  :silent call x2a#drawing#Underline(x2a#drawing#delimiters.fat_underscore)<CR>
 nnoremap <silent> \g- :silent call x2a#drawing#Line(x2a#drawing#delimiters.superdash)<CR>
@@ -1291,10 +1568,7 @@ vnoremap <silent> ,box <Esc>:call x2a#drawing#BoxIn()<CR>gvlolo
 inoremap <C-b>= <Esc>:call <SID>MakeSectionBox("=")<CR>
 inoremap <C-b>- <Esc>:call <SID>MakeSectionBox("-")<CR>
 
-if !has("gui_running")
-  " backgrounding in insert mode
-  inoremap <C-z> <C-o>:stop<CR>
-endif
+" ------------------------------------------------------------------------------ }}}
 
 " ------------------------------------------------------------------------------ }}}
 

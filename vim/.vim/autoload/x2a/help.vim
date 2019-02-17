@@ -1,4 +1,4 @@
-function! x2a#hhhhelp#alternate(...) abort
+function! x2a#help#alternate(...) abort
   if a:0 < 2
     if x2a#utils#plugins#isInstalled('vim-ctrlp-help') && exists(':CtrlPHelp')
       CtrlPHelp
@@ -42,7 +42,7 @@ function! x2a#hhhhelp#alternate(...) abort
   normal! 0
 endfunction
 
-function! x2a#hhhhelp#GoToTableOfContent() abort
+function! x2a#help#GoToTableOfContent() abort
   try
     execute ':h ' . expand('%:t:r') . '-contents'
   catch /:E149:/

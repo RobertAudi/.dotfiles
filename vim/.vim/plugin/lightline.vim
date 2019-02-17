@@ -8,6 +8,36 @@ scriptencoding utf-8
 " Let lightline take care of that
 set noshowmode
 
+" Variables {{{
+" ------------------------------------------------------------------------------
+
+let g:x2a#lightline#help_symbol     = get(g:, 'x2a#help_symbol',     "\u2139") " ℹ︎
+let g:x2a#lightline#lock_symbol     = get(g:, 'x2a#lock_symbol',     "\ue0a2") " 
+let g:x2a#lightline#modified_symbol = get(g:, 'x2a#modified_symbol', "\u25cb") " ○
+let g:x2a#lightline#git_symbol      = get(g:, 'x2a#git_symbol',      "\u00b1") " ±
+
+let g:x2a#lightline#separator = ''
+let g:x2a#lightline#subseparator = get(g:, 'x2a#vertical_separator', "\u007c") " |
+
+let g:x2a#lightline#ignored_special_filetypes = ['help', 'qf', 'man']
+let g:x2a#lightline#ignored_plugin_filetypes = ['ctrlp', 'nerdtree', 'ctrlsf']
+
+let g:x2a#lightline#special_filetypes =
+      \ {
+      \   'help': 'Help',
+      \   'qf':   'Quickfix',
+      \   'man':  'Man',
+      \ }
+
+let g:x2a#lightline#plugin_filetypes =
+      \ {
+      \   'ctrlp':    'CtrlP',
+      \   'nerdtree': 'NERDTree',
+      \   'ctrlsf':   'CtrlSF',
+      \ }
+
+" ------------------------------------------------------------------------------ }}}
+
 let g:lightline = {}
 let g:lightline.colorscheme = 'eighties'
 
@@ -31,7 +61,7 @@ let g:lightline.component_type = {
       \ }
 
 let g:lightline.active = {
-      \   'left':  [['readmode', 'mode', 'paste'], ['gitbranch', 'filename', 'filetype'], ['ctrlpmark']],
+      \   'left':  [['mode', 'paste'], ['gitbranch', 'filename', 'filetype'], ['ctrlpmark']],
       \   'right': [['lineinfo'], ['percent']]
       \ }
 
@@ -40,14 +70,31 @@ let g:lightline.inactive = {
       \   'right': []
       \ }
 
+let g:lightline.tab = {
+      \   'active':   ['tabnum', 'readonly', 'filename', 'modified'],
+      \   'inactive': ['tabnum', 'readonly', 'filename', 'modified']
+      \ }
+
+let g:lightline.tab_component_function = {
+      \   'filename': 'x2a#lightline#tab#Filename',
+      \   'modified': 'x2a#lightline#tab#Modified',
+      \   'readonly': 'x2a#lightline#tab#Readonly',
+      \   'tabnum':   'x2a#lightline#tab#TabNumber'
+      \ }
+
 let g:lightline.tabline = {
       \   'left':  [['tabs']],
       \   'right': []
       \ }
 
+let g:lightline.separator = {
+      \   'left':  g:x2a#lightline#separator,
+      \   'right': g:x2a#lightline#separator
+      \ }
+
 let g:lightline.subseparator = {
-      \   'left':  '|',
-      \   'right': '|'
+      \   'left':  g:x2a#lightline#subseparator,
+      \   'right': g:x2a#lightline#subseparator
       \ }
 
 " ----------------------------------------------------------------------
@@ -69,8 +116,5 @@ function! CtrlPStatusFunc_2(str)
   return lightline#statusline(0)
 endfunction
 
-function! s:fzf_statusline()
-  return lightline#statusline(0)
-endfunction
-
-autocmd! User FzfStatusLine call <SID>fzf_statusline()
+" Modeline {{{
+" vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker : }}}

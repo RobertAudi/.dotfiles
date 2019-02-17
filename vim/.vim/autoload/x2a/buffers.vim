@@ -105,70 +105,6 @@ function! x2a#buffers#BufDeleteAll(bang) abort
   endif
 endfunction
 
-" Description: Delete buffer while keeping window layout (don't close buffer's windows).
-" Last Change: 2008-11-18
-" URL: http://vim.wikia.com/wiki/VimTip165
-" License: CC-BY-SA
-function! x2a#buffers#Bclose(bang, buffer) abort
-  if empty(a:buffer)
-    let l:btarget = bufnr('%')
-  elseif a:buffer =~? '^\d\+$'
-    let l:btarget = bufnr(str2nr(a:buffer))
-  else
-    let l:btarget = bufnr(a:buffer)
-  endif
-
-  if l:btarget < 0
-    call x2a#utils#helpers#Warn('No matching buffer for ' . a:buffer)
-    return
-  endif
-
-  if empty(a:bang) && getbufvar(l:btarget, '&modified')
-    call x2a#utils#helpers#Warn('No write since last change for buffer ' . l:btarget . ' (use :Bclose!)')
-    return
-  endif
-
-  " Numbers of windows that view target buffer which we will delete.
-  let l:wnums = filter(range(1, winnr('$')), 'winbufnr(v:val) == l:btarget')
-
-  if exists('g:bclose_multiple') && !g:bclose_multiple && len(l:wnums) > 1
-    call x2a#utils#helpers#Warn('Buffer is in multiple windows (use ":let g:bclose_multiple = 1")')
-    return
-  endif
-
-  let l:wcurrent = winnr()
-  for l:w in l:wnums
-    execute l:w . 'wincmd w'
-
-    let l:prevbuf = bufnr('#')
-    if l:prevbuf > 0 && buflisted(l:prevbuf) && l:prevbuf != l:w
-      buffer #
-    else
-      bprevious
-    endif
-
-    if l:btarget == bufnr('%')
-      " Numbers of listed buffers which are not the target to be deleted.
-      let l:blisted = filter(range(1, bufnr('$')), 'buflisted(v:val) && v:val != l:btarget')
-
-      " Listed, not target, and not displayed.
-      let l:bhidden = filter(copy(l:blisted), 'bufwinnr(v:val) < 0')
-
-      " Take the first buffer, if any (could be more intelligent).
-      let l:bjump = (l:bhidden + l:blisted + [-1])[0]
-
-      if l:bjump > 0
-        execute 'buffer ' . l:bjump
-      else
-        execute 'enew' . a:bang
-      endif
-    endif
-  endfor
-
-  execute 'bdelete' . a:bang . ' ' . l:btarget
-  execute l:wcurrent . 'wincmd w'
-endfunction
-
 " Description: Select the entire file
 function! x2a#buffers#Select() abort
   keepjumps normal! ggVG
@@ -183,27 +119,3 @@ endfunction
 function! x2a#buffers#Yank() abort
   keepjumps normal! ggyG
 endfunction
-
-" Description: Copy (to the system clipboard) the full path to current file
-function! x2a#buffers#CopyFullPath() abort
-  let l:path = expand("%:p")
-  let @+=l:path
-  echo 'Copied file path to system clipboard: ' . l:path
-endfunction
-
-" Description: Copy (to the system clipboard) the path to current file (relative to PWD)
-function! x2a#buffers#CopyRelativePath() abort
-  let l:path = expand("%")
-  let @+=l:path
-  echo 'Copied file path to system clipboard: ' . l:path
-endfunction
-
-" Description: Copy (to the system clipboard) the path to current file (relative to PWD)
-"              with the line number ('my_folder/myfile:12')
-function! x2a#buffers#CopyRelativePathWithLineNumber() abort
-  let l:path = expand("%") . ':' . line(".")
-  let @+=l:path
-  echo 'Copied file path to system clipboard: ' . l:path
-endfunction
-
-" vim: set foldlevel=0 foldmethod=syntax :

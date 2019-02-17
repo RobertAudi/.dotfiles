@@ -1,6 +1,14 @@
 setlocal iskeyword-=:
 setlocal iskeyword-=#
-setlocal define=^\\s*\\(function\\\|command\\)
+
+" AutoPairs
+let b:AutoPairs = {
+      \   '(':')',
+      \   '[':']',
+      \   '{':'}',
+      \   "'":"'",
+      \   '`':'`'
+      \ }
 
 nnoremap <buffer> <silent> g? :set <C-r><C-w>?<CR>
 nnoremap <buffer> <silent> <C-]> :call lookup#lookup()<CR>

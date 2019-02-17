@@ -2,6 +2,7 @@
 " Description: Fuzzy file, buffer, mru, tag, etc finder.
 " URL: https://github.com/ctrlpvim/ctrlp.vim
 
+let g:ctrlp_types = ['fil', 'buf']
 let g:ctrlp_extensions = ['modified']
 let g:ctrlp_switch_buffer = 'et'
 
@@ -39,13 +40,16 @@ else
   let g:ctrlp_clear_cache_on_exit = 0
 endif
 
+" ------------------------------------------------------------------------------
+" Plugin: ctrlp-py-matcher
+" Description: Fast vim CtrlP matcher based on python
+" URL: https://github.com/FelikZ/ctrlp-py-matcher
+" ------------------------------------------------------------------------------
+
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 
-let g:ctrlp_map = '<Nop>'
+" ------------------------------------------------------------------------------
 
 nnoremap <silent> <C-b> :CtrlPBuffer<CR>
 
-if has('gui_running') && has('gui_macvim')
-  nnoremap <D-b> :CtrlPBuffer<CR>
-  inoremap <D-b> <Esc>:CtrlPBuffer<CR>
-endif
+command! CtrlPFileType call ctrlp#init(ctrlp#filetype#id())
