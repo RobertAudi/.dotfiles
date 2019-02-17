@@ -127,21 +127,6 @@ brew "findutils"
 #     MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 brew "coreutils"
 
-# FSF/GNU ld, ar, readelf, etc. for native development
-#   https://www.gnu.org/software/binutils/binutils.html
-#
-# ==> Caveats
-# binutils is keg-only, which means it was not symlinked into /usr/local,
-# because because Apple provides the same tools and binutils is poorly supported on macOS.
-#
-# If you need to have binutils first in your PATH run:
-#   echo 'export PATH="/usr/local/opt/binutils/bin:$PATH"' >> ~/.zshrc
-#
-# For compilers to find binutils you may need to set:
-#   export LDFLAGS="-L/usr/local/opt/binutils/lib"
-#   export CPPFLAGS="-I/usr/local/opt/binutils/include"
-brew "binutils"
-
 # Shell command parallelization utility
 #   https://savannah.gnu.org/projects/parallel/
 brew "parallel"
