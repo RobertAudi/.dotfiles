@@ -87,3 +87,6 @@ match:bg:black
 --colors
 match:style:nobold
 # ------------------------------------------------------------------------------ }}}
+
+# Modeline {{{
+# vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker : }}}

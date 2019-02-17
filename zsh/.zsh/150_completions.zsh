@@ -121,6 +121,7 @@ zstyle ':completion:*:*:(killall|pkill|kill):*:processes' list-colors '=(#bi) #(
 zstyle ':completion:*:*:(killall|pkill|kill):*' menu yes select
 zstyle ':completion:*:*:(killall|pkill|kill):*' force-list always
 zstyle ':completion:*:*:(killall|pkill|kill):*' insert-ids single
+# ---------------------------------------------------------------------
 
 # ---------------------------------------------------------------------
 # SSH/SCP/FTP/RSYNC/MOSH

@@ -10,7 +10,6 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_TMUX_HEIGHT="30%"
 
 function {
-  # Base16 Railscasts
   local color00='#2b2b2b'
   local color01='#272935'
   local color02='#3a4055'

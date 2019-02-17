@@ -1,5 +1,5 @@
 # Documentation generation tool
-#   http://yardoc.org/
+#   https://yardoc.org/
 yard
 
 # Manages an application's dependencies
@@ -24,7 +24,7 @@ bundler-stats
 awesome_print
 
 # An IRB alternative and runtime developer console
-#   http://pryrepl.org/
+#   https://pryrepl.org/
 pry
 
 # - gem edit: edit a library file you can require.
@@ -34,7 +34,7 @@ pry
 gem-browse
 
 # Compare versions of the given gem.
-#   http://github.com/fedora-ruby/gem-compare
+#   https://github.com/fedora-ruby/gem-compare
 gem-compare
 
 # Search gems for content directory
@@ -59,11 +59,11 @@ gem-release
 
 # This library contains some useful functionality to support the
 # development of Ruby Gems
-#   http://github.com/flori/gem_hadar
+#   https://github.com/flori/gem_hadar
 gem_hadar
 
 # Open REAME file of specified gem
-#   http://github.com/jugyo/gem_readme
+#   https://github.com/jugyo/gem_readme
 gem_readme
 
 # Updates the gems of your Gemfile and fetches the links pointing to
@@ -101,7 +101,7 @@ table_flipper
 rake
 
 # Fast, accurate ctags generator for ruby source code using Ripper
-#   http://github.com/tmm1/ripper-tags
+#   https://github.com/tmm1/ripper-tags
 ripper-tags
 
 # Xcodebuild formatter designed to be piped with `xcodebuild`

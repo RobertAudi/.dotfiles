@@ -24,9 +24,9 @@ if [ $# -lt 2 ]; then
 fi
 
 if [ $1 = "ssh" ]; then
-  HOST=$2
+	HOST=$2
 else
-  HOST=$1
+	HOST=$1
 fi
 
 echo "Waiting for $HOST to come online..."
@@ -40,6 +40,6 @@ done
 # By the time we reach here the ping-command has completed successfully
 # so we can launch the command we were given - along with any arguments.
 if [ $1 != "ssh" ]; then
-  shift
+	shift
 fi
 $*

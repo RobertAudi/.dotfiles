@@ -2,14 +2,22 @@ alias calc="noglob calc"
 alias ff="noglob ff"
 alias sfind="noglob sfind"
 
-# Suffix aliases: Website
+# Suffix aliases {{{
+# ------------------------------------------------------------------------------
+
+# Website
 alias -s {org,com,fr,html,htm}="$BROWSER"
 
-# Suffix alias: PDF and PostScript
+# PDF and PostScript
 alias -s {pdf,ps}="$PDF_READER"
 
-# Suffix alias: JAR files
+# Images
+alias -s {gif,jpg,jpeg,png,bmp}="$IMAGE_VIEWER"
+
+# JAR files
 alias -s jar="java -jar"
+
+# ------------------------------------------------------------------------------ }}}
 
 #  VIM related aliases ;o) btw. ``$SHELL:t'' is a modifiers from the Z
 #  Shell. In other shells you can use ``${SHELL##*/}'' instead. Valid
@@ -42,7 +50,7 @@ done
 
 # Resource Usage
 alias df="df -kh"
-alias du='du -d1 -kh'
+alias du="du -d1 -kh"
 
 # Directory tree
 alias dtree="tree -d"
@@ -136,3 +144,6 @@ fi
 if is-callable dfc; then
   alias dfc="dfc -Tdsow"
 fi
+
+# Modeline {{{
+# vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker : }}}

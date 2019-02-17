@@ -1,12 +1,17 @@
 require "pp"
 
+# Gems {{{
+# ---------------------------------------------------------------------
 %w[hirb awesome_print did_you_mean table_flipper].each do |gem|
   begin
     require gem
   rescue LoadError
   end
 end
+# --------------------------------------------------------------------- }}}
 
+# Logger {{{
+# ---------------------------------------------------------------------
 begin
   require "active_support/logger"
   $logger_class = ActiveSupport::Logger
@@ -14,11 +19,14 @@ rescue LoadError
   require "logger"
   $logger_class = Logger
 end
+# --------------------------------------------------------------------- }}}
 
 interpreter = (RUBY_DESCRIPTION rescue RUBY_VERSION)
 puts "## #{interpreter}"
 puts "`$logger_class' is `#{$logger_class.name}'"
 
+# IRB-specific configuration {{{
+# ---------------------------------------------------------------------
 if defined?(IRB)
   require "irb/completion"
   require "irb/ext/save-history"
@@ -32,14 +40,19 @@ if defined?(IRB)
   defined?(Hirb) and Hirb.enable
   defined?(AwesomePrint) and AwesomePrint.irb!
 end
+# --------------------------------------------------------------------- }}}
 
 if defined?(Rails)
   Rails.logger = $logger_class.new(STDOUT)
   ActionController::Base.logger = $logger_class.new(STDOUT)
 end
 
+# Local extensions and monkey patches {{{
+# ---------------------------------------------------------------------
 module LocalExtensions
   module Console
+    # IRB {{{
+    # ---------------------------------------------------------------------
     unless defined?(Pry)
       unless respond_to?(:clear)
         def clear
@@ -55,6 +68,10 @@ module LocalExtensions
       end
     end
 
+    # --------------------------------------------------------------------- }}}
+
+    # Ruby on Rails {{{
+    # ---------------------------------------------------------------------
     if defined?(ActionController::Base)
       unless respond_to?(:controller_callbacks)
         def controller_callbacks(kinds: %i[before after around])
@@ -103,7 +120,10 @@ module LocalExtensions
         end
       end
     end
+    # --------------------------------------------------------------------- }}}
 
+    # Sidekiq {{{
+    # ---------------------------------------------------------------------
     if defined?(Sidekiq)
       unless respond_to?(:clear_sidekiq!)
         def clear_sidekiq!
@@ -131,8 +151,11 @@ module LocalExtensions
         end
       end
     end
+    # --------------------------------------------------------------------- }}}
   end
 
+  # Object core extensions {{{
+  # ---------------------------------------------------------------------
   module Object
     unless ::Object.public_method_defined?(:inheritance_chain)
       def inheritance_chain(obj = self)
@@ -169,7 +192,10 @@ module LocalExtensions
       end
     end
   end
+  # --------------------------------------------------------------------- }}}
 
+  # String core extensions {{{
+  # ---------------------------------------------------------------------
   module String
     unless ::String.public_method_defined?(:|)
       # This extension adds a UNIX-style pipe to strings
@@ -196,8 +222,13 @@ module LocalExtensions
       end
     end
   end
+  # --------------------------------------------------------------------- }}}
 end
 
 include(LocalExtensions::Console)
 Object.include(LocalExtensions::Object)
 String.include(LocalExtensions::String)
+# --------------------------------------------------------------------- }}}
+
+# Modeline {{{
+# vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker : }}}
