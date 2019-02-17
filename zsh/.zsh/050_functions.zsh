@@ -104,7 +104,7 @@ psu() {
 # function brlinks() { for i in **/*(D@); [[ -f $i || -d $i ]] || echo $i }
 # function brlinks() { print -l **/*(@-^./=%p) }
 # SYS: Display all brokem symlinks
-broken-symlinks() { print -l **/*(-@) }
+broken-symlinks() { find . -type l ! -exec test -e {} \; -print }
 
 # Inline calculator
 function = { echo "$@" | tr 'x' '*' | bc -l }
