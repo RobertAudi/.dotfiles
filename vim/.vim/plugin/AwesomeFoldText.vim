@@ -20,10 +20,10 @@ if !exists('g:AwesomeFoldText#Indent')
   let g:AwesomeFoldText#Indent = 1
 endif
 if !exists('g:AwesomeFoldText#CountSurroundLeft')
-  let g:AwesomeFoldText#CountSurroundLeft = '─┤ '
+  let g:AwesomeFoldText#CountSurroundLeft = '─── '
 endif
 if !exists('g:AwesomeFoldText#CountSurroundRight')
-  let g:AwesomeFoldText#CountSurroundRight = ' ├─'
+  let g:AwesomeFoldText#CountSurroundRight = ' ─'
 endif
 if !exists('g:AwesomeFoldText#FoldLevelSymbol')
   let g:AwesomeFoldText#FoldLevelSymbol = '┼'

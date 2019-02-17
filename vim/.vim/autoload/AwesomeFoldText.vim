@@ -62,11 +62,11 @@ endfunction
 function! s:FormatLinesCount() abort
   let countText = ''
   let foldlen = v:foldend - v:foldstart + 1
-  let percent = printf(" (%.1f", (foldlen * 1.0)/line('$') * 100) . "%)"
+  let percent = printf('%.1f', (foldlen * 1.0)/line('$') * 100) . '%'
   if winwidth(0) < 60
-    let countText = printf("%4s", foldlen + 1)
+    let countText = printf('%4s', foldlen + 1)
   else
-    let countText = printf("%16s", foldlen . ' lines' . percent)
+    let countText = printf('%4s lines %5s', foldlen, percent)
   endif
 
   let countText = g:AwesomeFoldText#CountSurroundLeft . countText . g:AwesomeFoldText#CountSurroundRight
