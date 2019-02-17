@@ -1,5 +1,7 @@
 #!/usr/bin/env zsh
 
+sh "${${(%):-%x}:A:h}/rust.sh"
+
 command ghq get --update https://github.com/jwilm/alacritty.git
 
 local project_root=$(command ghq list --exact --full-path github.com/jwilm/alacritty)
