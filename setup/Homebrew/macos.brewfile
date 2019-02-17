@@ -352,10 +352,6 @@ cask "karabiner-elements"
 #   https://github.com/michaelvillar/timer-app
 cask "michaelvillar-timer"
 
-# A simple utility application to trigger haptic feedback when tapping Touch Bar.
-#   https://github.com/niw/HapticKey
-cask "haptickey"
-
 # Application to generate diagrams.
 #   https://www.yworks.com/products/yed
 cask "yed"
@@ -369,9 +365,6 @@ cask "witch"
 cask "virtualbox"
 cask "virtualbox-extension-pack"
 
-# FiScript lets you execute custom scripts on your files/folders from the context menu in Finder.
-#   https://github.com/Mortennn/FiScript
-cask "https://raw.githubusercontent.com/Mortennn/FiScript/master/fiscript.rb", args: %w[no-quarantine]
 # Back up your computer to the cloud
 #   https://www.arqbackup.com/
 cask "arq"
