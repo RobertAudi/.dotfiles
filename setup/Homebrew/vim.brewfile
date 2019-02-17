@@ -12,7 +12,7 @@ brew "neovim"
 # ==> Caveats
 # To use vimpager as your default pager, add `export PAGER=vimpager` to your
 # shell configuration.
-brew "vimpager"
+brew "vimpager", args: ["HEAD"]
 
 # GUI for vim, made for macOS
 #   https://github.com/macvim-dev/macvim
