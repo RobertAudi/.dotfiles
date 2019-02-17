@@ -1,0 +1,8 @@
+---
+cmdargs:
+  # Checking more strictly
+  severity: style_problem
+
+policies:
+  ProhibitAbbreviationOption:
+    enabled: true
