@@ -5,6 +5,6 @@ if ! type pyenv &>/dev/null; then
   return 1
 fi
 
-CFLAGS="-I$(brew --prefix openssl)/include -I$(brew --prefix readline)/include" \
+env CFLAGS="-I$(brew --prefix openssl)/include -I$(brew --prefix readline)/include" \
   LDFLAGS="-L$(brew --prefix openssl)/lib -L$(brew --prefix readline)/lib" \
   pyenv install "$@"
