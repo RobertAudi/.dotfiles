@@ -51,6 +51,8 @@ zplugin load _local/archive
 zplugin load _local/zsh-snippets
 zplugin load _local/zsh-hints
 zplugin load _local/zsh-git-escape-magic
+
+zplugin ice wait"1" lucid
 zplugin load _local/zsh-background-notifications
 
 zplugin ice wait"0" lucid
