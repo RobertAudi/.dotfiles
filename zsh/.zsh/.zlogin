@@ -6,7 +6,8 @@
   print
 
   print -P -- "%245FIn: %F{yellow}%~%f"
-  ls -A --color=always
+  ls-overview
+
   if is-callable git-status-overview; then
     git-status-overview
   fi

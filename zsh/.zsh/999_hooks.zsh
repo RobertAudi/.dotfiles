@@ -8,7 +8,7 @@ _chpwd-show-pwd-info() {
 }
 
 _chpwd-show-pwd-contents() {
-  ls -A --color=always
+  ls-overview
 }
 
 _chpwd-git-status-overview() {
