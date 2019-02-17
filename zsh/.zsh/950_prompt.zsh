@@ -36,12 +36,20 @@ prompt_pwd() {
   fi
 }
 
+prompt_jobs() {
+  local number_of_jobs=$(builtin jobs -s | wc -l)
+  if (( $number_of_jobs > 0 )); then
+    echo " %F{magenta}[${number_of_jobs}]%f"
+  fi
+}
+
 genprompt() {
   local prompt
   prompt+="%F{blue}%B[%b"
   prompt+="$(prompt_pwd)"
   prompt+="$(prompt_vcs_info)"
   prompt+="%F{blue}%B]%b%f"
+  prompt+="$(prompt_jobs)"
   prompt+="%F{%(?.green.red)} $ZSH_DEFAULT_PROMPT_CHAR %f"
   echo "$prompt"
 }
