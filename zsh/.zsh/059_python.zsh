@@ -8,7 +8,5 @@ if [[ -f "$HOME/.python-version" ]]; then
   export PYTHON_VERSION="$(cat $HOME/.python-version)"
 fi
 
-{
-  eval "$(pyenv init -)"
-  eval "$(pyenv virtualenv-init -)"
-} &!
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
