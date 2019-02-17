@@ -74,7 +74,7 @@ alias timestamp="date +%s"
 alias cpc="copy-last-command"
 
 # Move to the dotfiles
-alias dot='cd $DOT_DIR'
+alias dot='cd $DOTFILES_DIR'
 
 alias unstow="stow -D"
 alias restow="stow -R"

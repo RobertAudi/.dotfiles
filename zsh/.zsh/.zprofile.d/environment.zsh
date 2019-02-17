@@ -20,7 +20,7 @@ export VIM_CONFIG_HOME="$HOME/.vim"
 export VIMPAGER_RC="$XDG_CONFIG_HOME/vimpager/vimpagerrc"
 
 export TMPDIR="$HOME/.tmp"
-export DOT_DIR="$HOME/.dotfiles"
+export DOTFILES_DIR="$HOME/.dotfiles"
 export GOPATH="$XDG_DEVELOPER_DIR/go"
 
 # ZSH {{{
