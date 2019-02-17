@@ -1,7 +1,7 @@
 if [[ -n "$1" ]]; then
   command tmux new-session -d -c "$HOME" -s "$1" && tmux switch-client -t "$1"
 else
-  local session=$(tmux list-sessions -F "#{session_name}" | fzf --query="$1" --select-1 --exit-0) || return $?
+  local session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --query="$1" --select-1 --exit-0) || return $?
 
   if [[ -n "$TMUX" ]]; then
     tmux switch-client -t "$session"

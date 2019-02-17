@@ -1,9 +1,6 @@
 set noloadplugins
 set wrap
 
-let base16colorspace = 256
-colorscheme base16-railscasts
-
 highlight CursorColumn guibg=#333435 ctermbg=237
 highlight CursorLine   guibg=#333435 ctermbg=237
 highlight IncSearch    ctermbg=3   ctermfg=1

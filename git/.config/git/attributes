@@ -27,7 +27,7 @@
 *.png  binary
 *.psb  binary
 *.psd  binary
-*.svg  text
+*.svg  text -crlf
 *.svgz binary
 *.tif  binary
 *.tiff binary
