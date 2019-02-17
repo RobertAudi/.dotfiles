@@ -3,15 +3,22 @@
 is-callable ghq || { print-error "ghq not installed"; return 1 }
 
 # TODO: Fucking do something...
-(($#)) || { command ghq help; return $? }
+(($#)) || { command ghq help; return 1 }
 
 local repo
 local action="$1"; shift
 case "$action" in
   "get")
-    (($#)) && repo="$1" || repo="$(pbpaste)"
-    git ping "$repo" || return $?
-    command ghq get --update "$repo"
+    if (( $# == 0 )); then
+      repo="$(pbpaste)"
+      git ping "$repo" || return $status
+      command ghq get --shallow --update "$repo"
+    elif (( $# == 1 )); then
+      command ghq get --shallow --update "$1"
+    else # (( $# > 1 )) because $# can't be less than 0
+      # NOTE: I use $@ instead of $1 to avoid false negatives if ghq options are passed
+      command ghq get "${=@}"
+    fi
     ;;
   "look")
     repos=($(ghq list "$1"))
@@ -21,12 +28,33 @@ case "$action" in
       elif type fzf >/dev/null; then
         repo="$(printf -- '%s\n' "${repos[@]}" | fzf)"
       else
-        command ghq look "$@"
-        return $?
+        local -i repos_count=${#repos}
+
+        if (( $repos_count > 3 )); then
+          print-error "$repos_count repositories are found; Try more precise name."
+        else
+          print-error "More than one repositories are found; Try more precise name."
+          for repo in ${repos[@]}; do
+            printf '%10s- %s\n' "" "$repo"
+          done
+        fi
+
+        return 1
+      fi
+
+      if (( $status == 130 )); then
+        print-error "Aborted..."
+        return 130
       fi
 
       repo="$(echo -n "$repo" | xargs echo -n)"
       if [[ -n "$repo" ]]; then
+        local repo_url
+        repo_url="${repo##${repo:h:h}/}"
+
+        # Make sure to get the latest version
+        ghq get --update "$repo_url"
+
         if [[ -n "$TMUX" && "$PWD" != "$HOME" ]]; then
           tmux new-window -c "$HOME" \; send-keys -l " cd \"$repo\"" \; send-keys "C-m" "C-l"
         else
