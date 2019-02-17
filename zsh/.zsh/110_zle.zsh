@@ -37,11 +37,17 @@ bindkey -M isearch . self-insert
 
 fancy-ctrl-z() {
   if [[ $#BUFFER -eq 0 ]]; then
-    BUFFER="fg"
-    zle accept-line
+    if (( ${#jobstates} )); then
+      # zle .push-input # ???
+      [[ -o hist_ignore_space ]] && BUFFER=' ' || BUFFER=''
+      BUFFER="${BUFFER}fg"
+      zle .accept-line
+    else
+      zle -M 'No background jobs. Doing nothing.'
+    fi
   else
-    zle push-input
-    zle clear-screen
+    zle .push-input
+    zle .clear-screen
   fi
 }
 zle -N fancy-ctrl-z
