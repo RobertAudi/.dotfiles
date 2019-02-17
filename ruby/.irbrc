@@ -31,7 +31,17 @@ if defined?(IRB)
   require "irb/completion"
   require "irb/ext/save-history"
 
-  IRB.conf[:PROMPT_MODE]  = :SIMPLE
+  IRB.conf[:PROMPT] ||= {}
+  IRB.conf[:PROMPT][:MY_PROMPT] = {
+    :PROMPT_I => ">> ",    # normal
+    :PROMPT_N => "|  ",    # indenting
+    :PROMPT_C => " > ",    # continuing a statement
+    :PROMPT_S => "%l> ",   # continuing a string
+    :RETURN   => "=> %s \n",
+    :AUTO_INDENT => true
+  }
+
+  IRB.conf[:PROMPT_MODE]  = :MY_PROMPT
   IRB.conf[:AUTO_INDENT]  = true
   IRB.conf[:EVAL_HISTORY] = 10_000
   IRB.conf[:SAVE_HISTORY] = 10_000
