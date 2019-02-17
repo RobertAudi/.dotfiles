@@ -1,4 +1,39 @@
-" Disable pre-bundled plugins
+set encoding=utf-8
+set termencoding=utf-8
+scriptencoding utf-8
+
+" Setup {{{
+" ------------------------------------------------------------------------------
+
+set t_Co=256
+set ttyfast
+
+if !has('gui_running')
+  if empty($TMUX)
+    set term=xterm-256color
+  else
+    set term=screen-256color
+  endif
+endif
+
+" Credits: Suraj N. Kurapati (sunaku)
+" URL: https://github.com/sunaku
+" Source: https://github.com/sunaku/.vim/blob/7e004686e4a7f8d66e79572eb477976a40f552a3/plugin/color.vim#L16-L21
+"
+" Disable Background Color Erase (BCE) so that color schemes
+" render properly when inside 256-color tmux and GNU screen.
+" See also http://snk.tuxfamily.org/log/vim-256color-bce.html
+set t_ut=
+
+filetype plugin indent on
+
+if !exists('g:syntax_on')
+  syntax enable
+endif
+
+" Disable pre-bundled plugins {{{
+" ------------------------------------------------------------------------------
+
 let g:loaded_getscriptPlugin = 1
 let g:loaded_getscript = 1
 let g:loaded_gzip = 1
@@ -14,17 +49,10 @@ let g:loaded_vimball = 1
 let g:loaded_zipPlugin = 1
 let g:loaded_zip = 1
 
-if has('gui_running')
-  set t_Co=16
-else
-  set t_Co=256
-  set termencoding=utf-8
-  set ttyfast
-  set term=screen-256color
-endif
+" ------------------------------------------------------------------------------ }}}
 
-filetype plugin indent on
-syntax enable
+" Install vim-plug if needed {{{
+" ------------------------------------------------------------------------------
 
 if !filereadable(expand('~/.vim/autoload/plug.vim')) || !isdirectory(expand('~/.vim/plugged'))
   echomsg 'Installing vim-plug...'
@@ -45,10 +73,7 @@ if !filereadable(expand('~/.vim/autoload/plug.vim')) || !isdirectory(expand('~/.
   finish
 endif
 
-if has('gui_macvim')
-  let g:macvim_skip_cmd_opt_movement = 1
-  let g:macvim_skip_colorscheme = 1
-end
+" ------------------------------------------------------------------------------ }}}
 
 " Workaround for this deprecation warning:
 "   DeprecationWarning: The imp module is deprecated in favour of importlib;
@@ -57,14 +82,15 @@ if has('python3')
   silent! python3 1
 endif
 
+if has('gui_macvim')
+  let g:macvim_skip_cmd_opt_movement = 1
+  let g:macvim_skip_colorscheme = 1
+end
+
+" ------------------------------------------------------------------------------ }}}
+
 " Settings {{{
 " ------------------------------------------------------------------------------
-
-set encoding=utf-8
-scriptencoding utf-8
-
-syntax on
-filetype plugin indent on
 
 " Assume POSIX by default, not original Bourne shell
 let g:is_posix = 1
