@@ -1,4 +1,4 @@
 #autoload
 
-builtin print -P -- "[%F{196}ERROR%f] $@" >&2
+builtin print -P -- "[%F{red}ERROR%f] $@" >&2
 return 1

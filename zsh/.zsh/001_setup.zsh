@@ -31,6 +31,9 @@ zmodload zsh/terminfo
 # A builtin command interface to the stat system call.
 zmodload -F zsh/stat b:zstat
 
+# A builtin for starting a command in a pseudo-terminal.
+zmodload zsh/zpty
+
 # ------------------------------------------------------------------------------ }}}
 
 # Options {{{

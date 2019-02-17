@@ -1,4 +1,4 @@
 #autoload
 
 # ostype returns the lowercase OS name
-uname | tr '[[:upper:]]' '[[:lower:]]'
+uname -s | tr '[[:upper:]]' '[[:lower:]]'

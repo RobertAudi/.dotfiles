@@ -5,6 +5,9 @@ alias sfind="noglob sfind"
 # Suffix aliases {{{
 # ------------------------------------------------------------------------------
 
+# Text files
+alias -s txt='cat'
+
 # Website
 alias -s {org,com,fr,html,htm}="$BROWSER"
 

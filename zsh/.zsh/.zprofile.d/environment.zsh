@@ -286,6 +286,7 @@ export CLICOLOR=true
 export PAGER="smartless"
 export MANPAGER="less"
 export BROWSER="open"
+export IMAGE_VIEWER="open"
 export PDF_READER="open"
 export DOWNLOADS_DIR="$HOME/Downloads/_hazel"
 export QT_STYLE_OVERRIDE=adwaita

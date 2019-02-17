@@ -2,10 +2,6 @@ if [[ -d "$HOME/.cargo/bin" ]]; then
   export PATH="$HOME/.cargo/bin:$PATH"
 fi
 
-if [[ -d "/usr/local/opt/openssl/lib/pkgconfig" ]]; then
-  export PKG_CONFIG_PATH="/usr/local/opt/openssl/lib/pkgconfig"
-fi
-
 if [[ -d "$HOME/.pyenv" ]]; then
   export PYENV_ROOT="$HOME/.pyenv"
 fi

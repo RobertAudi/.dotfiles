@@ -33,7 +33,8 @@ zstyle ':completion:*:match:*' original only
 zstyle -e ':completion:*' special-dirs '[[ $PREFIX = (../)#(|.|..) ]] && reply=(..)'
 
 # Increase the number of errors based on the length of the typed word.
-zstyle -e ':completion:*:approximate:*' max-errors 'reply=($((($#PREFIX+$#SUFFIX)/3))numeric)'
+# Allow one error for every three characters typed in approximate completer
+zstyle -e ':completion:*:approximate:*' max-errors 'reply=( $((($#PREFIX+$#SUFFIX)/3 )) numeric )'
 
 # Case-insensitive (all), partial-word, and then substring completion.
 zstyle ':completion:*' matcher-list \
@@ -51,7 +52,7 @@ zstyle ':completion:*:*:*:*:*' menu select
 zstyle ':completion:*:matches'      group 'yes'
 zstyle ':completion:*:options'      description 'yes'
 zstyle ':completion:*:options'      auto-description '%d'
-zstyle ':completion:*:corrections'  format ' %F{green}-- %d (errors: %e) --%f'
+zstyle ':completion:*:corrections'  format ' %F{red}-- %d (errors: %e) --%f'
 zstyle ':completion:*:descriptions' format ' %F{yellow}-- %d --%f'
 zstyle ':completion:*:messages'     format ' %F{purple} -- %d --%f'
 zstyle ':completion:*:warnings'     format ' %F{red}-- no matches found --%f'
@@ -87,12 +88,6 @@ zstyle ':completion:*:-tilde-:*' group-order 'named-directories' 'path-directori
 # For example, cd ../<tab> should not prompt current directory.
 zstyle ':completion:*:*:cd:*' ignore-parents parent pwd ..
 
-# History
-zstyle ':completion:*:history-words' stop yes
-zstyle ':completion:*:history-words' remove-all-dups yes
-zstyle ':completion:*:history-words' list false
-zstyle ':completion:*:history-words' menu yes
-
 # Environmental Variables
 zstyle ':completion::*:(-command-|export):*' fake-parameters ${${${_comps[(I)-value-*]#*,}%%,*}:#-*-}
 
@@ -107,6 +102,18 @@ zstyle ':completion:*:rm:*' file-patterns '*:all-files'
 
 # Media Players
 zstyle ':completion:*:*:mocp:*' file-patterns '*.(wav|WAV|mp3|MP3|ogg|OGG|flac):ogg\ files *(-/):directories'
+
+# ---------------------------------------------------------------------
+# History
+# ---------------------------------------------------------------------
+# Ignore duplicate entries
+zstyle ':completion:*:history-words' stop yes
+zstyle ':completion:*:history-words' remove-all-dups yes
+
+# Insert all expansions for expand completer
+zstyle ':completion:*:history-words' list false
+zstyle ':completion:*:history-words' menu yes
+# ---------------------------------------------------------------------
 
 # ---------------------------------------------------------------------
 # Processes

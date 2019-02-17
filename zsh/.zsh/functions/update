@@ -202,6 +202,9 @@ function __update::commands::gem {
 }
 
 function __update::commands::npm {
+  # update NPM first
+  npm install -g npm
+
   for package in $(npm -g outdated --parseable --depth=0 | cut -d: -f2); do
     npm -g install "$package"
   done
@@ -307,7 +310,7 @@ function __update::commands::pip {
     fi
 
     # FIXME: Error if there are no outdated packages
-    env $=env_vars $cmd install --upgrade pip setuptools && \
+    env $=env_vars $cmd install --upgrade pip setuptools wheel && \
       $cmd list --outdated --format freeze \
       | cut -d'=' -f1 \
       | xargs -n1 env $=env_vars $cmd install --upgrade

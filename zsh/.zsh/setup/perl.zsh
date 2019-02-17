@@ -18,15 +18,6 @@ add_perl5lib_path() {
 
 add_perl5lib_path $XDG_LIB_HOME/perl5
 
-if [[ -s "${PERLBREW_ROOT:-$HOME/perl5/perlbrew}/etc/bashrc" ]]; then
-  source "${PERLBREW_ROOT:-$HOME/perl5/perlbrew}/etc/bashrc"
-
-  # Load Perlbrew completion.
-  if [[ -s "${PERLBREW_ROOT:-$HOME/perl5/perlbrew}/etc/perlbrew-completion.bash" ]]; then
-    source "${PERLBREW_ROOT:-$HOME/perl5/perlbrew}/etc/perlbrew-completion.bash"
-  fi
-fi
-
 # Perl is slow; cache its output.
 cache_file="${TMPDIR:-/tmp}/perl-cache.$UID.zsh"
 perl_path="$HOME/perl5"

@@ -132,9 +132,9 @@ fi
 
 # Be verbose
 alias cp="cp -v"
-alias chgrp='chgrp -v'
-alias chmod="chmod -v"
-alias chown="chown -v"
+alias chgrp='chgrp --preserve-root -v'
+alias chmod="chmod --preserve-root -v"
+alias chown="chown --preserve-root -v"
 alias mkdir="mkdir -vp"
 alias mv="mv -v"
 alias ln="ln -v"
