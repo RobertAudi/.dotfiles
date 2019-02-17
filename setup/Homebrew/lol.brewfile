@@ -17,3 +17,7 @@ brew "sl"
 # ASCII-art displaying typo-corrector for commands
 #   http://r-wos.org/hacks/gti
 brew "gti"
+
+# Converts boring normal dates to fun Discordian Date
+#   https://github.com/bo0ts/ddate
+brew "ddate"

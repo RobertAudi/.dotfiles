@@ -74,3 +74,15 @@ ___install du-dust
 # A tool to analyze file system usage written in Rust
 #   https://github.com/nachoparker/dutree
 ___install dutree
+
+# svgcleaner could help you to clean up your SVG files from the unnecessary data.
+#   https://github.com/RazrFalcon/svgcleaner
+___install svgcleaner
+
+# Find and replace text in source files
+#   https://github.com/TankerHQ/ruplacer
+__install ruplacer
+
+# Intuitive find & replace CLI (sed alternative)
+#   https://github.com/chmln/sd
+__install sd

@@ -156,6 +156,10 @@ brew "openssl"
 #   export PKG_CONFIG_PATH="/usr/local/opt/libressl/lib/pkgconfig"
 brew "libressl"
 
+# Tool which checks for the support of TLS/SSL ciphers and flaws
+#   https://testssl.sh/
+brew 'testssl'
+
 # OpenBSD freely-licensed SSH connectivity tools
 #   https://www.openssh.com/
 brew "openssh"
@@ -203,6 +207,14 @@ brew "scrypt"
 # Arbitrary precision calculator
 #   http://www.isthe.com/chongo/tech/comp/calc/
 brew "calc"
+
+# Progress: Coreutils Progress Viewer
+#   https://github.com/Xfennec/progress
+brew "progress"
+
+# Monitor data's progress through a pipe
+#   https://www.ivarch.com/programs/pv.shtml
+brew "pv"
 
 # Search tool like grep, but optimized for programmers
 #   https://beyondgrep.com/
@@ -255,6 +267,10 @@ brew "lolcat"
 # Sparklines for the shell
 #   https://zachholman.com/spark/
 brew "spark"
+
+# Create ASCII graphical histograms in the terminal
+#   https://github.com/philovivero/distribution
+brew "distribution"
 
 # <hr />, for your terminal window
 #   https://github.com/LuRsT/hr
@@ -367,6 +383,10 @@ brew "dfc"
 #   https://github.com/mikefarah/yq
 brew "yq"
 
+# Linter for YAML files
+#   https://github.com/adrienverge/yamllint
+brew "yamllint"
+
 # Lightweight and flexible command-line JSON processor
 #   https://stedolan.github.io/jq/
 brew "jq"
@@ -386,6 +406,10 @@ brew "jo"
 # Make JSON greppable
 #   https://github.com/tomnomnom/gron
 brew "gron"
+
+# JSON parser and validator with a CLI
+#   https://github.com/zaach/jsonlint
+brew "jsonlint"
 
 # Programs for dealing with numbers from the command-line
 #   https://suso.suso.org/programs/num-utils/
@@ -535,6 +559,20 @@ brew "youtube-dl"
 # Play, record, convert, and stream audio and video
 #   https://ffmpeg.org/
 brew "ffmpeg"
+
+# PNG file optimizer
+#   https://optipng.sourceforge.io/
+brew "optipng"
+
+# Prints information and tests integrity of JPEG/JFIF files
+#   https://github.com/tjko/jpeginfo
+#   https://www.kokkonen.net/tjko/projects.html
+brew "jpeginfo"
+
+# Utility to optimize JPEG files
+#   https://github.com/tjko/jpegoptim
+#   https://www.kokkonen.net/tjko/projects.html
+brew "jpegoptim"
 
 # Fast, simple and clean video downloader
 #   https://github.com/iawia002/annie
@@ -869,6 +907,15 @@ brew "number-to-words"
 # Draw a beautiful christmas tree in ascii
 #   https://github.com/moul/sapin
 brew "sapin", args: ["HEAD"]
+
+
+# ------------------------------------------------------------------------------
+
+tap "sbdchd/skim"
+
+# Fuzzy finder written in Rust
+#   https://github.com/lotabout/skim
+brew "sbdchd/skim/skim"
 
 # ------------------------------------------------------------------------------
 

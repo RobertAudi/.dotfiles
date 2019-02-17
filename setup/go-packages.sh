@@ -44,3 +44,7 @@ go get -u -v github.com/b4b4r07/vtest
 # rget is parallel downloader for GitHub release.
 #   https://github.com/orisano/rget
 go get -u -v github.com/orisano/rget
+
+# A faster file programming language detector
+#   https://github.com/src-d/enry
+go get -u -v gopkg.in/src-d/enry.v1/...
