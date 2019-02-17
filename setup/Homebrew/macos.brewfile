@@ -372,49 +372,34 @@ cask "virtualbox-extension-pack"
 # FiScript lets you execute custom scripts on your files/folders from the context menu in Finder.
 #   https://github.com/Mortennn/FiScript
 cask "https://raw.githubusercontent.com/Mortennn/FiScript/master/fiscript.rb", args: %w[no-quarantine]
+# Back up your computer to the cloud
+#   https://www.arqbackup.com/
+cask "arq"
 
-if `hostname`.to_s.match?(/\A[a-z]{3}-octo/i)
-  # Team chat
-  #   https://slack.com/
-  cask "slack"
+# Catch is a Mac application that runs in the menu bar, and will automatically
+# download episodes found in your ShowRSS feed using your favorite BitTorrent client.
+#   http://giorgiocalderolla.com/catch.html
+cask "catch"
 
-  # Connected space for product teams
-  #   https://zeplin.io/
-  cask "zeplin"
+# Media server
+#   https://www.plex.tv/
+cask "plex-media-server"
 
-  # Desktop chat client for Google Hangouts
-  #   https://github.com/yakyak/yakyak
-  cask "yakyak"
-else
-  # Back up your computer to the cloud
-  #   https://www.arqbackup.com/
-  cask "arq"
+# VLC media player
+#   https://www.videolan.org/vlc/index.html
+cask "vlc"
 
-  # Catch is a Mac application that runs in the menu bar, and will automatically
-  # download episodes found in your ShowRSS feed using your favorite BitTorrent client.
-  #   http://giorgiocalderolla.com/catch.html
-  cask "catch"
+# Transmission is a cross-platform BitTorrent client
+#   https://transmissionbt.com/
+cask "transmission"
 
-  # Media server
-  #   https://www.plex.tv/
-  cask "plex-media-server"
+# The open source video transcoder
+#   https://handbrake.fr/
+cask "handbrake"
 
-  # VLC media player
-  #   https://www.videolan.org/vlc/index.html
-  cask "vlc"
-
-  # Transmission is a cross-platform BitTorrent client
-  #   https://transmissionbt.com/
-  cask "transmission"
-
-  # The open source video transcoder
-  #   https://handbrake.fr/
-  cask "handbrake"
-
-  # X Lossless Decoder: Lossless audio decoder for Mac OS X
-  #   http://tmkk.undo.jp/xld/index_e.html
-  cask "xld"
-end
+# X Lossless Decoder: Lossless audio decoder for Mac OS X
+#   http://tmkk.undo.jp/xld/index_e.html
+cask "xld"
 
 # QuickLook plugins
 # ------------------------------------------------------------------------------
