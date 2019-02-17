@@ -85,6 +85,19 @@ if [[ -f "/Applications/MailMate.app/Contents/Resources/emate" && -x "/Applicati
   alias emate="/Applications/MailMate.app/Contents/Resources/emate"
 fi
 
+if ! type pg >/dev/null; then
+  # Aliases to control Postgres
+  # Paths noted below are for Postgres installed via Homebrew on OSX
+  # Source: OMZ postgres plugin
+
+  alias pg="pg_ctl -D /usr/local/var/postgres"
+  alias "pg-start"="pg start --log=/usr/local/var/postgres/server.log"
+  alias "pg-stop"="pg stop --silent --mode=fast"
+  alias "pg-restart"='pg restart --silent --mode=fast --wait'
+  alias "pg-reload"="pg reload --silent"
+  alias "pg-status"="pg status --silent"
+fi
+
 if type launch >/dev/null; then
   alias open="launch"
 fi
