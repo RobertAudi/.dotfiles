@@ -25,6 +25,10 @@ Pry.config.print = proc do |output, value|
   end
 end
 
+if defined?(PryTheme)
+  Pry.config.theme = "railscasts"
+end
+
 if defined?(Hirb)
   Hirb.enable
 end

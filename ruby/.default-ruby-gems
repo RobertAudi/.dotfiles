@@ -27,6 +27,10 @@ awesome_print
 #   https://pryrepl.org/
 pry
 
+# An easy way to customize Pry colors via theme files
+#   https://github.com/kyrylo/pry-theme
+pry-theme
+
 # - gem edit: edit a library file you can require.
 # - gem open: edit a gem by name.
 # - gem clone: clone a gem from GitHub.
