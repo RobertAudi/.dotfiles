@@ -12,7 +12,7 @@ case "$1" in
     ;;
   bundle-all)
     local f
-    for f in $DOT_DIR/setup/Homebrew/*.brewfile(:A); do
+    for f in $DOTFILES_DIR/setup/Homebrew/*.brewfile(:A); do
       builtin print -P -- "%F{032}==>%f brew bundle file: %B${f:t}%b"
       command brew bundle install --file="$f"
     done
