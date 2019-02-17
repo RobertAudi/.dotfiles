@@ -645,7 +645,20 @@ Plug 'RobertAudi/vim-smartbraces'
 Plug 'vim-scripts/loremipsum'
 Plug 'Olical/vim-expand'
 
-Plug 'lifepillar/vim-mucomplete'
+" Async completion framework made ease.
+Plug 'maralla/completor.vim'
+
+" Include completion framework
+Plug 'Shougo/neoinclude.vim'
+
+" The vim source
+Plug 'Shougo/neco-vim'
+
+" neco-vim completion support for completor.vim
+Plug 'kyouryuukunn/completor-necovim'
+
+" omnicompletion via zsh's completion engine
+Plug 'Valodim/vim-zsh-completion'
 
 Plug 'itchyny/vim-gitbranch'
 Plug 'airblade/vim-gitgutter'
