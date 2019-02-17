@@ -23,11 +23,10 @@ if [[ -f "$ZDOTDIR/setup/perl.zsh" ]]; then
 fi
 
 # Base16 Shell
-export BASE16_MANAGER_HOME="$HOME/.base16-manager"
-export BASE16_SHELL="$BASE16_MANAGER_HOME/chriskempson/base16-shell"
+export BASE16_SHELL="$XDG_CONFIG_HOME/base16/base16-shell"
 
-if [[ -f "$BASE16_SHELL/scripts/base16-railscasts.sh" ]]; then
-  source "$BASE16_SHELL/scripts/base16-railscasts.sh"
+if [[ -f "$BASE16_SHELL/base16-railscasts.sh" ]]; then
+  source "$BASE16_SHELL/base16-railscasts.sh"
 fi
 
 # Required because otherwise it goes to shit.....
