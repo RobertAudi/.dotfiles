@@ -25,9 +25,16 @@ function! x2a#utils#helpers#Preserve(func, ...) abort
   return l:return_value
 endfunction
 
-" Display an error message.
+" Display a warning message.
 function! x2a#utils#helpers#Warn(msg) abort
-  echohl ErrorMsg
+  echohl WarningMsg
   echomsg a:msg
+  echohl NONE
+endfunction
+
+" Display an error message.
+function! x2a#utils#helpers#Error(msg) abort
+  echohl ErrorMsg
+  echoerr a:msg
   echohl NONE
 endfunction
