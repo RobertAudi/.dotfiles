@@ -380,40 +380,6 @@ defaults write com.apple.menuextra.clock DateFormat -string "E MMM d HH:mm"
 
 # ------------------------------------------------------------------------------ }}}
 
-# Messages.app {{{
-# ------------------------------------------------------------------------------
-# PList file: ~/Library/Preferences/com.apple.messageshelper.MessageController.plist
-# ------------------------------------------------------------------------------
-___section "Messages.app"
-
-___describe "Disable automatic emoji substitution (i.e. use plain text smileys)"
-defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticEmojiSubstitutionEnablediMessage" -bool false
-(( $status == 0 )) && ___done || ___error
-
-___describe "Disable smart quotes as it's annoying for messages that contain code"
-defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticQuoteSubstitutionEnabled" -bool false
-(( $status == 0 )) && ___done || ___error
-
-___describe "Disable continuous spell checking"
-defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "continuousSpellCheckingEnabled" -bool false
-(( $status == 0 )) && ___done || ___error
-
-___describe "Disable automatic spelling correction"
-defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "continuousSpellCheckingEnabled" -bool false
-(( $status == 0 )) && ___done || ___error
-
-# ------------------------------------------------------------------------------ }}}
-
-# Photos.app {{{
-# ------------------------------------------------------------------------------
-___section "Photos.app"
-
-___describe "Prevent Photos from opening automatically when devices are plugged in"
-defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
-(( $status == 0 )) && ___done || ___error
-
-# ------------------------------------------------------------------------------ }}}
-
 # Safari {{{
 # ------------------------------------------------------------------------------
 # PList file: ~/Library/Preferences/com.apple.Safari.plist
