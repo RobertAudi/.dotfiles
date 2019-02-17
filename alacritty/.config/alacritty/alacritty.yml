@@ -44,8 +44,8 @@ window:
   #     - none: Neither borders nor title bar
   #
   # Values for `decorations` (macOS only):
-  #     - buttonless: Title bar, transparent background and title bar buttons
-  #     - transparent: Title bar, transparent background, but no title bar buttons
+  #     - transparent: Title bar, transparent background and title bar buttons
+  #     - buttonless: Title bar, transparent background, but no title bar buttons
   decorations: none
 
   # When true, alacritty starts maximized.
@@ -285,6 +285,8 @@ mouse:
     #
     # This program is executed when clicking on a text which is recognized as a URL.
     # The URL is always added to the command as the last parameter.
+    #
+    # When set to `None`, URL launching will be disabled completely.
     launcher: open
 
     # URL modifiers
