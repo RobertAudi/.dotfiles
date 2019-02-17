@@ -48,5 +48,3 @@ Pry.config.exception_handler = proc do |output, exception, _pry_|
     connection.begin_db_transaction
   end
 end
-
-Pry.commands.alias_command('w', 'whereami')
