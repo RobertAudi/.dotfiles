@@ -1,0 +1,66 @@
+#!/usr/bin/env zsh
+
+if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) != 'true' ]]; then
+  echo "Error: Not in a git repository" >&2
+  return 1
+fi
+
+local remoteRef="$(git for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD))"
+local remote="$(echo "$remoteRef" | cut -d/ -f1)"
+local remoteURL="$(git ls-remote --get-url $remote)"
+
+local repoURL
+
+if [[ "$remoteURL" =~ "^git@" ]]; then
+  repoURL="$(echo "$remoteURL" | sed -E 's#^git@([^:]+):(.+)#https://\1/\2#;s/\.git$//')"
+elif [[ "$remoteURL" =~ "^git://" ]]; then
+  repoURL="$(echo "$remoteURL" | sed 's#^git#https#;s/\.git$//')"
+elif [[ "$remoteURL" =~ "^https?://" ]]; then
+  repoURL="$(echo "$remoteURL" | sed 's/\.git$//')"
+else
+  echo "Error: Unable to parse remote URL" >&2
+  return 1
+fi
+
+local rev
+
+if [[ "$1" == "-r" || "$1" == "--raw" ]]; then
+  rev="$(git rev-parse HEAD)"
+  shift
+else
+  rev="$(echo "$remoteRef" | cut -d/ -f2)"
+fi
+
+if [[ -n "$1" ]]; then
+  local file
+  file="$(git ls-files --error-unmatch --full-name "$1" 2>/dev/null)"
+
+  if (( $status > 0 )); then
+    echo "Error: file is not tracked" >&2
+    return 1
+  fi
+
+  repoURL="$repoURL/blob/$rev/$file"
+  shift
+
+  if [[ "$1" =~ "^[0-9]+(,[0-9]+)?" ]]; then
+    local line1="$(echo "$1" | cut -d, -f1)"
+    local line2="$(echo "$1" | cut -d, -f2)"
+
+    local lineRange
+
+    if (( $line1 == $line2 )); then
+      lineRange="$line1"
+    else
+      lineRange="$line1,$line2"
+    fi
+
+    local line="$(echo "$lineRange" | sed -E '/,[2-9][0-9]*$/ s/,([0-9]+)$/-L\1/;/^([1-9][0-9]*)/ s/^([0-9]+)([^0-9]?)/L\1\2/')"
+    repoURL="$repoURL#$line"
+    shift
+  fi
+else
+  repoURL="$repoURL/tree/$rev"
+fi
+
+echo "$repoURL"

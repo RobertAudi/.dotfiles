@@ -1217,6 +1217,15 @@ endif
 
 " ------------------------------------------------------------------------------ }}}
 
+" Git {{{
+" ------------------------------------------------------------------------------
+
+command! -bang -range=0 -nargs=0 GitPermalink echo x2a#git#permalink(<bang>0, <line1>, <count>)
+command! -bang -range=0 -nargs=0 GitBrowse call x2a#git#browse(<bang>0, <line1>, <count>)
+command! -bang -range=0 -nargs=0 GitCopyPermalink call x2a#git#copy_permalink(<bang>0, <line1>, <count>)
+
+" ------------------------------------------------------------------------------ }}}
+
 command! -nargs=+ -complete=command Page call x2a#utils#page(<q-args>)
 command! -nargs=0 NormalizeWhitespace call x2a#utils#helpers#Preserve('x2a#utils#UnfuckWhitespace')
 command! -nargs=0 WhatSyntax call x2a#utils#WhatSyntax()
