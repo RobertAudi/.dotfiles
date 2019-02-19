@@ -496,8 +496,8 @@ set foldmarker={{{,}}}
 " Size of the fold column
 set foldcolumn=0
 
-" Start will all folds closed
-set foldlevelstart=0
+" Start will all folds open
+set foldlevelstart=99
 
 " Better fold text
 set foldtext=AwesomeFoldText#foldtext()
