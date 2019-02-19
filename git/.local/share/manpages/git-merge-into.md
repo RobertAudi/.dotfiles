@@ -10,7 +10,7 @@ git-merge-into(1) -- Merge one branch into another
 Merge one branch into another, and keep yourself on current branch. If src branch not given, it will merge current one to dest.
 
 ## OPTIONS
-  
+
   &lt;src&gt;
 
   The name of the branch will be merged into. If this not given, use current branch as default.
@@ -42,18 +42,10 @@ After running `git merge-into dest`, it will look like this:
 The `H` commit will record the merge result, just like what `git merge` does.
 And `src` is still the current branch.
 
-The default implementation of `merge-into` use `git checkout` and `git merge`, 
-which may cause temporary change in the working tree. If you make sure your 
+The default implementation of `merge-into` use `git checkout` and `git merge`,
+which may cause temporary change in the working tree. If you make sure your
 branch can be merged fast-forward, add `--ff-only` to avoid files change.
 
 ## AUTHOR
 
 Written by spacewander &lt;<spacewanderlzx@gmail.com>&gt;
-
-## REPORTING BUGS
-
-&lt;<https://github.com/tj/git-extras/issues>&gt;
-
-## SEE ALSO
-
-&lt;<https://github.com/tj/git-extras>&gt;

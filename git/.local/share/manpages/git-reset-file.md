@@ -23,20 +23,12 @@ git-reset-file(1) -- Reset one file
 
   Reset one file to HEAD
 
-	$ git reset-file .htaccess
+    $ git reset-file .htaccess
 
   or reset one file to certain commit
 
-	$ git reset-file .htaccess dc82b19
+    $ git reset-file .htaccess dc82b19
 
 ## AUTHOR
 
 Written by Sasha Khamkov &lt;<sanusart@gmail.com>&gt;
-
-## REPORTING BUGS
-
-&lt;<https://github.com/tj/git-extras/issues>&gt;
-
-## SEE ALSO
-
-&lt;<https://github.com/tj/git-extras>&gt;

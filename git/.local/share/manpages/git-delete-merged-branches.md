@@ -17,11 +17,3 @@ git-delete-merged-branches(1) -- Delete merged branches
 ## AUTHOR
 
 Written by Jesús Espino &lt;<jespinog@gmail.com>&gt;
-
-## REPORTING BUGS
-
-&lt;<https://github.com/tj/git-extras/issues>&gt;
-
-## SEE ALSO
-
-&lt;<https://github.com/tj/git-extras>&gt;

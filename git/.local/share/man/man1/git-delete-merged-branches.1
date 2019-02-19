@@ -1,1 +1,24 @@
-../../manpages/git-delete-merged-branches.1
+.\" generated with Ronn/v0.7.3
+.\" http://github.com/rtomayko/ronn/tree/0.7.3
+.
+.TH "GIT\-DELETE\-MERGED\-BRANCHES" "1" "February 2019" "" ""
+.
+.SH "NAME"
+\fBgit\-delete\-merged\-branches\fR \- Delete merged branches
+.
+.SH "SYNOPSIS"
+\fBgit\-delete\-merged\-branches\fR
+.
+.SH "DESCRIPTION"
+Deletes all branches merged in to current HEAD\. Does not delete \fImaster\fR, even if run from a branch that is a descendant of \fImaster\fR\.
+.
+.SH "EXAMPLES"
+.
+.nf
+
+$ git delete\-merged\-branches
+.
+.fi
+.
+.SH "AUTHOR"
+Written by Jesús Espino <\fIjespinog@gmail\.com\fR>
