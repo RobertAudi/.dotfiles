@@ -1,0 +1,10 @@
+#!/usr/bin/env zsh
+
+if [[ $1 -gt 1 ]]; then
+  back="~$1"
+else
+  back="^"
+fi
+
+git reset --soft HEAD$back
+git reset
