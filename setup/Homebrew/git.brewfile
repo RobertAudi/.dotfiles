@@ -6,10 +6,6 @@ brew "git", args: ["with-curl"]
 #   https://hub.github.com/
 brew "hub"
 
-# Small git utilities
-#   https://github.com/tj/git-extras
-brew "git-extras"
-
 # Alias for git commit --fixup <ref>
 #   https://github.com/keis/git-fixup
 brew "git-fixup"
