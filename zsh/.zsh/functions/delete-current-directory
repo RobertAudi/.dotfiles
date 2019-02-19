@@ -16,19 +16,45 @@ if ! [[ "$target_directory" =~ "${HOME:A}" ]]; then
   return 1
 fi
 
-builtin print -P -- "The following directory will be deleted: %B%F{yellow}${target_directory}%f%b"
-builtin print -nP -- "%B%F{202}Are you sure you want to continue?%f%b (You have 5 seconds to answer) %B[y/n]%b"
-builtin read -t5 -qs "? "
+if [[ "${target_directory:h}" == "${HOME:A}" ]]; then
+  print-error "You can't delete directories at the top level of your home directory: %B%F{yellow}${target_directory}%f%b"
+  return 1
+fi
 
-# This shit is required because read doesn't print a newline after swallowing the answer
-local answer=$status ; builtin print
+if [[ "$target_directory" =~ "${HOME:A}/Library" ]]; then
+  print-error "You can't delete directories under ~/Library: %B%F{yellow}${target_directory}%f%b"
+  return 1
+fi
+
+zparseopts -D f+=force -force+=force F+=force_rm_parent v+=verbose -verbose+=verbose
+
+local answer
+
+if (( $#force_rm_parent )) || (( $#force )); then
+  answer=0
+else
+  builtin print -P -- "The following directory will be deleted: %B%F{yellow}${target_directory}%f%b"
+  builtin print -nP -- "%B%F{202}Are you sure you want to continue?%f%b (You have 5 seconds to answer) %B[y/n]%b"
+  builtin read -t5 -qs "? "
+
+  # This shit is required because read doesn't print a newline after swallowing the answer
+  answer=$status ; builtin print
+fi
 
 if [[ $answer -eq 0 ]]; then
   local parent_directory="${target_directory:h}"
 
   builtin cd -q "$parent_directory" || return $status
 
-  { command rm -rfv "$target_directory"/{.,}*(N) && command rmdir "$target_directory" } || return $status
+  local rm_opts="-r -f"
+  local rmdir_opts=""
+
+  if (( $#verbose )); then
+    rm_opts+=" -v"
+    rmdir_opts+=" -v"
+  fi
+
+  { command rm $=rm_opts "$target_directory"/{.,}*(N) && command rmdir $=rmdir_opts "$target_directory" } || return $status
 
   if [[ $status -ne 0 ]]; then
     builtin cd -q "$target_directory"
@@ -45,19 +71,23 @@ if [[ $answer -eq 0 ]]; then
   print-success "Directory deleted: %B%F{yellow}${target_directory}%f%b"
   builtin print -P -- "%F{245}You are now in: %F{yellow}%d%f"
 
-  if [[ "${parent_directory:h}" != "${HOME:A}" && -n "$(find $parent_directory -type d -prune -empty)" ]]; then
-    builtin print
-    builtin print -P -- "The parent directory is empty: %B%F{yellow}${parent_directory}%f%b"
-    builtin print -nP -- "%B%F{202}Do you want to delete it as well?%f%b (You have 5 seconds to answer) %B[y/n]%b"
-    builtin read -t5 -qs "? "
+  if [[ "${parent_directory:h}" != "${HOME:A}" && "${parent_directory:h:h}" != "${HOME:A}" && -n "$(find $parent_directory -type d -prune -empty)" ]]; then
+    if (( $#force_rm_parent )); then
+      answer=0
+    else
+      builtin print
+      builtin print -P -- "The parent directory is empty: %B%F{yellow}${parent_directory}%f%b"
+      builtin print -nP -- "%B%F{202}Do you want to delete it as well?%f%b (You have 5 seconds to answer) %B[y/n]%b"
+      builtin read -t5 -qs "? "
 
-    # This shit is required because read doesn't print a newline after swallowing the answer
-    answer=$status ; builtin print
+      # This shit is required because read doesn't print a newline after swallowing the answer
+      answer=$status ; builtin print
+    fi
 
     if [[ $answer -eq 0 ]]; then
       builtin cd -q "${parent_directory:h}"
 
-      { command rmdir "$parent_directory" } || return $status
+      { command rmdir $=rmdir_opts "$parent_directory" } || return $status
 
       if [[ $status -ne 0 ]]; then
         builtin cd -q "$parent_directory"
