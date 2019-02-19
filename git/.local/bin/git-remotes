@@ -1,0 +1,13 @@
+#!/usr/bin/env zsh
+
+zparseopts -D -oneline+=oneline s+=short -short+=short v+=verbose -verbose+=verbose
+
+if (( $#oneline )); then
+  git remote | paste -s -d ' ' -
+elif (( $#short )); then
+  git remote | column -t
+elif (( $#verbose )); then
+  git remote --verbose | column -t
+else
+  git remote --verbose | sed -E '/\(push\)/d; s/\(fetch\)//g' | column -t
+fi

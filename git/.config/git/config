@@ -291,10 +291,9 @@
 
   shallow-clone = clone --depth=1
 
-  # Show verbose output about tags, branches or remotes
+  # Show verbose output about tags and branches
   tags = tag -n1 --list
   branches = branch --all --verbose --verbose
-  remotes = remote --verbose
 
   # Pretty format taken from https://github.com/sunaku/home
   # Source:
