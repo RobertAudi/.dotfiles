@@ -862,9 +862,6 @@ Plug 'kreskij/Repeatable.vim', { 'on': 'Repeatable' }
 " The ultimate snippet solution for Vim
 Plug 'SirVer/ultisnips'
 
-" Easy and high speed coding method
-Plug 'mattn/sonictemplate-vim'
-
 " Completion {{{
 " ------------------------------------------------------------------------------
 
