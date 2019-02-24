@@ -913,13 +913,6 @@ Plug 'zeero/vim-ctrlp-help', { 'on': 'CtrlPHelp' }
 " Plugin for vim to enabling opening a file in a given line
 Plug 'bogado/file-line'
 
-" Helpers for UNIX
-" Provides commands (among others):
-"   :Delete
-"   :Rename
-"   :Chmod
-Plug 'tpope/vim-eunuch'
-
 " Automatically create missing directories when saving a (new) file
 Plug 'haya14busa/vim-auto-mkdir'
 
