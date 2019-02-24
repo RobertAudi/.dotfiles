@@ -1,0 +1,67 @@
+#!/usr/bin/env zsh
+#
+# Undo your last N push of current branch
+
+if ! in-git-repo; then
+  builtin print -P -- "[%F{196}ERROR%f] Not a repository: %B%F{yellow}${PWD}%f%b" >&2
+  return 1
+fi
+
+local upstream
+upstream="$(git for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD))"
+
+if [[ -z "$upstream" ]]; then
+  local current_branch
+  current_branch="$(git rev-parse --abbrev-ref HEAD)"
+
+  builtin print -P -- "[%F{196}ERROR%f] Current branch has no tracking branch: %F{green}${current_branch}%f" >&2
+  return 1
+fi
+
+local -i count
+count=${1:-1}
+
+local back commits_count
+
+if (( $count > 1 )); then
+  back="~$count"
+  commits_count="$count commits"
+else
+  back="^"
+  commits_count="$count commit"
+  (( $count == 1 )) || commits_count+="s"
+fi
+
+local answer
+
+builtin print -P -- "You are about to undo %U%B${commits_count}%b%u from a remote branch: %F{magenta}${upstream}%f"
+builtin print -nP -- "%B%F{202}Are you sure you want to continue?%f%b (You have 5 seconds to answer) %B[y/n]%b"
+builtin read -t5 -qs "? "
+
+# This shit is required because read doesn't print a newline after swallowing the answer
+answer=$status ; builtin print
+
+if [[ $answer -eq 0 ]]; then
+  local tracking_remote tracking branch
+  tracking_remote="${upstream:h}"
+  tracking_branch="${upstream:t}"
+
+  local last_ref
+  last_ref="$(git rev-parse $upstream)"
+
+  local -h -i status_code
+
+  git push --force $tracking_remote ${last_ref}${back}:${tracking_branch}
+
+  status_code=$status
+
+  if [[ $status_code -eq 0 ]]; then
+    builtin print -P -- "%U%B${commits_count}%b%u commits were removed from upstream branch: %F{magenta}${upstream}%f" >&2
+  fi
+
+  return $status_code
+else
+  builtin print -P -- "Cancelled\! Commits %U%Bnot%b%u removed from upstream branch: %F{magenta}${upstream}%f" >&2
+  return 1
+fi
+

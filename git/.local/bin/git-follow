@@ -13,7 +13,7 @@ if ! [[ "$origin_remote_url" =~ "github.com" ]]; then
   return 1
 fi
 
-local repo_name="${origin_remote_url:t}"
+local repo_name="${${origin_remote_url:t}%.git}"
 
 local remote
 for remote in $@; do
