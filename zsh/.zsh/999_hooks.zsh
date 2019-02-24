@@ -11,13 +11,11 @@ _chpwd-show-pwd-contents() {
   ls-overview
 }
 
-_chpwd-git-status-overview() {
-  if is-callable git-status-overview; then
-    git-status-overview
-  fi
+_chpwd-vcs-status-overview() {
+  vcs-status-overview
 }
 
 autoload -Uz add-zsh-hook
 add-zsh-hook chpwd _chpwd-show-pwd-info
 add-zsh-hook chpwd _chpwd-show-pwd-contents
-add-zsh-hook chpwd _chpwd-git-status-overview
+add-zsh-hook chpwd _chpwd-vcs-status-overview

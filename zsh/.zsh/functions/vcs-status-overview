@@ -1,0 +1,5 @@
+#autoload
+
+if is-callable git-status-overview; then
+  git-status-overview
+fi

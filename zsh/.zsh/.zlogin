@@ -7,8 +7,5 @@
 
   print -P -- "%245FIn: %F{yellow}%~%f"
   ls-overview
-
-  if is-callable git-status-overview; then
-    git-status-overview
-  fi
+  vcs-status-overview
 } >&2
