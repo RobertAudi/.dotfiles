@@ -20,7 +20,7 @@ let g:x2a#lightline#separator = ''
 let g:x2a#lightline#subseparator = get(g:, 'x2a#vertical_separator', "\u007c") " |
 
 let g:x2a#lightline#ignored_special_filetypes = ['help', 'qf', 'man']
-let g:x2a#lightline#ignored_plugin_filetypes = ['ctrlp', 'nerdtree', 'ctrlsf']
+let g:x2a#lightline#ignored_plugin_filetypes = ['ctrlp', 'nerdtree', 'ctrlsf', 'tagbar']
 
 let g:x2a#lightline#special_filetypes =
       \ {
@@ -34,6 +34,7 @@ let g:x2a#lightline#plugin_filetypes =
       \   'ctrlp':    'CtrlP',
       \   'nerdtree': 'NERDTree',
       \   'ctrlsf':   'CtrlSF',
+      \   'tagbar':   'Tagbar',
       \ }
 
 " ------------------------------------------------------------------------------ }}}
@@ -113,6 +114,13 @@ function! CtrlPStatusFunc_1(focus, byfname, regex, prev, item, next, marked)
 endfunction
 
 function! CtrlPStatusFunc_2(str)
+  return lightline#statusline(0)
+endfunction
+
+let g:tagbar_status_func = 'TagbarStatusFunc'
+
+function! TagbarStatusFunc(current, sort, fname, ...) abort
+    let g:lightline.fname = a:fname
   return lightline#statusline(0)
 endfunction
 
