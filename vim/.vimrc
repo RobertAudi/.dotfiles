@@ -216,7 +216,7 @@ catch /^Vim\%((\a\+)\)\=:E474/
 endtry
 
 set list
-set listchars=tab:\⋮\ ,extends:…,precedes:…,trail:·,nbsp:⦸
+set listchars=tab:\▸\ ,extends:…,precedes:…,trail:·,nbsp:⦸
 set fillchars=vert:│,fold:-,diff:⣿
 
 let &showbreak = '↳  '
