@@ -42,16 +42,16 @@ let g:NERDTreeIgnore = [
 " ------------------------------------------------------------------------------
 
 let g:NERDTreeIndicatorMapCustom = {
-      \ "Modified"  : "○",
-      \ "Staged"    : "●",
-      \ "Untracked" : "⁇",
-      \ "Renamed"   : "➜",
-      \ "Unmerged"  : "‼",
-      \ "Deleted"   : "×",
-      \ "Dirty"     : "◌",
-      \ "Clean"     : "√",
-      \ 'Ignored'   : "╳",
-      \ "Unknown"   : "?"
+      \   'Modified'  : '○',
+      \   'Staged'    : '●',
+      \   'Untracked' : '⁇',
+      \   'Renamed'   : '➜',
+      \   'Unmerged'  : '‼',
+      \   'Deleted'   : '×',
+      \   'Dirty'     : '◌',
+      \   'Clean'     : '√',
+      \   'Ignored'   : '╳',
+      \   'Unknown'   : '?'
       \ }
 
 " ------------------------------------------------------------------------------
@@ -77,6 +77,6 @@ augroup RAPluginsNERDTree
   autocmd VimEnter * call <SID>SetUpNERDTreeIfVimStartedWithOneDirectoryArgument()
 
   " Make sure NERDTree has always the same size
-  autocmd BufEnter,BufWinEnter NERD_tree_\d\+ execute 'vertical resize ' . NERDTreeWinSize
-  autocmd BufLeave,BufWinLeave NERD_tree_\d\+ execute 'vertical resize ' . NERDTreeWinSize
+  autocmd BufEnter,BufWinEnter NERD_tree_\d\+ execute 'vertical resize ' . g:NERDTreeWinSize
+  autocmd BufLeave,BufWinLeave NERD_tree_\d\+ execute 'vertical resize ' . g:NERDTreeWinSize
 augroup END

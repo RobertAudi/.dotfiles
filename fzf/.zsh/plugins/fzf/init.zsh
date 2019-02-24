@@ -28,7 +28,12 @@ function {
   local color0F='#bc9458'
 
   export FZF_DEFAULT_OPTS="
-    -1 -0 --extended --cycle --no-hscroll --height 40%
+    --select-1
+    --exit-0
+    --extended
+    --cycle
+    --no-hscroll
+    --height 40%
     --color=bg+:$color01,bg:$color00,spinner:$color0C,hl:$color0D
     --color=fg:$color04,header:$color0D,info:$color0A,pointer:$color0C
     --color=marker:$color0C,fg+:$color06,prompt:$color0A,hl+:$color0D
