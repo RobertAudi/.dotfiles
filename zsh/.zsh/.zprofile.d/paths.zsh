@@ -113,7 +113,7 @@ infopath=(
 # ------------------------------------------------------------------------------ {{{
 
 fpath=(
-  $ZDOTDIR/{functions,functions/utils,completions}(N-/)
+  $ZDOTDIR/{functions,functions/{utils,prompts},completions}(N-/)
   /usr/local/share/zsh-completions(N-/)
   /usr/share/zsh/site-functions(N-/)
   $fpath

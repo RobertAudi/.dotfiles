@@ -1,0 +1,72 @@
+#autoload
+
+typeset -g ZSH_DEFAULT_PROMPT_CHAR="○"
+typeset -g ZSH_GIT_PROMPT_CHAR="±"
+typeset -g ZSH_HG_PROMPT_CHAR="☿"
+
+prompt_0x2a_git_info() {
+  local git_ref="$(command git symbolic-ref --short HEAD 2> /dev/null)" || return
+  local num_changes="$(command git status --porcelain | wc -l)"
+  if (($num_changes > 0)); then
+    num_changes=" %F{red}($num_changes%)%f"
+  else
+    num_changes=""
+  fi
+
+  echo "%F{cyan}$ZSH_GIT_PROMPT_CHAR%f %F{green}$git_ref%f$num_changes"
+}
+
+prompt_0x2a_hg_info() {
+  echo "%F{cyan}$ZSH_HG_PROMPT_CHAR%f"
+}
+
+prompt_0x2a_vcs_info() {
+  in-git-repo && echo " $(prompt_0x2a_git_info)" && return
+  hg root &>/dev/null && echo " $(prompt_0x2a_hg_info)" && return
+}
+
+prompt_0x2a_pwd() {
+  local pwdstr="%1~"
+  if [[ ${PWD:A} =~ $HOME ]]; then
+    echo "%F{yellow}${(N)pwdstr}%f"
+  else
+    echo "%F{red}%B${(N)pwdstr}%b%f"
+  fi
+}
+
+prompt_0x2a_jobs() {
+  local number_of_jobs=$(builtin jobs -s | wc -l)
+  if (( $number_of_jobs > 0 )); then
+    echo " %F{magenta}[${number_of_jobs}]%f"
+  fi
+}
+
+prompt_0x2a_help() {
+  cat <<'EOF'
+
+  prompt 0x2a
+
+EOF
+}
+
+prompt_0x2a_ps1() {
+  local -ah prompt
+  prompt=(
+    "%F{blue}%B[%b"
+    "$(prompt_0x2a_pwd)"
+    "$(prompt_0x2a_vcs_info)"
+    "%F{blue}%B]%b%f"
+    "$(prompt_0x2a_jobs)"
+    "%F{%(?.green.red)}"
+    " $ZSH_DEFAULT_PROMPT_CHAR %f"
+  )
+
+  PS1="${(j::)prompt}"
+}
+
+prompt_0x2a_setup() {
+  add-zsh-hook precmd prompt_0x2a_ps1
+  return 0
+}
+
+prompt_0x2a_setup "$@"
