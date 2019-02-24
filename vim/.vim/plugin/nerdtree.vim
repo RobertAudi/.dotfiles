@@ -5,6 +5,7 @@
 scriptencoding utf-8
 
 nnoremap <silent> -  :NERDTreeToggle<CR>
+nnoremap <silent> g- :NERDTreeFocus<CR>
 nnoremap <silent> gF :silent! NERDTreeFind<CR>
 
 let g:NERDTreeHighlightCursorline = 0

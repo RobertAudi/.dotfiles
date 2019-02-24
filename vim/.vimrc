@@ -1520,6 +1520,7 @@ inoremap <C-l> <C-x><C-l>
 
 " Matchit!
 map <BS> %
+map <S-BS> g%
 
 " Uppercase/Lowercase word under the cursor.
 nnoremap gU gUiw`]

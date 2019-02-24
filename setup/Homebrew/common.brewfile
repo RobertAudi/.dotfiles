@@ -919,6 +919,14 @@ brew "sbdchd/skim/skim"
 
 # ------------------------------------------------------------------------------
 
+tap "miserlou/loop", "https://github.com/Miserlou/Loop.git"
+
+# UNIX's missing `loop` command
+#   https://github.com/Miserlou/Loop
+brew "loop", args: ["HEAD"]
+
+# ------------------------------------------------------------------------------
+
 tap "RobertAudi/formulae", "https://github.com/RobertAudi/homebrew-formulae.git"
 
 # list files, recursively

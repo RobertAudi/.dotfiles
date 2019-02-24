@@ -8,8 +8,8 @@ scriptencoding utf-8
 " normal mode (after 500ms; no delay when writing).
 call neomake#configure#automake('nrwi', 500)
 
-" \u2503 : ┃
-let g:neomake_error_sign   = { 'text': "\u2503", 'texthl': 'NeomakeErrorSign'   }
-let g:neomake_warning_sign = { 'text': "\u2503", 'texthl': 'NeomakeWarningSign' }
-let g:neomake_message_sign = { 'text': "\u2503", 'texthl': 'NeomakeMessageSign' }
-let g:neomake_info_sign    = { 'text': "\u2503", 'texthl': 'NeomakeInfoSign'    }
+" \u2581 : ▁
+let g:neomake_error_sign   = { 'text': "\u2581", 'texthl': 'NeomakeErrorSign'   }
+let g:neomake_warning_sign = { 'text': "\u2581", 'texthl': 'NeomakeWarningSign' }
+let g:neomake_message_sign = { 'text': "\u2581", 'texthl': 'NeomakeMessageSign' }
+let g:neomake_info_sign    = { 'text': "\u2581", 'texthl': 'NeomakeInfoSign'    }

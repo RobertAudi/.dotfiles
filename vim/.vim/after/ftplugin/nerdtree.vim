@@ -1,5 +1,11 @@
-" scrooloose/nerdtree
-" ------------------------------------------------------------------------------
+" Plugin: nerdtree
+" Description: File system explorer
+" URL: https://github.com/scrooloose/nerdtree
+
+setlocal colorcolumn=
+
+nnoremap <buffer> J 5j
+nnoremap <buffer> K 5k
 
 nnoremap <buffer> gb <Nop>
 nnoremap <buffer> gB <Nop>

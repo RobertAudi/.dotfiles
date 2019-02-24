@@ -35,6 +35,7 @@ endfunction
 " Display an error message.
 function! x2a#utils#helpers#Error(msg) abort
   echohl ErrorMsg
-  echoerr a:msg
+  echomsg a:msg
   echohl NONE
+  let v:errmsg = a:msg
 endfunction

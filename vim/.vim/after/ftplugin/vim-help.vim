@@ -4,7 +4,13 @@ setlocal nomodeline
 
 setlocal nofoldenable
 setlocal norightleft
-setlocal noexpandtab
+setlocal expandtab
+
+setlocal cursorline
+setlocal noreadonly
+setlocal modifiable
+setlocal list
+setlocal nowrap
 
 setlocal tabstop=8
 setlocal textwidth=78

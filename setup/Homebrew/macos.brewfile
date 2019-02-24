@@ -194,6 +194,14 @@ brew "openssl-osx-ca", restart_service: :changed
 
 # ------------------------------------------------------------------------------
 
+tap "dduan/formulae"
+
+# Git-friently replacement for the tree command.
+#   https://github.com/dduan/tre
+brew "dduan/formulae/tre"
+
+# ------------------------------------------------------------------------------
+
 tap "RobertAudi/formulae", "https://github.com/RobertAudi/homebrew-formulae.git"
 
 # Pretty-prints compiled AppleScript (.scpt) files using ANSI escape sequences.

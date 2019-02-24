@@ -29,10 +29,10 @@ zmodload zsh/system
 zmodload zsh/terminfo
 
 # A builtin command interface to the stat system call.
-zmodload -F zsh/stat b:zstat
+zmodload -F -a zsh/stat b:zstat
 
 # A builtin for starting a command in a pseudo-terminal.
-zmodload zsh/zpty
+zmodload -F -a zsh/zpty b:zpty
 
 # ------------------------------------------------------------------------------ }}}
 
@@ -139,6 +139,7 @@ setopt NO_beep # SHUT THE FUCK UP!!!
 autoload -Uz zmv
 autoload -Uz add-zsh-hook
 autoload -Uz colors && colors
+autoload -Uz zsh-mime-setup && zsh-mime-setup
 
 # This logic comes from an old version of zim. Essentially, bracketed-paste was
 # added as a requirement of url-quote-magic in 5.1, but in 5.1.1 bracketed
