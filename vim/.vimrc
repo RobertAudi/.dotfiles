@@ -603,6 +603,11 @@ let g:plug_shallow = 1
 
 call plug#begin('~/.vim/plugged')
 
+" Minimalist Vim Plugin Manager
+"   https://github.com/junegunn/vim-plug
+" NOTE: Adding vim-plug as a plugin exposes its help
+Plug 'junegunn/vim-plug'
+
 " Base16 for Vim (colorsheme)
 Plug 'chriskempson/base16-vim'
 
