@@ -1,0 +1,10 @@
+#autoload
+
+is-callable ghq || return 1
+
+local p
+for p in $(ghq root --all); do
+  [[ "$PWD" =~ "$p" ]] && return 0
+done
+
+return 1
