@@ -21,18 +21,18 @@ let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
 
 let g:NERDTreeIgnore = [
-      \   '.git$[[dir]]',
-      \   '.hg$[[dir]]',
-      \   '.svn$[[dir]]',
-      \   '.gem$[[dir]]',
-      \   '.yardoc$[[dir]]',
-      \   '.sass-cache[[dir]]',
-      \   '.idea[[dir]]',
+      \   '\.git$[[dir]]',
+      \   '\.hg$[[dir]]',
+      \   '\.svn$[[dir]]',
+      \   '\.gem$[[dir]]',
+      \   '\.yardoc$[[dir]]',
+      \   '\.sass-cache[[dir]]',
+      \   '\.idea[[dir]]',
       \   'Pods$[[dir]]',
-      \   '.DS_Store$[[file]]',
-      \   'Gemfile.lock$[[file]]',
-      \   'Podfile.lock$[[file]]',
-      \   '.zwc$[[file]]', '.zwc.old$[[file]]',
+      \   '\.DS_Store$[[file]]',
+      \   'Gemfile\.lock$[[file]]',
+      \   'Podfile\.lock$[[file]]',
+      \   '\.zwc$[[file]]', '\.zwc\.old$[[file]]',
       \ ]
 
 " ------------------------------------------------------------------------------
