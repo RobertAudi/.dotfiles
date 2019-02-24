@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#autoload
 
 if (( $(\ls -AUC --width=$COLUMNS | wc -l) > 15 )); then
   # Testing out exa hoping to have better perfomance.
