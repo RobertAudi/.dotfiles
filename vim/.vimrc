@@ -1445,7 +1445,7 @@ onoremap <expr> ]] (search('^\S\@=.*{\s*$', 'esW') && (setpos("''", getpos('.'))
 " ------------------------------------------------------------------------------
 
 " Open fold
-nnoremap <expr> h x2a#folding#can_close_fold('.') ? 'zc' : 'h'
+nnoremap <expr> l x2a#folding#can_open_fold('.') ? 'zo' : 'l'
 
 " Toggle fold
 nnoremap <expr> <Space> x2a#folding#can_toggle_fold('.') ? 'za' : "\<Space>"
