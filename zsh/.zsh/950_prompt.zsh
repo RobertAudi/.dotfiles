@@ -2,10 +2,6 @@ ZSH_DEFAULT_PROMPT_CHAR="○"
 ZSH_GIT_PROMPT_CHAR="±"
 ZSH_HG_PROMPT_CHAR="☿"
 
-in-git-repo() {
-  { command git symbolic-ref HEAD || command git rev-parse --short HEAD } &>/dev/null || return 1
-}
-
 git_prompt_info() {
   local git_ref="$(command git symbolic-ref --short HEAD 2> /dev/null)" || return
   local num_changes="$(command git status --porcelain | wc -l)"
