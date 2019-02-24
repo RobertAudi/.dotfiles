@@ -9,25 +9,11 @@ setlocal wrapmargin=0
 setlocal formatoptions-=t " Don't auto-wrap text using textwidth
 setlocal formatoptions+=l " Don't format long lines automatically
 
-" vim-surround
-let b:surround_{char2nr('*')} = "*\r*"
-let b:surround_{char2nr('i')} = "*\r*"
-let b:surround_{char2nr('b')} = "**\r**"
-
 " Headings with ease!
 nnoremap <buffer> \3    I###<Space><Esc>
 nnoremap <buffer> \4   I####<Space><Esc>
 nnoremap <buffer> \5  I#####<Space><Esc>
 nnoremap <buffer> \6 I######<Space><Esc>
-
-" Easy bold and italic
-vmap <buffer> <C-i> Si
-vmap <buffer> <C-b> Sb
-
-if has("gui_running") && has("gui_macvim")
-  xmap <buffer> <D-b> Sb
-  xmap <buffer> <D-i> Si
-endif
 
 " ---
 " Stolen from gabrielelana/vim-markdown
