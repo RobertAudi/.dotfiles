@@ -1,0 +1,31 @@
+#autoload
+
+if ! type gittower >/dev/null; then
+  builtin print -P -- "[%F{196}ERROR%f] Tower Command Line Utility (gittower) not found!" >&2
+  return 1
+fi
+
+local repo
+
+if (( $# == 0 )); then
+  repo="$PWD"
+else
+  repo="$1"
+fi
+
+if ! [[ -d "$repo" ]]; then
+  builtin print -P -- "[%F{196}ERROR%f] Repo not found: %B${repo}%b" >&2
+  return 1
+fi
+
+repo="${repo:A}"
+
+local repo_path
+repo_path="$(builtin cd -q "$repo" ; git rev-parse --show-toplevel 2>/dev/null)"
+
+if [[ $status -ne 0 || -z "$repo_path" ]]; then
+  builtin print -P -- "[%F{196}ERROR%f] This directory doesn't seem to be in a git repo: %F{yellow}${repo}%f" >&2
+  return 1
+fi
+
+gittower "$repo_path"

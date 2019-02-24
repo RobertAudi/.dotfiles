@@ -102,10 +102,6 @@ if type launch >/dev/null; then
   alias open="launch"
 fi
 
-if type gittower >/dev/null; then
-  alias tower="gittower"
-fi
-
 if type flu.sh >/dev/null; then
   # Flush DNS cache
   alias flushdns="sudo flu.sh"
