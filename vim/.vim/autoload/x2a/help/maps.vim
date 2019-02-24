@@ -24,8 +24,8 @@ endfunction
 function! x2a#help#maps#disable() abort
   silent! nunmap <buffer> <CR>
   silent! nunmap <buffer> <BS>
-  silent! nunmap <buffer> d
-  silent! nunmap <buffer> u
+  silent! unmap  <buffer> d
+  silent! unmap  <buffer> u
   silent! nunmap <buffer> q
   silent! nunmap <buffer> Q
   silent! nunmap <buffer> c
