@@ -10,10 +10,3 @@ highlight clear SignColumn
 highlight VertSplit    guifg=#393939 guibg=#393939 ctermfg=237 ctermbg=237
 highlight CursorColumn guibg=#333435 ctermbg=237
 highlight CursorLine   guibg=#333435 ctermbg=237
-
-highlight IncSearch    ctermbg=3   ctermfg=1
-highlight Search       ctermbg=1   ctermfg=3
-
-highlight Visual       ctermbg=3   ctermfg=0
-highlight Pmenu        ctermbg=240 ctermfg=12
-highlight PmenuSel     ctermbg=3   ctermfg=1
