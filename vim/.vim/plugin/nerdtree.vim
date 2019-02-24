@@ -33,6 +33,7 @@ let g:NERDTreeIgnore = [
       \   'Gemfile\.lock$[[file]]',
       \   'Podfile\.lock$[[file]]',
       \   '\.zwc$[[file]]', '\.zwc\.old$[[file]]',
+      \   '.*@neomake*[[file]]',
       \ ]
 
 " ------------------------------------------------------------------------------

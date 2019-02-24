@@ -86,6 +86,9 @@ NERD_tree_*
 
 # Persistent undo
 [._]*.un~
+
+# Neomake temp files
+.*@neomake*
 # ---------------------------------------------------------------------- }}}
 
 # JetBrains {{{
