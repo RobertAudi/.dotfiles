@@ -43,7 +43,7 @@ let g:NERDTreeIgnore = [
 " URL: https://github.com/Xuyuanp/nerdtree-git-plugin
 " ------------------------------------------------------------------------------
 
-let g:NERDTreeIndicatorMapCustom = {
+let g:NERDTreeGitStatusIndicatorMap = {
       \   'Modified'  : '○',
       \   'Staged'    : '●',
       \   'Untracked' : '⁇',

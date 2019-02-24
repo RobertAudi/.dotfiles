@@ -926,14 +926,14 @@ Plug 'haya14busa/vim-auto-mkdir'
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTree', 'NERDTreeToggle', 'NERDTreeFocus', 'NERDTreeFind'] }
 
 " A plugin of NERDTree showing git status
-Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'RobertAudi/nerdtree-git-plugin'
 
 " ------------------------------------------------------------------------------ }}}
 
 " ------------------------------------------------------------------------------ }}}
 
 " Distributes available space among vertical splits, and plays nice with NERDTree.
-Plug 'jordwalke/VimSplitBalancer'
+Plug 'RobertAudi/VimSplitBalancer'
 
 " A light and configurable statusline/tabline plugin for Vim
 Plug 'itchyny/lightline.vim'
@@ -999,7 +999,7 @@ Plug 'fcpg/vim-navmode'
 Plug 'troydm/zoomwintab.vim', { 'on': ['ZoomWinTabIn', 'ZoomWinTabOut', 'ZoomWinTabToggle'] }
 
 " Delete buffers and close files in Vim without closing your windows or messing up your layout.
-Plug 'moll/vim-bbye', { 'on': ['Bdelete', 'Bwipeout'] }
+Plug 'RobertAudi/vim-bbye'
 
 " Land on window you chose like tmux's 'display-pane'
 Plug 't9md/vim-choosewin', { 'on': ['<Plug>(choosewin)', 'ChooseWin', 'ChooseWinSwap', 'ChooseWinSwapStay'] }
@@ -1088,7 +1088,7 @@ Plug 'tyru/open-browser-github.vim', { 'on': ['OpenGithubFile', 'OpenGithubIssue
 Plug 'tyru/open-browser-unicode.vim', { 'on': ['OpenBrowserUnicode'] }
 
 " View and grep man pages in vim
-Plug 'vim-utils/vim-man'
+Plug 'vim-utils/vim-man', { 'on': ['Man', 'Sman', 'Vman', 'Tman', 'Mangrep', '<Plug>(Man)', '<Plug>(Sman)', '<Plug>(Vman)', '<Plug>(Tman)'] }
 
 " A Vim plugin for typing accented characters without remembering their pseudo versions.
 Plug 'RobertAudi/vim-accent'
