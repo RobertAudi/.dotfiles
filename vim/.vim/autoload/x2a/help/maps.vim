@@ -1,18 +1,18 @@
 function! x2a#help#maps#enable() abort
   " jump to the subject (topic) under the cursor.
-  nnoremap <buffer> <silent> <CR> :nohlsearch<Bar>echo<CR><C-]>zz
+  nnoremap <buffer> <silent> <CR> :nohlsearch<Bar>echo<CR><C-]>:call x2a#movements#window#CenterCursorAesthetically()<CR>
 
   " return from the last jump.
-  nnoremap <buffer> <silent> <BS> :nohlsearch<Bar>echo<CR><C-T>zz
+  nnoremap <buffer> <silent> <BS> :nohlsearch<Bar>echo<CR><C-T>:call x2a#movements#window#CenterCursorAesthetically()<CR>
 
   nnoremap <buffer> <silent> <Space>   :nohlsearch<Bar>echo<CR>
   nnoremap <buffer> <silent> <S-Space> :nohlsearch<Bar>echo<CR>
 
-  noremap <buffer> <silent> d <C-d>zz
-  noremap <buffer> <silent> u <C-u>zz
+  noremap <buffer> <silent> d <C-d>:call x2a#movements#window#CenterCursorAesthetically()<CR>
+  noremap <buffer> <silent> u <C-u>:call x2a#movements#window#CenterCursorAesthetically()<CR>
 
-  map <buffer> <silent> <Space>   <C-d>zz
-  map <buffer> <silent> <S-Space> <C-u>zz
+  map <buffer> <silent> <Space>   <C-d>:call x2a#movements#window#CenterCursorAesthetically()<CR>
+  map <buffer> <silent> <S-Space> <C-u>:call x2a#movements#window#CenterCursorAesthetically()<CR>
 
   nnoremap <buffer> q :quit<CR>
   nnoremap <buffer> Q :quit<CR>

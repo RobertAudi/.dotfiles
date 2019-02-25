@@ -1,10 +1,18 @@
 function! s:AestheticCenter() abort
+  let l:current_line = line('.')
   let l:center = round(winheight(0) / 2.0)
   let l:offset = winheight(0) * 0.1
   let l:final = l:center - l:offset
   let l:rounded_final = float2nr(l:final) + 1
-  let l:rounded_offset = float2nr(l:offset)
-  let l:delta = float2nr(l:center) - l:rounded_final
+
+  if l:rounded_final > l:current_line
+    let l:rounded_final = l:current_line
+    let l:rounded_offset = 0
+    let l:delta = 0
+  else
+    let l:rounded_offset = float2nr(l:offset)
+    let l:delta = float2nr(l:center) - l:rounded_final
+  endif
 
   return { 'line': l:rounded_final, 'offset': l:rounded_offset, 'delta': l:delta }
 endfunction

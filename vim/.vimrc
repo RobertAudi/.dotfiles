@@ -1358,9 +1358,12 @@ nnoremap J mzJ`z
 " Universal opposite of J
 nnoremap <silent> S :call x2a#breakhere#BreakHere()<CR>
 
+" Use aesthetic middle of screen for "zz"
+nnoremap zz :call x2a#movements#window#CenterCursorAesthetically()<CR>
+
 " Stay in the center!!
-nnoremap <C-d> <C-d>zz
-nnoremap <C-u> <C-u>zz
+nnoremap <C-d> <C-d>:call x2a#movements#window#CenterCursorAesthetically()<CR>
+nnoremap <C-u> <C-u>:call x2a#movements#window#CenterCursorAesthetically()<CR>
 
 " Do not exit visual mode when shifting
 vnoremap <silent> > >gv
