@@ -37,15 +37,24 @@ else
 endif
 endsnippet
 
-snippet augroup "augroup block" b
+snippet "\baug(roup)?" "augroup block" r
 augroup ${1:AU_NAME}
 	autocmd!
 	${0}
 augroup END
 endsnippet
 
-snippet plug "vim-plug plugin definition" b
-Plug '`!v getreg('+') == '' ? '<\`0\`>' : getreg('+')`'${0}
+snippet "\bau(tocmd)?" "autocommand" r
+autocmd ${1:BufEnter} ${2:*} ${3}  set visualbell t_vb=
+endsnippet
+
+context "int(vim.eval('expand(\'%:h\') =~# \'ftdetect\''))"
+snippet "\bau(tocmd)?" "ftdetect autocommand" re
+autocmd BufRead,BufNewFile ${1} setlocal filetype=${2}
+endsnippet
+
+snippet "^\s*plug(in)?" "vim-plug plugin definition" r
+Plug '`!v getreg('+') == '' ? '<\`0\`>' : substitute(getreg('+'), '^https\?:\/\/github\.com\/', '', '')`'${0}
 endsnippet
 
 snippet gvar "Global / configuration variable" b
