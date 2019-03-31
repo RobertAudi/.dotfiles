@@ -1,0 +1,4 @@
+--theme="base16-railscasts"
+
+# Show line numbers, Git modifications and file header (but no grid)
+--style="numbers,changes,header"
