@@ -88,3 +88,7 @@ __install ruplacer
 # Intuitive find & replace CLI (sed alternative)
 #   https://github.com/chmln/sd
 __install sd
+
+# A fast and reliable alternative to rsync for synchronizing local files
+#   https://github.com/wchang22/LuminS
+__install lms

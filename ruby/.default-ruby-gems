@@ -31,6 +31,10 @@ pry
 #   https://github.com/kyrylo/pry-theme
 pry-theme
 
+# Automate the bundle/migration tedium of Rails with Git hooks
+#   https://github.com/tpope/hookup
+hookup
+
 # - gem edit: edit a library file you can require.
 # - gem open: edit a gem by name.
 # - gem clone: clone a gem from GitHub.
@@ -124,5 +128,13 @@ neovim
 # and dynamic code analysis.
 #   http://yujinakayama.me/transpec/
 transpec
+
+# The opposite of roff
+#   http://rtomayko.github.io/ronn/
+ronn
+
+# A little Ruby gem for finding the source location of classes and methods
+#   https://github.com/daveallie/where_is
+where_is
 
 # vim: set filetype=config textwidth=72 :

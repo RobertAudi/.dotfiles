@@ -496,6 +496,10 @@ brew "devd"
 #   https://the.exa.website
 brew "exa"
 
+# Clone of ls with colorful output, file type icons, and more
+#   https://github.com/Peltoche/lsd
+brew "lsd"
+
 # Bash and zsh history suggest box
 #   https://github.com/dvorka/hstr
 brew "hstr"
