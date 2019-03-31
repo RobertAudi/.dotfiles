@@ -108,6 +108,14 @@ do_sudo() {
 
 # Better tree command
 tree() {
+  # Options:
+  #   -C             Colors
+  #   -A             ANSI line graphics
+  #   -F             Classify (directory: /, executable file: *, etc.)
+  #   -a             All files (including hidden files, but not '.' and '..')
+  #   -I pattern     Don't list files matching the pattern
+  #   --dirsfirst    List directories before files
+  #   -L level       Max depth
   local treeopts="-CAFa -I 'rhel.*.*.package|.git|.gem' --dirsfirst"
   if [[ "$1" =~ "^[1-9][0-9]*$" ]]; then
     treeopts="$treeopts -L $1"
