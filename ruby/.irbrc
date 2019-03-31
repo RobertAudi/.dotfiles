@@ -4,7 +4,7 @@ require "date"
 
 # Gems {{{
 # ---------------------------------------------------------------------
-%w[hirb awesome_print did_you_mean table_flipper].each do |gem|
+%w[hirb awesome_print did_you_mean table_flipper where_is].each do |gem|
   begin
     require gem
   rescue LoadError

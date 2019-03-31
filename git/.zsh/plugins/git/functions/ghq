@@ -56,9 +56,12 @@ case "$action" in
         ghq get --update "$repo_url"
 
         if [[ -n "$TMUX" && "$PWD" != "$HOME" ]]; then
-          tmux new-window -c "$HOME" \; send-keys -l " cd \"$repo\"" \; send-keys "C-m" "C-l"
+          tmux new-window -c "$HOME" \; \
+            send-keys -l " cd -q \"$repo\"" \; \
+            send-keys "C-m" "C-l"
         else
-          cd "$repo"
+          cd -q "$repo"
+
           if [[ -n "$TMUX" ]]; then
             tmux send-keys "C-l"
           else
@@ -72,9 +75,12 @@ case "$action" in
     elif ghq get "$1"; then
       repo="$(ghq list "$1" | head -1)"
       if [[ -n "$TMUX" && "$PWD" != "$HOME" ]]; then
-        tmux new-window -c "$HOME" \; send-keys -l " cd \"$repo\"" \; send-keys "C-m" "C-l"
+        tmux new-window -c "$HOME" \; \
+          send-keys -l " cd -q \"$repo\"" \; \
+          send-keys "C-m" "C-l"
       else
-        cd "$repo"
+        cd -q "$repo"
+
         if [[ -n "$TMUX" ]]; then
           tmux send-keys "C-l"
         else

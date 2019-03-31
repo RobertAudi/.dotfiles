@@ -1,0 +1,7 @@
+\.git
+\.gitignore
+\.gitmodules
+\.gitattributes
+\.DS_Store
+README\.md
+\.local/share/manpages/Makefile
