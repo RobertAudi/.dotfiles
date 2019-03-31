@@ -1,6 +1,0 @@
-google: https://www.google.com/search?q=%s Google
-translate: http://translate.google.com/?source=osdd#auto|auto|%s Google Translator
-gh: https://github.com/search?q=%s GitHub
-so: http://stackoverflow.com/search?q=%s StackOverflow
-yt: http://www.youtube.com/results?search_query=%s YouTube
-imdb: http://www.imdb.com/find?s=all&q=%s IMDB

@@ -1,0 +1,75 @@
+" Unbind annoying mappings
+unbind ZZ " close all tabs and windows
+unbind ]c " increment the current URL by 1
+unbind [c " decrement the current URL by 1
+unbind gr " open Firefox reader mode
+unbind zi " zoom in
+unbind zo " zoom out
+unbind zz " reset zoom
+unbind <C-f> " jump to the next part of the page
+unbind <C-b> " jump to the previous part of the page
+unbin A " bookmark the current page
+unbin a " bookmark the current page, but allow the URL to be modified first
+
+" Next/Previous tab
+bind <C-n> tabnext_gt
+bind <C-p> tabprev
+
+bind <C-b> fillcmdline tab
+bind <C-t> fillcmdline tabopen
+
+" Duplicate tab
+bind gd tabduplicate
+bind D tabduplicate
+
+" Move current tab to new window
+bind gw tabdetach
+
+" Pin current tab
+bind gp pin
+
+" Git{Hub,Lab} git clone via SSH yank
+bind yg composite js "git clone " + document.location.href.replace(/https?:\/\//,"git@").replace("/",":").replace(/$/,".git") | clipboard yank
+
+" Make gu take you back to subreddit from comments
+bindurl reddit.com gu urlparent 4
+
+" Only hint search results on Google
+bindurl www.google.com f hint -Jc .rc > .r > a
+bindurl www.google.com F hint -Jtc .rc>.r>a
+
+" Sane hinting mode
+set hintfiltermode vimperator-reflow
+set hintnames numeric
+
+" Make Tridactyl work on more sites at the expense of some security
+set csp clobber
+fixamo_quiet
+
+" Search engines {{{
+" -------------------------------------------------------------------------------
+
+" GitHub
+set searchurls.gh https://github.com/search?q=%s
+
+" Google Translate
+set searchurls.translate https://translate.google.com/?source=osdd#auto|auto|%s
+
+" StackOverflow
+set searchurls.so https://stackoverflow.com/search?q=%s
+
+" YouTube
+set searchurls.yt https://www.youtube.com/results?search_query=%s
+
+" IMDB
+set searchurls.imdb https://www.imdb.com/find?s=all&q=%s
+
+" ------------------------------------------------------------------------------- }}}
+
+" URL redirects
+" -------------------------------------------------------------------------------
+
+" New reddit is bad
+autocmd DocStart www.reddit.com js tri.excmds.urlmodify("-t", "www", "old")
+
+" vim: set filetype=vim:
