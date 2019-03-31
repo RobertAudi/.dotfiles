@@ -1,4 +1,4 @@
 #compdef lspath
 #autoload
 
-_values "commands" "path" "fpath" "manpath" && ret=0
+_values "commands" "path" "fpath" "manpath" "gem_path" && ret=0

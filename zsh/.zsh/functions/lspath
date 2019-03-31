@@ -8,14 +8,14 @@ local path_var="${(U)1}"
 local path_
 
 case "$path_var" in
-  MAN(PATH)?)
+  MAN?(PATH))
     path_="MANPATH"
     ;;
   FPATH)
     path_="FPATH"
     ;;
-  GEM(_?PATH)?)
-    path_="GEM_PATH"
+  GEM?(_PATH)|GEMPATH)
+      path_="GEM_PATH"
     ;;
   PATH)
     path_="PATH"
