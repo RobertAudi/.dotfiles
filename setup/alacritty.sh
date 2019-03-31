@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-sh "${${(%):-%x}:A:h}/rust.sh"
+source "${${(%):-%x}:A:h}/rust.sh"
 
 command ghq get --update https://github.com/jwilm/alacritty.git
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 if ! type brew &>/dev/null; then
-  sh "${${(%):-%x}:A:h}/brew.sh" || return $status
+  source "${${(%):-%x}:A:h}/brew.sh" || return $status
 fi
 
 if ! type ghq &>/dev/null; then

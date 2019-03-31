@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-sh "${${(%):-%x}:A:h}/brew.sh"
+source "${${(%):-%x}:A:h}/brew.sh"
 
 brew install openssl readline sqlite xz zlib
 

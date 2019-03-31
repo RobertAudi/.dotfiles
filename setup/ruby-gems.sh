@@ -1,5 +1,7 @@
 #!/usr/bin/env zsh
 
+source "${${(%):-%x}:A:h}/ruby.sh"
+
 # Documentation generation tool
 #   http://yardoc.org/
 gem install yard --env-shebang --no-document
