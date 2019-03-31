@@ -196,7 +196,6 @@ fi
 hash -d dotfiles="${DOTFILES_DIR:-$HOME/.dotfiles}"
 hash -d developer="${PROJECTS:-$HOME/Developer}"
 hash -d downloads="${XDG_DOWNLOAD_DIR:-$HOME/Downloads}"
-hash -d icloud="${HOME}/Library/Mobile Documents/com~apple~CloudDocs"
 # ------------------------------------------------------------------------------ }}}
 
 # Modeline {{{
