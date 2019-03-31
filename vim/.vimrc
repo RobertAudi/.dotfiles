@@ -609,7 +609,10 @@ call plug#begin('~/.vim/plugged')
 Plug 'junegunn/vim-plug'
 
 " Base16 for Vim (colorsheme)
-Plug 'chriskempson/base16-vim'
+function FixupBase16(info)
+  !sed -i '/Base16hi/\! s/a:\(attr\|guisp\)/l:\1/g' ~/.vim/plugged/base16-vim/colors/*.vim
+endfunction
+Plug 'chriskempson/base16-vim', { 'do': function('FixupBase16') }
 
 " FileType plugins {{{
 " ------------------------------------------------------------------------------
