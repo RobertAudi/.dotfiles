@@ -18,7 +18,11 @@ use_gem_home() {
 
 layout_ruby() {
   if use chruby; then
-    [[ -f "$PWD/.ruby-version" ]] && chruby `cat "$PWD/.ruby-version"`
+    if [[ -f "$PWD/.ruby-version" ]]; then
+      chruby `cat "$PWD/.ruby-version"`
+    elif [[ -n "$1" ]]; then
+      chruby "$1"
+    fi
   fi
 
   if use gem_home; then
@@ -50,7 +54,7 @@ EOF
 }
 
 use_ruby() {
-  layout ruby
+  layout ruby "$@"
 }
 
 # Modeline {{{
