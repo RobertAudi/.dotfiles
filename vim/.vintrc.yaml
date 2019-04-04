@@ -3,6 +3,16 @@ cmdargs:
   # Checking more strictly
   severity: style_problem
 
+  # Colorize human-readable output.
+  color: true
+
+  # Print statistic like:
+  #   Total violations: 20.
+  stat: true
+
 policies:
   ProhibitAbbreviationOption:
+    enabled: true
+
+  ProhibitImplicitScopeVariable:
     enabled: true
