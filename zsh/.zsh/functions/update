@@ -303,26 +303,11 @@ function __update::commands::arch {
 function __update::commands::pip {
   local env_vars="${(j: :)_UPDATE_CUSTOM_ENV_VARIABLES}"
 
-  for cmd in pip2 pip3 ; do
-    if ! is-callable "$cmd"; then
-      __update::utils::errors::command-not-found "$cmd"
-      continue
-    fi
-
-    # FIXME: Error if there are no outdated packages
-    env $=env_vars $cmd install --upgrade pip setuptools wheel && \
-      $cmd list --outdated --format freeze \
-      | cut -d'=' -f1 \
-      | xargs -n1 env $=env_vars $cmd install --upgrade
-  done
-}
-
-function __update::commands::sudo-pip {
-  __update::utils::sudo-loop || return $status
-  sudo pip install --upgrade pip setuptools && \
-    sudo pip list --outdated --format freeze \
-    | cut -d= -f1 \
-    | xargs -n1 sudo pip install --upgrade
+  # FIXME: Error if there are no outdated packages
+  env $=env_vars pip install --upgrade pip setuptools wheel && \
+    pip list --outdated --format freeze \
+    | cut -d'=' -f1 \
+    | xargs -n1 env $=env_vars pip install --upgrade
 }
 
 function __update::run-command {
