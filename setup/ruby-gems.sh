@@ -2,6 +2,9 @@
 
 source "${${(%):-%x}:A:h}/ruby.sh"
 
+# Update RubyGems
+gem update --system
+
 # Documentation generation tool
 #   http://yardoc.org/
 gem install yard --env-shebang --no-document
