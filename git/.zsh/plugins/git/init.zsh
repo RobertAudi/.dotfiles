@@ -44,20 +44,28 @@ zstyle -g existing_user_commands ':completion:*:*:git:*' user-commands
 
 zstyle ':completion:*:*:git:*' user-commands $existing_user_commands \
   author-stats:'Output number of lines added / removed by author' \
-  browse:'browse the project on GitHub' \
+  browse:'Browse the project on GitHub' \
+  change-author:'Change the author information' \
+  churn:'Show the churn' \
   conflicts:'Show list of files in a conflict state' \
   copy-branch-name:'Copy the current branch name to the clipboard (pbcopy)' \
+  delete-merged-branches:'Delete branches that have been merged' \
   diff-unpushed:"Show the diff of everything you haven't pushed yet" \
   diffstat-unpushed:"Show the diffstat of everything you haven't pushed yet" \
+  disable-pushing:'Update the push URL for all remotes' \
+  follow:'Add the remotes for forks on GitHub' \
+  merge-into:'Merge a branch into another one' \
   nuke:'Nukes a branch locally and on the origin remote' \
   nuke-tag:'Nukes a tag locally and on the origin remote' \
   prune-branches:'Simple script that cleans up unnecessary branches' \
   pruneall:'Prune branches from specified remotes, or all remotes when <remote> not specified' \
+  remotes:'Show all remotes' \
   reset-file:'Reset one file to a certain commit' \
   submodule-purge:'Purges the copies of obsoleted submodule repositories' \
   submodule-rm:'Remove submodules from current repo' \
   submodule-update:'Updates submodules in the current working directory' \
   track:'Sets up your branch to track a remote branch' \
+  undo:'Undo the N last commits on the current branch' \
   undo-push:'Undo your last push to branch ($1) of origin' \
   wip:'Create a WIP commit with all the changes' \
   wtf:'Displays the state of your repository in a readable, easy-to-scan format'
