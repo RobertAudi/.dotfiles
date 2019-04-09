@@ -263,6 +263,7 @@ iOSInjectionProject/
 .bundle/*
 *.gem
 *.rbc
+.rspec-local
 /coverage/
 /InstalledFiles
 /pkg/
