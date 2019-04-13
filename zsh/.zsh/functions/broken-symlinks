@@ -1,0 +1,21 @@
+#autoload
+
+# Find (and print) all symbolic links without a target within the
+# current directorytree (i. e. ll symlinks that dont point to files,
+# directories, sockets, devices, or named pipes).
+#
+# Note: all three functions work but the last is nicer
+#
+#   function brlinks() { for i in **/*(D@); [[ -f $i || -d $i ]] || echo $i }
+#   function brlinks() { print -l **/*(@-^./=%p) }
+#
+# SYS: Display all brokem symlinks
+
+local directories
+if (( $# == 0 )); then
+  directories="."
+else
+  directories="$@"
+fi
+
+find "$=directories" -type l ! -exec test -e {} \; -print

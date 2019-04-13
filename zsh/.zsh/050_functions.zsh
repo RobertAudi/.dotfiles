@@ -97,15 +97,6 @@ psu() {
   ps -U "${1:-$LOGNAME}" -o 'pid,%cpu,%mem,command' "${(@)argv[2,-1]}"
 }
 
-# Find (and print) all symbolic links without a target within the
-# current directorytree (i. e. ll symlinks that dont point to files,
-# directories, sockets, devices, or named pipes).
-# Note: all three functions works but the last is nicer
-# function brlinks() { for i in **/*(D@); [[ -f $i || -d $i ]] || echo $i }
-# function brlinks() { print -l **/*(@-^./=%p) }
-# SYS: Display all brokem symlinks
-broken-symlinks() { find . -type l ! -exec test -e {} \; -print }
-
 # Inline calculator
 function = { echo "$@" | tr 'x' '*' | bc -l }
 
