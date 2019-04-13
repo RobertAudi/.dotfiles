@@ -1,7 +1,7 @@
 #autoload
 # fzf-git-checkout - checkout git branch/tag
 
-if [[ "$1" == "-" ]]; then
+if ! type fzf >/dev/null || [[ "$1" == "-" ]]; then
   git checkout "$@"
   return $status
 fi

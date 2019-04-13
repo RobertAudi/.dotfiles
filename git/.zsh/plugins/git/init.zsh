@@ -35,7 +35,8 @@ compdef -a _git \
   gc=git-commit \
   gac=git-commit \
   gb=git-branch \
-  gd=git-diff
+  gd=git-diff \
+  fzf-git-checkout=git-checkout
 
 git-insert-branch-name() {
   if git rev-parse 2> /dev/null; then
