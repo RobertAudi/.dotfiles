@@ -1,17 +1,9 @@
 alias ga="git add --all"
-compdef _git ga=git-add
-
 alias gc="git commit"
-compdef _git gc=git-commit
-
 alias gac="git add --all; git commit"
-compdef _git gac=git-commit
-
 alias gb="git branch"
-compdef _git gb=git-branch
 
 alias gd="git diff --patch-with-stat"
-compdef _git gd=git-diff
 
 alias gaia="git add --all --intent-to-add"
 alias gap="git add --patch"

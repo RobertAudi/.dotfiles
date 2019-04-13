@@ -29,7 +29,13 @@ if [[ -f "/usr/local/opt/git-extras/share/git-extras/git-extras-completion.zsh" 
   source "/usr/local/opt/git-extras/share/git-extras/git-extras-completion.zsh"
 fi
 
-compdef _git-ignore gi=git-ignore
+compdef -a _git-ignore gi=git-ignore
+compdef -a _git \
+  ga=git-add \
+  gc=git-commit \
+  gac=git-commit \
+  gb=git-branch \
+  gd=git-diff
 
 git-insert-branch-name() {
   if git rev-parse 2> /dev/null; then
