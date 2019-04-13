@@ -16,11 +16,6 @@ if is-callable mmake; then
   function make() { mmake "$@" }
 fi
 
-# Better calc: http://www.isthe.com/chongo/tech/comp/calc/
-if ! is-command calc; then
-  function calc() { echo $(( $@ )) }
-fi
-
 # Reload functions.
 refunc() {
   while (($#)); do
