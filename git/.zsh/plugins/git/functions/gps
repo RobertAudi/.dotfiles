@@ -1,18 +1,38 @@
 #autoload
 
-if (($#)); then
-  git push "$@"
-else
-  if ! git push; then
-    root="$(git rev-parse --show-toplevel 2> /dev/null)"
-    branch="$(git current-branch)"
+emulate -L zsh
 
-    if ! git ls-remote --exit-code --heads "$root" "origin/${branch}"; then
-      if read -q "?Push new branch to 'origin/${branch}'? [y/n] "; then
-        git push --set-upstream origin "${branch}"
-      fi
-    fi
-  fi
+setopt rematch_pcre
+
+# If arguments were given then just call `git push` normally
+if (( $# > 0)); then
+  git push "$@"
+
+  return $status
 fi
 
-# vim: ft=zsh
+# Return early if `git push` succeeds
+git push && return
+
+local gitRemotes="$(git remote)"
+
+if [[ -z "$gitRemotes" ]]; then
+  builtin print -P -- "[%F{196}ERROR%f] No tracked repository configured" >&2
+
+  return 128
+elif ! [[ "$gitRemotes" =~ "\borigin\b" ]]; then
+  builtin print -P -- "[%F{196}ERROR%f] Remote not found: origin" >&2
+  builtin print    -- "You can configure the 'origin' remote repository using" >&2
+  builtin print    -- "\n\tgit remote add origin <url>" >&2
+
+  return 1
+fi
+
+root="$(git rev-parse --show-toplevel 2> /dev/null)"
+branch="$(git current-branch)"
+
+if ! git ls-remote --exit-code --heads "$root" "origin/${branch}"; then
+  if read -q "?Push new branch to 'origin/${branch}'? [y/n] "; then
+    git push --set-upstream origin "${branch}"
+  fi
+fi
