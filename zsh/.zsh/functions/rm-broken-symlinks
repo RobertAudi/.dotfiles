@@ -1,0 +1,25 @@
+#autoload
+
+emulate -L zsh
+
+setopt pipe_fail
+
+local -a directories
+
+if (( $# == 0 )); then
+  directories+=(".")
+else
+  local arg
+  while (( $# > 0 )); do
+    arg="$1"
+    shift
+
+    if [[ "$arg" == "--" ]]; then
+      break
+    else
+      directories+=("$arg")
+    fi
+  done
+fi
+
+broken-symlinks "${directories[@]}" 2>/dev/null | xargs --no-run-if-empty rm -fv
