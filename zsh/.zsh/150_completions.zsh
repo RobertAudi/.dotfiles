@@ -192,6 +192,9 @@ zstyle ':completion:*:complete:-command-::commands' ignored-patterns '*\~'
 # filename suffixes to ignore during completion (except after rm command)
 zstyle ':completion:*:*:(^rm):*:*files' ignored-patterns  '*?.(o|c~|old|pro|zwc)' '*~'
 
+# Don't list tmux command aliases in completion results
+zstyle ':completion:*:*:tmux:*:subcommands' mode 'commands'
+
 # An array (colon separated list) containing the suffixes of files to
 # be ignored during filename completion. However, if completion only
 # generates files with suffixes in this list, then these files are
