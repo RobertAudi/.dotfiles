@@ -1,0 +1,22 @@
+#autoload
+
+if ! type tmux >/dev/null || [[ -z $TMUX ]]; then
+  git diff "$@"
+  return $status
+fi
+
+zparseopts -D -E -horizontal+=horizontal h+=horizontal -vertical+=vertical v+=vertical
+
+if (( $#vertical == 0 && $#horizontal == 0 )); then
+  git diff "$@"
+  return $status
+fi
+
+local params
+if (($#vertical)); then
+  params="-h -l 135"
+else
+  params="-v -p 50"
+fi
+
+tmux split-window $=params -- git diff "$@"
