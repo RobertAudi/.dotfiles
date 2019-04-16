@@ -41,7 +41,7 @@ compdef -a _git \
 git-insert-branch-name() {
   if git rev-parse 2> /dev/null; then
     local branch=$(git rev-parse --abbrev-ref HEAD)
-    LBUFFER+=$(git rev-parse --abbrev-ref HEAD)
+    LBUFFER+=$branch
   fi
 }
 zle -N git-insert-branch-name
