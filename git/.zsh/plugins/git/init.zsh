@@ -56,6 +56,7 @@ zstyle ':completion:*:*:git:*' user-commands $existing_user_commands \
   churn:'Show the churn' \
   conflicts:'Show list of files in a conflict state' \
   copy-branch-name:'Copy the current branch name to the clipboard (pbcopy)' \
+  current-branch:'Displays the current Git branch' \
   delete-merged-branches:'Delete branches that have been merged' \
   diff-unpushed:"Show the diff of everything you haven't pushed yet" \
   diffstat-unpushed:"Show the diffstat of everything you haven't pushed yet" \

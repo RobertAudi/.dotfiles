@@ -1,0 +1,26 @@
+#!/usr/bin/env zsh
+#
+# Displays the current Git branch.
+#
+# Authors:
+#   Sorin Ionescu <sorin.ionescu@gmail.com>
+#
+
+git-current-branch() {
+  if ! git rev-parse 2> /dev/null; then
+    echo -e "\e[1;41;97m ERROR \e[0m Not a repository: $PWD" >&2
+    return 1
+  fi
+
+  local ref
+  ref="$(git symbolic-ref HEAD 2> /dev/null)" || return $status
+
+  if [[ -n "$ref" ]]; then
+    print "${ref#refs/heads/}"
+    return 0
+  else
+    return 1
+  fi
+}
+
+git-current-branch $@
