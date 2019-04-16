@@ -8,7 +8,6 @@
 [core]
   excludesFile   = ~/.config/git/ignore
   attributesFile = ~/.config/git/attributes
-  hooksPath      = ~/.config/git/hooks
 
   # Treat spaces before tabs and all kinds of trailing whitespace as an error
   # [default] trailing-space: looks for spaces at the end of a line
@@ -107,6 +106,9 @@
 
 # Commands {{{
 # ------------------------------------------------------------------------------
+
+[init]
+  templateDir = ~/.config/git/templates
 
 [status]
   showUntrackedFiles = all
