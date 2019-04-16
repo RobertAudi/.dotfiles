@@ -1,0 +1,5 @@
+#autoload
+
+builtin print -P -- "%F{red}=>%f git push --force-with-lease"
+
+git push --force-with-lease

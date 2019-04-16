@@ -1,0 +1,23 @@
+#autoload
+
+local gitRemotes="$(git remote)"
+
+if [[ -z "$gitRemotes" ]]; then
+  builtin print -P -- "[%F{196}ERROR%f] No tracked repository configured" >&2
+
+  return 128
+elif ! [[ "$gitRemotes" =~ "\borigin\b" ]]; then
+  builtin print -P -- "[%F{196}ERROR%f] Remote not found: origin" >&2
+  builtin print    -- "You can configure the 'origin' remote repository using" >&2
+  builtin print    -- "\n\tgit remote add origin <url>" >&2
+
+  return 1
+fi
+
+local current_branch
+
+current_branch="$(git current-branch)" || return $status
+
+builtin print -P -- "%F{blue}=>%f git push -u origin  $current_branch"
+
+git push -u origin  $current_branch
