@@ -214,10 +214,8 @@ brew "RobertAudi/formulae/appswitch"
 
 # ------------------------------------------------------------------------------
 
-# Homebrew Cask
+# Homebrew Cask {{{
 # ------------------------------------------------------------------------------
-tap "caskroom/cask"
-tap "caskroom/versions"
 
 # Password manager
 #   https://1password.com/
@@ -402,7 +400,21 @@ cask "handbrake"
 #   http://tmkk.undo.jp/xld/index_e.html
 cask "xld"
 
-# QuickLook plugins
+# Intel Power Gadget is a software-based power usage monitoring tool
+# enabled for Intel Core processors
+#   https://software.intel.com/en-us/articles/intel-power-gadget-20
+cask "intel-power-gadget"
+
+# A simple and elegant open-source markdown editor that
+# focused on speed and usability.
+#   https://github.com/marktext/marktext
+cask "mark-text"
+
+# A Mac menu bar utility that hides your inactive windows.
+#   https://hocusfoc.us/
+cask "hocus-focus"
+
+# QuickLook plugins {{{
 # ------------------------------------------------------------------------------
 
 # Quick Look plugin for apps and provisioning profile files
@@ -449,7 +461,28 @@ cask "quicklookase"
 #   https://www.mothersruin.com/software/SuspiciousPackage/
 cask "suspicious-package"
 
-# App Store applications
+# ------------------------------------------------------------------------------ }}}
+
+# ------------------------------------------------------------------------------
+
+tap "lukakerr/things"
+
+# A modern, native macOS markdown editor
+#   https://lukakerr.github.io/Pine/
+#   https://github.com/lukakerr/Pine
+cask "pine"
+
+# ------------------------------------------------------------------------------
+
+tap "devhubapp/devhub"
+
+# TweetDeck for GitHub
+#   https://github.com/devhubapp/devhub
+cask "devhub"
+
+# ------------------------------------------------------------------------------
+
+# App Store applications {{{
 # ------------------------------------------------------------------------------
 
 # Powerful, full-featured image editor for Mac.
@@ -520,5 +553,9 @@ mas "Swiftify for Xcode", id: 1183412116
 #   https://developer.apple.com/xcode/
 mas "Xcode", id: 497799835
 
-# ------------------------------------------------------------------------------
-# vim:set foldmethod=marker:
+# ------------------------------------------------------------------------------ }}}
+
+# ------------------------------------------------------------------------------ }}}
+
+# Modeline {{{
+# vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker : }}}
