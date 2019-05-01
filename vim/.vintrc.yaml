@@ -10,6 +10,10 @@ cmdargs:
   #   Total violations: 20.
   stat: true
 
+  # Enable Neovim syntax
+  env:
+    neovim: true
+
 policies:
   ProhibitAbbreviationOption:
     enabled: true
