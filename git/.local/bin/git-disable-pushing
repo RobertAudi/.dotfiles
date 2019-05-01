@@ -1,0 +1,14 @@
+#!/usr/bin/env zsh
+
+if ! in-git-repo; then
+  builtin print -P -- "[%F{196}ERROR%f] Not in a git repository." >&2
+  return 1
+fi
+
+local remote push_url
+for remote in $(git remote); do
+  push_url="$(git remote get-url --push $remote)"
+  if [[ "$push_url" != "no-pushing" ]]; then
+    git remote set-url --push "$remote" no-pushing
+  fi
+done
