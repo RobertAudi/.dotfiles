@@ -1,8 +1,0 @@
-set ignorecase
-set smartcase
-set incsearch
-set hlsearch
-set gdefault
-
-" Emulate vim-surround
-set surround
