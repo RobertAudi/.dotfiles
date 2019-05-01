@@ -701,7 +701,7 @@ brew "postgresql"
 
 # Persistent key-value database, with built-in net interface
 #   https://redis.io/
-brew "redis"
+brew "redis", restart_service: true
 
 # Command-line interface for SQLite
 #   https://sqlite.org/
