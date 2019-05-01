@@ -1,0 +1,24 @@
+{
+  "settings" : {
+    "gfm"                 :  true,
+    "commonmark"          :  false,
+    "pedantic"            :  false,
+    "footnotes"           :  false,
+    "entities"            :  false,
+    "setext"              :  true,
+    "closeAtx"            :  false,
+    "fence"               :  "`",
+    "fences"              :  true,
+    "bullet"              :  "-",
+    "listItemIndent"      :  "tab",
+    "incrementListMarker" :  true,
+    "rule"                :  "-",
+    "ruleRepetition"      :  3,
+    "ruleSpaces"          :  false,
+    "strong"              :  "*",
+    "emphasis"            :  "_"
+  },
+  "plugins" : [
+    "remark-github"
+  ]
+}

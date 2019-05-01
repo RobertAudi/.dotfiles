@@ -10,6 +10,7 @@
 
 path=(
   $XDG_BIN_HOME(N-/)
+  $XDG_DATA_HOME/npm/bin(N-/)
   $HOME/.pyenv/bin(N-/)
   $HOME/.n/bin(N-/)
   $HOME/.tmuxifier/bin(N-/)
