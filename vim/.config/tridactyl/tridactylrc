@@ -8,8 +8,8 @@ unbind zo " zoom out
 unbind zz " reset zoom
 unbind <C-f> " jump to the next part of the page
 unbind <C-b> " jump to the previous part of the page
-unbin A " bookmark the current page
-unbin a " bookmark the current page, but allow the URL to be modified first
+unbind A " bookmark the current page
+unbind a " bookmark the current page, but allow the URL to be modified first
 
 " Next/Previous tab
 bind <C-n> tabnext_gt
