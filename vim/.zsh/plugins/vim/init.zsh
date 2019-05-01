@@ -11,6 +11,13 @@ elif type mvim >/dev/null; then
   export GVIM_COMMAND="mvim"
 fi
 
+fpath=("$ZSH_HOME/plugins/vim/completions" $fpath)
+function {
+  emulate -L zsh
+  setopt extended_glob
+  autoload -Uz $ZSH_HOME/plugins/vim/completions/*~(*~|*.zwc)(-N.:t)
+}
+
 alias vim="\$VIM_COMMAND"
 alias view="\$VIM_COMMAND -R"
 alias vi="\$VIM_COMMAND -u NONE -U NONE"
