@@ -77,6 +77,5 @@ Alacritty
 ---------
 
 ```console
-$ ./rust.sh
 $ ./alacritty.sh
 ```
