@@ -16,7 +16,6 @@ export XDG_PUBLICSHARE_DIR="$HOME/Public"
 export XDG_VIDEOS_DIR="$HOME/Videos"
 # --------------------------------------------------------------------- }}}
 
-export VIM_CONFIG_HOME="$HOME/.vim"
 export VIMPAGER_RC="$XDG_CONFIG_HOME/vimpager/vimpagerrc"
 
 export TMPDIR="$HOME/.tmp"
@@ -45,7 +44,6 @@ export ZPLG_LOADFILE="$ZSH_HOME/plugins/zplugin.zsh"
     "$XDG_CACHE_HOME"    \
     "$XDG_DATA_HOME"     \
     "$XDG_DEVELOPER_DIR" \
-    "$VIM_CONFIG_HOME"   \
     "$ZSH_HOME"          \
     "$ZSH_CACHE_DIR"     \
     "$ZSH_TMP_DIR"       \
@@ -268,12 +266,12 @@ export TREE_CHARSET=UTF-8
 
 # Editor {{{
 # ---------------------------------------------------------------------
-export EDITOR="nvim"
-export VISUAL="mvim"
-export GIT_EDITOR="$EDITOR"
-export SUDO_EDITOR="$EDITOR"
-export BUNDLER_EDITOR="$EDITOR"
-export GEMEDITOR="$EDITOR"
+export EDITOR="\${VIM_COMMAND:-vim} -u NONE -U NONE"
+export VISUAL="\${VIM_COMMAND:-vim}"
+export GIT_EDITOR="$VISUAL"
+export SUDO_EDITOR="$VISUAL"
+export BUNDLER_EDITOR="$VISUAL"
+export GEMEDITOR="$VISUAL"
 # --------------------------------------------------------------------- }}}
 
 if [[ -z "$HELPDIR" && -d "/usr/local/share/zsh/help" ]]; then

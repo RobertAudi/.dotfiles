@@ -14,10 +14,6 @@ brew "neovim"
 # shell configuration.
 brew "vimpager", args: ["HEAD"]
 
-# GUI for vim, made for macOS
-#   https://github.com/macvim-dev/macvim
-cask "macvim"
-
 # Refined Neovim experience for macOS
 #   http://vimr.org/
 cask "vimr"

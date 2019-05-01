@@ -28,11 +28,6 @@ if ! is-callable say && is-command espeak; then
   say() { espeak "$@" }
 fi
 
-mvim() {
-  print -P -- "%F{196}DEPRECATED%f -- Use '%F{032}gvim%f' instead! "
-  return 1
-}
-
 qdep() {
   pacman-color -Q $@ $(pacman -Qi $@ \
     | grep "Depends" \

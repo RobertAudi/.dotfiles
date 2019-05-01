@@ -4,10 +4,6 @@ alias -s {md,mmd,markdown}="marked"
 # Misc (random shit really...)
 alias brews="brew list -1"
 
-# Alias gvim to mvim
-type gvim  >/dev/null || alias gvim="mvim"
-type gview >/dev/null || alias gview="mview"
-
 # See $ZDOTDIR/plugins/macos/functions/xcopen
 alias xco="xcopen"
 
