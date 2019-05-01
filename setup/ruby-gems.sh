@@ -22,6 +22,4 @@ fi
 #   https://rubygems.org/gems/extended_bundler-errors
 bundler plugin install extended_bundler-errors
 
-if type install-default-gems; then
-  install-default-gems
-fi
+source "${${(%):-%x}:A:h}/ruby/gems.sh"
