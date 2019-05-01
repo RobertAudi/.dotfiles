@@ -135,7 +135,7 @@ alias locate="noglob locate"
 if ((${+commands[safe-rm]})); then
   alias rm="safe-rm -v"
 else
-  alias rm="rm -v"
+  alias rm="rm -v --preserve-root"
 fi
 
 # Be verbose

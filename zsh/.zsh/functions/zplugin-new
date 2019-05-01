@@ -17,8 +17,8 @@ local zplugin_manifest_file="$zplugin_manifest_dir/$plugin_name.zplugin.zsh"
 local zplugin_file="../../../../${package_dir:t}/.zsh/plugins/$plugin_name/init.zsh"
 
 mkdir -vp "$plugin_dir" "$zplugin_manifest_dir" "$zplugin_dir"
-touch "$plugin_file"
+touch "$plugin_file" "$zplugin_manifest_file"
 
-print -l -- "# local plugins" "zplugin load _local/$plugin_name" >! "$zplugin_manifest_file"
+print -l -- "# local plugins" "zplugin load _local/$plugin_name" >> "$zplugin_manifest_file"
 
-(cd "$zplugin_dir" && ln -sfv "$zplugin_file" "$plugin_name.plugin.zsh")
+(cd -q "$zplugin_dir" && ln -sfv "$zplugin_file" "$plugin_name.plugin.zsh")
