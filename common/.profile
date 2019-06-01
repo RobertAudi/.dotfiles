@@ -9,6 +9,17 @@ export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgreprc"
 export LESSHISTFILE="$XDG_CACHE_HOME/less/history"
 export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
 
+if command -v nvim >/dev/null; then
+  export VIM_COMMAND="nvim"
+else
+  export VIM_COMMAND="vim"
+fi
+
+if command -v vimr >/dev/null; then
+  export GVIM_COMMAND="vimr"
+  export GVIEW_COMMAND="$=GVIM_COMMAND --nvim -R"
+fi
+
 if [[ -d "$HOME/.cargo/bin" ]]; then
   export PATH="$HOME/.cargo/bin:$PATH"
 fi

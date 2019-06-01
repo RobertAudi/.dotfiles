@@ -269,8 +269,8 @@ export TREE_CHARSET=UTF-8
 
 # Editor {{{
 # ---------------------------------------------------------------------
-export EDITOR="\${VIM_COMMAND:-vim} -u NONE -U NONE"
-export VISUAL="\${VIM_COMMAND:-vim}"
+export EDITOR="${VIM_COMMAND:-vim}"
+export VISUAL="$EDITOR"
 export GIT_EDITOR="$VISUAL"
 export SUDO_EDITOR="$VISUAL"
 export BUNDLER_EDITOR="$VISUAL"
