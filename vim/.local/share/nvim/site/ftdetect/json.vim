@@ -7,3 +7,4 @@ autocmd BufRead,BufNewFile .prettierrc          setfiletype json
 autocmd BufRead,BufNewFile .remarkrc            setfiletype json
 autocmd BufRead,BufNewFile .stylelintrc         setfiletype json
 autocmd BufRead,BufNewFile .tern-{project,port} setfiletype json
+autocmd BufRead,BufNewFile *.alfredappearance   setfiletype json

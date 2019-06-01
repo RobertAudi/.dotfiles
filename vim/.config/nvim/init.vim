@@ -831,9 +831,6 @@ Plug 'christoomey/vim-tmux-navigator', has('gui_vimr') ? { 'on': [] } : {}
 " A (Neo)vim plugin for formatting code
 Plug 'sbdchd/neoformat', { 'on': 'Neoformat' }
 
-" A Plugin to show a diff, whenever recovering a buffer
-Plug 'chrisbra/Recover.vim'
-
 " Breakdown Vim's --startuptime output
 Plug 'tweekmonster/startuptime.vim', { 'on': 'StartupTime' }
 
@@ -841,6 +838,7 @@ Plug 'tweekmonster/startuptime.vim', { 'on': 'StartupTime' }
 Plug 'tyru/capture.vim', { 'on': 'Capture' }
 
 " Quoting/parenthesizing made simple
+" TODO: Replace tpope/vim-surround by rhysd/vim-operator-surround
 Plug 'tpope/vim-surround'
 
 " Comment stuff out
@@ -895,11 +893,11 @@ Plug 'deoplete-plugins/deoplete-zsh'
 " Bignyanco use ruby-dictionary3 in ruby completion
 Plug 'takkii/Bignyanco'
 
+" HTML tag input completion dictionary
+Plug 'takkii/bistro'
+
 " Deoplete source for emoji codes
 Plug 'fszymanski/deoplete-emoji'
-
-" Include completion framework
-Plug 'Shougo/neoinclude.vim'
 
 " The vim source
 Plug 'Shougo/neco-vim'
@@ -1073,7 +1071,7 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'AndrewRadev/switch.vim'
 
 " Run your tests at the speed of thought
-Plug 'janko-m/vim-test'
+Plug 'janko-m/vim-test', { 'on': ['TestFile', 'TestNearest', 'TestLast'] }
 
 " Asynchronous linting and make framework for Neovim/Vim
 Plug 'neomake/neomake'
@@ -1172,6 +1170,8 @@ call x2a#abolish#commands('wqa', 'Wqa', 'WQa', 'WQA')
 call x2a#abolish#commands('qa', 'Qa', 'QA')
 call x2a#abolish#commands('tabc', 'Tabc')
 call x2a#abolish#commands('tabnew', 'Tabnew', 'Tnew', 'TNew', 'tnew')
+
+call x2a#abolish#commands('Man', 'man')
 
 " Buffers {{{
 " ------------------------------------------------------------------------------
@@ -1519,22 +1519,40 @@ vnoremap <C-v> <Esc>
 " excluding indentation.
 nnoremap vv ^vg_
 
+" Source: https://vim.fandom.com/wiki/Selecting_your_pasted_text
+" Select the last changed (or pasted) text
+nnoremap <expr> gv '`[' . strpart(getregtype(), 0, 1) . '`]'
+
 " ------------------------------------------------------------------------------ }}}
 
 " Command mode {{{
 " ------------------------------------------------------------------------------
 
+" Disable some annoying mappings
+cnoremap <C-x> <Nop>
+cnoremap <C-_> <Nop>
+
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
-cnoremap <C-b> <Left>
-cnoremap <C-f> <Right>
-cnoremap <C-d> <Del>
-cnoremap <C-a> <Home>
-cnoremap <C-e> <End>
-cnoremap <C-y> <C-r>+
-cnoremap <M-b> <S-Left>
-cnoremap <M-f> <S-Right>
-cnoremap <M-d> <S-Right><C-w>
+
+" Move to next/previous character.
+" Calling `<Space><BS>` makes sure that
+" we get out of the wildmenu if it's active.
+"
+" Credit: The `<Space><BS>` was taken from ryvnf/readline.vim
+" URL:    https://github.com/ryvnf/readline.vim/commit/e32951b
+cnoremap <C-b> <Space><BS><Left>
+cnoremap <C-f> <Space><BS><Right>
+
+cnoremap <C-d>  <Del>
+cnoremap <C-a>  <Home>
+cnoremap <C-e>  <End>
+cnoremap <C-y>  <C-r>+
+
+cnoremap <M-b>  <S-Left>
+cnoremap <M-f>  <S-Right>
+cnoremap <M-d>  <S-Right><C-w>
+cnoremap <M-BS> <C-w>
 
 " ------------------------------------------------------------------------------ }}}
 
@@ -1603,10 +1621,6 @@ nnoremap Q @@
 
 " Repeats macro on every line
 vnoremap @ :normal @
-
-" Reapeat the last macro on every line
-vnoremap Q  <Cmd>normal @@<CR>
-vnoremap @@ <Cmd>normal @@<CR>
 
 " ------------------------------------------------------------------------------ }}}
 

@@ -45,9 +45,11 @@ function! x2a#buffers#BufOnly(bang) abort
   let l:reopenNERDTree = exists('g:NERDTree') && g:NERDTree.IsOpen()
   let l:deletedCount = 0
 
-  if l:reopenNERDTree
-    silent! call s:exec('NERDTreeClose')
-  endif
+  " Close all tabs
+  silent! call s:exec('tabonly')
+
+  " Close NERDTree in the current tab
+  silent! call s:exec('NERDTreeClose')
 
   for l:buffer in l:buffers
     if l:buffer.bufnr == l:currentBuffer
@@ -136,9 +138,11 @@ function! x2a#buffers#BufDeleteAll(bang) abort
   let l:reopenNERDTree = exists('g:NERDTree') && g:NERDTree.IsOpen()
   let l:deletedCount = 0
 
-  if l:reopenNERDTree
-    silent! call s:exec('NERDTreeClose')
-  endif
+  " Close all tabs
+  silent! call s:exec('tabonly')
+
+  " Close NERDTree in the current tab
+  silent! call s:exec('NERDTreeClose')
 
   for l:buffer in l:buffers
     if getbufvar(l:buffer.bufnr, '&filetype') ==# 'nerdtree'
@@ -163,6 +167,10 @@ function! x2a#buffers#BufDeleteAll(bang) abort
   endif
 
   let l:message = l:deletedCount . ' buffer' . (l:deletedCount > 1 ? 's' : '') . ' deleted'
+
+  if exists('*lightline#update')
+    silent! call s:exec('lightline#update')
+  endif
 
   call x2a#utils#echo#Message(l:message)
 endfunction

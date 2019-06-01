@@ -4,8 +4,6 @@
 
 setlocal colorcolumn=
 
-nnoremap <buffer> <nowait> <Esc> <Cmd>NERDTreeClose<CR>
-
 nnoremap <buffer> J 5j
 nnoremap <buffer> K 5k
 
