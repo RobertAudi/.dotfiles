@@ -8,24 +8,115 @@ is-callable ghq || { print-error "ghq not installed"; return 1 }
 local repo
 local action="$1"; shift
 case "$action" in
+  "title")
+    repo="$1"
+
+    if [[ -z "$repo" ]]; then
+      print-error "Missing argument"
+      return 1
+    fi
+
+    local title ghq_root
+    ghq_root="$(command ghq root)"
+
+    if [[ "$repo" =~ "${ghq_root}" ]]; then
+      title="${repo##${repo:h:h}/}"
+    else
+      title="${repo:t}"
+    fi
+
+    builtin print -- "$title"
+    ;;
+  "update-cmd")
+    if (($# == 0)); then
+      print-error "Missing argument"
+      return 1
+    fi
+
+    repo="$(echo -n "$1" | xargs echo -n)"
+
+    if [[ -z "$repo" || ! -d "$repo" ]]; then
+      print-error "Repo not found"
+      return 1
+    fi
+
+    local ghq_root repo_url cmd
+    ghq_root="$(command ghq root)"
+    repo_url="${repo##${repo:h:h:h}/}"
+
+    if [[ "$repo" =~ "$ghq_root" ]]; then
+      cmd="command ghq get --update $repo_url"
+    elif [[ -d "$repo/.git" ]]; then
+      cmd="git pull"
+    elif [[ -d "$repo/.hg" ]]; then
+      cmd="hg pull"
+    else
+      print-error "Unable to update repo"
+      return 1
+    fi
+
+    builtin print -n -- "$cmd"
+    ;;
+  "update")
+    if (($# == 0)); then
+      print-error "Missing argument"
+      return 1
+    fi
+
+    repo="$(echo -n "$1" | xargs echo -n)"
+
+    if [[ -z "$repo" || ! -d "$repo" ]]; then
+      print-error "Repo not found"
+      return 1
+    fi
+
+    local cmd
+    cmd="$(ghq update-cmd "$repo")"
+
+    (cd -q "$repo" && eval "$cmd")
+    ;;
   "get")
+    if (( $# > 1 )); then
+      # NOTE: I use $@ instead of $1 to avoid false negatives if ghq options are passed
+      command ghq get "${=@}"
+      return $status
+    fi
+
     if (( $# == 0 )); then
       repo="$(pbpaste)"
       git ping "$repo" || return $status
-      command ghq get --shallow --update "$repo"
     elif (( $# == 1 )); then
-      command ghq get --shallow --update "$1"
-    else # (( $# > 1 )) because $# can't be less than 0
-      # NOTE: I use $@ instead of $1 to avoid false negatives if ghq options are passed
-      command ghq get "${=@}"
+      repo="$1"
+    fi
+
+    local output
+
+    # FIXME: This will redirect everything to STDOUT, which means that
+    #        STDERR can't be captured separatly later on.
+    #        We also lose the output of git clone.
+    output="$(command ghq get --shallow "$repo" 2>&1 | tee /dev/tty)"
+
+    if [[ "$output" =~ "exists" ]]; then
+      command ghq get --shallow --update "$repo"
+    elif [[ "$output" =~ "clone" ]]; then
+      local repo_path
+      repo_path="$(builtin print -n "$output" | command head -n 1 | command sed "s/.\+-> //")"
+
+      if [[ -d "$repo_path" ]]; then
+        (cd -q "$repo_path" && git disable-pushing)
+      fi
+    else
+      command ghq get --shallow --update "$repo"
     fi
     ;;
   "look")
-    repos=($(ghq list "$1"))
-    if ((${#repos})); then
+    local -a repos
+    repos=($(ghq list "${1##${1:h:h}}"))
+
+    if (( ${#repos} > 0 )); then
       if (( ${#repos} == 1 )); then
         repo="$repos"
-      elif type fzf >/dev/null; then
+      elif type fzf > /dev/null; then
         repo="$(printf -- '%s\n' "${repos[@]}" | fzf)"
       else
         local -i repos_count=${#repos}
@@ -47,58 +138,44 @@ case "$action" in
         return 130
       fi
 
-      repo="$(echo -n "$repo" | xargs echo -n)"
-      if [[ -n "$repo" ]]; then
-        local repo_url
-        repo_url="${repo##${repo:h:h}/}"
-
-        # Make sure to get the latest version
-        ghq get --update "$repo_url"
-
-        if [[ -n "$TMUX" && "$PWD" != "$HOME" ]]; then
-          tmux new-window -c "$HOME" \; \
-            send-keys -l " cd -q \"$repo\"" \; \
-            send-keys "C-m" "C-l"
-        else
-          cd -q "$repo"
-
-          if [[ -n "$TMUX" ]]; then
-            tmux send-keys "C-l"
-          else
-            clear
-          fi
-        fi
-      else
-        print-error "Repo not found"
-        return 1
-      fi
-    elif ghq get "$1"; then
-      repo="$(ghq list "$1" | head -1)"
       if [[ -n "$TMUX" && "$PWD" != "$HOME" ]]; then
-        tmux new-window -c "$HOME" \; \
-          send-keys -l " cd -q \"$repo\"" \; \
-          send-keys "C-m" "C-l"
+        local default_shell update_cmd cmd title
+        default_shell="$(tmux show-option -gv default-command)" || return $status
+        update_cmd="$(ghq update-cmd "$repo")" || return $status
+        cmd="$default_shell -c '$=update_cmd && clear && $default_shell -i'"
+        title="$(ghq title "$repo")"
+
+        tmux new-window -c "$repo" -n "$title" "$cmd"
       else
         cd -q "$repo"
-
-        if [[ -n "$TMUX" ]]; then
-          tmux send-keys "C-l"
-        else
-          clear
-        fi
+        ghq update "$repo"
       fi
     else
       print-error "Repo not found"
-      return 1
+      print-info "Trying to retrieve repo with ghq"
+      ghq get "$1" || return $status
+
+      repo="$(ghq list "$1" | head -1)"
+
+      if [[ -n "$TMUX" && "$PWD" != "$HOME" ]]; then
+        local title
+        title="$(ghq title "$repo")"
+
+        tmux new-window -c "$repo" -n "$title"
+      else
+        cd -q "$repo"
+      fi
     fi
+
+    clear
     ;;
   "list")
+    local query
     query="$(echo -n "$1" | sed -E "s/^.*:|\.git\$|\/\$//g" | rev | cut -d/ -f-2 | rev)"
+
     command ghq list --full-path "$query"
     ;;
   *)
     command ghq "$action" "$@"
     ;;
 esac
-
-# vim: ft=zsh
