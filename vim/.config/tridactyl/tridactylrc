@@ -1,15 +1,51 @@
-" Unbind annoying mappings
-unbind ZZ " close all tabs and windows
-unbind ]c " increment the current URL by 1
-unbind [c " decrement the current URL by 1
-unbind gr " open Firefox reader mode
-unbind zi " zoom in
-unbind zo " zoom out
-unbind zz " reset zoom
-unbind <C-f> " jump to the next part of the page
-unbind <C-b> " jump to the previous part of the page
-unbind A " bookmark the current page
-unbind a " bookmark the current page, but allow the URL to be modified first
+" " Uncomment to reset the config to the ones in this file
+" sanitise tridactyllocal tridactylsync
+
+" Profile directory to use with native messenger
+set profiledir default
+
+colourscheme default
+
+" Key bindings {{{
+" -------------------------------------------------------------------------------
+
+" Unbind annoying mappings {{{
+" ----------------------------
+
+" close all tabs and windows
+unbind ZZ
+
+" increment the current URL by 1
+unbind ]c
+
+" decrement the current URL by 1
+unbind [c
+
+" open Firefox reader mode
+unbind gr
+
+" zoom in
+unbind zi
+
+" zoom out
+unbind zo
+
+" reset zoom
+unbind zz
+
+" jump to the next part of the page
+unbind <C-f>
+
+" jump to the previous part of the page
+unbind <C-b>
+
+" bookmark the current page
+unbind A
+
+" bookmark the current page, but allow the URL to be modified first
+unbind a
+
+" ---------------------------- }}}
 
 " Next/Previous tab
 bind <C-n> tabnext_gt
@@ -29,7 +65,9 @@ bind gw tabdetach
 bind gp pin
 
 " Git{Hub,Lab} git clone via SSH yank
-bind yg composite js "git clone " + document.location.href.replace(/https?:\/\//,"git@").replace("/",":").replace(/$/,".git") | clipboard yank
+bind yg composite js document.location.href.replace(/https?:\/\//, "git@").replace("/", ":").replace(/$/, ".git") | clipboard yank
+
+" ------------------------------------------------------------------------------- }}}
 
 " Make gu take you back to subreddit from comments
 bindurl reddit.com gu urlparent 4
@@ -37,6 +75,9 @@ bindurl reddit.com gu urlparent 4
 " Only hint search results on Google
 bindurl www.google.com f hint -Jc .rc > .r > a
 bindurl www.google.com F hint -Jtc .rc>.r>a
+
+" Disable the 't' binding in github
+unbindurl github.com t
 
 " Sane hinting mode
 set hintfiltermode vimperator-reflow
@@ -70,6 +111,7 @@ set searchurls.imdb https://www.imdb.com/find?s=all&q=%s
 " -------------------------------------------------------------------------------
 
 " New reddit is bad
-autocmd DocStart www.reddit.com js tri.excmds.urlmodify("-t", "www", "old")
+autocmd DocStart /^(https?:\/\/)?www.reddit.com/ js tri.excmds.urlmodify("-t", "www", "old")
 
-" vim: set filetype=vim:
+" Modeline {{{
+" vim: set filetype=vim foldmarker={{{,}}} foldlevel=0 foldmethod=marker : }}}
