@@ -353,6 +353,9 @@ config.codekit
 *.sql
 *.sqlite
 
+pids/
+*.pid
+
 *.donotfuckingsync
 *.nogit
 *.cvsignore
@@ -365,4 +368,5 @@ invoker.ini
 .autoenv.zsh
 .autoenv_leave.zsh
 /.gtm/
+/.chglog/
 # ---------------------------------------------------------------------- }}}

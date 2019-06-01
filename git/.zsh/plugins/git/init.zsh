@@ -7,15 +7,6 @@
 [[ -f /usr/local/share/zsh/site-functions/_git ]] && \
   rm -f /usr/local/share/zsh/site-functions/_git
 
-export GITHUB_EDITOR="$EDITOR"
-
-# Make sure git uses the macOS supplied openSSH.
-# This is important because the SSH keys are stored
-# in the system keychain.
-if [[ $(uname | tr '[[:upper:]]' '[[:lower:]]') == *'darwin'* ]]; then
-  export GIT_SSH="/usr/bin/ssh"
-fi
-
 path=("$ZSH_HOME/plugins/git/bin" $path)
 fpath=("$ZSH_HOME/plugins/git/completions" "$ZSH_HOME/plugins/git/functions" $fpath)
 function {
@@ -36,6 +27,7 @@ compdef -a _git \
   gac=git-commit \
   gb=git-branch \
   gd=git-diff \
+  tmux-git-diff=git-diff \
   fzf-git-checkout=git-checkout
 
 git-insert-branch-name() {
@@ -62,6 +54,7 @@ zstyle ':completion:*:*:git:*' user-commands $existing_user_commands \
   diffstat-unpushed:"Show the diffstat of everything you haven't pushed yet" \
   disable-pushing:'Update the push URL for all remotes' \
   follow:'Add the remotes for forks on GitHub' \
+  fixup:'Create a fixup commit' \
   merge-into:'Merge a branch into another one' \
   nuke:'Nukes a branch locally and on the origin remote' \
   nuke-tag:'Nukes a tag locally and on the origin remote' \

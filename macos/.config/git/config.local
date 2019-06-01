@@ -1,6 +1,12 @@
 [credential]
   helper = osxkeychain
 
+[core]
+  # Make sure git uses the macOS supplied openSSH.
+  # This is important because the SSH keys are stored
+  # in the system keychain.
+  sshCommand = /usr/bin/ssh
+
 [mergetool "Kaleidoscope"]
   cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" \"$REMOTE\"
 

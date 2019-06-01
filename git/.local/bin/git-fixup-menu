@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+smart-fzf \
+  --height '60%' \
+  --bind 'tab:toggle-preview' \
+  --preview 'git show --color {+1}' \
+  --preview-window=right:55% \
+  --prompt 'Select commit: '

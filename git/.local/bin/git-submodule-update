@@ -22,5 +22,5 @@ git -c color.status=always status | grep --color=never 'new commits'
 
 echo ""
 echo "So we need to update submodules too:"
-echo -e "${bold}${yellow}:: git submodule sync && git submodule update --init --recursive${reset}"
-git submodule sync 1>/dev/null && git submodule update --init --recursive
+echo -e "${bold}${yellow}:: git submodule sync && git submodule update --init --remote --rebase --recursive${reset}"
+git submodule sync && git submodule update --init --remote --rebase --recursive

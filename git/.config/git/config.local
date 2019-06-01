@@ -1,0 +1,53 @@
+[core]
+  excludesFile   = ~/.config/git/ignore
+  attributesFile = ~/.config/git/attributes
+
+[init]
+  templateDir = ~/.dotfiles/git/.config/git/templates
+
+[pager]
+  diff = diff-so-fancy | smartless
+  show = diff-so-fancy | smartless
+
+[commit]
+  template = ~/.config/git/commit.txt
+
+[diff]
+  tool = GitDiffTool
+
+[merge]
+  tool = GitMergeTool
+
+[difftool "GitDiffTool"]
+  cmd = ~/.local/bin/difftool --local \"$LOCAL\" --remote \"$REMOTE\" --base \"$BASE\"
+
+[mergetool "GitMergeTool"]
+  cmd = ~/.local/bin/mergetool --local \"$LOCAL\" --remote \"$REMOTE\" --merged \"$MERGED\" --base \"$BASE\"
+
+# External commands {{{
+# ------------------------------------------------------------------------------
+
+[ghq]
+  root = ~/Developer/ghq
+  root = ~/Developer/Tower
+
+[hub]
+  protocol = https
+
+[diff-so-fancy]
+  markEmptyLines = false
+  stripLeadingSymbols = false
+  changeHunkIndicators = true
+  useUnicodeRuler = true
+
+[fixup]
+  commit = true
+  menu = git-fixup-menu
+
+# ------------------------------------------------------------------------------ }}}
+
+[alias]
+  ls-conflicts = conflicts
+
+# Modeline {{{
+# vim: set filetype=gitconfig foldmarker={{{,}}} foldlevel=0 foldmethod=marker : }}}

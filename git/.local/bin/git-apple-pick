@@ -1,0 +1,40 @@
+#!/usr/bin/env zsh
+
+git-apple-pick() {
+  if ! in-git-repo; then
+    echo -e "\e[1;41;97m ERROR \e[0m Not a repository: $PWD" >&2
+    return 1
+  fi
+
+  if (( $# < 2 )); then
+    echo -e "\e[1;41;97m ERROR \e[0m branch and commits required" >&2
+    echo "Usage: git rebase-parent-branch <branch> <commits>" >&2
+    return 1
+  fi
+
+  local branch="$1"
+  local commits="${@:2}"
+
+  if ! git local-branch-exists $branch; then
+    echo "FIXME"
+    echo -e "\e[1;41;97m ERROR \e[0m Invalid branch: ${branch}" >&2
+    return 1
+  fi
+
+  local current_branch
+  current_branch="$(git current-branch)"
+
+  if (( $status != 0 )) ; then
+    echo -e "\e[1;41;97m ERROR \e[0m Unable to find current branch name" >&2
+    return 1
+  fi
+
+  local old_branch="__git-apple-pick__/${branch}"
+
+  git branch --move --force "$old_branch" || return $status
+  git checkout -b "$current_branch" "$branch"
+  git cherry-pick ${=commits} || return $status
+  git branch --delete --force "$old_branch"
+}
+
+git-apple-pick "$@"
