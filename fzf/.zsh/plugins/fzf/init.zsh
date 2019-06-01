@@ -48,3 +48,5 @@ function {
   setopt extended_glob
   autoload -Uz $ZSH_HOME/plugins/fzf/functions/*~(*~|*.zwc)(-N.:t)
 }
+
+alias fzf="smart-fzf"

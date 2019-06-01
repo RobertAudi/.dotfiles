@@ -22,6 +22,8 @@ Pry.config.print = proc do |output, value|
     # The following line enables awesome_print for all pry output,
     # and it also enables paging
     Pry::Helpers::BaseHelpers.stagger_output("=> #{value.ai}", output)
+  else
+    Pry::Helpers::BaseHelpers.stagger_output("=> #{value.inspect}", output)
   end
 end
 
@@ -41,10 +43,12 @@ Pry.config.exception_handler = proc do |output, exception, _pry_|
   output.puts "#{exception.class}: #{exception.message}"
   output.puts exception.backtrace.first
 
-  if exception.instance_of?(ActiveRecord::StatementInvalid) && exception.original_exception.is_a?(PG::Error)
-    output.puts 'Rolling back transaction and starting a new one!'
-    connection = ActiveRecord::Base.connection
-    connection.rollback_db_transaction
-    connection.begin_db_transaction
+  if defined?(Rails) && defined?(PG)
+    if exception.instance_of?(ActiveRecord::StatementInvalid) && exception.original_exception.is_a?(PG::Error)
+      output.puts 'Rolling back transaction and starting a new one!'
+      connection = ActiveRecord::Base.connection
+      connection.rollback_db_transaction
+      connection.begin_db_transaction
+    end
   end
 end

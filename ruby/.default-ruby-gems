@@ -2,10 +2,6 @@
 #   https://yardoc.org/
 yard
 
-# Manages an application's dependencies
-#   https://bundler.io/
-bundler
-
 # Conservative bundler updates
 #   https://github.com/livingsocial/bundler-patch
 bundler-patch
@@ -31,6 +27,10 @@ pry
 #   https://github.com/kyrylo/pry-theme
 pry-theme
 
+# View state in pry session
+#   https://github.com/SudhagarS/pry-state
+pry-state
+
 # Automate the bundle/migration tedium of Rails with Git hooks
 #   https://github.com/tpope/hookup
 hookup
@@ -49,9 +49,9 @@ gem-compare
 #   https://github.com/mpapis/gem-content
 gem-content
 
-# Automatic ctags generation on gem install
-#   https://github.com/tpope/gem-ctags
-gem-ctags
+# Fast and accurate ctags generator on gem install
+#   https://github.com/lzap/gem-ripper-tags
+gem-ripper-tags
 
 # Display a man page for an installed RubyGem.
 #   https://github.com/defunkt/gem-man
@@ -104,21 +104,9 @@ graf
 #   https://github.com/iridakos/table_flipper
 table_flipper
 
-# Rake is a Make-like program implemented in Ruby.
-#   https://github.com/ruby/rake
-rake
-
 # Fast, accurate ctags generator for ruby source code using Ripper
 #   https://github.com/tmm1/ripper-tags
 ripper-tags
-
-# Xcodebuild formatter designed to be piped with `xcodebuild`
-#   https://github.com/supermarin/xcpretty
-xcpretty
-
-# CocoaPods manages library dependencies for your Xcode project.
-#   https://github.com/CocoaPods/CocoaPods
-cocoapods
 
 # A Ruby client for Neovim
 #   https://github.com/alexgenco/neovim-ruby
@@ -136,5 +124,25 @@ ronn
 # A little Ruby gem for finding the source location of classes and methods
 #   https://github.com/daveallie/where_is
 where_is
+
+# Manage complex tmux sessions easily
+#   https://github.com/tmuxinator/tmuxinator
+tmuxinator
+
+# Ruby gem information, stats and usage for your terminal
+#   https://github.com/zverok/whatthegem
+whatthegem
+
+# The instafailing RSpec progress bar formatter
+#   https://github.com/thekompanee/fuubar
+fuubar
+
+# RSpec formatter for the macOS Notification Center
+#   https://github.com/twe4ked/rspec-nc
+rspec-nc
+
+# Nyan Cat inspired RSpec formatter!
+#   https://github.com/mattsears/nyan-cat-formatter
+nyan-cat-formatter
 
 # vim: set filetype=config textwidth=72 :
