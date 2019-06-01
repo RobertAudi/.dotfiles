@@ -2,6 +2,8 @@
 
 source "${${(%):-%x}:A:h}/rust.sh"
 
+builtin print -Pn -- "%B%F{019}"; hr "⋅"; builtin print -Pn -- "%f%b"
+
 command ghq get --update https://github.com/jwilm/alacritty.git
 
 local project_root=$(command ghq list --exact --full-path github.com/jwilm/alacritty)

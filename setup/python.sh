@@ -35,5 +35,6 @@ local v
 for v in $(print -- "$PYTHON_VERSION" | tr '[:space:]' ' '); do
   env CFLAGS="-I$(brew --prefix openssl)/include -I$(brew --prefix readline)/include" \
     LDFLAGS="-L$(brew --prefix openssl)/lib -L$(brew --prefix readline)/lib" \
+    PKG_CONFIG_PATH="$(brew --prefix openssl)/lib/pkgconfig:$(brew --prefix readline)/lib/pkgconfig" \
     pyenv install --skip-existing "$v"
 done
