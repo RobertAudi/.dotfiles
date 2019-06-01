@@ -10,6 +10,8 @@
 --exclude=public
 --exclude=node_modules
 --exclude=bower_components
+--exclude=.gem
+--exclude=coverage
 --exclude=\*.cache.html
 --exclude=\*.nocache.js
 --exclude=\*.min.\*
@@ -19,3 +21,4 @@
 --exclude=\*.cache
 --exclude=tags
 --exclude=\*.tar.\*
+--exclude=*.svg

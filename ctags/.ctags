@@ -12,6 +12,8 @@
 --exclude=public
 --exclude=node_modules
 --exclude=bower_components
+--exclude=.gem
+--exclude=coverage
 --exclude=\*.cache.html
 --exclude=\*.nocache.js
 --exclude=\*.min.\*
@@ -21,6 +23,26 @@
 --exclude=\*.cache
 --exclude=tags
 --exclude=\*.tar.\*
+--exclude=*.svg
+
+--regex-ruby=/^[ \t]*create_table[ \t]*"([a-zA-Z0-9_]+)"/\1/t,table/
+--regex-ruby=/^[ \t]*create_table[ \t]*:([a-zA-Z0-9_]+)/\1/t,table/
+--regex-ruby=/^[ \t]*namespace[ \t]*:([a-zA-Z0-9_]+)/--- \1 ---/n,namespace/
+--regex-ruby=/^[ \t]*task[ \t]*([a-zA-Z0-9_]+):/\1/k,task/
+--regex-ruby=/^  (resources?|scope|[A-Za-z0-9_-]*namespace[ \t]*)[ \t]*:([a-zA-Z0-9_]+)/\2/n,namespace/
+--regex-ruby=/^  (resources?|scope|[A-Za-z0-9_-]*namespace[ \t]*)[ \t]*'([^']+)'/\2/n,namespace/
+--regex-ruby=/^  (resources?|scope|[A-Za-z0-9_-]*namespace[ \t]*)[ \t]*"([^"]+)"/\2/n,namespace/
+--regex-ruby=/^  ((get|post|put|patch|delete|match)[ \t]*:[a-zA-Z0-9_]+)/\1/r,route/
+--regex-ruby=/^  ((get|post|put|patch|delete|match)[ \t]*'[^']+')/\1/r,route/
+--regex-ruby=/^  ((get|post|put|patch|delete|match)[ \t]*"[^"]+")/\1/r,route/
+--regex-ruby=/^  ((root|root to:|root :to =>)[ \t]*'[^']+')/\1/r,route/
+--regex-ruby=/^  ((root|root to:|root :to =>)[ \t]*"[^"]+")/\1/r,route/
+--regex-ruby=/^  ((devise_for|devise_scope|authenticated?)[ \t]*:[a-zA-Z0-9_]+)/\1/r,route/
+
+--regex-ruby=/^[ \t]*describe ['"](.*)['"] do/\1/d,RSpec describe/
+--regex-ruby=/^[ \t]*context ['"](.*)['"] do/\1/C,RSpec context/
+--regex-ruby=/^[ \t]*(it|specify|example) ['"](.*)['"] do/\2/i,RSpec examples/
+--regex-ruby=/^[ \t]*scenario ['"](.*)['"] do/\1/e,Feature test/
 
 --langmap=javascript:.js
 --regex-javascript=/([A-Za-z0-9._$]+)[ \t]*[:=][ \t]*[\(]function[ \t]*\(/\1/f,function,Functions/
