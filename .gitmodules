@@ -1,3 +1,21 @@
 [submodule "nano/.nano"]
 	path = nano/.local/share/nano/nano-highlight
 	url = https://github.com/serialhex/nano-highlight.git
+[submodule "setup/packages/tj/histo"]
+	path = setup/packages/tj/histo
+	url = https://github.com/tj/histo.git
+[submodule "setup/packages/jb55/extname"]
+	path = setup/packages/jb55/extname
+	url = https://github.com/jb55/extname.git
+[submodule "setup/packages/jb55/pidpath"]
+	path = setup/packages/jb55/pidpath
+	url = https://github.com/jb55/pidpath.git
+[submodule "setup/packages/lavoiesl/osx-cpu-temp"]
+	path = setup/packages/lavoiesl/osx-cpu-temp
+	url = https://github.com/lavoiesl/osx-cpu-temp.git
+[submodule "setup/packages/jwerle/suri"]
+	path = setup/packages/jwerle/suri
+	url = https://github.com/jwerle/suri.git
+[submodule "setup/packages/jb55/mandown"]
+	path = setup/packages/jb55/mandown
+	url = https://github.com/jb55/mandown.git
