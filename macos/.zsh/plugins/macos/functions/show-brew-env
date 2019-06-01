@@ -11,7 +11,7 @@ function __show-brew-env::hr {
 }
 
 function show-brew-env {
-  if (($#)); then
+  if (( $# > 0 )); then
     builtin print -P -- "[%F{221}WARN%f] Arguments ignored: $@" >&2
   fi
 

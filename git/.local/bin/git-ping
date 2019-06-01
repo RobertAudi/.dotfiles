@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 git-ping() {
-  if ! (($#)); then
+  if  (( $# == 0 )); then
     echo -e "\e[1;41;97m ERROR \e[0m Repo required" >&2
     return 1
   fi

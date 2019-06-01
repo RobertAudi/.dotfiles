@@ -1,3 +1,5 @@
+#autoload
+
 if [[ -n "$1" ]]; then
   command tmux new-session -d -c "$HOME" -s "$1" && tmux switch-client -t "$1"
 else
@@ -9,5 +11,3 @@ else
     tmux attach-session -t "$session"
   fi
 fi
-
-# vim: ft=zsh

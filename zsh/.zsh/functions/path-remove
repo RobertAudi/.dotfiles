@@ -1,6 +1,6 @@
 #autoload
 
-(($#)) || { print-error "Argument required!"; return $? }
+(( $# > 0 )) || { print-error "Argument required!"; return $? }
 
 path=("${(@)path:#$1}")
 

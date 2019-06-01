@@ -7,13 +7,13 @@ if zplugin loaded | grep -q "zshmarks"; then
 
   marks() {
     local marks=$(showmarks | awk '{print $1 " - " $2}' | column -t)
-    (($#)) && marks=$(echo "$marks" | grep "$@")
+    (( $# > 0 )) && marks=$(echo "$marks" | grep "$@")
     echo $marks
   }
 
   z() {
     local marks=$(showmarks)
-    if (($#marks == 0)); then
+    if (( $#marks == 0 )); then
       echo "No bookmarks found"
       return 1
     fi
@@ -39,16 +39,16 @@ if zplugin loaded | grep -q "zshmarks"; then
 
   delete-mark() {
     local marks=$(showmarks)
-    if (($#marks == 0)); then
+    if (( $#marks == 0 )); then
       echo "No bookmarks found"
       return 1
     fi
 
-    if (($#)); then
+    if (( $# > 0 )); then
       marks=$(echo "$marks" | grep "$@")
     fi
 
-    local height=$((4 + $(wc -l <<< "$marks")))
+    local height=$(( 4 + $(wc -l <<< "$marks") ))
     local message="Selet bookmark to delete"
     local mark=$(echo "$marks" | awk '{print $1 " - " $2}' | column -t | fzf-tmux --tac --header=$message -d $height +1 +m)
     if [[ -n "$mark" ]]; then

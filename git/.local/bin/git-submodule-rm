@@ -15,7 +15,7 @@ git-submodule-rm() {
     return 1
   fi
 
-  if (($#)); then
+  if (( $# > 0 )); then
     local submodulepath
     for submodulepath in $@; do
       git config -f .git/config --remove-section submodule.$submodulepath

@@ -8,7 +8,7 @@
 # ------------------------------------------------------------------------------
 
 smart_cd() {
-  if (($# != 1)); then
+  if (( $# != 1 )); then
     builtin cd "$@"
     return $?
   fi
@@ -88,8 +88,8 @@ do_sudo() {
     run+=($1 $2)
     shift ; shift
   fi
-  (($# == 0)) && 1=/bin/zsh
-  while (($#)); do
+  (( $# == 0 )) && 1=/bin/zsh
+  while (( $# > 0 )); do
     case "$1" in
       command|exec|-) shift; break ;;
       nocorrect) shift ;;
@@ -97,7 +97,7 @@ do_sudo() {
       *) break ;;
     esac
   done
-  if ((glob)); then
+  if (( glob )); then
     PATH="/sbin:/usr/sbin:/usr/local/sbin:$PATH" $run $~==*
   else
     PATH="/sbin:/usr/sbin:/usr/local/sbin:$PATH" $run $==*
@@ -132,7 +132,7 @@ alias history="noglob history"
 alias locate="noglob locate"
 
 # not aliasing rm -i, but if safe-rm is available, use condom.
-if ((${+commands[safe-rm]})); then
+if (( ${+commands[safe-rm]} > 0 )); then
   alias rm="safe-rm -v"
 else
   alias rm="rm -v --preserve-root"

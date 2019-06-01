@@ -6,7 +6,7 @@ git-nuke-tag() {
     return 1
   fi
 
-  if ! (($#)); then
+  if (( $# == 0 )); then
     echo -e "\e[1;41;97m ERROR \e[0m Missing tag name" >&2
     return 1
   fi

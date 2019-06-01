@@ -1,3 +1,5 @@
+#autoload
+
 # fshow - git commit browser
 fshow() {
   git log --graph --color=always \
@@ -11,5 +13,3 @@ FZF-EOF"
 }
 
 fshow "$@"
-
-# vim: ft=zsh

@@ -4,7 +4,7 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
   print-error   () { echo "\e[01;37;41m ERROR \e[0m $@" >&2 }
   print-success () { echo "\e[01;37;46m DONE \e[0m $@"      }
 
-  if (($#)); then
+  if (( $# > 0 )); then
     directory="$(realpath $1)"
   else
     directory="$PWD"

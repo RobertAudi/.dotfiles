@@ -16,6 +16,7 @@ CVS
 _darcs
 \.hg
 
+\.github
 \.git
 \.gitignore
 \.gitmodules

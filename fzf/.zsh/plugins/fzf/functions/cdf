@@ -1,6 +1,6 @@
+#autoload
+
 # cdf - cd into the directory of the selected file
 local file
 local dir
 file=$(fzf +m -q "$1") && dir=$(dirname "$file") && cd "$dir"
-
-# vim: ft=zsh

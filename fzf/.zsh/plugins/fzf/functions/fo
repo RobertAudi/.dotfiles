@@ -1,3 +1,5 @@
+#autoload
+
 # Modified version of fe() where you can press
 #   - CTRL-O to open with `xdg-open` command,
 #   - CTRL-E or Enter key to open with the $EDITOR
@@ -8,5 +10,3 @@ file=$(head -2 <<< "$out" | tail -1)
 if [ -n "$file" ]; then
   [ "$key" = ctrl-o ] && open "$file" || ${EDITOR:-vim} "$file"
 fi
-
-# vim: ft=zsh

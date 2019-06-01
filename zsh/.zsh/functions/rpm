@@ -1,7 +1,7 @@
 #autoload
 
 # Usage: rpm <file>
-if ! (($#)); then
+if (( $# == 0 )); then
   echo "usage: rpm <file>" >&2
   return 1
 fi

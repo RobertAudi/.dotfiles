@@ -3,7 +3,7 @@
 is-callable ghq || { print-error "ghq not installed"; return 1 }
 
 # TODO: Fucking do something...
-(($#)) || { command ghq help; return 1 }
+(( $# > 0 )) || { command ghq help; return 1 }
 
 local repo
 local action="$1"; shift

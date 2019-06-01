@@ -52,6 +52,7 @@ let g:x2a#lightline#plugin_filetypes =
 " ------------------------------------------------------------------------------ }}}
 
 let g:lightline = {}
+
 let g:lightline.colorscheme = 'eighties'
 
 let g:lightline.component_function = {

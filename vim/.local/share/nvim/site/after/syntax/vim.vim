@@ -1,3 +1,3 @@
-syntax keyword raVimPlug Plug skipwhite nextgroup=vimString
+syntax keyword x2aVimPlug Plug skipwhite nextgroup=vimString
 
 highlight def link raVimPlug vimCommand

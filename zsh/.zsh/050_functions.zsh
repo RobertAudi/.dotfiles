@@ -6,7 +6,7 @@ typeset -a fns
 for dirname in $fpath; do
   if ! [[ $dirname =~ ($ZDOTDIR/plugins|${ZPLG_HOME:-$HOME/.zplugin})/* ]]; then
     fns=( $dirname/*~(*~|*.zwc)(-N.:t) )
-    (($#fns)) && autoload -Uz "$fns[@]"
+    (( $#fns > 0 )) && autoload -Uz "$fns[@]"
   fi
 done
 unset dirname fns
@@ -18,7 +18,7 @@ fi
 
 # Reload functions.
 refunc() {
-  while (($#)); do
+  while (( $# > 0 )); do
     if unfunction $1; then
       autoload -Uz $1
       print-success "Function reloaded: $1"
@@ -41,7 +41,7 @@ reload-shell() {
 }
 
 which-less() {
-  if (($#)); then
+  if (( $# > 0 )); then
     less --quit-if-one-screen $(which $1)
   else
     print-error 'Nothing to show...'

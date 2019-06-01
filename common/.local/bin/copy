@@ -15,7 +15,7 @@ copy() {
 
   zparseopts -D -E -quiet+=quiet q+=quiet -help+=help h+=help
 
-  if ((${#help})); then
+  if (( ${#help} > 0 )); then
     echo "Intelligently copies command results, text file, or raw text to"
     echo "the System clipboard."
     echo
@@ -30,11 +30,11 @@ copy() {
 
   local output
   local res=false
-  local tmpfile="${TMPDIR}/copy.$RANDOM.txt"
+
   local msg=""
   local err=""
 
-  if (($#)); then
+  if (( $# > 0 )); then
     local cmd=""
     for arg in $@; do
       cmd+="\"$(echo -en "$arg" | sed -E 's/"/\\"/g')\" "

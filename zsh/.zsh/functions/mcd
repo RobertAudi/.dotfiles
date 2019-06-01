@@ -2,7 +2,7 @@
 
 # Create Directoy and cd to it
 
-if ! (($#)); then
+if (( $# == 0 )); then
   print -- "usage: mcd [new-directory...] <new-directory>"
   return 64
 fi

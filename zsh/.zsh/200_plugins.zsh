@@ -1,9 +1,6 @@
 # tj/n
 export N_PREFIX="$HOME/.n"
 
-# djui/alias-tips
-export ZSH_PLUGINS_ALIAS_TIPS_TEXT=" 💡  Alias tip:"
-
 # molovo/tipz
 export TIPZ_TEXT=" 💡  Alias tip:"
 
@@ -38,3 +35,6 @@ if is-command direnv; then
   source "$cache_file"
   unset cache_file
 fi
+
+# Replay compdefs
+zplugin cdreplay -q

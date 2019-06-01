@@ -2,7 +2,7 @@
 
 # cat a file in your path
 cat-which() {
-  if (($#)); then
+  if (( $# > 0 )); then
     if is-command "$1"; then
       local command_path="$(whence -c "$1")"
       if file -bL --mime "$command_path" | grep -q "charset=binary"; then

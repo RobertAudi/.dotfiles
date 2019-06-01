@@ -1,3 +1,5 @@
+#autoload
+
 # ftpane - switch pane
 ftpane() {
   local panes current_window current_pane target target_window target_pane preview_cmd
@@ -25,5 +27,3 @@ ftpane() {
 }
 
 ftpane "$@"
-
-# vim: ft=zsh

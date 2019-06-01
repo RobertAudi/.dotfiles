@@ -1,6 +1,6 @@
 #autoload
 
-if (($#)); then
+if (( $# > 0 )); then
   if [[ "$1" == "-h" ]]; then
     echo "Usage: ql [options] file"
     echo "  -h    print these usage instructions"

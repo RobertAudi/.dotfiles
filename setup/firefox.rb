@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'fileutils'
 
 FIREFOX_BASE_DIR = File.expand_path("~/Library/Application Support/Firefox")

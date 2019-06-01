@@ -5,7 +5,7 @@ if [[ ! -f tmp/routes ]] || [[ ! -s tmp/routes ]] || [[ tmp/routes -ot config/ro
   run_with_bundler rake routes >! tmp/routes 2>/dev/null
 fi
 
-if (($#)); then
+if (( $# > 0 )); then
   if type rg >/dev/null; then
     rg --color always --no-line-number "${(j:|:)@}" tmp/routes
   elif type ag >/dev/null; then

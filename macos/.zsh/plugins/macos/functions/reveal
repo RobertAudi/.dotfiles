@@ -1,7 +1,7 @@
 #autoload
 
 # Show file in Finder
-if (($#)); then
+if (( $# > 0 )); then
   command open --reveal "$@"
 else
   builtin print -P -- "[%F{196}ERROR%f] No target was specified to be revealed in the Finder." >&2

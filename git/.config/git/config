@@ -24,17 +24,17 @@
 
   # Awesome table describing this config:
   #
-  # ╔═══════════════╦══════════════╦══════════════╦══════════════╗
-  # ║ core.autocrlf ║     false    ║     input    ║     true     ║
-  # ╠═══════════════╬══════════════╬══════════════╬══════════════╣
-  # ║               ║ LF   => LF   ║ LF   => LF   ║ LF   => LF   ║
-  # ║ git commit    ║ CR   => CR   ║ CR   => CR   ║ CR   => CR   ║
-  # ║               ║ CRLF => CRLF ║ CRLF => LF   ║ CRLF => LF   ║
-  # ╠═══════════════╬══════════════╬══════════════╬══════════════╣
-  # ║               ║ LF   => LF   ║ LF   => LF   ║ LF   => CRLF ║
-  # ║ git checkout  ║ CR   => CR   ║ CR   => CR   ║ CR   => CR   ║
-  # ║               ║ CRLF => CRLF ║ CRLF => CRLF ║ CRLF => CRLF ║
-  # ╚═══════════════╩══════════════╩══════════════╩══════════════╝
+  # ┌───────────────┬──────────────┬──────────────┬──────────────┐
+  # │ core.autocrlf │     false    │     input    │     true     │
+  # ├───────────────┼──────────────┼──────────────┼──────────────┤
+  # │               │ LF   => LF   │ LF   => LF   │ LF   => LF   │
+  # │ git commit    │ CR   => CR   │ CR   => CR   │ CR   => CR   │
+  # │               │ CRLF => CRLF │ CRLF => LF   │ CRLF => LF   │
+  # ├───────────────┼──────────────┼──────────────┼──────────────┤
+  # │               │ LF   => LF   │ LF   => LF   │ LF   => CRLF │
+  # │ git checkout  │ CR   => CR   │ CR   => CR   │ CR   => CR   │
+  # │               │ CRLF => CRLF │ CRLF => CRLF │ CRLF => CRLF │
+  # └───────────────┴──────────────┴──────────────┴──────────────┘
   #
   # Credits to @pratt for his answer on StackOverflow:
   #   https://stackoverflow.com/a/41282375/123016

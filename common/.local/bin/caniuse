@@ -14,7 +14,7 @@ caniuse() {
   local domain="http://caniuse.com/"
   local query
 
-  if (($#)); then
+  if (( $# > 0 )); then
     for term in "$@"; do
       query=$(python -c "import sys, urllib as ul; print ul.quote('${term}');")
       open "${domain}#search=${query}"

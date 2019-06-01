@@ -1,6 +1,6 @@
 #autoload
 
-if (($#)); then
+if (( $# > 0 )); then
   git clone --recursive "$@"
 else
   repo="$(pbpaste)"

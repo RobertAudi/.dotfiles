@@ -6,7 +6,7 @@ if ! is-callable cal >/dev/null; then
   return 1
 fi
 
-if (($#)); then
+if (( $# > 0 )); then
   cal $@ | grep -C 40 --color "\<($(date +%B)|$(date +%e | tr -d ' '))\>"
 else
   cal | grep -C 40 --color "\<$(date +%e| tr -d ' ')\>"

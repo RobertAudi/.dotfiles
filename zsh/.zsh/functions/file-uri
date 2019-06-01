@@ -3,10 +3,10 @@
 # quick un-smart function to prepend file:// to local requests:
 # (refine this for multiple files, etc, later on)
 
-if (($#)); then
+if (( $# > 0 )); then
   local file="$1" ; shift
 
-  if (($#)); then
+  if (( $# > 0 )); then
     print-warning "$# arguments ignored: $@"
   fi
 
