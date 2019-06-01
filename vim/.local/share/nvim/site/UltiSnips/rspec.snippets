@@ -1,0 +1,67 @@
+extends ruby
+
+snippet "\bdesc(ribe)?" "describe block" r
+describe "$1" do
+	$0
+end
+endsnippet
+
+snippet "\bcon(t(ext)?)?" "context block" r
+context "$1" do
+	$0
+end
+endsnippet
+
+snippet it "it block" b
+it "$1" do
+	$0
+end
+endsnippet
+
+snippet it "inline it block" b
+it { $0 }
+endsnippet
+
+snippet "\bbef(ore)?" "before block" r
+before do
+	$0
+end
+endsnippet
+
+snippet "\baft(er)?" "after block" r
+after do
+	$0
+end
+endsnippet
+
+snippet "\bsub(ject)?" "subject" r
+subject(:$1) { $0 }
+endsnippet
+
+snippet let "let" b
+let(:$1) { $0 }
+endsnippet
+
+snippet "\bexp(ect)?" "expect().to" r
+expect($1).to $0
+endsnippet
+
+snippet "\bexp(ect)?" "expect {  }.to" r
+expect { $1 }.to $0
+endsnippet
+
+snippet "\bexp(ect)?" "expect {  }.to change {  }" r
+expect { $1 }.to change { $0 }
+endsnippet
+
+snippet "\bexp(ect)?!" "expect().to_not" r
+expect($1).to_not $0
+endsnippet
+
+snippet "\bexp(ect)?!" "expect {  }.to_not" r
+expect { $1 }.to_not $0
+endsnippet
+
+snippet "\bexp(ect)?!" "expect {  }.to_not change {  }" r
+expect { $1 }.to_not change { $0 }
+endsnippet

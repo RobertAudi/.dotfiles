@@ -1,0 +1,4 @@
+--regex-ruby=/^[ \t]*describe ['"](.*)['"] do/\1/d,RSpec describe/
+--regex-ruby=/^[ \t]*context ['"](.*)['"] do/\1/C,RSpec context/
+--regex-ruby=/^[ \t]*(it|specify|example) ['"](.*)['"] do/\2/i,RSpec examples/
+--regex-ruby=/^[ \t]*scenario ['"](.*)['"] do/\1/e,Feature test/

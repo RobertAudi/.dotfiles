@@ -1,0 +1,1 @@
+../ruby/auto-pairs.vim
