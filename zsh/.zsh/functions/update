@@ -1,17 +1,11 @@
 #autoload
 
-typeset -g _UPDATE_DEFAULT_PACKAGES_DIR
 typeset -ga _UPDATE_CUSTOM_ENV_VARIABLES
 
-_UPDATE_DEFAULT_PACKAGES_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/update/packages"
-
 typeset -gA _UPDATE_PACKAGE_MANAGERS
-_UPDATE_PACKAGE_MANAGERS[gem]="gem\tUpdate RubyGems and outdated gems"
 _UPDATE_PACKAGE_MANAGERS[pip]="pip\tUpdate outdated pip2 and pip3 packages"
 _UPDATE_PACKAGE_MANAGERS[npm]="npm\tUpdate outdated npm packages"
-_UPDATE_PACKAGE_MANAGERS[vim]="vim\tUpdate Vim plugins"
 _UPDATE_PACKAGE_MANAGERS[nvim]="nvim\tUpdate Neovim plugins"
-_UPDATE_PACKAGE_MANAGERS[rust]="rustup\tUpdate the Rust tooling and Cargo packages"
 _UPDATE_PACKAGE_MANAGERS[zsh]="zsh\tUpdate ZSH plugins"
 
 if is_macos; then
@@ -21,10 +15,6 @@ if is_macos; then
   _UPDATE_CUSTOM_ENV_VARIABLES+="LDFLAGS=-L/usr/local/opt/openssl/lib"
   _UPDATE_CUSTOM_ENV_VARIABLES+="CPPFLAGS=-I/usr/local/opt/openssl/include"
   _UPDATE_CUSTOM_ENV_VARIABLES+="PKG_CONFIG_PATH=/usr/local/opt/openssl/lib/pkgconfig"
-fi
-
-if is_linux; then
-  _UPDATE_PACKAGE_MANAGERS[arch]="arch\tUpdate pacman packages"
 fi
 
 typeset -gA _UPDATE_SUBCOMMANDS
@@ -81,66 +71,9 @@ function __update::help::print {
   return 0
 }
 
-function __update::utils::ask-password {
-  local timeout=90
-  local title msg
-  if [[ -n "$1" ]]; then
-    msg="$1"
-    shift
-  else
-    msg="Password:"
-  fi
-
-  if [[ -n "$1" ]]; then
-    title="$1"
-    shift
-  else
-    title="[update] Enter your password"
-  fi
-
-  if is_macos; then
-    local cmd=""
-    cmd+="Tell application \"System Events\" to"
-    cmd+=" display dialog \"$msg\""
-    cmd+=" default answer \"\""
-    cmd+=" with hidden answer"
-    cmd+=" with title \"$title\""
-    cmd+=" giving up after $timeout"
-    osascript -e "$cmd" -e 'text returned of result' 2>/dev/null
-  elif is_linux; then
-    zenity --password --title="$title" --timeout=$timeout 2>/dev/null
-  fi
-}
-
-function __update::utils::sudo-loop {
-  sudo -n true 2>/dev/null || { __update::utils::ask-password | sudo -S -v -p "" } || return 1
-}
-
-function __update::utils::packages::file {
-  local package_manager="$1"
-
-  [[ -n "$package_manager" ]] || return 1
-
-  print -- "$_UPDATE_DEFAULT_PACKAGES_DIR/$package_manager.txt"
-}
-
-function __update::utils::packages::file::exists {
-  [[ -s "$(__update::utils::packages::file "$1")" ]]
-}
-
-function __update::utils::packages {
-  local packages_file="$(__update::utils::packages::file "$1")"
-
-  if [[ -s "$packages_file" ]]; then
-    cat "$packages_file" | grep -v '^#' | grep -v '^$'
-  else
-    __update::utils::log::error "Packages file not found: $packages_file"
-  fi
-}
-
 function __update::utils::log::separator {
   local word
-  (($#)) && word="$@" || word="━"
+  (( $# > 0 )) && word="$@" || word="━"
   builtin print -Pn -- "%B%F{019}"
   hr "$word"
   builtin print -Pn -- "%f%b"
@@ -165,81 +98,31 @@ function __update::utils::errors::invalid-option {
   return 129
 }
 
-function __update::commands::gem::chruby-ruby {
-  {
-    { chruby | grep '*' | awk '{print $2}' } \
-      || { cat "$HOME/.ruby-version" } \
-      || { print "$RUBY_VERSION" }
-  } 2>/dev/null
-}
-
-function __update::commands::gem {
-  local ruby_version="$(__update::commands::gem::chruby-ruby)"
-  if [[ -n "$ruby_version" ]]; then
-    local env_vars="${(j: :)_UPDATE_CUSTOM_ENV_VARIABLES}"
-
-    __update::utils::log::info "chruby-exec $ruby_version -- env $env_vars gem update --system"
-    { chruby-exec $ruby_version -- env $=env_vars gem update --system } || return $status
-
-    __update::utils::log::info "chruby-exec $ruby_version -- env $env_vars gem install yard --no-document --minimal-deps"
-    { chruby-exec $ruby_version -- env $=env_vars gem install yard --no-document --minimal-deps } || return $status
-
-    local packages="$(__update::utils::packages "gem")"
-    if [[ $status -eq 0 && -n "$packages" ]] ; then
-      __update::utils::log::info "chruby-exec $ruby_version -- env $env_vars gem install $packages --document=ri,yri --minimal-deps"
-      { chruby-exec $ruby_version -- env $=env_vars gem install "$packages" --document=ri,yri --minimal-deps } || return $status
-    fi
-
-    __update::utils::log::info "chruby-exec $ruby_version -- env $env_vars gem update --document=ri,yri --minimal-deps"
-    { chruby-exec $ruby_version -- env $=env_vars gem update --document=ri,yri --minimal-deps } || return $status
-
-    __update::utils::log::info "chruby-exec $ruby_version -- env $env_vars gem cleanup"
-    { chruby-exec $ruby_version -- env $=env_vars gem cleanup } || return $status
-  else
-    __update::utils::log::error "Unable to find appropriate ruby version"
-    return 1
-  fi
-}
-
 function __update::commands::npm {
   # update NPM first
-  npm install -g npm
+  command npm install --global npm
 
-  for package in $(npm -g outdated --parseable --depth=0 | cut -d: -f2); do
-    npm -g install "$package"
+  for package in $(command npm --global outdated --parseable --depth=0 | cut -d: -f2); do
+    command npm --global install "$package"
   done
 }
 
 function __update::commands::zsh {
   if is-callable zplugin; then
-    zplugin self-update
-    zplugin update --all
-    zplugin compile --all
-  fi
-}
+    __update::utils::log::info "zplugin self-update"
+    zplugin self-update > /dev/null
 
-function __update::commands::rust {
-  if is-callable rustup; then
-    rustup update stable
-  fi
+    __update::utils::log::info "zplugin update --all"
+    zplugin update --all --quiet > /dev/null
 
-  if ! is-callable cargo-install-update; then
-    cargo install cargo-update
+    __update::utils::log::info "zplugin compile --all"
+    zplugin compile --all > /dev/null
   fi
-
-  local packages="$(__update::utils::packages "cargo")"
-  if [[ $status -eq 0 && -n "$packages" ]]; then
-    cargo install-update --allow-no-update "$packages"
-  fi
-}
-
-function __update::commands::vim {
-  vim -e +PlugInstall +PlugUpgrade +PlugUpdate +PlugClean! +qall
 }
 
 function __update::commands::nvim {
   if is-callable nvim; then
-    nvim --headless -e +PlugInstall +PlugUpgrade +PlugUpdate +PlugClean! +qall &>/dev/null
+    nvim -e +PlugInstall +PlugUpgrade +PlugUpdate +PlugClean! +qall &>/dev/null
   fi
 }
 
@@ -266,48 +149,47 @@ function __update::commands::brew {
     return $status
   fi
 
-  __update::utils::log::info "command brew update"
+  __update::utils::log::separator
+  __update::utils::log::info "brew update"
   __update::utils::log::separator "⋅"
   command brew update
 
   builtin print
-  __update::utils::log::info "command brew upgrade"
+  __update::utils::log::separator
+  __update::utils::log::info "brew upgrade --display-times"
   __update::utils::log::separator "⋅"
   command brew upgrade
 
   builtin print
-  __update::utils::log::info "command brew cask upgrade"
+  __update::utils::log::separator
+  __update::utils::log::info "brew cask upgrade"
   __update::utils::log::separator "⋅"
   command brew cask upgrade
 
   builtin print
-  __update::utils::log::info "command brew cleanup"
+  __update::utils::log::separator
+  __update::utils::log::info "brew cleanup -s --prune-prefix"
   __update::utils::log::separator "⋅"
-  command brew cleanup
+  command brew cleanup -s --prune-prefix
 
   builtin print
-}
-
-function __update::commands::arch {
-  if ! is_linux; then
-    unfunction __update::commands::arch
-    __update::utils::errors::command-not-found "arch"
-    return $status
-  fi
-
-  __update::utils::sudo-loop || return 1
-  sudo pacman-key --refresh-keys
-  pacaur --noedit --noconfirm -Syyu
 }
 
 function __update::commands::pip {
   local env_vars="${(j: :)_UPDATE_CUSTOM_ENV_VARIABLES}"
 
-  # FIXME: Error if there are no outdated packages
-  env $=env_vars pip install --upgrade pip setuptools wheel && \
-    pip list --outdated --format freeze \
-    | cut -d'=' -f1 \
-    | xargs -n1 env $=env_vars pip install --upgrade
+  __update::utils::log::info "pip install --upgrade --upgrade-strategy eager --progress-bar pretty pip setuptools wheel"
+  env $=env_vars pip install --upgrade --upgrade-strategy eager --progress-bar pretty pip setuptools wheel || return $status
+
+  local outdated_packages="$(pip list --outdated --format freeze | cut -d'=' -f1 | tr '\n' ' ')"
+
+  if [[ -z "$outdated_packages" ]]; then
+    __update::utils::log::info "No outdated pip packages"
+    return
+  fi
+
+  __update::utils::log::info "pip install --upgrade --upgrade-strategy eager --progress-bar pretty \"$outdated_packages\""
+  env $=env_vars pip install --upgrade --upgrade-strategy eager --progress-bar pretty $=outdated_packages
 }
 
 function __update::run-command {
@@ -325,7 +207,7 @@ function __update::run-command {
 
 function __update::run-commands {
   local -a cmds
-  if (($#)); then
+  if (( $# > 0 )); then
     cmds=($@)
   else
     cmds=(${(ko)_UPDATE_PACKAGE_MANAGERS[@]})
@@ -340,16 +222,16 @@ function __update::run-commands {
 ###
 
 function update {
-  if (($# == 0)); then
+  if (( $# == 0 )); then
     __update::help::print
     return $status
   fi
 
   zparseopts -D l+=list -list+=list h+=help -help+=help a+=all -all+=all
 
-  (($#list)) && { update list ; return $status }
-  (($#help)) && { update help ; return $status }
-  (($#all))  && { update all  ; return $status }
+  (( $#list > 0 )) && { update list ; return $status }
+  (( $#help > 0 )) && { update help ; return $status }
+  (( $#all > 0 ))  && { update all  ; return $status }
 
   case "$1" in
     help)

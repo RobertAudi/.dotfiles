@@ -250,7 +250,7 @@ export TIMEFMT="%E real        %U user        %S sys"
 
 # Report time statistics for commands
 # that take too long to run
-export REPORTTIME=10
+export REPORTTIME=30
 
 # Limit this fuckung "zsh: do you wish to see all NNN possibilities (NNN
 # lines)?" downward (default is 100). Only ask before displaying
@@ -329,6 +329,18 @@ export HOMEBREW_NO_AUTO_UPDATE=1
 
 # Do not permit redirects from secure HTTPS to insecure HTTP.
 export HOMEBREW_NO_INSECURE_REDIRECT=1
+
+# Never cleanup automatically after running brew install/upgrade/reinstall
+export HOMEBREW_NO_INSTALL_CLEANUP=1
+
+# Do not disable the use of curlrc.
+export HOMEBREW_CURLRC=1
+
+# --no-quarantine
+#        Prevent Gatekeeper from enforcing its security restrictions
+#        on the Cask. This will let you run it straightaway.
+export HOMEBREW_CASK_OPTS="--no-quarantine --verbose"
+
 # --------------------------------------------------------------------- }}}
 
 # JAVA home

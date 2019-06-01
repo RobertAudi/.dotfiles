@@ -8,7 +8,7 @@ zplugin light b4b4r07/httpstat
 
 # Gives you helpful hints when you execute a command for which you have an alias defined
 #   https://github.com/molovo/tipz
-zplugin ice pick"tipz.zsh"
+zplugin ice wait"2" pick"tipz.zsh" lucid
 zplugin light molovo/tipz
 
 # Add zsh's missing hooks, and support for user-defined hooks
@@ -25,6 +25,7 @@ zplugin light zsh-users/zsh-history-substring-search
 
 # Tmux Session Manager
 #   https://github.com/RobertAudi/tsm
+zplugin ice wait"" lucid
 zplugin light RobertAudi/tsm
 
 # Easily see what's happening on your computer's ports
@@ -53,9 +54,6 @@ zplugin load _local/zsh-hints
 zplugin load _local/zsh-git-escape-magic
 
 zplugin ice wait"1" lucid
-zplugin load _local/zsh-background-notifications
-
-zplugin ice wait"0" lucid
 zplugin load _local/spectrum
 
 for f in $ZSH_HOME/plugins/zplugin.d/*.zplugin.zsh; do

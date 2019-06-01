@@ -5,12 +5,20 @@ typeset -g ZSH_GIT_PROMPT_CHAR="±"
 typeset -g ZSH_HG_PROMPT_CHAR="☿"
 
 prompt_0x2a_git_info() {
-  local git_ref="$(command git symbolic-ref --short HEAD 2> /dev/null)" || return
-  local num_changes="$(command git status --porcelain | wc -l)"
-  if (($num_changes > 0)); then
-    num_changes=" %F{red}($num_changes%)%f"
-  else
-    num_changes=""
+  local git_ref
+  git_ref="$(command git symbolic-ref --short HEAD 2> /dev/null)" || return
+
+  local num_changes
+  num_changes=""
+
+  if ! in-ghq-repo; then
+    num_changes="$(command git status --porcelain | wc -l)"
+
+    if (( $num_changes > 0 )); then
+      num_changes=" %F{red}($num_changes%)%f"
+    else
+      num_changes=""
+    fi
   fi
 
   echo "%F{cyan}$ZSH_GIT_PROMPT_CHAR%f %F{green}$git_ref%f$num_changes"
