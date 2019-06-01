@@ -589,7 +589,7 @@ let g:plug_retries = 3
 let g:plug_timeout = 180
 let g:plug_shallow = 1
 
-call plug#begin($XDG_BIN_HOME . '/nvim/plugged')
+call plug#begin($XDG_DATA_HOME . '/nvim/plugged')
 
 " Minimalist Vim Plugin Manager
 "   https://github.com/junegunn/vim-plug

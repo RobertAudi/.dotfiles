@@ -23,7 +23,7 @@ if [[ -f "$ZDOTDIR/setup/perl.zsh" ]]; then
 fi
 
 # Base16 Shell
-export BASE16_SHELL="$XDG_CONFIG_HOME/base16/base16-shell"
+export BASE16_SHELL="$XDG_DATA_HOME/base16/base16-shell"
 
 if [[ -f "$BASE16_SHELL/base16-railscasts.sh" ]]; then
   source "$BASE16_SHELL/base16-railscasts.sh"

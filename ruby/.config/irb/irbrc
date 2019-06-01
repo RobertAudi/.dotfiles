@@ -47,7 +47,7 @@ if defined?(IRB)
   IRB.conf[:AUTO_INDENT]  = true
   IRB.conf[:EVAL_HISTORY] = 10_000
   IRB.conf[:SAVE_HISTORY] = 10_000
-  IRB.conf[:HISTORY_FILE] = File.expand_path(File.join(ENV.fetch("HOME", "~"), ".irbhistory"))
+  IRB.conf[:HISTORY_FILE] ||= File.expand_path(File.join(ENV.fetch("XDG_DATA_HOME", "~/.local/share"), "irb/history"))
 
   defined?(Hirb) and Hirb.enable
   defined?(AwesomePrint) and AwesomePrint.irb!

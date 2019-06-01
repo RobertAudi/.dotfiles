@@ -18,8 +18,8 @@ export XDG_VIDEOS_DIR="$HOME/Videos"
 
 export VIMPAGER_RC="$XDG_CONFIG_HOME/vimpager/vimpagerrc"
 
-export TMPDIR="$HOME/.tmp"
 export DOTFILES_DIR="$HOME/.dotfiles"
+export STOW_DIR="$DOTFILES_DIR"
 export GOPATH="$XDG_DEVELOPER_DIR/go"
 
 # ZSH {{{
@@ -112,6 +112,9 @@ if (($#commands[(i)lesspipe(|.sh)])); then
   export LESSOPEN="| /usr/bin/env $commands[(i)lesspipe(|.sh)] %s 2>&-"
 fi
 
+# History file
+export LESSHISTFILE="$XDG_CACHE_HOME/less/history"
+
 export LESSCHARSET="utf-8"
 export LESSSECURE=1
 export LESS_TERMCAP_mb=$(tput bold; tput setaf 1)            # Begins blinking.
@@ -191,7 +194,7 @@ export LC_TIME=C      # Display the old 'ls -l' formatting.
 #   than savehist, to give the history
 #   deduplication room to actually work.
 #
-export HISTFILE="$HOME/.zsh_history"
+export HISTFILE="$ZSH_CACHE_DIR/history"
 export SAVEHIST=$(( 2 << 12 ))
 export HISTSIZE=$(( $SAVEHIST + (1 << 10) ))
 
@@ -295,8 +298,14 @@ unset DISPLAY
 # If we're 64bit, let everything know!
 [[ "x86_64" == "$(/usr/bin/uname -m)" ]] && export ARCHFLAGS="-arch x86_64 ${ARCHFLAGS}"
 
+# Readline config
+export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
+
+# Ack config file path
+export ACKRC="$XDG_CONFIG_HOME/ack/ackrc"
+
 # ripgrep (rg) config file path
-export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
+export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgreprc"
 
 # cURL config file assuming XDG Base Directory setup
 export CURL_HOME="$XDG_CONFIG_HOME/curl"

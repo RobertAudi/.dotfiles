@@ -1,10 +1,10 @@
+export IRBRC="$XDG_CONFIG_HOME/irb/irbrc"
 export RUBY_VERSION="$(cat $HOME/.ruby-version)"
 export DEFAULT_GEMFILE="$HOME/.default-ruby-gems"
 
-export BUNDLE_USER_HOME="$XDG_CONFIG_HOME/bundler"
+export BUNDLE_USER_CONFIG="$XDG_CONFIG_HOME/bundler/config"
 export BUNDLE_USER_CACHE="$XDG_CACHE_HOME/bundler"
-export BUNDLE_USER_CONFIG="$BUNDLE_USER_HOME/config"
-export BUNDLE_USER_PLUGIN="$BUNDLE_USER_HOME/plugins"
+export BUNDLE_USER_PLUGIN="$XDG_DATA_HOME/bundler"
 
 fpath=("$ZSH_HOME/plugins/ruby/functions" $fpath)
 function {

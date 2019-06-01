@@ -1,4 +1,4 @@
-load File.expand_path("~/.irbrc")
+load ENV.fetch("IRBRC", File.expand_path(File.join(ENV.fetch("XDG_CONFIG_HOME", "~/.config"), "irb/irbrc")))
 
 Pry.config.editor = "vim"
 Pry.config.hooks.add_hook(:after_session, :say_bye) do

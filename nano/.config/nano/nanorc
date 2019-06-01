@@ -1,0 +1,4 @@
+include "~/.local/share/nano/nano-highlight/*.nanorc"
+
+# Use auto-indentation.
+set autoindent
