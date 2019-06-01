@@ -194,14 +194,6 @@ brew "openssl-osx-ca", restart_service: :changed
 
 # ------------------------------------------------------------------------------
 
-tap "dduan/formulae"
-
-# Git-friently replacement for the tree command.
-#   https://github.com/dduan/tre
-brew "dduan/formulae/tre"
-
-# ------------------------------------------------------------------------------
-
 tap "RobertAudi/formulae", "https://github.com/RobertAudi/homebrew-formulae.git"
 
 # Pretty-prints compiled AppleScript (.scpt) files using ANSI escape sequences.
@@ -304,11 +296,6 @@ cask "modmove"
 #   https://numi.io/
 cask "numi"
 
-# FUSE for macOS allows you to extend macOS's native
-# file handling capabilities via third-party file systems
-#   https://osxfuse.github.io/
-cask "osxfuse"
-
 # The most advanced API tool for Mac
 #   https://paw.cloud/
 cask "paw"
@@ -365,11 +352,6 @@ cask "yed"
 # App/window/tab switcher. For when ⌘-Tab simply doesn't cut it.
 #   https://manytricks.com/witch/
 cask "witch"
-
-# VirtualBox is a general-purpose full virtualizer for x86 hardware
-#   https://www.virtualbox.org/
-cask "virtualbox"
-cask "virtualbox-extension-pack"
 
 # Back up your computer to the cloud
 #   https://www.arqbackup.com/
