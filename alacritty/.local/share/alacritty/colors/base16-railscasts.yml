@@ -1,0 +1,84 @@
+# Base16 Railscasts - alacritty color config
+# Ryan Bates (http://railscasts.com)
+colors:
+  # Default colors
+  primary:
+    background: '0x2b2b2b'
+    foreground: '0xe6e1dc'
+
+    # # Bright and dim foreground colors
+    # #
+    # # The dimmed foreground color is calculated automatically if it is not present.
+    # # If the bright foreground color is not set, or `draw_bold_text_with_bright_colors`
+    # # is `false`, the normal foreground color will be used.
+    # dim_foreground: '0x212121'
+    # bright_foreground: '0xffffff'
+
+  # Cursor colors
+  #
+  # Colors which should be used to draw the terminal cursor. If these are unset,
+  # the cursor color will be the inverse of the cell color.
+  cursor:
+    text: '0x2b2b2b'
+    cursor: '0xe6e1dc'
+
+  # # Selection colors
+  # #
+  # # Colors which should be used to draw the selection area. If selection
+  # # background is unset, selection color will be the inverse of the cell colors.
+  # # If only text is unset the cell text color will remain the same.
+  # selection:
+  #   text: '0xeaeaea'
+  #   background: '0x404040'
+
+  # Normal colors
+  normal:
+    black:   '0x2b2b2b'
+    red:     '0xda4939'
+    green:   '0xa5c261'
+    yellow:  '0xffc66d'
+    blue:    '0x6d9cbe'
+    magenta: '0xb6b3eb'
+    cyan:    '0x519f50'
+    white:   '0xe6e1dc'
+
+  # Bright colors
+  bright:
+    black:   '0x5a647e'
+    red:     '0xda4939'
+    green:   '0xa5c261'
+    yellow:  '0xffc66d'
+    blue:    '0x6d9cbe'
+    magenta: '0xb6b3eb'
+    cyan:    '0x519f50'
+    white:   '0xf9f7f3'
+
+  # # Dim colors
+  # #
+  # # If the dim colors are not set, they will be calculated automatically based
+  # # on the `normal` colors.
+  # dim:
+  #   black:   '0x333333'
+  #   red:     '0xf2777a'
+  #   green:   '0x99cc99'
+  #   yellow:  '0xffcc66'
+  #   blue:    '0x6699cc'
+  #   magenta: '0xcc99cc'
+  #   cyan:    '0x66cccc'
+  #   white:   '0xdddddd'
+
+  # Indexed Colors
+  #
+  # The indexed colors include all colors from 16 to 256.
+  # When these are not set, they're filled with sensible defaults.
+  #
+  # Example:
+  #   `- { index: 16, color: '0xff00ff' }`
+  #
+  indexed_colors:
+    - { index: 16, color: '0xcc7833' }
+    - { index: 17, color: '0xbc9458' }
+    - { index: 18, color: '0x272935' }
+    - { index: 19, color: '0x3a4055' }
+    - { index: 20, color: '0xd4cfc9' }
+    - { index: 21, color: '0xf4f1ed' }
