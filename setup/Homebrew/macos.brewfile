@@ -396,6 +396,18 @@ cask "mark-text"
 #   https://hocusfoc.us/
 cask "hocus-focus"
 
+# Finder Toolbar app for macOS to open the current directory in Terminal, iTerm, Hyper or Alacritty.
+#   https://github.com/Ji4n1ng/OpenInTerminal
+#   https://github.com/Ji4n1ng/OpenInTerminal/blob/master/Resources/README-Lite.md
+#
+# Setup: Hold the Command key and drag the app to the Finder toolbar.
+#
+# Run the following command to set the default terminal
+#
+#   defaults write wang.jianing.OpenInTerminal-Lite OIT_TerminalBundleIdentifier io.alacritty
+#
+cask "openinterminal-lite"
+
 # QuickLook plugins {{{
 # ------------------------------------------------------------------------------
 
