@@ -20,6 +20,10 @@ if command -v vimr >/dev/null; then
   export GVIEW_COMMAND="$=GVIM_COMMAND --nvim -R"
 fi
 
+if [[ -d "/usr/local/MacGPG2/bin" ]]; then
+  export PATH="/usr/local/MacGPG2/bin:$PATH"
+fi
+
 if [[ -d "$HOME/.cargo/bin" ]]; then
   export PATH="$HOME/.cargo/bin:$PATH"
 fi

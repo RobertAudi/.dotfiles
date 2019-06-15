@@ -4,6 +4,7 @@ if [[ -d "$HOME/Library/Mobile Documents/com~apple~CloudDocs" ]]; then
   hash -d icloud="$ICLOUD_DRIVE_DIR"
 fi
 
+path=(/usr/local/MacGPG2/bin(N-/) $path)
 fpath=("$ZSH_HOME/plugins/macos/functions" $fpath)
 function {
   emulate -L zsh
