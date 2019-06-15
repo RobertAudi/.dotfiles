@@ -1,0 +1,57 @@
+#autoload
+
+# == WIP ==
+
+# NOTE: Most of this was taken from the which-command function provided by Zsh
+
+if (( $#BUFFER == 0 )); then
+  zle -M 'Buffer empty, nothing to show.'
+else
+  local output_text
+  output_text=$(function {
+    local output
+    output="== WIP ==\n"
+
+    local -a wds
+    wds=(${(z)BUFFER})
+
+    local wd barewd
+    local -A seen
+
+    while true; do
+      wd=${wds[1]}
+      barewd=${(Q)wd}
+
+      if [[ $barewd != $wd || -n $seen[$barewd] ]]; then
+        if [[ -z $seen[$barewd] && -n $aliases[$wd] ]]; then
+          output="${output}$(builtin whence -sav $wd)"
+
+          seen[$wd]=1
+          wds=(${(z)aliases[$wd]})
+
+          continue
+        else
+          (
+            unalias -- $barewd 2> /dev/null
+            output="${output}$(builtin whence -sav $barewd)"
+          )
+        fi
+      else
+        output="${output}$(builtin whence -sav ${~barewd})"
+
+        if [[ -n $aliases[$barewd] && -z $seen[$barewd] ]]; then
+          seen[$barewd]=1
+          wds=(${(z)aliases[$barewd]})
+
+          continue
+        fi
+      fi
+
+      break
+    done
+
+    echo "$output"
+  })
+
+  zle -M "$output_text"
+fi

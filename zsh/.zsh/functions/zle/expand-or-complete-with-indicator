@@ -1,0 +1,5 @@
+#autoload
+
+print -Pn "%B%F{red}...%f%b"
+zle expand-or-complete
+zle redisplay

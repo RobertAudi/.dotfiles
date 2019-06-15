@@ -8,7 +8,7 @@ autoload -Uz zrecompile
 
 local f
 
-for f in ${ZDOTDIR}/***/{functions,functions/{utils,prompts},completions}/*(-N.:A) ; do
+for f in ${ZDOTDIR}/***/{functions,functions/{utils,prompts,zle},completions}/*(-N.:A) ; do
   zrecompile -p -U $f && \
     command rm -fv $f.zwc.old
 done

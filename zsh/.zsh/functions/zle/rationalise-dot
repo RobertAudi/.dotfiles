@@ -1,0 +1,23 @@
+#autoload
+
+if [[ $_IS_PASTING = 1 ]]; then
+  zle self-insert
+  return
+fi
+
+local -a split
+split=( ${=LBUFFER} )
+local dir=$split[-1]
+
+if [[ $LBUFFER =~ '(^|/| |	|'$'\n''|\||;|&)(\.\./)+$' ]]; then
+  zle self-insert
+  zle self-insert
+  LBUFFER+=/
+  [ -e $dir ] && zle -M $dir(:a:h)
+elif [[ $LBUFFER =~ '(^|/| |	|'$'\n''|\||;|&)\.$' ]]; then
+  zle self-insert
+  LBUFFER+=/
+  [ -e $dir ] && zle -M $dir(:a:h)
+else
+  zle self-insert
+fi
