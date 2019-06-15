@@ -51,7 +51,6 @@ zplugin light zdharma/fast-syntax-highlighting
 zplugin load _local/archive
 zplugin load _local/zsh-snippets
 zplugin load _local/zsh-hints
-zplugin load _local/zsh-git-escape-magic
 
 zplugin ice wait"1" lucid
 zplugin load _local/spectrum

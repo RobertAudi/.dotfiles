@@ -16,3 +16,4 @@ zplugin light nachoparker/git-forget-blob
 
 # local plugins
 zplugin load _local/git
+zplugin load _local/zsh-git-escape-magic
