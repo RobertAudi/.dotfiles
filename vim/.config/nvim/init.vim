@@ -920,7 +920,7 @@ Plug 'haya14busa/vim-auto-mkdir'
 " ------------------------------------------------------------------------------
 
 " Dark powered asynchronous unite all interfaces for Neovim/Vim8
-Plug 'Shougo/denite.nvim'
+Plug 'Shougo/denite.nvim', { 'tag': '2.1', 'do': ':UpdateRemotePlugins' }
 
 " Freaky fast fuzzy finder for denite.nvim
 Plug 'raghur/fruzzy', { 'do': { -> fruzzy#install() } }
