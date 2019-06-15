@@ -949,7 +949,7 @@ Plug 'neoclide/denite-git'
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTree', 'NERDTreeToggle', 'NERDTreeFocus', 'NERDTreeFind'] }
 
 " A plugin of NERDTree showing git status
-Plug 'RobertAudi/nerdtree-git-plugin'
+Plug 'RobertAudi/nerdtree-git-plugin', { 'on': ['NERDTree', 'NERDTreeToggle', 'NERDTreeFocus', 'NERDTreeFind'] }
 
 " ------------------------------------------------------------------------------ }}}
 
