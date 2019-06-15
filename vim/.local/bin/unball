@@ -1,5 +1,4 @@
-#!/usr/bin/env python2
-#-*- coding:utf-8 -*-
+#!/usr/bin/env python
 #
 # Unarchive a vimball into a set of directories and files
 #
@@ -23,7 +22,6 @@ vbasize = len(lines)
 i = 0
 
 while i < vbasize:
-
     line = lines[i]
     if line.endswith('\t[[[1'):
         path = line.rstrip('\t[[[1').replace('\\', '/')
@@ -34,10 +32,10 @@ while i < vbasize:
         if not os.path.exists(dirname):
             os.makedirs(dirname)
         open(relpath, 'w').write(content)
-        print 'wrote', path
+        print('wrote', path)
         i += 2 + size
     else:
         i += 1
 
-print 'Unballed', infile, 'into', vba_dir
-print 'And hence the world rests in peace'
+print('Unballed', infile, 'into', vba_dir)
+print('And hence the world rests in peace')
