@@ -169,7 +169,7 @@ function! x2a#buffers#BufDeleteAll(bang) abort
   let l:message = l:deletedCount . ' buffer' . (l:deletedCount > 1 ? 's' : '') . ' deleted'
 
   if exists('*lightline#update')
-    silent! call s:exec('lightline#update')
+    silent! call lightline#update()
   endif
 
   call x2a#utils#echo#Message(l:message)
