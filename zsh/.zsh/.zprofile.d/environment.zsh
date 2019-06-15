@@ -305,7 +305,7 @@ export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
 export ACKRC="$XDG_CONFIG_HOME/ack/ackrc"
 
 # ripgrep (rg) config file path
-export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgreprc"
+export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/ripgreprc"
 
 # cURL config file assuming XDG Base Directory setup
 export CURL_HOME="$XDG_CONFIG_HOME/curl"
