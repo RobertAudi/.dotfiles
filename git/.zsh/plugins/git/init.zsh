@@ -39,13 +39,11 @@ fi
 gitstatus_check MY || gitstatus_start -s -1 -u -1 -d -1 MY
 
 compdef -a _git-ignore gi=git-ignore
-compdef -a _git \
-  ga=git-add \
-  gc=git-commit \
+compdef -a _git  \
+  ga=git-add     \
+  gc=git-commit  \
   gac=git-commit \
-  gb=git-branch \
-  gd=git-diff \
-  tmux-git-diff=git-diff \
+  gb=git-branch  \
   fzf-git-checkout=git-checkout
 
 git-insert-branch-name() {

@@ -23,11 +23,6 @@ zplugin light RobertAudi/zshmarks
 #   https://github.com/zsh-users/zsh-history-substring-search
 zplugin light zsh-users/zsh-history-substring-search
 
-# Tmux Session Manager
-#   https://github.com/RobertAudi/tsm
-zplugin ice wait"" lucid
-zplugin light RobertAudi/tsm
-
 # Easily see what's happening on your computer's ports
 #   https://github.com/caarlos0/ports
 zplugin light caarlos0/ports

@@ -1,0 +1,80 @@
+#autoload
+
+if (( $# == 0 )); then
+  builtin print -P -- "[%F{red}ERROR%f] tpane: not enough arguments" >&2
+  return 1
+fi
+
+if ! type tmux >/dev/null || [[ -z $TMUX ]]; then
+  eval "$@"
+  return $status
+fi
+
+zparseopts -D -interactive+=interactive i+=interactive -horizontal+=horizontal h+=horizontal -vertical+=vertical v+=vertical
+
+if (( $# == 0 )); then
+  builtin print -P -- "[%F{red}ERROR%f] tpane: not enough arguments" >&2
+  return 1
+fi
+
+local params
+if (( $#horizontal > $#vertical )); then
+  params="-v -p 50"
+else
+  params="-h -l 135"
+fi
+
+local cmd
+cmd="$@"
+
+# Resolve aliases/functions
+local arg
+while true; do
+  arg="$(echo "$cmd" | awk '{print $1;}')"
+
+  if (( $+aliases[$arg] )); then
+    cmd="${aliases[$arg]} $(echo "$cmd" | awk '{$1=""; print substr($0,2)}')"
+
+    if [[ "$arg" != "$(echo "${aliases[$arg]}" | awk '{print $1;}')" ]]; then
+      continue
+    fi
+  elif (( $+functions[$arg] )); then
+    if [[ $functions[$arg] == *'builtin autoload'* ]]; then
+      cmd="autoload +X $arg; $cmd"
+    else
+      # If the function calls another function then it might fail.
+      # Note: redefining the function can (and will) produce bugs...
+      local tmp_func
+      tmp_func="__tpane_${arg}__"
+      cmd="function $tmp_func { unfunction $tmp_func ; ${functions[$arg]} }; $tmp_func $(echo "$cmd" | awk '{$1=""; print substr($0,2)}')"
+    fi
+  else
+    cmd="$cmd"
+  fi
+
+  break
+done
+
+# Avoid calling tpane functions using tpane..
+if grep -q -E "\btpane(-\w+)?\b" <<<"$cmd"; then
+  if (( $#horizontal > $#vertical )); then
+    params="-h"
+  else
+    params="-v"
+  fi
+
+  cmd="$(echo "$cmd" | perl -0777 -pe "s/\b(tpane(?:-\w+)?)\b/\1 $params/s")"
+
+  eval "$cmd"
+  return $status
+fi
+
+if (( $#interactive > 0 )); then
+  cmd="$SHELL -i -c $cmd"
+else
+  cmd="$cmd ; printf '\\e[2m%*s\\n\\e[0m' \"\${COLUMNS:-80}\" '' | tr ' ' '-'"
+  cmd="$cmd ; read -sk"
+  cmd="eval $cmd"
+fi
+
+tmux split-window $=params -- "$cmd"
