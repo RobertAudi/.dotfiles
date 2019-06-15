@@ -1,3 +1,5 @@
+syntax match x2aZSHcompdef     /\<compdef\>\s/me=e-1
+
 syntax match x2aZpluginCommand     /\<zplugin\>\s/me=e-1 skipwhite nextgroup=x2aZpluginSubCommands
 syntax match x2aZpluginSubCommands /\s\<\%(ice\|light\|snippet\|load\)\>\s/ms=s+1,me=e-1
 
@@ -10,6 +12,8 @@ syntax match x2aZpluginIceModifiers  /\s\<\%(nocompletions\|nocompile\|multisrc\
 
 syntax match x2aZpluginSnippetSubCommand /\ssnippet\s/ms=s+1,me=e-1 nextgroup=x2aZpluginSnippetShorthands
 syntax match x2aZpluginSnippetShorthands /\s\<\%(OMZ\|PZT\)\>::/ms=s+1,me=e-2
+
+highlight def link x2aZSHcompdef Keyword
 
 highlight def link x2aZpluginCommand           Statement
 highlight def link x2aZpluginSubCommands       Type
