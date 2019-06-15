@@ -1204,7 +1204,7 @@ call x2a#abolish#commands('BufDeleteAll',
 " ------------------------------------------------------------------------------
 
 " Copy (to the system clipboard) the path to current file
-command! -nargs=0 CopyFilePath call x2a#file#CopyFullPath()
+command! -nargs=0 CopyFilePath call x2a#file#CopyRelativePath()
 command! -nargs=0 CopyFullFilePath call x2a#file#CopyFullPath()
 command! -nargs=0 CopyRelativeFilePath call x2a#file#CopyRelativePath()
 command! -nargs=0 CopyRelativeFilePathWithLineNumber call x2a#file#CopyRelativePathWithLineNumber()
