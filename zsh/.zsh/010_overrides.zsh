@@ -61,13 +61,13 @@ cd() {
 #   https://github.com/aspiers/shell-env/blob/0f7d4bf/.zsh/functions/wh
 where() {
   for thing in "$@"; do
-    if [[ `builtin where "$thing"` == *'builtin autoload'* ]]; then
+    if [[ `builtin whence -ca "$thing"` == *'builtin autoload'* ]]; then
       autoload +X "$thing"
-      echo "# Note: $thing was autoloaded"
+      builtin print -P -- "%F{008}# Note: $thing was autoloaded%f"
     fi
   done
 
-  builtin where "$@"
+  builtin whence -cas "$@"
 }
 
 # sudo {{{

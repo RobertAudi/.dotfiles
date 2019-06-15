@@ -35,6 +35,3 @@ if is-command direnv; then
   source "$cache_file"
   unset cache_file
 fi
-
-# Replay compdefs
-zplugin cdreplay -q
