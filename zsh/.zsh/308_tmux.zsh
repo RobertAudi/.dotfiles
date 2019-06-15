@@ -1,8 +1,7 @@
 export TSM_HOME="$XDG_DATA_HOME/tsm"
-export TMUX_SESSIONS_HOME="$TSM_HOME"
-export TMUX_SESSIONS_SESSIONS_DIR="$TMUX_SESSIONS_HOME/sessions"
-export TMUX_SESSIONS_BACKUPS_DIR="$TMUX_SESSIONS_HOME/backups"
-export TMUX_SESSIONS_BACKUPS_COUNT=10
+export TSM_SESSIONS_DIR="$TSM_HOME/sessions"
+export TSM_BACKUPS_DIR="$TSM_HOME/backups"
+export TSM_BACKUPS_COUNT=10
 
 # is-tmux-runnning returns true if tmux is running
 function is-tmux-runnning() { [[ -n $TMUX ]] }
