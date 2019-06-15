@@ -1,23 +1,14 @@
 #!/usr/bin/env zsh
 
-if ! type pnpm >/dev/null; then
-  curl -L https://unpkg.com/@pnpm/self-installer \
-    | PNPM_BIN_DEST=${XDG_BIN_HOME:-$HOME/.local/bin} node
-fi
-
 # Utils {{{
 # ------------------------------------------------------------------------------
 
 function ___install {
-  builtin print -P -- "%F{blue}==>%f pnpm install --global \"$1\""
-  pnpm install --global "$1"
+  builtin print -P -- "%F{blue}==>%f npm install --global \"$1\""
+  npm install --global "$1"
 }
 
 # ------------------------------------------------------------------------------ }}}
-
-# Fast, disk space efficient package manager
-#   https://github.com/pnpm/pnpm
-___install pnpm
 
 # See the GitHub contributions calendar of a user in the command line.
 #   https://github.com/IonicaBizau/ghcal
