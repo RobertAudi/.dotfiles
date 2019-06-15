@@ -14,6 +14,11 @@ zplugin light takaaki-kasai/git-foresta
 zplugin ice as"command" cp"git-forget-blob.sh -> git-forget-blob" pick"git-forget-blob"
 zplugin light nachoparker/git-forget-blob
 
+# Easy TOC creation for GitHub README.md
+#   https://github.com/ekalinin/github-markdown-toc
+zplugin ice as"command" pick"gh-md-toc"
+zplugin light ekalinin/github-markdown-toc
+
 # local plugins
 zplugin load _local/git
 zplugin load _local/zsh-git-escape-magic

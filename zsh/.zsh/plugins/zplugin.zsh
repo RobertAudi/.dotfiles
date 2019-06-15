@@ -37,11 +37,6 @@ zplugin light caarlos0/ports
 zplugin ice as"command" pick"vspark"
 zplugin light LuRsT/vspark
 
-# Easy TOC creation for GitHub README.md
-#   https://github.com/ekalinin/github-markdown-toc
-zplugin ice as"command" pick"gh-md-toc"
-zplugin light ekalinin/github-markdown-toc
-
 # Syntax-highlighting for Zshell
 #   https://github.com/zdharma/fast-syntax-highlighting
 zplugin ice wait"1" lucid
