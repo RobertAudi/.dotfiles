@@ -12,7 +12,7 @@ _chpwd-show-pwd-contents() {
 }
 
 _chpwd-vcs-status-overview() {
-  vcs-status-overview
+  vcs-status-overview 2>/dev/null
 }
 
 autoload -Uz add-zsh-hook

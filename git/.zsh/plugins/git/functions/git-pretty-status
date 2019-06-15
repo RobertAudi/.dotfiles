@@ -1,0 +1,145 @@
+#autoload
+
+# Call gitstatus_query synchronously. Note that gitstatus_query can also be called
+# asynchronously; see documentation in gitstatus.plugin.zsh.
+gitstatus_query MY || return $status  # error
+
+if [[ $VCS_STATUS_RESULT != ok-sync ]]; then
+  builtin print -P -- "[%F{red}ERROR%f] Not a repository: %B${PWD}%b" >&2
+  return 1
+fi
+
+local -a divergences num_changes
+local git_range git_ref tracking_ref divergence output
+local str # this will hold temporary stuff while building output strings
+
+zparseopts -D -verbose+=verbose v+=verbose
+
+output="%F{245}# =>%f"
+
+if [[ -n "$VCS_STATUS_LOCAL_BRANCH" ]]; then
+  git_ref="%F{green}${VCS_STATUS_LOCAL_BRANCH//\%/%%}%f"
+  git_range="${git_ref}"
+
+  if [[ -n "$VCS_STATUS_REMOTE_NAME" && -n "$VCS_STATUS_REMOTE_BRANCH" ]]; then
+    tracking_ref="%F{magenta}${VCS_STATUS_REMOTE_NAME//\%/%%}/${VCS_STATUS_REMOTE_BRANCH//\%/%%}%f"
+    git_range+="...${tracking_ref}"
+
+    if [[ $VCS_STATUS_COMMITS_AHEAD -gt 0 || $VCS_STATUS_COMMITS_BEHIND -gt 0 ]]; then
+      if [[ $VCS_STATUS_COMMITS_AHEAD -gt 0 ]]; then
+        str="%F{green}⇡${VCS_STATUS_COMMITS_AHEAD}%f commit"
+        [[ $VCS_STATUS_COMMITS_AHEAD -gt 1 ]] && str+="s"
+        str+=" %Bahead%b"
+
+        divergences+=("$str")
+      fi
+
+      if [[ $VCS_STATUS_COMMITS_BEHIND -gt 0 ]]; then
+        str="%F{red}⇣${VCS_STATUS_COMMITS_BEHIND}%f commit"
+        [[ $VCS_STATUS_COMMITS_BEHIND -gt 1 ]] && str+="s"
+        str+=" %Bbehind%b"
+
+        divergences+=("$str")
+      fi
+
+      divergence="${(j: and :)divergences}."
+    fi
+  fi
+
+  output+=" ${git_range} (%F{blue}${VCS_STATUS_COMMIT[1,8]//\%/%%}%f)"
+elif [[ -n "$VCS_STATUS_TAG" ]]; then
+  git_ref="%F{magenta}${VCS_STATUS_TAG//\%/%%}%f"
+  git_range="${git_ref}"
+  output+=" ${git_range} (%F{blue}${VCS_STATUS_COMMIT[1,8]//\%/%%}%f)"
+else
+  git_ref="%F{magenta}${VCS_STATUS_COMMIT[1,8]//\%/%%}%f"
+  git_range="${git_ref}"
+  output+=" ${git_range}"
+fi
+
+if [[ $VCS_STATUS_HAS_STAGED == 1 || $VCS_STATUS_HAS_UNSTAGED == 1 || $VCS_STATUS_HAS_UNTRACKED == 1 ]]; then
+  if [[ -n "$divergence" ]]; then
+    output+="\n${divergence}"
+  fi
+
+  if [[ $VCS_STATUS_HAS_STAGED == 1 ]]; then
+    str="%F{yellow}${VCS_STATUS_NUM_STAGED}%f %Bstaged%b change"
+
+    [[ $VCS_STATUS_NUM_STAGED -gt 1 ]] && str+="s"
+
+    num_changes+=("$str")
+  fi
+
+  if [[ $VCS_STATUS_HAS_UNSTAGED  == 1 ]]; then
+    str="%F{green}${VCS_STATUS_NUM_UNSTAGED}%f %Bunstaged%b change"
+
+    [[ $VCS_STATUS_NUM_UNSTAGED -gt 1 ]] && str+="s"
+
+    num_changes+=("$str")
+  fi
+
+  if [[ $VCS_STATUS_HAS_UNTRACKED == 1 ]]; then
+    str="%F{cyan}${VCS_STATUS_NUM_UNTRACKED}%f %Buntracked%b file"
+
+    [[ $VCS_STATUS_NUM_UNTRACKED -gt 1 ]] && str+="s"
+
+    num_changes+=("$str")
+  fi
+
+  output+="\n%F{blue}%Bgit status%b:%f "
+
+  if (( ${#num_changes} == 1 )); then
+    output+="${num_changes[1]}."
+  elif (( ${#num_changes} == 2 )); then
+    output+="${num_changes[1]} and ${num_changes[2]}."
+  elif (( ${#num_changes} == 3 )); then
+    output+="${num_changes[1]}, ${num_changes[2]} and ${num_changes[3]}."
+  else
+    # dafuq
+    output+="%F{239}...%f"
+  fi
+elif [[ -n "$VCS_STATUS_LOCAL_BRANCH" ]]; then
+  if [[ -n "$divergence" ]]; then
+    output+="\n${divergence}\n"
+  else
+    output+="\n%BUp to date%b. "
+  fi
+
+  output+="%BNo local changes%b."
+fi
+
+builtin print -P -- "$output"
+
+if (( ${#num_changes} > 0 && ${#verbose} > 0 )); then
+  local git_status
+  git_status="$(command git -c color.status=always status --short 2>/dev/null)" || return $status
+
+  if (( ${#verbose} > 1 )); then
+    builtin print "$git_status"
+  else
+    local -i git_status_count num_lines max_changes
+
+    if [[ -n "$git_status" ]]; then
+      git_status_count=$(builtin print -- "$git_status" | wc -l)
+    else
+      git_status_count=0
+    fi
+
+    num_lines=$(tput lines)
+    max_changes=$(( ($num_lines - (($num_lines / 4) * 3)) ))
+
+    if (( $git_status_count > $max_changes )); then
+      local -i changes_left
+      local more_changes
+
+      changes_left=$(( $git_status_count - $max_changes + 1 ))
+      more_changes="${changes_left} more change"
+      (( ${#changes_left} > 1 )) && more_changes+="s"
+
+      builtin print "$git_status" | head -$max_changes
+      builtin print -P -- "%F{245}# ... (${more_changes}%)%f"
+    else
+      builtin print "$git_status"
+    fi
+  fi
+fi

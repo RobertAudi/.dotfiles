@@ -4,6 +4,6 @@ if is-callable in-ghq-repo && in-ghq-repo; then
   return
 fi
 
-if is-callable git-status-overview; then
-  git-status-overview
+if is-callable git-pretty-status; then
+  git-pretty-status -v
 fi

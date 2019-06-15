@@ -21,5 +21,5 @@ alias grsp="git reset --patch"
 alias grv="git remotes"
 
 alias gcd="cd-gitroot"
-alias gs="git pretty-status"
-alias gss="git-status-overview"
+alias gs="git-pretty-status -vv"
+alias gss="git-pretty-status -v"
