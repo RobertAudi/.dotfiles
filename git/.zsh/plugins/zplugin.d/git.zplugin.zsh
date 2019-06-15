@@ -1,3 +1,8 @@
+# 10x faster implementation of `git status` command
+#   https://github.com/romkatv/gitstatus
+zplugin ice wait"" pick"gitstatus.plugin.zsh" lucid atload"gitstatus_check MY || gitstatus_start -s -1 -u -1 -d -1 MY"
+zplugin light romkatv/gitstatus
+
 # Open the GitHub page or website for a repository in your browser.
 #   https://github.com/paulirish/git-open
 zplugin ice as"command" pick"git-open"

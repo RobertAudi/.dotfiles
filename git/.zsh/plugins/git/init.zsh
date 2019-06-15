@@ -20,6 +20,24 @@ if [[ -f "/usr/local/opt/git-extras/share/git-extras/git-extras-completion.zsh" 
   source "/usr/local/opt/git-extras/share/git-extras/git-extras-completion.zsh"
 fi
 
+# 10x faster implementation of `git status` command.
+#   https://github.com/romkatv/gitstatus
+#
+# Start gitstatusd instance with name "MY".
+#
+# gitstatus_start [OPTION]... NAME
+#
+#   -s INT    Report at most this many staged changes; negative value means infinity.
+#             Defaults to 1.
+#
+#   -u INT    Report at most this many unstaged changes; negative value means infinity.
+#             Defaults to 1.
+#
+#   -d INT    Report at most this many untracked files; negative value means infinity.
+#             Defaults to 1.
+#
+gitstatus_check MY || gitstatus_start -s -1 -u -1 -d -1 MY
+
 compdef -a _git-ignore gi=git-ignore
 compdef -a _git \
   ga=git-add \
