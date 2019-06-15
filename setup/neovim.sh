@@ -46,7 +46,7 @@ curl --fail --location \
   --create-dirs \
   https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim || return $status
 
-nvim --headless -e +PlugInstall +PlugUpgrade +PlugUpdate +PlugClean! +qall &>/dev/null
+nvim --headless -e +PlugInstall +PlugUpgrade +PlugUpdate! +PlugClean! +qall &>/dev/null
 
 # --------------------------------------------------------------------- }}}
 
