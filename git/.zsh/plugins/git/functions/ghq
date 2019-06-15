@@ -151,7 +151,7 @@ case "$action" in
         ghq update "$repo"
       fi
     else
-      print-error "Repo not found"
+      print-warning "Repo not found"
       print-info "Trying to retrieve repo with ghq"
       ghq get "$1" || return $status
 
