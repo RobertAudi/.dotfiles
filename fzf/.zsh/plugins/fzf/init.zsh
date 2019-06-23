@@ -6,7 +6,6 @@ elif type ag >/dev/null; then
   export FZF_DEFAULT_COMMAND='ag --hidden --files-with-matches -g ""'
 fi
 
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_TMUX_HEIGHT="30%"
 
 function {
@@ -40,13 +39,18 @@ function {
   "
 }
 
-[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+path=($HOME/.local/opt/fzf/bin(N-/) $path)
+fpath=($ZSH_HOME/plugins/fzf/{functions,functions/zle} $fpath)
+manpath=($HOME/.local/opt/fzf/man(N-/) $manpath)
 
-fpath=("$ZSH_HOME/plugins/fzf/functions" $fpath)
 function {
   emulate -L zsh
   setopt extended_glob
-  autoload -Uz $ZSH_HOME/plugins/fzf/functions/*~(*~|*.zwc)(-N.:t)
+  autoload -Uz $ZSH_HOME/plugins/fzf/{functions,functions/zle}/*~(*~|*.zwc)(-N.:t)
 }
 
 alias fzf="smart-fzf"
+
+# Ctrl-r - Paste the selected command from history into the command line
+zle -N fzf-history-widget
+bindkey -M emacs '\C-r' fzf-history-widget

@@ -8,10 +8,6 @@ tap "homebrew/livecheck"
 #   https://korpus.juls.savba.sk/~garabik/software/grc.html
 brew "grc"
 
-# Command-line fuzzy finder written in Go
-#   https://github.com/junegunn/fzf
-brew "fzf"
-
 # Create and view interactive cheat sheets for *nix commands
 #   https://github.com/chrisallenlane/cheat
 brew "cheat"

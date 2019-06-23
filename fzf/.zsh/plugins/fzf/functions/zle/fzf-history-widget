@@ -1,0 +1,23 @@
+#autoload
+
+emulate -L zsh
+
+setopt local_options no_glob_subst no_posix_builtins pipefail 2> /dev/null
+
+local -a selected
+local ret
+selected=($(fc -rl 1 | perl -pe 's/^\s*\d+\s+//g' | smart-fzf --tiebreak=index --bind=ctrl-r:toggle-sort --query="${LBUFFER}" +m))
+ret=$status
+
+if (( ${#selected} )); then
+  local num
+  num=${selected[1]}
+
+  if [[ -n "$num" ]]; then
+    zle vi-fetch-history -n $num
+  fi
+fi
+
+zle reset-prompt
+
+return $ret
