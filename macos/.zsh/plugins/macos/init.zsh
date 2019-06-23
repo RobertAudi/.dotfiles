@@ -5,11 +5,11 @@ if [[ -d "$HOME/Library/Mobile Documents/com~apple~CloudDocs" ]]; then
 fi
 
 path=(/usr/local/MacGPG2/bin(N-/) $path)
-fpath=("$ZSH_HOME/plugins/macos/functions" $fpath)
+fpath=("$ZSH_HOME/plugins/macos/completions" "$ZSH_HOME/plugins/macos/functions" $fpath)
 function {
   emulate -L zsh
   setopt extended_glob
-  autoload -Uz $ZSH_HOME/plugins/macos/functions/*~(*~|*.zwc)(-N.:t)
+  autoload -Uz $ZSH_HOME/plugins/macos/{completions,functions}/*~(*~|*.zwc)(-N.:t)
 }
 
 source "$ZSH_HOME/plugins/macos/aliases.zsh"
