@@ -31,7 +31,7 @@ let g:NERDTreeIgnore = [
       \   '\.idea[[dir]]',
       \   'Pods$[[dir]]',
       \   '\.DS_Store$[[file]]',
-      \   'Gemfile\.lock$[[file]]',
+      \   'Gemfile\.lock$[[file]]', 'Gemfile\.local\.lock$[[file]]',
       \   'Podfile\.lock$[[file]]',
       \   '\.zwc$[[file]]', '\.zwc\.old$[[file]]',
       \   '.*@neomake*[[file]]',
