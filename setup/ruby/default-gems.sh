@@ -54,10 +54,6 @@ defaultExecutableGems+=("gem-compare")
 #   https://github.com/mpapis/gem-content
 defaultExecutableGems+=("gem-content")
 
-# Fast and accurate ctags generator on gem install
-#   https://github.com/RobertAudi/gem-ripper-tags-optional
-defaultExecutableGems+=("gem-ripper-tags-optional")
-
 # Display a man page for an installed RubyGem.
 #   https://github.com/defunkt/gem-man
 defaultExecutableGems+=("gem-man")
