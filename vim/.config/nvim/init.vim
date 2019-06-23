@@ -885,7 +885,7 @@ Plug 'autozimu/LanguageClient-neovim', {
 Plug 'airblade/vim-rooter'
 
 " KISS local vimrc with hash protection
-Plug 'igrep/vim-addon-local-vimrc'
+Plug 'RobertAudi/local-vimrc'
 
 " Completion {{{
 " ------------------------------------------------------------------------------
