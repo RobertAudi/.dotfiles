@@ -123,7 +123,7 @@
 
 [pull]
   prune = true
-  rebase = preserve
+  rebase = merges
 
 [merge]
   summary = true
