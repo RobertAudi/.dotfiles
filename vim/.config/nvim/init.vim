@@ -1267,15 +1267,6 @@ command! -nargs=0 UnfuckScreen syntax sync fromstart | :redraw!
 " Source: https://github.com/koturn/vim-config/blob/b88f05f6bdf230dd3250451fc6eea4b7a6c4bd3a/.vimrc#L655
 command! -bar -nargs=0 ClearMessages  messages clear
 
-" Sequentially increment numbers in visual selection by a:1 (if given) or 1
-"
-"   Without '!':  Increments each number relative to the previous one,
-"                 starting with the second number
-"
-"      With '!':  Increment all numbers by the same count
-"                 starting with the first number
-command! -bang -range -nargs=? Increment <line1>,<line2>call x2a#incr#Incr(max([get([<args>], 0, 0), 1]), <bang>0)
-
 " ------------------------------------------------------------------------------ }}}
 
 " Autocommands {{{
