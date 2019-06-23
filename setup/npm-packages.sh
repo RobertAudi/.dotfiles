@@ -61,10 +61,6 @@ ___install open-pip-cli
 #   https://github.com/BubuAnabelas/markcat
 ___install markcat
 
-# Bash language server implementation
-#   https://github.com/mads-hartmann/bash-language-server
-___install bash-language-server
-
 # Command-line interface for remark: Markdown processor
 #   https://github.com/remarkjs/remark
 ___install remark-cli
@@ -80,3 +76,19 @@ ___install prettier
 # Check whether a website is up or down using the isitup.org API
 #   https://github.com/sindresorhus/is-up-cli
 ___install is-up-cli
+
+# Bash language server implementation
+#   https://github.com/mads-hartmann/bash-language-server
+___install bash-language-server
+
+# vim language server, lsp for viml
+#  https://github.com/iamcco/vim-language-server
+___install vim-language-server
+
+# JavaScript and TypeScript code intelligence through the Language Server Protocol
+#   https://github.com/sourcegraph/javascript-typescript-langserver
+___install javascript-typescript-langserver
+
+# Language Server for Yaml Files
+#   https://github.com/redhat-developer/yaml-language-server
+___install yaml-language-server

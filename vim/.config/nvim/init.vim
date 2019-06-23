@@ -871,6 +871,15 @@ Plug 'SirVer/ultisnips'
 " Vim plugin that displays tags in a window, ordered by scope
 Plug 'majutsushi/tagbar'
 
+" Viewer & Finder for LSP symbols and tags in Vim
+Plug 'liuchengxu/vista.vim'
+
+" Language Server Protocol (LSP) support for vim and neovim.
+Plug 'autozimu/LanguageClient-neovim', {
+    \   'branch': 'next',
+    \   'do': 'bash install.sh',
+    \ }
+
 " Changes Vim working directory to project root
 " (identified by presence of known directory or file).
 Plug 'airblade/vim-rooter'

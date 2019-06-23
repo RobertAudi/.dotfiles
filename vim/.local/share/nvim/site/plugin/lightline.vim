@@ -32,6 +32,7 @@ let g:x2a#lightline#ignored_plugin_filetypes =
       \   'nerdtree',
       \   'ctrlsf',
       \   'tagbar',
+      \   'vista',
       \ ]
 
 let g:x2a#lightline#special_filetypes =
@@ -47,6 +48,7 @@ let g:x2a#lightline#plugin_filetypes =
       \   'nerdtree': 'NERDTree',
       \   'ctrlsf':   'CtrlSF',
       \   'tagbar':   'Tagbar',
+      \   'vista':    'Vista',
       \ }
 
 " ------------------------------------------------------------------------------ }}}
