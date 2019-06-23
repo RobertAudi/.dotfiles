@@ -766,14 +766,6 @@ brew "dtan4/tools/ghrls"
 
 # ------------------------------------------------------------------------------
 
-tap "knqyf263/pet"
-
-# Simple command-line snippet manager
-#   https://github.com/knqyf263/pet
-brew "knqyf263/pet/pet"
-
-# ------------------------------------------------------------------------------
-
 tap "Code-Hex/pget"
 
 # The fastest file download client
