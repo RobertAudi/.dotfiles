@@ -1,5 +1,14 @@
 #!/usr/bin/env zsh
 
+emulate -L zsh
+
+setopt pipe_fail
+
+if ! type nvim > /dev/null; then
+  builtin print -P -- "%F{196}!!!%f Neovim is not installed" >&2
+  return 1
+fi
+
 # Python {{{
 # ---------------------------------------------------------------------
 
@@ -42,7 +51,7 @@ npm install -g neovim
 # ---------------------------------------------------------------------
 
 curl --fail --location \
-  --output ${XDG_DATA_HOME:-~/.local/share}/nvim/site/autoload/plug.vim \
+  --output ${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/autoload/plug.vim \
   --create-dirs \
   https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim || return $status
 

@@ -4,6 +4,24 @@ emulate -L zsh
 
 autoload -Uz colors && colors
 
+if [[ "$(ostype)" != *'darwin'* ]]; then
+  builtin print -P -- "%F{196}!!!%f Unable to run the macOS setup script when not using macOS" >&2
+  return 1
+fi
+
+# Software update {{{
+# ------------------------------------------------------------------------------
+
+builtin print -P -- "%F{032}==>%f softwareupdate --install --all"
+softwareupdate --install --all
+
+if type mas > /dev/null; then
+  builtin print -P -- "%F{032}==>%f mas upgrade"
+  mas upgrade
+fi
+
+# ------------------------------------------------------------------------------ }}}
+
 # Utils {{{
 # ------------------------------------------------------------------------------
 

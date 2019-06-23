@@ -10,6 +10,9 @@ function ___install {
 
 # ------------------------------------------------------------------------------ }}}
 
+# Update NPM first
+___install npm
+
 # See the GitHub contributions calendar of a user in the command line.
 #   https://github.com/IonicaBizau/ghcal
 ___install ghcal
