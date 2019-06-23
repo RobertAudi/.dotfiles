@@ -26,15 +26,18 @@ call denite#custom#option('default', {
 " file/rec source
 " ------------------------------------------------------------------------------
 if executable('fd')
-  call denite#custom#var('file/rec', 'command', x2a#denite#commands#fd())
+  call denite#custom#var('file/rec', 'command', x2a#fuzzy#denite#commands#fd())
 elseif executable('ag')
-  call denite#custom#var('file/rec', 'command', x2a#denite#commands#ag())
+  call denite#custom#var('file/rec', 'command', x2a#fuzzy#denite#commands#ag())
 elseif executable('rg')
-  call denite#custom#var('file/rec', 'command', x2a#denite#commands#rg())
+  call denite#custom#var('file/rec', 'command', x2a#fuzzy#denite#commands#rg())
 endif
 
 call denite#custom#source('file/rec', 'matchers',
       \ ['matcher/fruzzy', 'matcher/ignore_current_buffer'])
+
+call denite#custom#source('file/rec', 'sorters',
+      \ ['sorter/sublime'])
 
 " buffer source
 " ------------------------------------------------------------------------------
@@ -151,5 +154,12 @@ command! -nargs=0 Dspec       Denite rails:spec
 
 " ------------------------------------------------------------------------------ }}}
 
-nnoremap <C-p> <Cmd>Denite file/rec<CR>
+" Maps {{{
+" ------------------------------------------------------------------------------
+
 nnoremap <C-b> <Cmd>Denite buffer<CR>
+
+" ------------------------------------------------------------------------------ }}}
+
+" Modeline {{{
+" vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker : }}}

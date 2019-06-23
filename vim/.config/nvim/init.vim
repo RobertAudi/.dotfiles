@@ -964,6 +964,15 @@ Plug 'RobertAudi/nerdtree-git-plugin', { 'on': ['NERDTree', 'NERDTreeToggle', 'N
 
 " ------------------------------------------------------------------------------ }}}
 
+" A fuzzy picker for Neovim and Vim
+Plug 'srstevenson/vim-picker', {
+      \   'on': [
+      \     '<Plug>(PickerEdit)', '<Plug>(PickerSplit)', '<Plug>(PickerTabedit)', '<Plug>(PickerVsplit)',
+      \     'PickerEdit', 'PickerSplit', 'PickerTabedit', 'PickerVsplit',
+      \     '<Plug>(PickerBuffer)', '<Plug>(PickerHelp)', 'PickerBuffer', 'PickerHelp'
+      \   ]
+      \ }
+
 " Always have a nice view for vim split windows!
 Plug 'RobertAudi/GoldenView.vim'
 
