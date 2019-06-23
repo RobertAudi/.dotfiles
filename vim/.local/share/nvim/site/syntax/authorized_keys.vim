@@ -1,23 +1,50 @@
 " Highlighting for ssh authorized_keys
 
+if exists("b:current_syntax")
+  finish
+endif
+
 " Options
-" any WORD at the beginning followed by a key type
-syntax match authorizedKeysOptions /^\s*\S\+\%(\s\+\%(ssh-\%(dss\|rsa\)\|ecdsa-sha2-nistp\%(256\|384\|521\)\)\)\@=/
-highlight link authorizedKeysOptions PreProc
+syntax keyword authorizedKeysOptions
+      \ cert-authority
+      \ command
+      \ environment
+      \ from
+      \ permitopen
+      \ principals
+      \ restrict
+      \ tunnel
+      \ zos-key-ring-label
 
-" Key type
-setlocal iskeyword+=-
+syntax match authorizedKeysOptions "\(no-\)\?agent-forwarding"
+syntax match authorizedKeysOptions "\(no-\)\?port-forwarding"
+syntax match authorizedKeysOptions "\(no-\)\?pty"
+syntax match authorizedKeysOptions "\(no-\)\?user-rc"
+syntax match authorizedKeysOptions "\(no-\)\?X11-forwarding"
+
+" Host key type
 syntax keyword authorizedKeysType
-   \ ssh-dss
-   \ ssh-rsa
-   \ ecdsa-sha2-nistp256
-   \ ecdsa-sha2-nistp384
-   \ ecdsa-sha2-nistp521
-highlight link authorizedKeysType Type
+      \ ssh-dss
+      \ ssh-dsa
+      \ ssh-rsa
+      \ ssh-ed25519
+      \ ecdsa-sha2-nistp256
+      \ ecdsa-sha2-nistp384
+      \ ecdsa-sha2-nistp521
 
-" Comments (usually emails)
-setlocal synmaxcol&
-syntax match authorizedKeysComment /\S\+\s*$/
+" Strings
+syntax region authorizedKeysString start=/"/ skip=/\\"/ end=/"/ oneline
+
+" Comments
+syntax match authorizedKeysComment /^#.*/
+syntax match authorizedKeysComment /= .*$/ms=s+1
+syntax match authorizedKeysComment /==.*$/ms=s+2
+
+highlight link authorizedKeysType    Type
 highlight link authorizedKeysComment Comment
+highlight link authorizedKeysOptions Keyword
+highlight link authorizedKeysString  String
 
-" vim: filetype=vim
+let b:current_syntax = "authorized_keys"
+
+" vim: set filetype=vim :

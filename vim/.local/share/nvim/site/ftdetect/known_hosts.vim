@@ -1,1 +1,1 @@
-autocmd BufNewFile,BufRead known_hosts setlocal filetype=known_hosts
+autocmd BufNewFile,BufRead known_hosts,ssh_known_hosts setlocal filetype=known_hosts
