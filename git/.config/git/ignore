@@ -183,11 +183,11 @@ Temporary Items
 
 # Xcode {{{
 # ----------------------------------------------------------------------
-## Build generated
+# Build generated
 build/
 DerivedData/
 
-## Various settings
+# Various settings
 *.pbxuser
 !default.pbxuser
 *.mode1v3
@@ -198,18 +198,18 @@ DerivedData/
 !default.perspectivev3
 xcuserdata/
 
-## Other
+# Other
 *.moved-aside
 *.xccheckout
 *.xcscmblueprint
 
-## Obj-C/Swift specific
+# Obj-C/Swift specific
 *.hmap
 *.ipa
 *.dSYM.zip
 *.dSYM
 
-## Playgrounds
+# Playgrounds
 timeline.xctimeline
 playground.xcworkspace
 
@@ -271,7 +271,7 @@ iOSInjectionProject/
 /test/tmp/
 /test/version_tmp/
 
-## Specific to RubyMotion:
+# Specific to RubyMotion:
 .dat*
 .repl_history
 build/
@@ -279,19 +279,20 @@ build/
 build-iPhoneOS/
 build-iPhoneSimulator/
 
-## Documentation cache and generated files:
+# Documentation cache and generated files:
 /.yardoc/
 /_yardoc/
 /doc/
 /rdoc/
 
-## Environment normalization:
+# Environment normalization:
 /.bundle/
 /vendor/bundle
 /lib/bundler/man/
 
 # unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
 .rvmrc
+
 # ---------------------------------------------------------------------- }}}
 
 # Rails {{{
