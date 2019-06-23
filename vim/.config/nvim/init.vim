@@ -747,8 +747,8 @@ Plug 'itspriddle/vim-marked', { 'for': 'markdown' }
 " Asciidoc syntax and configuration for Vim
 Plug 'mjakl/vim-asciidoc', { 'for': 'asciidoc' }
 
-" Vim syntax for log highlighting
-Plug 'dzeban/vim-log-syntax'
+" Syntax highlighting for generic log files in VIM
+Plug 'MTDL9/vim-log-highlighting'
 
 " Vim syntax file & snippets for Docker's Dockerfile
 Plug 'ekalinin/Dockerfile.vim'
@@ -1128,7 +1128,6 @@ Plug 'tyru/open-browser.vim'
 Plug 'powerman/vim-plugin-AnsiEsc'
 
 " (Neo)Vim plugin for displaying the colours in the file
-"   https://github.com/RRethy/vim-hexokinase
 Plug 'RRethy/vim-hexokinase'
 
 " Lord of the Registers displays a persistent view of your Vim :registers in a sidebar window.
@@ -1140,8 +1139,8 @@ Plug 'tyru/open-browser-github.vim', { 'on': ['OpenGithubFile', 'OpenGithubIssue
 " Open fileformat.info page about character on current cursor / given character
 Plug 'tyru/open-browser-unicode.vim', { 'on': ['OpenBrowserUnicode'] }
 
-" A Vim plugin for typing accented characters without remembering their pseudo versions.
-Plug 'RobertAudi/vim-accent'
+" Utilites around neovim's `:terminal`.
+Plug 'vimlab/split-term.vim', { 'on': ['Term', 'VTerm', 'TTerm'] }
 
 " Insert block quotes
 Plug 'RobertAudi/BlockQuote.vim', { 'on': ['BlockQuote', 'BlockQuoteFile', 'BlockUnQuote'] }
@@ -1620,6 +1619,9 @@ nnoremap <silent> gT <Cmd>call x2a#tabs#TabBaward(v:count1)<CR>
 " Next/Previous buffer
 nnoremap <silent> gb <Cmd>bnext<CR>
 nnoremap <silent> gB <Cmd>bprevious<CR>
+
+" Delete the contents of a line but not the line itself
+nnoremap dL "_cc<Esc>
 
 " Macros {{{
 " ------------------------------------------------------------------------------
