@@ -1,1 +1,7 @@
-.*
+Homebrew/*
+packages/*
+ruby/*
+\.gitignore
+.*\.sh
+.*\.rb
+^/README.*
