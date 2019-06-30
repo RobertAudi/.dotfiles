@@ -1,0 +1,1 @@
+../../../../../../../.dotfiles/vim/.local/share/nvim/site/autoload/x2a/private/terminal.vim

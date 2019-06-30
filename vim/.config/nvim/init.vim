@@ -1031,14 +1031,6 @@ Plug 'alpertuna/vim-header', { 'on': ['AddHeader', 'AddMinHeader', 'AddMITLicens
 " Vim plugin for direnv support
 Plug 'direnv/direnv.vim'
 
-" Enhanced terminal integration for Vim
-" Includes:
-"   - Cursor shape change in insert and replace mode
-"   - Improved mouse support
-"   - Focus reporting
-"   - Bracketed Paste
-Plug 'wincent/terminus'
-
 " killring-alike plugin for neovim and vim 8 with no default mappings
 " NOTE: Make block-wise copy/paste work in neovim
 " See: https://github.com/neovim/neovim/issues/1822
@@ -1292,7 +1284,7 @@ augroup RAVimAutocommands
         \ endif
 
   " More eager than 'autoread'.
-  autocmd WinEnter * checktime
+  autocmd WinEnter,FocusGained * silent! checktime
 
   " Update diff.
   autocmd InsertLeave * if &l:diff | diffupdate | endif
