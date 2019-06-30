@@ -922,32 +922,6 @@ Plug 'bogado/file-line'
 " Automatically create missing directories when saving a (new) file
 Plug 'haya14busa/vim-auto-mkdir'
 
-" Denite {{{
-" ------------------------------------------------------------------------------
-
-" Dark powered asynchronous unite all interfaces for Neovim/Vim8
-Plug 'Shougo/denite.nvim', { 'tag': '2.1', 'do': ':UpdateRemotePlugins' }
-
-" Freaky fast fuzzy finder for denite.nvim
-Plug 'raghur/fruzzy', { 'do': { -> fruzzy#install() } }
-
-" MRU plugin includes denite.nvim MRU sources
-Plug 'Shougo/neomru.vim'
-
-" Saves yank history includes unite.vim/denite.nvim history/yank source.
-Plug 'Shougo/neoyank.vim'
-
-" Denite.nvim source for Rails
-Plug 'y310/denite-rails'
-
-" Denite source for neomake
-Plug 'mhartington/denite-neomake'
-
-" Manger list of git objects with interface of denite.nvim
-Plug 'neoclide/denite-git'
-
-" ------------------------------------------------------------------------------ }}}
-
 " NERDTree {{{
 " ------------------------------------------------------------------------------
 

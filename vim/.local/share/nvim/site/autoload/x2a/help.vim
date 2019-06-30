@@ -3,6 +3,9 @@ function! x2a#help#alternate(bang, ...) abort
     if x2a#utils#plugins#isInstalled('denite.nvim')
       Denite help
       return
+    elseif x2a#utils#plugins#isInstalled('vim-picker')
+      PickerHelp
+      return
     else
       throw 'E471: Argument required'
     endif

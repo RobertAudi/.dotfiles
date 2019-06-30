@@ -22,3 +22,5 @@ nmap <silent> <C-p><C-e> <Plug>(PickerEdit)
 nmap <silent> <C-p><C-s> <Plug>(PickerSplit)
 nmap <silent> <C-p><C-v> <Plug>(PickerVsplit)
 nmap <silent> <C-p><C-t> <Plug>(PickerTabedit)
+
+nmap <silent> <C-b> <Plug>(PickerBuffer)
