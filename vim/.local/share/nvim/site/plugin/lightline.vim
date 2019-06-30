@@ -63,6 +63,7 @@ let g:lightline.component_function = {
       \   'filetype':     'x2a#lightline#Filetype',
       \   'mode':         'x2a#lightline#Mode',
       \   'inactivemode': 'x2a#lightline#InactiveMode',
+      \   'method':       'x2a#lightline#NearestMethodOrFunction'
       \ }
 
 let g:lightline.component_expand = {
@@ -74,7 +75,7 @@ let g:lightline.component_type = {
       \ }
 
 let g:lightline.active = {
-      \   'left':  [['mode', 'paste'], ['gitbranch', 'filename', 'filetype']],
+      \   'left':  [['mode', 'paste'], ['gitbranch', 'filename', 'filetype'], ['method']],
       \   'right': [['lineinfo'], ['percent']]
       \ }
 

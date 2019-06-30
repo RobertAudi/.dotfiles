@@ -80,3 +80,14 @@ function! x2a#lightline#InactiveMode() abort
     return ''
   endif
 endfunction
+
+function! x2a#lightline#NearestMethodOrFunction() abort
+  let l:name = get(b:, 'vista_nearest_method_or_function', '')
+  let l:icon = get(g:vista#renderer#icons, 'function', '')
+
+  if !empty(l:name) && !empty(l:icon)
+    let l:name = l:icon . ' ' . l:name
+  endif
+
+  return empty(l:name) ? '' : l:name
+endfunction

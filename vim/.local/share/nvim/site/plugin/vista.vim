@@ -102,6 +102,10 @@ nnoremap <silent> _  <Cmd>Vista<CR>
 augroup RAPluginsVista
   autocmd!
 
+  " Run vista automatically to be able to show the
+  " nearest function in the statusline automatically
+  autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
+
   " Make sure Vista has always the same size
   autocmd BufEnter,BufWinEnter __vista__ execute 'vertical resize ' . g:vista_sidebar_width
   autocmd BufLeave,BufWinLeave __vista__ execute 'vertical resize ' . g:vista_sidebar_width
