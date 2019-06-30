@@ -1004,7 +1004,13 @@ Plug 'chrisbra/vim_faq'
 Plug 'kshenoy/vim-signature'
 
 " Create temporary file for memo, testing, etc.
-Plug 'RobertAudi/junkfile.vim', { 'on': ['JunkfileOpen', 'JunkfileEdit', 'JunkfileVsplit', 'JunkfileSplit', 'JunkfileTabEdit'] }
+Plug 'RobertAudi/junkfile.vim',
+      \ {
+      \   'on': [
+      \     'JunkfileOpen', 'JunkfileEdit', 'JunkfileVsplit', 'JunkfileSplit', 'JunkfileTabEdit',
+      \     'JunkfileSave', 'JunkfileSplitSave', 'JunkfileVsplitSave', 'JunkfileTabSave'
+      \   ]
+      \ }
 
 " Modern matchit and matchparen replacement
 Plug 'andymass/vim-matchup'
