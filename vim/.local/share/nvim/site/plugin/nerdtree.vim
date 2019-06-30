@@ -8,8 +8,7 @@ nnoremap <silent> -  <Cmd>NERDTreeToggle<CR>
 nnoremap <silent> g- <Cmd>NERDTreeFocus<CR>
 nnoremap <silent> gF <Cmd>silent! NERDTreeFind<CR>
 
-let g:NERDTreeHighlightCursorline = 0
-let g:NERDTreeAutoDeleteBuffer    = 1
+let g:NERDTreeAutoDeleteBuffer = 1
 let g:NERDTreeCreatePrefix = 'silent keepalt keepjumps'
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeMinimalUI  = 1
@@ -71,8 +70,6 @@ function! s:SetUpNERDTreeIfVimStartedWithOneDirectoryArgument()
     bdelete " Delete the automatically-opened directory browser
     execute 'cd ' . fnameescape(argv(0))
     NERDTree
-    " I don’t know of any other way to configure the below for NERDTree
-    set nocursorline
   endif
 endfunction
 

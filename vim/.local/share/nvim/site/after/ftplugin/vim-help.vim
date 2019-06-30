@@ -6,7 +6,7 @@ setlocal nofoldenable
 setlocal norightleft
 setlocal expandtab
 
-setlocal cursorline
+setlocal nocursorline
 setlocal noreadonly
 setlocal modifiable
 setlocal list

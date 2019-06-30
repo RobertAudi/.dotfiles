@@ -174,8 +174,8 @@ set colorcolumn=121
 " prefer a slight higher line height
 set linespace=2
 
-" Highlight the current line
-set cursorline
+" Don't highlight the current line
+set nocursorline
 
 " Show matching brackets.
 set showmatch
@@ -950,6 +950,9 @@ Plug 'RobertAudi/GoldenView.vim'
 " A light and configurable statusline/tabline plugin for Vim
 Plug 'itchyny/lightline.vim'
 
+" Show / hide cursorline automatically
+Plug 'delphinus/vim-auto-cursorline'
+
 " An ack.vim alternative mimics Ctrl-Shift-F on Sublime Text 2
 Plug 'dyng/ctrlsf.vim'
 
@@ -1277,14 +1280,6 @@ augroup RAVimAutocommands
   " Update the 'scrolloff' according to the height of the window
   " Source: https://github.com/uplus/vimrc/blob/80b6dc96d08bf00ed59e545448ea031aee194230/autocmds.vim#L8
   autocmd VimEnter,WinEnter,VimResized * let &scrolloff = float2nr(winheight('') * 0.1)
-
-  " Only show cursorline in the current
-  " window and in normal mode.
-  autocmd WinLeave * setlocal nocursorline
-  autocmd WinEnter *
-        \ if !exists('b:NERDTree')
-        \ | setlocal cursorline |
-        \ endif
 
   " More eager than 'autoread'.
   autocmd WinEnter,FocusGained * silent! checktime
