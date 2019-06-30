@@ -681,9 +681,6 @@ Plug 'vim-perl/vim-perl', { 'for': 'perl' }
 " Vim configuration for Rust.
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 
-" Go development plugin for Vim
-Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoUpdateBinaries' }
-
 " SQL {{{
 " ------------------------------------------------------------------------------
 
