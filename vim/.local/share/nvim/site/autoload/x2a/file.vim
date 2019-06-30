@@ -7,7 +7,7 @@ endfunction
 
 " Description: Copy (to the system clipboard) the path to current file (relative to PWD)
 function! x2a#file#CopyRelativePath() abort
-  let l:path = expand('%')
+  let l:path = substitute(expand('%'), getcwd() . '/', '', '')
   call setreg('+', l:path)
   echo 'Copied file path to system clipboard: ' . l:path
 endfunction
