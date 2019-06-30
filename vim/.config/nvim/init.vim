@@ -953,6 +953,9 @@ Plug 'itchyny/lightline.vim'
 " Show / hide cursorline automatically
 Plug 'delphinus/vim-auto-cursorline'
 
+" Underlines the word under the cursor
+Plug 'itchyny/vim-cursorword'
+
 " An ack.vim alternative mimics Ctrl-Shift-F on Sublime Text 2
 Plug 'dyng/ctrlsf.vim'
 
