@@ -45,11 +45,17 @@ function! x2a#buffers#BufOnly(bang) abort
   let l:reopenNERDTree = exists('g:NERDTree') && g:NERDTree.IsOpen()
   let l:deletedCount = 0
 
+  let l:eventignore_keep = &eventignore
+  let l:lazyredraw_keep  = &lazyredraw
+
+  set eventignore=all
+  set lazyredraw
+
   " Close all tabs
-  silent! call s:exec('tabonly')
+  silent! tabonly
 
   " Close NERDTree in the current tab
-  silent! call s:exec('NERDTreeClose')
+  silent! NERDTreeClose
 
   for l:buffer in l:buffers
     if l:buffer.bufnr == l:currentBuffer
@@ -57,7 +63,7 @@ function! x2a#buffers#BufOnly(bang) abort
     endif
 
     if getbufvar(l:buffer.bufnr, '&filetype') ==# 'nerdtree'
-      silent! call s:exec('NERDTreeClose')
+      silent! NERDTreeClose
 
       continue
     endif
@@ -70,16 +76,19 @@ function! x2a#buffers#BufOnly(bang) abort
       continue
     endif
 
-    silent call s:exec(l:bdelete . ' ' . l:buffer.bufnr)
+    silent execute l:bdelete . ' ' . l:buffer.bufnr
 
     let l:deletedCount += 1
   endfor
 
-  silent! call s:exec('only')
+  silent! only
 
   if l:reopenNERDTree
-    call s:exec('keepjumps keepalt NERDTreeToggle | keepjumps keepalt ' . l:currentWindow . 'wincmd w')
+    execute 'keepjumps keepalt NERDTreeToggle | keepjumps keepalt ' . l:currentWindow . 'wincmd w'
   endif
+
+  let &eventignore = l:eventignore_keep
+  let &lazyredraw  = l:lazyredraw_keep
 
   let l:message = l:deletedCount . ' buffer' . (l:deletedCount > 1 ? 's' : '') . ' deleted'
 
@@ -97,6 +106,12 @@ function! x2a#buffers#BufDeleteInactive(bang) abort
 
   let l:buffers = filter(getbufinfo(), '(v:val.listed || v:val.loaded) && empty(v:val.windows)')
   let l:deletedCount = 0
+
+  let l:eventignore_keep = &eventignore
+  let l:lazyredraw_keep  = &lazyredraw
+
+  set eventignore=all
+  set lazyredraw
 
   for l:buffer in l:buffers
     if l:buffer.changed && !a:bang
@@ -116,12 +131,15 @@ function! x2a#buffers#BufDeleteInactive(bang) abort
       let l:command = l:bdelete
     endif
 
-    silent call s:exec(l:command . ' ' . l:buffer.bufnr)
+    silent execute l:command . ' ' . l:buffer.bufnr
 
     if ((empty(l:buftype) && !empty(l:buffer.name)) || l:buftype ==# 'nofile') && !l:buffer_is_empty
       let l:deletedCount += 1
     endif
   endfor
+
+  let &eventignore = l:eventignore_keep
+  let &lazyredraw  = l:lazyredraw_keep
 
   let l:message = l:deletedCount . ' buffer' . (l:deletedCount > 1 ? 's' : '') . ' deleted'
 
@@ -138,15 +156,21 @@ function! x2a#buffers#BufDeleteAll(bang) abort
   let l:reopenNERDTree = exists('g:NERDTree') && g:NERDTree.IsOpen()
   let l:deletedCount = 0
 
+  let l:eventignore_keep = &eventignore
+  let l:lazyredraw_keep  = &lazyredraw
+
+  set eventignore=all
+  set lazyredraw
+
   " Close all tabs
-  silent! call s:exec('tabonly')
+  silent! tabonly
 
   " Close NERDTree in the current tab
-  silent! call s:exec('NERDTreeClose')
+  silent! NERDTreeClose
 
   for l:buffer in l:buffers
     if getbufvar(l:buffer.bufnr, '&filetype') ==# 'nerdtree'
-      silent! call s:exec('NERDTreeClose')
+      silent! NERDTreeClose
 
       continue
     elseif l:buffer.changed && !a:bang
@@ -156,14 +180,14 @@ function! x2a#buffers#BufDeleteAll(bang) abort
 
       continue
     else
-      silent call s:exec(l:bdelete . ' ' . l:buffer.bufnr)
+      silent execute l:bdelete . ' ' . l:buffer.bufnr
     endif
 
     let l:deletedCount += 1
   endfor
 
   if l:reopenNERDTree
-    call s:exec('keepjumps keepalt NERDTreeToggle | keepjumps keepalt wincmd w')
+    execute 'keepjumps keepalt NERDTreeToggle | keepjumps keepalt wincmd w'
   endif
 
   let l:message = l:deletedCount . ' buffer' . (l:deletedCount > 1 ? 's' : '') . ' deleted'
@@ -171,6 +195,9 @@ function! x2a#buffers#BufDeleteAll(bang) abort
   if exists('*lightline#update')
     silent! call lightline#update()
   endif
+
+  let &eventignore = l:eventignore_keep
+  let &lazyredraw  = l:lazyredraw_keep
 
   call x2a#utils#echo#Message(l:message)
 endfunction
