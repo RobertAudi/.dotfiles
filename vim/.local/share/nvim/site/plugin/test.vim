@@ -13,7 +13,6 @@ endif
 let test#ruby#bundle_exec = 1
 let test#ruby#use_binstubs = 0
 
-let test#ruby#rspec#options = '--format documentation'
-
-nmap <silent> <leader>R <Cmd>TestNearest<CR>
-nmap <silent> <leader>r <Cmd>TestFile<CR>
+nmap <silent> <Leader>R <Cmd>TestNearest<CR>
+nmap <silent> <Leader>r <Cmd>TestFile<CR>
+nnoremap \R :TestNearest<Space>

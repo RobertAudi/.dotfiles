@@ -67,8 +67,11 @@ let g:NERDTreeGitStatusIndicatorMap = {
 " directory and set up a *real* NERDTree
 function! s:SetUpNERDTreeIfVimStartedWithOneDirectoryArgument()
   if argc() == 1 && getftype(argv(0)) ==# 'dir'
-    bdelete " Delete the automatically-opened directory browser
+    " Delete the automatically-opened directory browser
+    bdelete
+
     execute 'cd ' . fnameescape(argv(0))
+
     NERDTree
   endif
 endfunction
