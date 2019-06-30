@@ -992,6 +992,9 @@ Plug 'andymass/vim-matchup'
 " Make blockwise Visual mode more useful
 Plug 'kana/vim-niceblock'
 
+" A vim script to provide CamelCase motion through words
+Plug 'RobertAudi/CamelCaseMotion', { 'branch': 'disable-mappings' }
+
 " Vimscript library of common functions
 Plug 'inkarkat/vim-ingo-library'
 
