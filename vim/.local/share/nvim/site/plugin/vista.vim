@@ -2,7 +2,7 @@
 " Description: Viewer & Finder for LSP symbols and tags in Vim
 " URL: https://github.com/liuchengxu/vista.vim
 
-let g:vista_sidebar_width = 30
+let g:vista_sidebar_width = 40
 let g:vista#renderer#enable_icon = v:true
 let g:vista_close_on_jump = v:false
 let g:vista_stay_on_open = v:true
@@ -96,3 +96,13 @@ let g:vista#renderer#icons = {
       \ }
 
 call x2a#abolish#commands('Vista', 'vista')
+
+nnoremap <silent> _  <Cmd>Vista<CR>
+
+augroup RAPluginsVista
+  autocmd!
+
+  " Make sure Vista has always the same size
+  autocmd BufEnter,BufWinEnter __vista__ execute 'vertical resize ' . g:vista_sidebar_width
+  autocmd BufLeave,BufWinLeave __vista__ execute 'vertical resize ' . g:vista_sidebar_width
+augroup END

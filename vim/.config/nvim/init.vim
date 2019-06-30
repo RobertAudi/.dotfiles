@@ -868,9 +868,6 @@ Plug 'kreskij/Repeatable.vim', { 'on': 'Repeatable' }
 " The ultimate snippet solution for Vim
 Plug 'SirVer/ultisnips'
 
-" Vim plugin that displays tags in a window, ordered by scope
-Plug 'majutsushi/tagbar'
-
 " Viewer & Finder for LSP symbols and tags in Vim
 Plug 'liuchengxu/vista.vim'
 

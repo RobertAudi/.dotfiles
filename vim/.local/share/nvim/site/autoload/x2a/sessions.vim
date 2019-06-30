@@ -50,7 +50,6 @@ endfunction
 
 function! s:restore_drawers() abort
   let l:nerdtree_tabs = []
-  let l:tagbar_tabs = []
   let l:buffers = []
 
   for l:tabpage in range(1, tabpagenr('$'))
@@ -59,9 +58,6 @@ function! s:restore_drawers() abort
 
       if l:bufname =~# 'NERD_tree'
         call add(l:nerdtree_tabs, l:tabpage)
-        call add(l:buffers, l:buffer)
-      elseif l:bufname =~# '__Tagbar__'
-        call add(l:tagbar_tabs, l:tabpage)
         call add(l:buffers, l:buffer)
       endif
     endfor
@@ -79,10 +75,6 @@ function! s:restore_drawers() abort
     endfor
 
     silent execute l:active_tabpage . 'tabnext'
-  endif
-
-  if index(l:tagbar_tabs, l:active_tabpage) >= 0 && exists(':TagbarOpen')
-    silent execute 'TagbarOpen'
   endif
 endfunction
 

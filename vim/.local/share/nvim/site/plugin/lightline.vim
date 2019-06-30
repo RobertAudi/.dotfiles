@@ -31,7 +31,6 @@ let g:x2a#lightline#ignored_plugin_filetypes =
       \   'fzf',
       \   'nerdtree',
       \   'ctrlsf',
-      \   'tagbar',
       \   'vista',
       \ ]
 
@@ -47,7 +46,6 @@ let g:x2a#lightline#plugin_filetypes =
       \   'fzf':      'FZF',
       \   'nerdtree': 'NERDTree',
       \   'ctrlsf':   'CtrlSF',
-      \   'tagbar':   'Tagbar',
       \   'vista':    'Vista',
       \ }
 
@@ -111,15 +109,6 @@ let g:lightline.subseparator = {
       \   'left':  g:x2a#lightline#subseparator,
       \   'right': g:x2a#lightline#subseparator
       \ }
-
-" ----------------------------------------------------------------------
-
-let g:tagbar_status_func = 'TagbarStatusFunc'
-
-function! TagbarStatusFunc(current, sort, fname, ...) abort
-    let g:lightline.fname = a:fname
-  return lightline#statusline(0)
-endfunction
 
 " Modeline {{{
 " vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker : }}}
