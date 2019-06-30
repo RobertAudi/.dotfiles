@@ -1022,8 +1022,8 @@ Plug 'fcpg/vim-navmode'
 " A vim plugin to display the indention levels with thin vertical lines
 Plug 'Yggdroot/indentLine'
 
-" Zoom in/out of windows
-Plug 'troydm/zoomwintab.vim', { 'on': ['ZoomWinTabIn', 'ZoomWinTabOut', 'ZoomWinTabToggle'] }
+" Simple plugin to zoom windows
+Plug 'RobertAudi/ZoomWinTab'
 
 " Delete buffers and close files in Vim without closing your windows or messing up your layout.
 Plug 'RobertAudi/vim-bbye'
