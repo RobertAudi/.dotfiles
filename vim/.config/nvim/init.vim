@@ -1022,6 +1022,9 @@ Plug 'AaronLasseigne/yank-code', { 'on': ['YankCode', '<plug>YankCode'] }
 " Navigation mode for Vim
 Plug 'fcpg/vim-navmode'
 
+" A vim plugin to display the indention levels with thin vertical lines
+Plug 'Yggdroot/indentLine'
+
 " Zoom in/out of windows
 Plug 'troydm/zoomwintab.vim', { 'on': ['ZoomWinTabIn', 'ZoomWinTabOut', 'ZoomWinTabToggle'] }
 
