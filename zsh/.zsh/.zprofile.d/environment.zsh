@@ -293,6 +293,7 @@ export DOWNLOADS_DIR="$HOME/Downloads/_hazel"
 export QT_STYLE_OVERRIDE=adwaita
 export WALLPAPER="$XDG_DATA_HOME/resources/wallpaper.png"
 export PROJECTS="$HOME/Developer"
+
 unset DISPLAY
 
 export FZF_HOME="$HOME/.local/opt/fzf"

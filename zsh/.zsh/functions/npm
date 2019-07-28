@@ -1,7 +1,0 @@
-#autoload
-
-if is-callable pnpm && [[ "$1" == "install" ]]; then
-  pnpm ${=@}
-else
-  command npm ${=@}
-fi

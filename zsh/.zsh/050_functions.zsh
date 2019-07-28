@@ -6,7 +6,7 @@ typeset -a fns
 for dirname in $fpath; do
   if ! [[ $dirname =~ ($ZDOTDIR/plugins|${ZPLG_HOME:-$HOME/.zplugin})/* ]]; then
     fns=( $dirname/*~(*~|*.zwc)(-N.:t) )
-    (( $#fns > 0 )) && autoload -Uz "$fns[@]"
+    (( $#fns > 0 )) && autoload -Uz -- "$fns[@]"
   fi
 done
 unset dirname fns
@@ -93,33 +93,17 @@ psu() {
 }
 
 # Inline calculator
-function = { echo "$@" | tr 'x' '*' | bc -l }
+function = {
+  local operation result
+  operation="$(builtin print -n -- "$@" | tr 'x' '*')"
 
-# -------------------------------------------------------------------
-# Display values of environment variables
-# -------------------------------------------------------------------
-# $ ev disp
-# => shows the values of env variables whose names start with "disp" (case insensitive), such as DISPLAY.
-ev() {
-  env \
-    | cat -v \
-    | egrep -a -i \^$1 \
-    | sed -e 's/=/     /' -e '/^PATH/d' -e '/^CDPATH/d' \
-    | sort \
-    | awk '{f=$1 ; $1="" ; print f" |"$0}' \
-    | column -s "|" -t -c 2
-}
+  if is-command eva ; then
+    result="$(builtin print -n -- "$operation" | eva)"
+  else
+    result="$(builtin print -n -- "$operation" | bc -l)"
+  fi
 
-# $ eva lib
-# => shows the values of env variables whose names contain "lib" (case insensitive), such as DISPLAY.
-eva() {
-  env \
-    | cat -v \
-    | egrep -a -i "^[a-z_]*$1" \
-    | sed -e 's/=/     /' -e '/^PATH/d' -e '/^CDPATH/d' \
-    | sort \
-    | awk '{f=$1 ; $1="" ; print f" |"$0}' \
-    | column -s "|" -t -c 2
+  builtin printf "%s\n" "${result#"${result%%[![:space:]]*}"}"
 }
 
 # Profile a function with zprof.

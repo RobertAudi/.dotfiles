@@ -7,7 +7,7 @@ typeset -g ZSH_HG_PROMPT_CHAR="☿"
 prompt_0x2a_git_info() {
   # Call gitstatus_query synchronously. Note that gitstatus_query can also be called
   # asynchronously; see documentation in gitstatus.plugin.zsh.
-  gitstatus_query MY                  || return $status  # error
+  gitstatus_query MY &> /dev/null     || return $status  # error
   [[ $VCS_STATUS_RESULT == ok-sync ]] || return 0  # not a git repo
 
   local git_ref
@@ -44,8 +44,13 @@ prompt_0x2a_hg_info() {
 }
 
 prompt_0x2a_vcs_info() {
-  in-git-repo && echo " $(prompt_0x2a_git_info)" && return
-  hg root &>/dev/null && echo " $(prompt_0x2a_hg_info)" && return
+  local vcs_info
+
+  if in-git-repo ; then
+    vcs_info="$(prompt_0x2a_git_info)" && echo " $vcs_info"
+  elif hg root &>/dev/null ; then
+    vcs_info="$(prompt_0x2a_hg_info)" && echo " $vcs_info"
+  fi
 }
 
 prompt_0x2a_pwd() {

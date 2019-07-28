@@ -6,14 +6,14 @@ setopt extended_glob
 
 local f
 for f in ${HOME}/.zshenv.zwc*(-N.) ${ZDOTDIR}/***/*.zsh.zwc*(-N.) ${ZDOTDIR}/***/{functions,functions/{utils,prompts,zle},completions}/*.zwc*(-N.) ${ZDOTDIR}/.{zlog{in,out},zprofile,zsh{env,rc}}{,.d/*.zsh}.zwc*(-N.); do
-  if command rm -f ${f:A}; then
+  if command rm -f -- ${f:A}; then
     builtin print -P -- "[%F{032}INFO%f] Removed ${f:A}"
 
-    if [[ -L $f ]] && ! command rm -f $f; then
+    if [[ -L $f ]] && ! command rm -f -- $f; then
       builtin print -P -- "[%F{196}ERROR%f] Failed to remove $f (symlink)" >&2
     fi
   else
     builtin print -P -- "[%F{196}ERROR%f] Failed to remove ${f:A}" >&2
-    [[ -L $f ]] && command rm -f $f 2>/dev/null
+    [[ -L $f ]] && command rm -f -- $f 2>/dev/null
   fi
 done

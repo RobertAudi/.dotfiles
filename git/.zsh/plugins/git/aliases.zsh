@@ -20,6 +20,7 @@ alias grs="git reset"
 alias grsp="git reset --patch"
 alias grv="git remotes"
 
+alias gbr="git-browse"
 alias gcd="cd-gitroot"
 alias gs="git-pretty-status -vv"
 alias gss="git-pretty-status -v"

@@ -1,0 +1,16 @@
+#!/usr/bin/env zsh
+
+function {
+  local current_branch parent_branch log_range
+
+  current_branch="$(git rev-parse --abbrev-ref HEAD)"
+  parent_branch="$(git parent-branch "$current_branch")"
+
+  if [[ "$current_branch" == "$parent_branch" ]]; then
+    log_range="$current_branch"
+  else
+    log_range="${parent_branch}..."
+  fi
+
+  git l $log_range
+}

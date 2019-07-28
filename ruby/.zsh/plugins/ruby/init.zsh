@@ -6,6 +6,23 @@ export BUNDLE_USER_CONFIG="$XDG_CONFIG_HOME/bundler/config"
 export BUNDLE_USER_CACHE="$XDG_CACHE_HOME/bundler"
 export BUNDLE_USER_PLUGIN="$XDG_DATA_HOME/bundler"
 
+if [[ -d "/usr/local/opt/libffi/lib" ]]; then
+  export LDFLAGS="$LDFLAGS -L/usr/local/opt/libffi/lib"
+fi
+
+if [[ -d "/usr/local/opt/libffi/lib/pkgconfig" ]]; then
+  typeset -T PKG_CONFIG_PATH pkg_config_path
+
+  pkg_config_path=(
+    /usr/local/opt/libffi/lib/pkgconfig(N-/)
+    $pkg_config_path
+  )
+
+  typeset -gU pkg_config_path
+
+  export PKG_CONFIG_PATH
+fi
+
 fpath=("$ZSH_HOME/plugins/ruby/functions" $fpath)
 function {
   emulate -L zsh

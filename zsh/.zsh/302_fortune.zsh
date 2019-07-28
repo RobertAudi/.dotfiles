@@ -1,6 +1,6 @@
 autoload -Uz zargs
 
-export FORTUNES_DIR="$HOME/.local/share/fortunes"
+export FORTUNES_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/fortunes"
 
 typeset -ga fortunes cows
 fortunes=($(sort -u <(zargs -n1 $FORTUNES_DIR/*(:t:r))))

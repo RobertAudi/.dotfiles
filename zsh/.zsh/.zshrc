@@ -1,5 +1,8 @@
 [ -n "$PROFILE_INIT" ] && zmodload zsh/zprof
 
+module_path+=("$HOME/.zplugin/bin/zmodules/Src")
+zmodload zdharma/zplugin
+
 #   umask   directory   file
 #   002     775         664
 #   022     755         644
@@ -34,16 +37,6 @@ autoload -Uz zstyle+
 
 if [[ -n "$ZPLG_HOME" && -f "$ZPLG_HOME/bin/zplugin.zsh" ]]; then
   source "$ZPLG_HOME/bin/zplugin.zsh"
-
-  if [[ ! -a "$ZPLG_HOME/bin/zmodules/Src/zdharma/zplugin.bundle" ]] && [[ -a "$ZPLG_HOME/bin/zmodules/Src/zdharma/zplugin.so" ]]; then
-    mv "$ZPLG_HOME/bin/zmodules/Src/zdharma/zplugin.so" "$ZPLG_HOME/bin/zmodules/Src/zdharma/zplugin.bundle"
-  fi
-
-  if [[ ! -a "$ZPLG_HOME/bin/zmodules/Src/zdharma/zplugin.bundle" ]]; then
-    module_path+=("$HOME/.zplugin/bin/zmodules/Src")
-
-    zmodload zdharma/zplugin
-  fi
 
   if [[ -n "$ZPLG_LOADFILE" && -f "$ZPLG_LOADFILE" ]]; then
     source "$ZPLG_LOADFILE"

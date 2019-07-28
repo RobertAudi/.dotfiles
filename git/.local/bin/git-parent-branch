@@ -1,0 +1,20 @@
+#!/usr/bin/env zsh
+
+# Taken from: https://stackoverflow.com/questions/3161204/find-the-parent-branch-of-a-git-branch#comment51253180_17843908
+
+function {
+  local branch
+
+  if [[ -n "$1" ]] && git local-branch-exists "$1"; then
+    branch="$1"
+  else
+    branch="$(git current-branch)"
+  fi
+
+  git show-branch \
+    | sed "s/].*//" \
+    | grep "\*" \
+    | grep -v "$branch" \
+    | head -n1 \
+    | sed "s/^.*\[//"
+}

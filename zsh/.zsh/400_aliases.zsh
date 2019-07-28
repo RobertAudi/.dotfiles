@@ -22,6 +22,35 @@ alias -s jar="java -jar"
 
 # ------------------------------------------------------------------------------ }}}
 
+# Global aliases {{{
+# ------------------------------------------------------------------------------
+
+if is-callable rg; then
+  alias -g "?"="| rg"
+elif is-callable ag; then
+  alias -g "?"="| ag"
+else
+  alias -g "?"="| grep"
+fi
+
+# path-extractor
+if is-callable path-extractor; then
+  alias -g ":pe"="| path-extractor"
+fi
+
+# Add snippets as global aliases as well
+alias -g "::"='| $PAGER'
+alias -g ":_"="&>/dev/null"
+alias -g ":+"="| wc -l"
+alias -g ":c"="| and-pipe copy"
+
+# Intuitive map function
+# For example, to list all directories that contain a certain file:
+# find . -name .gitattributes :map dirname
+alias -g ":map"="| xargs -n1"
+
+# ------------------------------------------------------------------------------ }}}
+
 #  VIM related aliases ;o) btw. ``$SHELL:t'' is a modifiers from the Z
 #  Shell. In other shells you can use ``${SHELL##*/}'' instead. Valid
 #  Modifiers can be found in ``info -f zsh -n Modifiers''.
@@ -31,15 +60,6 @@ alias :{Q,Qa,QA,Wa,WA,Wq,WQ,Wqa,WQa,WQA}{,!}='echo "This is $SHELL:t and not Vi(
 if is-callable ag; then
   # Make ag pretty
   alias ag="ag --hidden --smart-case --color-match='30;31' --color-line-number='31;35' --color-path='31;34'"
-fi
-
-# Usefull globals
-if is-callable rg; then
-  alias -g "?"="| rg"
-elif is-callable ag; then
-  alias -g "?"="| ag"
-else
-  alias -g "?"="| grep"
 fi
 
 # chmod {u,g,a}{+,-}{x,w,r}

@@ -5,8 +5,9 @@ case "$1" in
     if [[ ! -f "Gemfile.local" ]]; then
       builtin print -P -- "[%F{196}ERROR%f] Local Gemfile not found." >&2
       return 1
-    else
     fi
+
+    shift
 
     command bundle config --local gemfile "Gemfile.local"
 
@@ -14,18 +15,31 @@ case "$1" in
 
     typeset -gx BUNDLE_LOCAL_ENABLED=true
 
-    shift
     ;;
   "unlocal")
     [[ -f ".bundle/config" ]] && sed -i "/BUNDLE_GEMFILE/d" ".bundle/config"
     [[ -f "Gemfile.local.lock" ]] && rm -f "Gemfile.local.lock"
-    unset BUNDLE_LOCAL_ENABLED
     shift
+    unset BUNDLE_LOCAL_ENABLED
     ;;
 esac
 
 if [[ -f "Gemfile.local.lock" ]]; then
   builtin print -P -- "[%F{032}INFO%f] %BUsing local Gemfile%b"
+fi
+
+if [[ -z "$1" || "$1" =~ "install|update" ]]; then
+  if [[ -f "Gemfile.local.lock" ]]; then
+    builtin print -P -- "[%F{032}INFO%f] Running %Bbundle $@%b using the regular Gemfile..."
+
+    command bundle config --local gemfile "Gemfile"
+
+    command bundle $@
+
+    command bundle config --local gemfile "Gemfile.local"
+
+    [[ -f "Gemfile.lock" ]] && cp -f "Gemfile.lock" "Gemfile.local.lock"
+  fi
 fi
 
 command bundle "$@"

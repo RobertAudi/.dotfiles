@@ -8,17 +8,21 @@ for f in $ZSH_HINTS_DIR/*.hints(:t:r); do
   zle -N zsh-hints-$f zsh-hints
 done
 
-show-zsh-hints() {
+function list-zsh-hints {
+  builtin print -l -- $ZSH_HINTS_DIR/*.hints(:t:r)
+}
+
+function -show-zsh-hint {
   local -a hints
-  hints=($ZSH_HINTS_DIR/*.hints(:t:r))
+  hints=($(list-zsh-hints))
 
   local hint
-  hint=$(echo $hints | tr " " "\n" | fzf-tmux +1 -m -d $((10 + $(wc -l <<< "$hints"))))
+  hint=$(builtin print -l -- $hints | fzf-tmux +1 -m -d $((10 + ${#hints})))
 
   if [[ -n "$hint" ]]; then
     zle zsh-hints-$hint -w
   fi
 }
 
-zle -N show-zsh-hints
-bindkey -M emacs "$key_info[Control]X/" show-zsh-hints
+zle -N -- -show-zsh-hint
+bindkey -M emacs "$key_info[Control]X/" -show-zsh-hint

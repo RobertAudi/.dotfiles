@@ -1,14 +1,15 @@
 # oh-my-zsh plugin
+zplugin ice wait"1" lucid
 zplugin snippet OMZ::plugins/safe-paste/safe-paste.plugin.zsh
 
 # It's like curl -v, with graphs and colors
 #   https://github.com/b4b4r07/httpstat
-zplugin ice as"command" cp"httpstat.sh -> httpstat" pick"httpstat"
+zplugin ice as"command" cp"httpstat.sh -> httpstat" pick"httpstat" wait"1" lucid
 zplugin light b4b4r07/httpstat
 
 # Gives you helpful hints when you execute a command for which you have an alias defined
 #   https://github.com/molovo/tipz
-zplugin ice wait"2" pick"tipz.zsh" lucid
+zplugin ice pick"tipz.zsh" atload'source $ZDOTDIR/setup/plugins/molovo/tipz.zsh' wait"2" lucid
 zplugin light molovo/tipz
 
 # Add zsh's missing hooks, and support for user-defined hooks
@@ -17,19 +18,22 @@ zplugin light willghatch/zsh-hooks
 
 # Simple bookmarking plugin
 #   https://github.com/RobertAudi/zshmarks
+zplugin ice atload'source $ZDOTDIR/setup/plugins/RobertAudi/zshmarks.zsh' wait"1" lucid
 zplugin light RobertAudi/zshmarks
 
 # ZSH port of Fish history search
 #   https://github.com/zsh-users/zsh-history-substring-search
+zplugin ice atload'source $ZDOTDIR/setup/plugins/zsh-users/zsh-history-substring-search.zsh' wait"1" lucid
 zplugin light zsh-users/zsh-history-substring-search
 
 # Easily see what's happening on your computer's ports
 #   https://github.com/caarlos0/ports
+zplugin ice wait"1" lucid
 zplugin light caarlos0/ports
 
 # Vertical graphs
 #   https://github.com/LuRsT/vspark
-zplugin ice as"command" pick"vspark"
+zplugin ice as"command" pick"vspark" wait"1" lucid
 zplugin light LuRsT/vspark
 
 # Syntax-highlighting for Zshell
@@ -38,12 +42,20 @@ zplugin ice wait"1" lucid
 zplugin light zdharma/fast-syntax-highlighting
 
 # Local plugins
+zplugin ice wait"1" lucid
 zplugin load _local/archive
+
+zplugin ice atload'source $ZDOTDIR/setup/plugins/_local/zsh-snippets.zsh' wait"1" lucid
 zplugin load _local/zsh-snippets
+
+zplugin ice atload'source $ZDOTDIR/setup/plugins/_local/zsh-hints.zsh' wait"1" lucid
 zplugin load _local/zsh-hints
 
 zplugin ice wait"1" lucid
 zplugin load _local/spectrum
+
+zplugin ice wait"" lucid
+zplugin load _local/direnv
 
 for f in $ZSH_HOME/plugins/zplugin.d/*.zplugin.zsh; do
   source $f

@@ -1,0 +1,14 @@
+#autoload
+
+# Dig for an IP
+#   https://github.com/rummik/zsh-dug
+
+local domain=$1
+local result=$(dig in ${2:-A} +short $domain)
+
+if [[ -n $result ]]; then
+  print $result
+else
+  print "No record found for '$domain'"
+  return 1
+fi
