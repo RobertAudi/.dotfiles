@@ -1,6 +1,8 @@
 setlocal iskeyword-=:
 setlocal iskeyword-=#
 
+setlocal keywordprg=:Help
+
 " Source: https://sanctum.geek.nz/cgit/dotfiles.git
 "         https://sanctum.geek.nz/cgit/dotfiles.git/tree/vim/after/ftplugin/vim.vim#n1
 "

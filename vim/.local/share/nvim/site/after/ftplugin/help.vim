@@ -7,7 +7,7 @@ setlocal readonly
 setlocal nomodifiable
 setlocal nolist
 setlocal wrap
-setlocal keywordprg=:help
+setlocal keywordprg=:Help
 setlocal bufhidden=hide
 
 if getbufvar('%', '&timeoutlen') != 0
