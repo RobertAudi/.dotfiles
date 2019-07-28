@@ -3,5 +3,5 @@ if exists('g:loaded_nerdtree_path_filters')
 endif
 let g:loaded_nerdtree_path_filters = 1
 
-call NERDTreeAddPathFilter('x2a#NERDTree#PathFilters#IgnoreSpecialVimDirectories')
-call NERDTreeAddPathFilter('x2a#NERDTree#PathFilters#IgnoreZpluginPluginDirectories')
+call NERDTreeAddPathFilter('x2a#nerdtree#PathFilters#IgnoreSpecialVimDirectories')
+call NERDTreeAddPathFilter('x2a#nerdtree#PathFilters#IgnoreZpluginPluginDirectories')

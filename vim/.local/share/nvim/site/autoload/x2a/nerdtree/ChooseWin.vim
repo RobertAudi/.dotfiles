@@ -4,7 +4,7 @@
 " Source:      https://github.com/weilbith/nerdtree_choosewin-plugin
 " Author:      Thore Weilbier (weilbith)
 " License:     MIT license
-function! x2a#NERDTree#ChooseWin#Open(filenode) abort
+function! x2a#nerdtree#ChooseWin#Open(filenode) abort
   " It is necessary to jump back the NERDTree window, cause local buffer
   " variables are required for the following procedure.
   let l:nerdwindow = win_getid()

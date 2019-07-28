@@ -18,15 +18,15 @@ let g:loaded_nerdtree_chmod_menuitem = 1
 call NERDTreeAddMenuItem({
       \   'text':             '(x)chmod -x',
       \   'shortcut':         'x',
-      \   'callback':         'x2a#NERDTree#chmod#removeExecutableBits',
-      \   'isActiveCallback': 'x2a#NERDTree#chmod#isExecutable'
+      \   'callback':         'x2a#nerdtree#chmod#removeExecutableBits',
+      \   'isActiveCallback': 'x2a#nerdtree#chmod#isExecutable'
       \ })
 
 call NERDTreeAddMenuItem({
       \   'text':             '(x)chmod +x',
       \   'shortcut':         'x',
-      \   'callback':         'x2a#NERDTree#chmod#addExecutableBits',
-      \   'isActiveCallback': 'x2a#NERDTree#chmod#isNotExecutable'
+      \   'callback':         'x2a#nerdtree#chmod#addExecutableBits',
+      \   'isActiveCallback': 'x2a#nerdtree#chmod#isNotExecutable'
       \ })
 
 

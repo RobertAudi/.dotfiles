@@ -1,4 +1,4 @@
-function! x2a#NERDTree#Expanderrific#activate(filenode) abort
+function! x2a#nerdtree#Expanderrific#activate(filenode) abort
   if a:filenode.path.isDirectory
     call x2a#utils#echo#Warning("Warn: Can't activate a directory!")
     return 0
@@ -7,7 +7,7 @@ function! x2a#NERDTree#Expanderrific#activate(filenode) abort
   call a:filenode.activate({ 'reuse': 'all', 'where': 'p' })
 endfunction
 
-function! x2a#NERDTree#Expanderrific#expand(dir) abort
+function! x2a#nerdtree#Expanderrific#expand(dir) abort
   let l:opts = { 'reuse': 1 }
   if g:NERDTreeCascadeOpenSingleChildDir == 0
     call a:dir.open(l:opts)
@@ -17,7 +17,7 @@ function! x2a#NERDTree#Expanderrific#expand(dir) abort
   call b:NERDTree.render()
 endfunction
 
-function! x2a#NERDTree#Expanderrific#collapse(node) abort
+function! x2a#nerdtree#Expanderrific#collapse(node) abort
   let l:node = a:node
   if !a:node.path.isDirectory || !a:node.isOpen
     let l:node = a:node.parent

@@ -1,13 +1,13 @@
-function! x2a#NERDTree#chmod#isExecutable() abort
+function! x2a#nerdtree#chmod#isExecutable() abort
   let l:node = g:NERDTreeFileNode.GetSelected()
   return l:node.path.isExecutable
 endfunction
 
-function! x2a#NERDTree#chmod#isNotExecutable() abort
-  return !x2a#NERDTree#chmod#isExecutable()
+function! x2a#nerdtree#chmod#isNotExecutable() abort
+  return !x2a#nerdtree#chmod#isExecutable()
 endfunction
 
-function! x2a#NERDTree#chmod#addExecutableBits() abort
+function! x2a#nerdtree#chmod#addExecutableBits() abort
   let l:node = g:NERDTreeFileNode.GetSelected()
   let l:arg = input('chmod: ', '+x')
   let l:cmd = 'chmod ' . l:arg . ' ' . l:node.path.str({ 'escape': 1 })
@@ -21,7 +21,7 @@ function! x2a#NERDTree#chmod#addExecutableBits() abort
   endif
 endfunction
 
-function! x2a#NERDTree#chmod#removeExecutableBits() abort
+function! x2a#nerdtree#chmod#removeExecutableBits() abort
   let l:node = g:NERDTreeFileNode.GetSelected()
   let l:arg = input('chmod: ', '-x')
   let l:cmd = 'chmod ' . l:arg . ' ' . l:node.path.str({ 'escape': 1 })

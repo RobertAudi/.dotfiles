@@ -119,7 +119,7 @@ function! x2a#file#Delete(bang, keeplayout) abort
     call x2a#utils#echo#FatalError('Failed to delete "' . l:file . '"')
   else
     call x2a#utils#echo#Message('Deleted file: ' . l:file)
-    call x2a#NERDTree#Refresh(l:directory)
+    silent! call x2a#nerdtree#Refresh(l:directory)
   endif
 endfunction
 

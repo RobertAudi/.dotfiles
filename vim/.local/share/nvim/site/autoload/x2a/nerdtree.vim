@@ -10,18 +10,18 @@ function! s:exec(cmd) abort
   let &lazyredraw  = l:lazyredraw_keep
 endfunction
 
-function! x2a#NERDTree#CopyNodePath(node) abort
+function! x2a#nerdtree#CopyNodePath(node) abort
   let l:path = a:node.path.str()
   call setreg('*', l:path)
   redraw
   echomsg 'Copied to clipboard: ' . l:path
 endfunction
 
-function! x2a#NERDTree#CopyPath() abort
-  call x2a#NERDTree#CopyNodePath(g:NERDTreeFileNode.GetSelected())
+function! x2a#nerdtree#CopyPath() abort
+  call x2a#nerdtree#CopyNodePath(g:NERDTreeFileNode.GetSelected())
 endfunction
 
-function! x2a#NERDTree#Refresh(...) abort
+function! x2a#nerdtree#Refresh(...) abort
   if !exists('g:NERDTree') || !g:NERDTree.IsOpen()
     return
   endif
@@ -33,7 +33,7 @@ function! x2a#NERDTree#Refresh(...) abort
   endif
 
   if empty(l:pathStr)
-    call nerdtree#echoWarning('no file for the current buffer')
+    call nerdtree#echo#Warning('no file for the current buffer')
     return
   endif
 
@@ -41,7 +41,7 @@ function! x2a#NERDTree#Refresh(...) abort
     let l:pathStr = g:NERDTreePath.Resolve(l:pathStr)
     let l:pathObj = g:NERDTreePath.New(l:pathStr)
   catch /^NERDTree.InvalidArgumentsError/
-    call nerdtree#echoWarning('invalid path')
+    call nerdtree#echo#Warning('invalid path')
     return
   endtry
 
@@ -52,11 +52,16 @@ function! x2a#NERDTree#Refresh(...) abort
   endif
 
   let l:node = l:NERDTree.root.findNode(l:pathObj)
-  if !l:node.path.isDirectory
-    let l:node = l:node.parent
-  endif
 
-  call l:node.refresh()
+  try
+    if l:node.path && !l:node.path.isDirectory
+      let l:node = l:node.parent
+    endif
+
+    call l:node.refresh()
+  catch /.*/
+    call x2a#utils#echo#Warning('DAFUQ: NERDTree Refresh failed')
+  endtry
 
   let l:curWin = winnr()
   let l:cmd = 'keepjumps keepalt ' . g:NERDTree.GetWinNum() . 'wincmd w'

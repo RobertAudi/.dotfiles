@@ -21,14 +21,14 @@ if has('clipboard')
   call NERDTreeAddMenuItem({
         \   'scope':    'Node',
         \   'shortcut': 'y',
-        \   'callback': 'x2a#NERDTree#CopyPath',
+        \   'callback': 'x2a#nerdtree#CopyPath',
         \   'text':     '(y)copy path to clipboard'
         \ })
 
   call NERDTreeAddKeyMap({
         \   'scope':         'Node',
         \   'key':           'yy',
-        \   'callback':      'x2a#NERDTree#CopyNodePath',
+        \   'callback':      'x2a#nerdtree#CopyNodePath',
         \   'quickhelpText': 'copy path to clipboard'
         \ })
 endif

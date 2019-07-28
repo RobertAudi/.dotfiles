@@ -11,7 +11,7 @@ call NERDTreeAddKeyMap(
       \ {
       \   'key': '<Space>',
       \   'scope': 'FileNode',
-      \   'callback': 'x2a#NERDTree#macos#PreviewFileNodeInQuickLook',
+      \   'callback': 'x2a#nerdtree#macos#PreviewFileNodeInQuickLook',
       \   'quickhelpText': 'Preview the file in QuickLook'
       \ })
 
@@ -19,6 +19,6 @@ call NERDTreeAddKeyMap(
       \ {
       \   'key': 'gf',
       \   'scope': 'FileNode',
-      \   'callback': 'x2a#NERDTree#macos#RevealFileNodeInFinder',
+      \   'callback': 'x2a#nerdtree#macos#RevealFileNodeInFinder',
       \   'quickhelpText': 'Reveal file in Finder'
       \ })

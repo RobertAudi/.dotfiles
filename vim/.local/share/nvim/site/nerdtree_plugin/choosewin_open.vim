@@ -7,6 +7,6 @@ call NERDTreeAddKeyMap(
       \ {
       \   'key':      'O',
       \   'scope':    'FileNode',
-      \   'callback': 'x2a#NERDTree#ChooseWin#Open',
+      \   'callback': 'x2a#nerdtree#ChooseWin#Open',
       \   'override': 1
       \ })
