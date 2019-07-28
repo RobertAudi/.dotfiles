@@ -1,0 +1,27 @@
+Digraph     Character     Name
+-----------------------------------------------------------
+  -N           –          EN DASH
+  -M           —          EM DASH
+  -3           ―          HORIZONTAL BAR
+  ,.           …          HORIZONTAL ELLIPSIS
+  N0           №          NUMERO SIGN
+  =e           €          EURO SIGN
+  Eu           €          EURO SIGN
+  Pd           £          POUND SIGN
+  $$           £          POUND SIGN
+  Co           ©          COPYRIGHT SIGN
+  cO           ©          COPYRIGHT SIGN
+  Rg           ®          REGISTERED SIGN
+  TM           ™          TRADE MARK SIGN
+  *X           ×          MULTIPLICATION SIGN
+  /\           ×          MULTIPLICATION SIGN
+  00           ∞          INFINITY
+  0m           ○          WHITE CIRCLE
+  0M           ●          BLACK CIRCLE
+  C*           Ξ          GREEK CAPITAL LETTER XI
+  Om           Ω          OHM SIGN
+  a*           α          GREEK SMALL LETTER ALPHA
+  l*           λ          GREEK SMALL LETTER LAMDA
+  m*           μ          GREEK SMALL LETTER MU
+  o/           ø          LATIN SMALL LETTER O WITH STROKE
+  -o           º          MASCULINE ORDINAL INDICATOR
