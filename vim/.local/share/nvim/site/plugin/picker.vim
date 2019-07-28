@@ -13,13 +13,18 @@ elseif executable('rg')
   let g:picker_custom_find_flags = x2a#fuzzy#picker#find#flags('rg')
 endif
 
+nmap <silent> <C-p> <Cmd>call x2a#utils#echo#Warning('Use one of e, s, x, v or t.')<CR>
+nmap <silent> <C-p><C-p> <Cmd>call x2a#utils#echo#Warning('Use one of e, s, x, v or t.')<CR>
+
 nmap <silent> <C-p>e <Plug>(PickerEdit)
 nmap <silent> <C-p>s <Plug>(PickerSplit)
+nmap <silent> <C-p>x <Plug>(PickerSplit)
 nmap <silent> <C-p>v <Plug>(PickerVsplit)
 nmap <silent> <C-p>t <Plug>(PickerTabedit)
 
 nmap <silent> <C-p><C-e> <Plug>(PickerEdit)
 nmap <silent> <C-p><C-s> <Plug>(PickerSplit)
+nmap <silent> <C-p><C-x> <Plug>(PickerSplit)
 nmap <silent> <C-p><C-v> <Plug>(PickerVsplit)
 nmap <silent> <C-p><C-t> <Plug>(PickerTabedit)
 
