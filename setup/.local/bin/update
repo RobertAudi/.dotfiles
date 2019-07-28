@@ -1,4 +1,21 @@
-#autoload
+#!/usr/bin/env zsh
+
+emulate -L zsh
+
+zmodload zsh/parameter
+zmodload zsh/pcre
+
+setopt extended_glob rematch_pcre
+
+autoload -Uz colors && colors
+
+function __update::utils::is-macos() {
+  [[ "$(uname -s | tr '[[:upper:]]' '[[:lower:]]')" =~ "darwin" ]]
+}
+
+function __update::utils::is-callable() {
+  (( $+builtins[$1] )) || (( $+functions[$1] )) || (( $+aliases[$1] )) || (( $+commands[$1] ))
+}
 
 typeset -ga _UPDATE_CUSTOM_ENV_VARIABLES
 
@@ -8,7 +25,7 @@ _UPDATE_PACKAGE_MANAGERS[npm]="npm\tUpdate outdated npm packages"
 _UPDATE_PACKAGE_MANAGERS[nvim]="nvim\tUpdate Neovim plugins"
 _UPDATE_PACKAGE_MANAGERS[zsh]="zsh\tUpdate ZSH plugins"
 
-if is_macos; then
+if __update::utils::is-macos; then
   _UPDATE_PACKAGE_MANAGERS[macos]="macos\tUpdate macOS and Mac App Store apps"
   _UPDATE_PACKAGE_MANAGERS[brew]="brew\tUpdate Homebrew and Cask packages"
 
@@ -28,40 +45,40 @@ _UPDATE_OPTIONS[list]="-l, --list\tList all commands"
 _UPDATE_OPTIONS[help]="-h, --help\tDisplay this text and exit"
 
 function __update::commands::list::subcommands {
-  print -l -- "${(o)_UPDATE_SUBCOMMANDS[@]}" | awk -F '\t' '{ printf "%-14s %s\n", $1, $2 }'
+  builtin print -l -- "${(o)_UPDATE_SUBCOMMANDS[@]}" | awk -F '\t' '{ printf "%-14s %s\n", $1, $2 }'
 }
 
 function __update::commands::list::package-managers {
-  print -l -- "${(o)_UPDATE_PACKAGE_MANAGERS[@]}" | awk -F '\t' '{ printf "%-14s %s\n", $1, $2 }'
+  builtin print -l -- "${(o)_UPDATE_PACKAGE_MANAGERS[@]}" | awk -F '\t' '{ printf "%-14s %s\n", $1, $2 }'
 }
 
 function __update::commands::list::options {
-  print -l -- "${_UPDATE_OPTIONS[@]}" | awk -F '\t' '{ printf "%-14s %s\n", $1, $2 }'
+  builtin print -l -- "${_UPDATE_OPTIONS[@]}" | awk -F '\t' '{ printf "%-14s %s\n", $1, $2 }'
 }
 
 function __update::help::usage {
-  print -- "usage: update [OPTIONS] [COMMANDS]"
-  print
+  builtin print -- "usage: update [OPTIONS] [COMMANDS]"
+  builtin print
 }
 
 function __update::help::commands {
-  print -- "COMMANDS:"
+  builtin print -- "COMMANDS:"
   __update::commands::list::package-managers | pr -to2
-  print
+  builtin print
   __update::commands::list::subcommands | pr -to2
-  print
+  builtin print
 }
 
 function __update::help::package-managers {
-  print -- "COMMANDS:"
+  builtin print -- "COMMANDS:"
   __update::commands::list::package-managers | pr -to2
-  print
+  builtin print
 }
 
 function __update::help::options {
-  print -- "OPTIONS:"
+  builtin print -- "OPTIONS:"
   __update::commands::list::options | pr -to2
-  print
+  builtin print
 }
 
 function __update::help::print {
@@ -108,7 +125,7 @@ function __update::commands::npm {
 }
 
 function __update::commands::zsh {
-  if is-callable zplugin; then
+  if __update::utils::is-callable zplugin; then
     __update::utils::log::info "zplugin self-update"
     zplugin self-update > /dev/null
 
@@ -121,13 +138,13 @@ function __update::commands::zsh {
 }
 
 function __update::commands::nvim {
-  if is-callable nvim; then
+  if __update::utils::is-callable nvim; then
     nvim -e +PlugInstall +PlugUpgrade +PlugUpdate +PlugClean! +qall &>/dev/null
   fi
 }
 
 function __update::commands::macos {
-  if ! is_macos; then
+  if ! __update::utils::is-macos; then
     unfunction __update::commands::macos
     __update::utils::errors::command-not-found "macos"
     return $status
@@ -136,14 +153,14 @@ function __update::commands::macos {
   __update::utils::log::info "softwareupdate --install --all"
   softwareupdate --install --all
 
-  if is-callable mas; then
+  if __update::utils::is-callable mas; then
     __update::utils::log::info "mas upgrade"
     mas upgrade
   fi
 }
 
 function __update::commands::brew {
-  if ! is_macos; then
+  if ! __update::utils::is-macos; then
     unfunction __update::commands::brew
     __update::utils::errors::command-not-found "brew"
     return $status
@@ -198,7 +215,7 @@ function __update::run-command {
     eval __update::commands::$1 || return $status
   else
     __update::utils::errors::command-not-found "$1"
-    print
+    builtin print
     __update::help::package-managers
     return 129
   fi
@@ -247,7 +264,7 @@ function update {
       return $status;;
 
     -*)
-      __update::utils::errors::invalid-option "$1" ; print
+      __update::utils::errors::invalid-option "$1" ; builtin print
       __update::help::print
       return 129;;
 
