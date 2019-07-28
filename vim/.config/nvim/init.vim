@@ -597,10 +597,7 @@ call plug#begin($XDG_DATA_HOME . '/nvim/plugged')
 Plug 'junegunn/vim-plug'
 
 " Base16 for Vim (colorsheme)
-function! FixupBase16(info)
-  !sed -i '/Base16hi/\! s/a:\(attr\|guisp\)/l:\1/g' $XDG_BIN_HOME/nvim/plugged/base16-vim/colors/*.vim
-endfunction
-Plug 'chriskempson/base16-vim', { 'do': function('FixupBase16') }
+Plug 'chriskempson/base16-vim'
 
 " FileType plugins {{{
 " ------------------------------------------------------------------------------
