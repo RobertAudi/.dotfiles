@@ -1,49 +1,23 @@
-Homebrew
---------
-
-The `brew.sh` script will update `brew` or install it if needed:
-
-```console
-$ ./brew.sh
-```
-
-Dependencies are managed using [Homebrew Bundle][brew-bundle] and are organized in multiple ["bundles"](./Homebrew) (files with the `.brewfile` extension).
-
-To install a bundle, you need to specify its file to the `brew bundle` command:
-
-```console
-$ brew bundle install --file="./Homebrew/common.brewfile"
-```
-
-Or you can install all bundles:
-
-```zsh
-# In ZSH:
-for f in ./Homebrew/*.brewfile(:A); do
-  brew bundle install --file="$f"
-done
-```
-
-[brew-bundle]: https://github.com/Homebrew/homebrew-bundle
-
 Rust
 ----
 
-### Install
+### Install/Update
 
-The `rust.sh` script will install Rust using [rustup.rs][]:
+Use the `setup` script to install Rust using [rustup.rs][]:
 
 ```console
-$ ./rust.sh
+$ setup rust
+```
+
+Use the `setup` script to install/update default cargo packages:
+
+```console
+$ setup cargo-packages
 ```
 
 [rustup.rs]: https://rustup.rs/
 
 ### Packages
-
-```console
-$ ./cargo-packages.sh
-```
 
 - [cargo-update][]: A cargo subcommand for checking and applying updates to installed executables
 - [genact][]: 🌀 A nonsense activity generator – [svenstaro.github.io/genact](https://svenstaro.github.io/genact/)
@@ -58,6 +32,7 @@ $ ./cargo-packages.sh
 - [checkpwn][]: Check [Have I Been Pwned](https://haveibeenpwned.com/) and see if it's time for you to change passwords.
 - [simple-http-server][]: Simple http server in Rust
 - [fw][]: Workspace productivity booster
+- [eva][]: Simple calculator REPL, similar to bc(1), with syntax highlighting and persistent history
 
 [cargo-update]: https://github.com/nabijaczleweli/cargo-update
 [genact]: https://github.com/svenstaro/genact
@@ -72,10 +47,4 @@ $ ./cargo-packages.sh
 [checkpwn]: https://github.com/brycx/checkpwn
 [simple-http-server]: https://github.com/TheWaWaR/simple-http-server
 [fw]: https://github.com/brocode/fw
-
-Alacritty
----------
-
-```console
-$ ./alacritty.sh
-```
+[eva]: https://github.com/NerdyPepper/eva
