@@ -295,6 +295,8 @@ export WALLPAPER="$XDG_DATA_HOME/resources/wallpaper.png"
 export PROJECTS="$HOME/Developer"
 unset DISPLAY
 
+export FZF_HOME="$HOME/.local/opt/fzf"
+
 # If we're 64bit, let everything know!
 [[ "x86_64" == "$(/usr/bin/uname -m)" ]] && export ARCHFLAGS="-arch x86_64 ${ARCHFLAGS}"
 

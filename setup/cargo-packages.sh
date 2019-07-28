@@ -78,6 +78,10 @@ cargoPackages+=("du-dust")
 #   https://github.com/nachoparker/dutree
 cargoPackages+=("dutree")
 
+# A tool to conveniently learn about the disk usage of directories, fast!
+#   https://github.com/Byron/dua-cli
+cargoPackages+=("dua-cli")
+
 # svgcleaner could help you to clean up your SVG files from the unnecessary data.
 #   https://github.com/RazrFalcon/svgcleaner
 cargoPackages+=("svgcleaner")
@@ -93,6 +97,10 @@ cargoPackages+=("sd")
 # A fast and reliable alternative to rsync for synchronizing local files
 #   https://github.com/wchang22/LuminS
 cargoPackages+=("lms")
+
+# Simple calculator REPL, similar to bc(1), with syntax highlighting and persistent history
+#   https://github.com/NerdyPepper/eva
+cargoPackages+=("eva")
 
 builtin print -P -- "%F{blue}==>%f Installing or updating cargo packages:"
 builtin print -P -- "      %B${(j: :)cargoPackages}%b\n"

@@ -9,6 +9,9 @@ function main {
   json_response="$(curl --fail --silent --request GET https://api.github.com/repos/junegunn/fzf-bin/releases/latest 2>/dev/null)" \
     || return $status
 
+  : ${FZF_HOME:=${HOME}/.local/opt/fzf}
+  export FZF_HOME
+
   local latest_version version
   latest_version="$(builtin echo -E "$json_response" | jq -r '.name')"
   if (( $+commands[fzf] )) &>/dev/null; then
@@ -16,8 +19,7 @@ function main {
   fi
 
   if [[ -z "$version" ]] || [[ -n "$latest_version" && "$version" != "$latest_version" ]]; then
-    local fzf_home
-    fzf_home="${HOME:-~}/.local/opt/fzf"
+    FZF_HOME="${HOME}/.local/opt/fzf"
 
     local release_notes download_url
     release_notes="$(builtin echo -E "$json_response" | jq -r '.body')"
@@ -25,6 +27,12 @@ function main {
 
     local fzf_tmux_download_url
     fzf_tmux_download_url="https://raw.githubusercontent.com/junegunn/fzf/${latest_version}/bin/fzf-tmux"
+
+    local fzf_vim_plugin_download_url
+    fzf_vim_plugin_download_url="https://raw.githubusercontent.com/junegunn/fzf/${latest_version}/plugin/fzf.vim"
+
+    local fzf_vim_doc_download_url
+    fzf_vim_doc_download_url="https://raw.githubusercontent.com/junegunn/fzf/${latest_version}/doc/fzf.txt"
 
     local manpage_download_url fzf_tmux_manpage_download_url
     manpage_download_url="https://raw.githubusercontent.com/junegunn/fzf/${latest_version}/man/man1/fzf.1"
@@ -36,13 +44,13 @@ function main {
     mdcat <(builtin echo -E "$release_notes") | pr --omit-header --indent=4
     builtin print -Pn -- "\n%B%F{019}"; hr "⋅"; builtin print -P -- "%f%b"
 
-    command mkdir -p "$fzf_home"/{bin,man/man1}
+    command mkdir -p "$FZF_HOME"/{bin,man/man1,plugin,doc}
 
     (
-      builtin cd -q "$fzf_home"
+      builtin cd -q "$FZF_HOME"
 
       builtin print -Pn -- "%F{blue}==>%f Downloading the latest binary..."
-      builtin cd -q "$fzf_home"/bin
+      builtin cd -q "$FZF_HOME"/bin
       command curl --silent --disable --fail --location "$download_url" | tar --overwrite -xzf - || return $status
       chmod +x fzf
       builtin print -P -- "%F{green}Done%f"
@@ -52,8 +60,15 @@ function main {
       chmod +x fzf-tmux
       builtin print -P -- "%F{green}Done%f"
 
+      builtin print -Pn -- "%F{blue}==>%f Downloading the fzf Vim plugin..."
+      builtin cd -q "$FZF_HOME"/plugin
+      command curl --silent --disable --fail --location --remote-name "$fzf_vim_plugin_download_url" || return $status
+      builtin cd -q "$FZF_HOME"/doc
+      command curl --silent --disable --fail --location --remote-name "$fzf_vim_doc_download_url" || return $status
+      builtin print -P -- "%F{green}Done%f"
+
       builtin print -Pn -- "%F{blue}==>%f Downloading manpages..."
-      builtin cd -q "$fzf_home"/man/man1
+      builtin cd -q "$FZF_HOME"/man/man1
       command curl --silent --disable --fail --location --remote-name "$manpage_download_url" || return $status
       command curl --silent --disable --fail --location --remote-name "$fzf_tmux_manpage_download_url" || return $status
       builtin print -P -- "%F{green}Done%f"

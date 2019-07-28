@@ -72,3 +72,7 @@ ___install github.com/orisano/rget 'rget is parallel downloader for GitHub relea
 # A faster file programming language detector
 #   https://github.com/src-d/enry
 ___install gopkg.in/src-d/enry.v1/... 'A faster file programming language detector'
+
+# Easily create & extract archives, and compress & decompress files of various formats.
+#   https://github.com/mholt/archiver
+___install github.com/mholt/archiver/cmd/arc 'Easily create & extract archives, and compress & decompress files of various formats.'

@@ -11,12 +11,16 @@ local project_root=$(command ghq list --exact --full-path github.com/jwilm/alacr
 [[ -d "$project_root" ]] || return 1
 
 (
+  local mandir alacritty_dotfiles_dir
+  mandir="${XDG_DATA_HOME-:$HOME/.local/share}/man/man1"
+  alacritty_dotfiles_dir="${DOTFILES_DIR-:$HOME/.dotfiles}/alacritty"
+
   cd $project_root
   make app
   cp -rv target/release/osx/Alacritty.app /Applications/
-  mkdir -pv /usr/local/share/man/man1
-  gzip -c extra/alacritty.man | tee /usr/local/share/man/man1/alacritty.1.gz > /dev/null
-  cp -v extra/completions/_alacritty ~/.dotfiles/alacritty/.zsh/completions/_alacritty
-  cp -v extra/completions/alacritty.bash ~/.dotfiles/alacritty/.bash/alacritty-completions.bash
+  mkdir -pv "$mandir"
+  gzip -c extra/alacritty.man | tee "${mandir}"/alacritty.1.gz > /dev/null
+  cp -v extra/completions/_alacritty "${alacritty_dotfiles_dir}"/.zsh/completions/_alacritty
+  cp -v extra/completions/alacritty.bash "${alacritty_dotfiles_dir}"/.bash/alacritty-completions.bash
   make clean
 )
