@@ -309,14 +309,6 @@ cask "postico"
 #   https://postgresapp.com/
 cask "postgres"
 
-# SQLite 3 client
-#   https://menial.co.uk/base/
-cask "base"
-
-# Sequel Pro is a MySQL database management application
-#   https://www.sequelpro.com/
-cask "sequel-pro"
-
 # Powerful and customizable text editor
 #   https://macromates.com/
 cask "textmate"
@@ -381,11 +373,6 @@ cask "handbrake"
 # X Lossless Decoder: Lossless audio decoder for Mac OS X
 #   http://tmkk.undo.jp/xld/index_e.html
 cask "xld"
-
-# Intel Power Gadget is a software-based power usage monitoring tool
-# enabled for Intel Core processors
-#   https://software.intel.com/en-us/articles/intel-power-gadget-20
-cask "intel-power-gadget"
 
 # A simple and elegant open-source markdown editor that
 # focused on speed and usability.
@@ -468,14 +455,6 @@ cask "pine"
 
 # ------------------------------------------------------------------------------
 
-tap "devhubapp/devhub"
-
-# TweetDeck for GitHub
-#   https://github.com/devhubapp/devhub
-cask "devhub"
-
-# ------------------------------------------------------------------------------
-
 # App Store applications {{{
 # ------------------------------------------------------------------------------
 
@@ -538,10 +517,6 @@ mas "stts", id: 1187772509
 # Apple Configurator 2 makes it easy to deploy iPad, iPhone, iPod touch, and Apple TV devices.
 #   https://itunes.apple.com/fr/app/apple-configurator-2/id1037126344?l=en
 mas "Apple Configurator 2", id: 1037126344
-
-# Objective-C to Swift Converter
-#   https://objectivec2swift.com/#/xcode-extension/
-mas "Swiftify for Xcode", id: 1183412116
 
 # Apple IDE
 #   https://developer.apple.com/xcode/
