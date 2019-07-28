@@ -2,4 +2,7 @@
 #
 # Stolen from https://sanctum.geek.nz/cgit/dotfiles.git
 #   https://sanctum.geek.nz/cgit/dotfiles.git/tree/games/aaf
+#
+# Depends on pup:
+#   https://github.com/ericchiang/pup
 curl http://www.asciiartfarts.com/random.cgi | pup -p 'table[cellpadding]' pre text{}

@@ -1,3 +1,23 @@
+# Banner-like program prints strings as ASCII art
+#   http://www.figlet.org/
+brew "figlet"
+
+# Configurable talking characters in ASCII art
+#   https://github.com/tnalpgge/rank-amateur-cowsay
+brew "cowsay"
+
+# Infamous electronic fortune-cookie generator
+#   https://www.ibiblio.org/pub/linux/games/amusements/fortune/!INDEX.html
+brew "fortune"
+
+# Color-based alternative to figlet (uses libcaca)
+#   http://caca.zoy.org/wiki/toilet
+brew "toilet"
+
+# Rainbows and unicorns in your console!
+#   https://github.com/busyloop/lolcat
+brew "lolcat"
+
 # Animated pipes terminal screensaver
 #   https://github.com/pipeseroni/pipes.sh
 brew "pipes-sh"
