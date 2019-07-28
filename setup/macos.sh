@@ -313,17 +313,17 @@ defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
 defaults write com.apple.finder FXPreferredSearchViewStyle -string "Nlsv"
 (( $status == 0 )) && ___done || ___error
 
-___describe "Show icons for hard drives on the desktop"
-defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -boolean true
-defaults write com.apple.finder ShowHardDrivesOnDesktop -boolean true
+___describe "Don't show icons for hard drives on the desktop"
+defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -boolean false
+defaults write com.apple.finder ShowHardDrivesOnDesktop -boolean false
 (( $status == 0 )) && ___done || ___error
 
-___describe "Show icons for mounted servers on the desktop"
-defaults write com.apple.finder ShowMountedServersOnDesktop -boolean true
+___describe "Don't show icons for mounted servers on the desktop"
+defaults write com.apple.finder ShowMountedServersOnDesktop -boolean false
 (( $status == 0 )) && ___done || ___error
 
-___describe "Show icons removable media on the desktop"
-defaults write com.apple.finder ShowRemovableMediaOnDesktop -boolean true
+___describe "Don't show icons removable media on the desktop"
+defaults write com.apple.finder ShowRemovableMediaOnDesktop -boolean false
 (( $status == 0 )) && ___done || ___error
 
 ___describe "Do not open a new Finder window when a volume is mounted"
