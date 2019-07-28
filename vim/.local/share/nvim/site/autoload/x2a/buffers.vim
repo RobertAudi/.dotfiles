@@ -107,14 +107,14 @@ function! x2a#buffers#BufDeleteInactive(bang) abort
   let l:buffers = filter(getbufinfo(), '(v:val.listed || v:val.loaded) && empty(v:val.windows)')
   let l:deletedCount = 0
 
-  let l:eventignore_keep = &eventignore
-  let l:lazyredraw_keep  = &lazyredraw
-
-  set eventignore=all
-  set lazyredraw
-
   for l:buffer in l:buffers
-    if l:buffer.changed && !a:bang
+    let l:buffer_filetype = getbufvar(l:buffer.bufnr, '&filetype')
+
+    if l:buffer_filetype ==# 'nerdtree' || l:buffer_filetype ==# 'vista'
+      silent! bwipeout!
+
+      continue
+    elseif l:buffer.changed && !a:bang
       let l:message = 'No write since last change for buffer ' . l:buffer.bufnr . ' (add ! to override)'
 
       call x2a#utils#echo#Warning(l:message)
@@ -138,9 +138,6 @@ function! x2a#buffers#BufDeleteInactive(bang) abort
     endif
   endfor
 
-  let &eventignore = l:eventignore_keep
-  let &lazyredraw  = l:lazyredraw_keep
-
   let l:message = l:deletedCount . ' buffer' . (l:deletedCount > 1 ? 's' : '') . ' deleted'
 
   call x2a#utils#echo#Message(l:message)
@@ -153,24 +150,24 @@ function! x2a#buffers#BufDeleteAll(bang) abort
   endif
 
   let l:buffers = filter(getbufinfo(), 'v:val.listed || v:val.loaded')
-  let l:reopenNERDTree = exists('g:NERDTree') && g:NERDTree.IsOpen()
+
+  let l:NERDTree_bufnr = bufnr(t:NERDTreeBufName)
+  let l:reopenNERDTree = exists('g:NERDTree') && g:NERDTree.ExistsForTab()
   let l:deletedCount = 0
-
-  let l:eventignore_keep = &eventignore
-  let l:lazyredraw_keep  = &lazyredraw
-
-  set eventignore=all
-  set lazyredraw
 
   " Close all tabs
   silent! tabonly
 
   " Close NERDTree in the current tab
-  silent! NERDTreeClose
+  silent! call s:exec('NERDTreeClose')
 
   for l:buffer in l:buffers
-    if getbufvar(l:buffer.bufnr, '&filetype') ==# 'nerdtree'
-      silent! NERDTreeClose
+    let l:buffer_filetype = getbufvar(l:buffer.bufnr, '&filetype')
+
+    if l:buffer_filetype ==# 'nerdtree' && l:reopenNERDTree && l:buffer.bufnr == l:NERDTree_bufnr
+      continue
+    elseif l:buffer_filetype ==# 'vista'
+      silent! Vista!
 
       continue
     elseif l:buffer.changed && !a:bang
@@ -187,7 +184,7 @@ function! x2a#buffers#BufDeleteAll(bang) abort
   endfor
 
   if l:reopenNERDTree
-    execute 'keepjumps keepalt NERDTreeToggle | keepjumps keepalt wincmd w'
+    call s:exec('keepjumps keepalt NERDTreeToggle | keepjumps keepalt wincmd w')
   endif
 
   let l:message = l:deletedCount . ' buffer' . (l:deletedCount > 1 ? 's' : '') . ' deleted'
@@ -195,9 +192,6 @@ function! x2a#buffers#BufDeleteAll(bang) abort
   if exists('*lightline#update')
     silent! call lightline#update()
   endif
-
-  let &eventignore = l:eventignore_keep
-  let &lazyredraw  = l:lazyredraw_keep
 
   call x2a#utils#echo#Message(l:message)
 endfunction

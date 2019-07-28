@@ -10,12 +10,15 @@ nnoremap <silent> gF <Cmd>silent! NERDTreeFind<CR>
 
 let g:NERDTreeAutoDeleteBuffer = 1
 let g:NERDTreeCreatePrefix = 'silent keepalt keepjumps'
+let g:NERDTreeAutoCenter = 1
 let g:NERDTreeHighlightCursorline = 0
+let g:NERDTreeHijackNetrw = 1
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeMinimalUI  = 1
 let g:NERDTreeDirArrows  = 1
 let g:NERDTreeQuitOnOpen = 0
 let g:NERDTreeChDirMode  = 0
+let g:NERDTreeStatusline = -1
 let g:NERDTreeMouseMode  = 3
 let g:NERDTreeWinSize    = 30
 let g:NERDTreeDirArrowExpandable = '▸'
@@ -40,7 +43,7 @@ let g:NERDTreeIgnore = [
 " ------------------------------------------------------------------------------
 " Plugin: nerdtree-git-plugin
 " Description: A plugin of NERDTree showing git status
-" URL: https://github.com/Xuyuanp/nerdtree-git-plugin
+" URL: https://github.com/RobertAudi/nerdtree-git-plugin
 " ------------------------------------------------------------------------------
 
 let g:NERDTreeGitStatusUpdateOnCursorHold = 0

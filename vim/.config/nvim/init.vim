@@ -584,6 +584,19 @@ set mousemodel=
 " Plugins {{{
 " ------------------------------------------------------------------------------
 
+" FZF {{{
+" ------------------------------------------------------------------------------
+
+if exists("$FZF_HOME")
+  " A command-line fuzzy finder
+  "   https://github.com/junegunn/fzf
+  set rtp+=$FZF_HOME
+elseif isdirectory(fnamemodify("~/.local/opt/fzf", ":p"))
+  set rtp+=fnamemodify("~/.local/opt/fzf", ":p")
+endif
+
+" ------------------------------------------------------------------------------ }}}
+
 let g:plug_threads = 16
 let g:plug_retries = 3
 let g:plug_timeout = 180
@@ -645,6 +658,9 @@ Plug 'cespare/vim-toml', { 'for': 'toml' }
 
 " Vim Syntax for Homebrew formulae
 Plug 'xu-cheng/brew.vim'
+
+" Super small plugin to improve Vim’s highlighting of shell scripts
+Plug 'arzg/vim-sh'
 
 " Vim support for editing fish scripts
 Plug 'dag/vim-fish', { 'for': 'fish' }
