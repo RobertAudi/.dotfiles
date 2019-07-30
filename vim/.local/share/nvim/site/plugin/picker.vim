@@ -28,4 +28,17 @@ nmap <silent> <C-p><C-x> <Plug>(PickerSplit)
 nmap <silent> <C-p><C-v> <Plug>(PickerVsplit)
 nmap <silent> <C-p><C-t> <Plug>(PickerTabedit)
 
-nmap <silent> <C-b> <Plug>(PickerBuffer)
+nmap <silent> <C-b> <Cmd>call x2a#utils#echo#Warning('Use one of e, s, x, v or t.')<CR>
+nmap <silent> <C-b><C-b> <Cmd>call x2a#utils#echo#Warning('Use one of e, s, x, v or t.')<CR>
+
+nmap <silent> <C-b>e <Cmd>call x2a#picker#Buffer#Edit()<CR>
+nmap <silent> <C-b>s <Cmd>call x2a#picker#Buffer#Split()<CR>
+nmap <silent> <C-b>x <Cmd>call x2a#picker#Buffer#Split()<CR>
+nmap <silent> <C-b>v <Cmd>call x2a#picker#Buffer#Vsplit()<CR>
+nmap <silent> <C-b>t <Cmd>call x2a#picker#Buffer#Tabedit()<CR>
+
+nmap <silent> <C-b><C-e> <Cmd>call x2a#picker#Buffer#Edit()<CR>
+nmap <silent> <C-b><C-s> <Cmd>call x2a#picker#Buffer#Split()<CR>
+nmap <silent> <C-b><C-x> <Cmd>call x2a#picker#Buffer#Split()<CR>
+nmap <silent> <C-b><C-v> <Cmd>call x2a#picker#Buffer#Vsplit()<CR>
+nmap <silent> <C-b><C-t> <Cmd>call x2a#picker#Buffer#Tabedit()<CR>
