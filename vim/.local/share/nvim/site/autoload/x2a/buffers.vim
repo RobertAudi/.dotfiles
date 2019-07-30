@@ -151,7 +151,7 @@ function! x2a#buffers#BufDeleteAll(bang) abort
 
   let l:buffers = filter(getbufinfo(), 'v:val.listed || v:val.loaded')
 
-  let l:NERDTree_bufnr = bufnr(t:NERDTreeBufName)
+  let l:NERDTree_bufnr = exists('t:NERDTreeBufName') ? bufnr(t:NERDTreeBufName) : ''
   let l:reopenNERDTree = exists('g:NERDTree') && g:NERDTree.ExistsForTab()
   let l:deletedCount = 0
 
