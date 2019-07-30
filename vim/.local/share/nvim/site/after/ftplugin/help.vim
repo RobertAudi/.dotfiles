@@ -2,12 +2,13 @@ setlocal iskeyword+=:
 setlocal iskeyword+=#
 setlocal iskeyword+=-
 
+setlocal keywordprg=:help
+
 setlocal nocursorline
 setlocal readonly
 setlocal nomodifiable
 setlocal nolist
 setlocal wrap
-setlocal keywordprg=:Help
 setlocal bufhidden=hide
 
 if getbufvar('%', '&timeoutlen') != 0
