@@ -1342,6 +1342,12 @@ augroup RAVimAutocommands
     autocmd BufNewFile,BufReadPre /tmp/*,$TMPDIR/*,$TMP/*,$TEMP/* setlocal noswapfile
   endif
 
+  " Don't show whitespace in readonly and nomodifiable buffers
+  autocmd BufReadPost *
+        \ if &readonly
+        \ | execute 'setlocal nolist' |
+        \ endif
+
   " Open new tabs at the end
   autocmd TabNew * tabmove
 

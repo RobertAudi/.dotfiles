@@ -15,3 +15,12 @@ let g:better_whitespace_filetypes_blacklist =
       \   'gitcommit',
       \   'gitrebase'
       \ ]
+
+augroup RAPluginsBetterWhitespace
+  autocmd!
+
+  autocmd BufReadPost *
+        \ if &readonly
+        \ | execute 'DisableWhitespace' |
+        \ endif
+augroup END
