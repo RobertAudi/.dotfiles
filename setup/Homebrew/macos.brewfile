@@ -235,10 +235,6 @@ cask "karabiner-elements"
 #   https://github.com/michaelvillar/timer-app
 cask "michaelvillar-timer"
 
-# Application to generate diagrams.
-#   https://www.yworks.com/products/yed
-cask "yed"
-
 # App/window/tab switcher. For when ⌘-Tab simply doesn't cut it.
 #   https://manytricks.com/witch/
 cask "witch"
@@ -280,6 +276,11 @@ cask "mark-text"
 # A Mac menu bar utility that hides your inactive windows.
 #   https://hocusfoc.us/
 cask "hocus-focus"
+
+# Lightweight clipboard manager for macOS
+#   https://maccy.app/
+#   https://github.com/p0deje/Maccy
+cask "maccy"
 
 # Finder Toolbar app for macOS to open the current directory in Terminal, iTerm, Hyper or Alacritty.
 #   https://github.com/Ji4n1ng/OpenInTerminal

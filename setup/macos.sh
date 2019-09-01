@@ -662,6 +662,25 @@ defaults write org.m0k.transmission RandomPort -boolean true
 
 # ------------------------------------------------------------------------------ }}}
 
+# Maccy {{{
+# ------------------------------------------------------------------------------
+# PList file: ~/Library/Preferences/org.p0deje.Maccy.plist
+# ------------------------------------------------------------------------------
+
+# Popup Hotkey
+defaults write org.p0deje.Maccy hotKey control+option+c
+
+# History Size
+defaults write org.p0deje.Maccy historySize 500
+
+# Show/Hide Icon in Status Bar
+defaults write org.p0deje.Maccy showInStatusBar false
+
+# Don't paste selection automatically
+defaults write org.p0deje.Maccy pasteByDefault false
+
+# ------------------------------------------------------------------------------ }}}
+
 # Kill affected applications {{{
 # ------------------------------------------------------------------------------
 

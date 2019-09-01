@@ -102,6 +102,14 @@ cargoPackages+=("lms")
 #   https://github.com/NerdyPepper/eva
 cargoPackages+=("eva")
 
+# A command-line tool to generate, analyze, convert and manipulate colors
+#   https://github.com/sharkdp/pastel
+cargoPackages+=("pastel")
+
+# A minimal, fast alternative to 'du -sh'
+#   https://github.com/sharkdp/diskus
+cargoPackages+=("diskus")
+
 builtin print -P -- "%F{blue}==>%f Installing or updating cargo packages:"
 builtin print -P -- "      %B${(j: :)cargoPackages}%b\n"
 

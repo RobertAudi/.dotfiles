@@ -691,6 +691,9 @@ brew "sqlite"
 #   https://dev.mysql.com/doc/refman/8.0/en/
 brew "mysql"
 
+# Open a web search in your terminal
+#   https://github.com/zquestz/s
+brew "s-search"
 
 # Modeline {{{
 # vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker : }}}
