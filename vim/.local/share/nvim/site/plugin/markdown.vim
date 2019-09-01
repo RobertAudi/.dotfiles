@@ -29,5 +29,6 @@ let g:gfm_syntax_enable_filetypes = ['markdown']
 " URL: https://github.com/mzlogin/vim-markdown-toc
 " ------------------------------------------------------------------------------
 let g:vmt_auto_update_on_save = 0
-let g:vmt_dont_insert_fence = 0
+let g:vmt_dont_insert_fence = 1
+let g:vmt_list_item_char = '-'
 " ------------------------------------------------------------------------------

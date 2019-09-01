@@ -1,4 +1,5 @@
 " Use tabs in Makefiles
 setlocal noexpandtab
-setlocal shiftwidth=4
-setlocal tabstop=4
+set tabstop=8
+set softtabstop=8
+set shiftwidth=8

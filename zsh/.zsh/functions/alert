@@ -13,12 +13,10 @@ fi
 
 if is-callable terminal-notifier; then
   if is-callable reattach-to-user-namespace; then
-    reattach-to-user-namespace terminal-notifier -message "$message"
+    ds reattach-to-user-namespace terminal-notifier -message "$message"
   else
-    terminal-notifier -message "$message"
+    ds terminal-notifier -message "$message"
   fi
-elif is-callable notify-send; then
-  notify-send "$message"
 else
   print-info "$message"
 fi

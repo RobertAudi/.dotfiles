@@ -171,9 +171,6 @@ alias dirs="dirs -v -p"
 # fancy top
 alias top="top -ocpu -R -F -s 2 -n30"
 
-# Use $EDITOR for vidir
-alias vidir="VISUAL=\$EDITOR vidir"
-
 alias fetchmail="fetchmail --check"
 
 # Modeline {{{

@@ -1,8 +1,7 @@
-snippet header "standard Vim script file header" b
-" File: ${1:`!v expand('%:t')`}
-" Author: ${2}
-" Description: ${3}
-${0:" Last Modified: `!v strftime("%B %d, %Y")`}
+snippet header "Header for plugin files" b
+" Plugin: ${1:`!v expand('%:t')`}
+" Description: PLUGIN DESCRIPTION
+" URL: https://github.com/USER/`!v expand('%:t')`
 endsnippet
 
 snippet "\bfun(c|ction)?" "function" r

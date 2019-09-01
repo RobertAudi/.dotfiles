@@ -12,7 +12,7 @@ if (( $# > 0)); then
 fi
 
 # Return early if `git push` succeeds
-git push && return
+git push && return $status
 
 local gitRemotes="$(git remote)"
 

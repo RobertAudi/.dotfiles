@@ -6,6 +6,7 @@ elif type ag >/dev/null; then
   export FZF_DEFAULT_COMMAND='ag --hidden --files-with-matches -g ""'
 fi
 
+export FZF_HEIGHT="40%"
 export FZF_TMUX_HEIGHT="30%"
 
 function {
@@ -32,7 +33,7 @@ function {
     --extended
     --cycle
     --no-hscroll
-    --height 40%
+    --height $FZF_HEIGHT
     --color=bg+:$color01,bg:$color00,spinner:$color0C,hl:$color0D
     --color=fg:$color04,header:$color0D,info:$color0A,pointer:$color0C
     --color=marker:$color0C,fg+:$color06,prompt:$color0A,hl+:$color0D

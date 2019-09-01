@@ -25,11 +25,11 @@ endfunction
 
 function! x2a#buffers#BufOnly(bang) abort
   if getbufvar('%', '&filetype') ==# 'nerdtree'
-    silent! call s:exec('NERDTreeClose')
+    silent! NERDTreeClose
 
     call x2a#buffers#BufDeleteAll(a:bang)
 
-    silent! call s:exec('NERDTreeToggle')
+    silent! NERDTreeToggle
 
     return
   endif
@@ -159,7 +159,7 @@ function! x2a#buffers#BufDeleteAll(bang) abort
   silent! tabonly
 
   " Close NERDTree in the current tab
-  silent! call s:exec('NERDTreeClose')
+  silent! NERDTreeClose
 
   for l:buffer in l:buffers
     let l:buffer_filetype = getbufvar(l:buffer.bufnr, '&filetype')
@@ -184,7 +184,7 @@ function! x2a#buffers#BufDeleteAll(bang) abort
   endfor
 
   if l:reopenNERDTree
-    call s:exec('keepjumps keepalt NERDTreeToggle | keepjumps keepalt wincmd w')
+    execute 'keepjumps keepalt NERDTreeToggle | keepjumps keepalt wincmd w'
   endif
 
   let l:message = l:deletedCount . ' buffer' . (l:deletedCount > 1 ? 's' : '') . ' deleted'

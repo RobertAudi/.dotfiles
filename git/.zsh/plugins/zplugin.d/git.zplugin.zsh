@@ -1,6 +1,6 @@
 # 10x faster implementation of `git status` command
 #   https://github.com/romkatv/gitstatus
-zplugin ice pick"gitstatus.plugin.zsh" atload"gitstatus_check MY || gitstatus_start -s -1 -u -1 -d -1 MY"
+zplugin ice pick"gitstatus.plugin.zsh" atload"gitstatus_check MY || gitstatus_start -s -1 -u -1 -d -1 MY > /dev/null"
 zplugin light romkatv/gitstatus
 
 # local plugins

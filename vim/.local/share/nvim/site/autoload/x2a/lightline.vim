@@ -10,7 +10,7 @@ function! x2a#lightline#Percent() abort
   if x2a#lightline#predicates#IgnoreFiletype(&filetype)
     return ''
   else
-    return '%3p%%'
+    return '%3p%% (' . line('$') . ' lines)'
   endif
 endfunction
 

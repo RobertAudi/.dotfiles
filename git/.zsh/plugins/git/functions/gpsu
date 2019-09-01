@@ -14,10 +14,13 @@ elif ! [[ "$gitRemotes" =~ "\borigin\b" ]]; then
   return 1
 fi
 
-local current_branch
+local current_branch remote
 
 current_branch="$(git current-branch)" || return $status
 
-builtin print -P -- "%F{blue}=>%f git push -u origin  $current_branch"
+# FIXME: Don't hard-code the remote
+remote="origin"
 
-git push -u origin  $current_branch
+builtin print -P -- "%F{blue}=>%f git push --set-upstream $remote $current_branch"
+
+git push --set-upstream $remote $current_branch

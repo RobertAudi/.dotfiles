@@ -11,7 +11,7 @@ nnoremap <silent> gF <Cmd>silent! NERDTreeFind<CR>
 let g:NERDTreeAutoDeleteBuffer = 1
 let g:NERDTreeCreatePrefix = 'silent keepalt keepjumps'
 let g:NERDTreeAutoCenter = 1
-let g:NERDTreeHighlightCursorline = 0
+let g:NERDTreeHighlightCursorline = 1
 let g:NERDTreeHijackNetrw = 1
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeMinimalUI  = 1

@@ -149,6 +149,9 @@ set showcmd
 " Pop-up menu's line height
 set pumheight=20
 
+" Enable pseudo-transparency for the popup-menu
+set pumblend=5
+
 " Minimum help window height
 set helpheight=12
 
@@ -163,6 +166,9 @@ set titlestring=%{x2a#TitleString#build()}
 " I hate line numbers
 set nonumber
 set norelativenumber
+
+" Resize to accommodate multiple signs up to 4 signs
+set signcolumn=auto:4
 
 " ------------------------------------------------------------------------------ }}}
 
@@ -1042,7 +1048,7 @@ Plug 'RobertAudi/ZoomWinTab'
 Plug 'RobertAudi/vim-bbye'
 
 " Land on window you chose like tmux's 'display-pane'
-Plug 't9md/vim-choosewin', { 'on': ['<Plug>(choosewin)', 'ChooseWin', 'ChooseWinSwap', 'ChooseWinSwapStay'] }
+Plug 't9md/vim-choosewin'
 
 " Intelligently reopen files at your last edit position in Vim.
 Plug 'farmergreg/vim-lastplace'
@@ -1150,6 +1156,15 @@ call plug#end()
 " Shell scripts are Bash by default
 let g:is_bash = 1
 
+augroup RAVimSyntaxAutocommands
+  autocmd!
+
+  autocmd Syntax *
+        \   call matchadd('Todo',  '\W\zs\(TODO\|FIXME\|CHANGED\|XXX\|BUG\|\!\!\!\|???\)')
+        \ | call matchadd('Todo',  '\W\zs\(NOTE\|Note\|INFO\|NOTICE\)')
+        \ | call matchadd('Debug', '\W\zs\(Debug\|DEBUG\)')
+augroup END
+
 highlight IncSearch cterm=NONE ctermfg=Black ctermbg=154 gui=NONE guifg=#000000 guibg=#c0cd38
 highlight! link txtBold Identifier
 
@@ -1238,7 +1253,7 @@ command! -nargs=0 ReloadFiletype call x2a#utils#ReloadFiletype()
 " macOS {{{
 " ------------------------------------------------------------------------------
 
-if has('mac') || has('macunix')
+if x2a#utils#os#is_mac()
   " Open the macOS dictionary on current word
   " Credits: https://github.com/rafi/vim-config/blob/0a7902092063e45f1a409fbe12121e23b33fe6cc/config/mappings.vim#L259-L260
   command! -nargs=0 Define silent! execute '!open dict://' . expand('<cword>')
@@ -1266,6 +1281,12 @@ command! -bang -range=0 -nargs=0 GitCopyPermalink call x2a#git#copy_permalink(<b
 command! -nargs=+ -complete=command Page call x2a#utils#page(<q-args>)
 command! -nargs=0 NormalizeWhitespace call x2a#utils#helpers#Preserve('x2a#utils#UnfuckWhitespace')
 command! -nargs=0 WhatSyntax call x2a#utils#WhatSyntax()
+command! -nargs=0 Scratch call x2a#utils#scratch()
+
+" Author: Andrew Radev
+" URL: https://github.com/AndrewRadev/Vimfiles
+" Source: https://github.com/AndrewRadev/Vimfiles/blob/b02e9ed925c9eeecc4629ac1cc8b235d432f64f6/startup/commands.vim#L152
+command! -nargs=0 Redraw call x2a#utils#helpers#redraw()
 
 " Unfuck my screen
 " Source: https://bitbucket.org/sjl/dotfiles/src/26d3b19a08938930b576cedb18bc6fca706be6c5/vim/vimrc#vimrc-443
@@ -1296,6 +1317,11 @@ augroup RAVimAutocommands
   " Update the 'scrolloff' according to the height of the window
   " Source: https://github.com/uplus/vimrc/blob/80b6dc96d08bf00ed59e545448ea031aee194230/autocmds.vim#L8
   autocmd VimEnter,WinEnter,VimResized * let &scrolloff = float2nr(winheight('') * 0.1)
+
+  autocmd TermOpen *
+        \ setlocal signcolumn=no |
+        \ setlocal nobuflisted |
+        \ setlocal nospell
 
   " More eager than 'autoread'.
   autocmd WinEnter,FocusGained * silent! checktime
@@ -1554,7 +1580,7 @@ nnoremap <silent> <Esc><Esc> <Cmd>nohlsearch<Bar>match<Bar>echo<CR>
 
 " Extend a previous match
 " Source: https://github.com/thoughtstream/Damian-Conway-s-Vim-Setup/blob/master/.vimrc#L1257
-nnoremap // /<C-R>/
+nnoremap g/ /<C-R>/
 
 " List all matches for a search
 " with their line number

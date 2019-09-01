@@ -24,3 +24,14 @@ function! x2a#utils#helpers#Preserve(func, ...) abort
 
   return l:return_value
 endfunction
+
+" Author: Andrew Radev
+" URL: https://github.com/AndrewRadev/Vimfiles
+" Source: https://github.com/AndrewRadev/Vimfiles/blob/b02e9ed925c9eeecc4629ac1cc8b235d432f64f6/startup/commands.vim#L153,157
+function! x2a#utils#helpers#redraw() abort
+  syntax sync fromstart
+
+  nohlsearch
+
+  redraw!
+endfunction

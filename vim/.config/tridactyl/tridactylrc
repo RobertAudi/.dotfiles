@@ -79,6 +79,9 @@ bindurl www.google.com F hint -Jtc .rc>.r>a
 " Disable the 't' binding in github
 unbindurl github.com t
 
+" Allow pages (not necessarily github) to override `/`, which is a default Firefox binding.
+set leavegithubalone true
+
 " Sane hinting mode
 set hintfiltermode vimperator-reflow
 set hintnames numeric

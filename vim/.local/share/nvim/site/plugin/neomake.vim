@@ -17,12 +17,11 @@ let g:lint_types =
       \   'javascript',
       \   'json',
       \   'markdown',
-      \   'ruby',
       \   'sh',
       \   'vim'
       \ ]
 
-augroup RAPluginsNERDTree
+augroup RAPluginsNeomake
   autocmd!
 
   autocmd BufWritePost *

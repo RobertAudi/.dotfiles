@@ -1,4 +1,4 @@
-if !has('macunix') && !has('mac')
+if !x2a#utils#os#is_mac()
   finish
 endif
 

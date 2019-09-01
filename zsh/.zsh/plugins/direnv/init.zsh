@@ -1,4 +1,4 @@
-if is-command direnv; then
+if (( $+commands[direnv] )) &>/dev/null; then
   cache_file="${ZSH_CACHE_DIR:-$HOME/.cache/zsh}/direnv-cache.$UID.zsh"
 
   if [[ "$commands[direnv]" -nt "$cache_file" || ! -s "$cache_file" ]]; then

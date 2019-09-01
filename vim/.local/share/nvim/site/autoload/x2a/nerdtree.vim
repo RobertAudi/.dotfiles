@@ -33,7 +33,7 @@ function! x2a#nerdtree#Refresh(...) abort
   endif
 
   if empty(l:pathStr)
-    call nerdtree#echo#Warning('no file for the current buffer')
+    call x2a#utils#echo#Warning('no file for the current buffer')
     return
   endif
 
@@ -41,7 +41,7 @@ function! x2a#nerdtree#Refresh(...) abort
     let l:pathStr = g:NERDTreePath.Resolve(l:pathStr)
     let l:pathObj = g:NERDTreePath.New(l:pathStr)
   catch /^NERDTree.InvalidArgumentsError/
-    call nerdtree#echo#Warning('invalid path')
+    call x2a#utils#echo#Warning('invalid path')
     return
   endtry
 
