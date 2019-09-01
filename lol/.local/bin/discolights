@@ -1,0 +1,32 @@
+#!/usr/bin/env zsh
+
+function {
+  emulate -L zsh
+
+  setopt local_traps
+
+  if [[ -o interactive ]]; then
+    trap 'echo; return 130' INT
+  fi
+
+  local -a glyphs
+  local i
+
+  for i in {10240..10495}; do
+    glyphs+=("\\U$(echo "obase=16;$i" | bc)")
+  done
+
+  local -i colors_count=$(tput colors)
+  local glyphs_count=${#glyphs}
+  local glyph glyph_color
+
+  while true; do
+    # GNU sleep required to sleep less than 1 second
+    sleep 0.1
+
+    glyph=${glyphs[RANDOM % $glyphs_count + 1]}
+    glyph_color=$(($(od -d -N 2 -A n /dev/urandom) % ${colors_count}))
+
+    print -n -- "\r\e[38;5;${glyph_color}m${glyph}\e[0m";
+  done
+}

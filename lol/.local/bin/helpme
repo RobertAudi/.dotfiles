@@ -1,4 +1,4 @@
-#autoload
+#!/usr/bin/env zsh
 
 echo "Please wait.. i'll think about.."
 repeat 3 (echo -ne "."; sleep 0.3)
