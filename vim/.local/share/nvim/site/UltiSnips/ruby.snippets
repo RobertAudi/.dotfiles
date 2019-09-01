@@ -39,12 +39,8 @@ rescue
 end
 endsnippet
 
-snippet rescue "rescue nil" i
-rescue ${0:nil}
-endsnippet
-
 snippet rescue "rescue Exception" b
-rescue Exception => e
+rescue ${1:StandardError} => e
 	puts e.message
 	puts e.backtrace.inspect
 	${0:# Rescue}
