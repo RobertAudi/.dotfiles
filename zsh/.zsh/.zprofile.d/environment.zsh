@@ -339,6 +339,19 @@ export HOMEBREW_NO_INSTALL_CLEANUP=1
 # Do not disable the use of curlrc.
 export HOMEBREW_CURLRC=1
 
+# Print install times for each formula at the end of the run
+export HOMEBREW_DISPLAY_INSTALL_TIMES=1
+
+# Editor to use when editing formulae
+# Note: Use vim "unaliased"
+export HOMEBREW_EDITOR="\\vim"
+
+# Always use a Homebrew-installed curl rather than the system version
+export HOMEBREW_FORCE_BREWED_CURL=1
+
+# Always use a Homebrew-installed git rather than the system version
+export HOMEBREW_FORCE_BREWED_GIT=1
+
 # --no-quarantine
 #        Prevent Gatekeeper from enforcing its security restrictions
 #        on the Cask. This will let you run it straightaway.

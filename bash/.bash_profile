@@ -9,6 +9,33 @@ export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgreprc"
 export LESSHISTFILE="$XDG_CACHE_HOME/less/history"
 export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
 
+# Homebrew {{{
+# ---------------------------------------------------------------------
+# Do not use the GitHub API for e.g searches or fetching relevant issues on a failed install.
+export HOMEBREW_NO_GITHUB_API=1
+
+# Do not send analytics
+export HOMEBREW_NO_ANALYTICS=1
+
+# Do not auto-update before running brew install, brew upgrade or brew tap.
+export HOMEBREW_NO_AUTO_UPDATE=1
+
+# Do not permit redirects from secure HTTPS to insecure HTTP.
+export HOMEBREW_NO_INSECURE_REDIRECT=1
+
+# Never cleanup automatically after running brew install/upgrade/reinstall
+export HOMEBREW_NO_INSTALL_CLEANUP=1
+
+# Print install times for each formula at the end of the run
+export HOMEBREW_DISPLAY_INSTALL_TIMES=1
+
+# --no-quarantine
+#        Prevent Gatekeeper from enforcing its security restrictions
+#        on the Cask. This will let you run it straightaway.
+export HOMEBREW_CASK_OPTS="--no-quarantine --verbose"
+
+# --------------------------------------------------------------------- }}}
+
 if command -v nvim >/dev/null; then
   export VIM_COMMAND="nvim"
 else
