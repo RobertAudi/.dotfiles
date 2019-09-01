@@ -82,6 +82,9 @@ unbindurl github.com t
 " Allow pages (not necessarily github) to override `/`, which is a default Firefox binding.
 set leavegithubalone true
 
+" Don't display the mode indicator.
+set modeindicator false
+
 " Sane hinting mode
 set hintfiltermode vimperator-reflow
 set hintnames numeric
