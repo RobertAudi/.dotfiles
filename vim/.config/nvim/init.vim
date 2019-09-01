@@ -790,8 +790,8 @@ Plug 'rhysd/conflict-marker.vim'
 " A Vim plugin for more pleasant editing on commit messages
 Plug 'rhysd/committia.vim'
 
-" A git wrapper focus on simplity and usability
-Plug 'RobertAudi/vim-easygit-lite', { 'on': ['Gblame', 'GdiffThis'] }
+" A plugin to run `git blame` on the current buffer.
+Plug 'RobertAudi/git-blame.vim'
 
 " ------------------------------------------------------------------------------ }}}
 
