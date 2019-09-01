@@ -17,13 +17,7 @@ nnoremap <buffer> \6 I######<Space><Esc>
 
 " ---
 " Stolen from gabrielelana/vim-markdown
-"   https://github.com/gabrielelana/vim-markdown/blob/08e0731ce2c0b541ea335c782c59bb2e870730d4/ftplugin/markdown.vim#L155-L160
+"   https://github.com/gabrielelana/vim-markdown/blob/08e0731ce2c0b541ea335c782c59bb2e870730d4/ftplugin/markdown.vim#L159-L160
 " ---
-"
-" Jumping around
-noremap  <silent> <buffer> ]] <Cmd>call x2a#utils#markdown#JumpToHeader(1, 0)<CR>
-noremap  <silent> <buffer> [[ <Cmd>call x2a#utils#markdown#JumpToHeader(0, 0)<CR>
-vnoremap <silent> <buffer> ]] <Cmd>call x2a#utils#markdown#JumpToHeader(1, 1)<CR>
-vnoremap <silent> <buffer> [[ <Cmd>call x2a#utils#markdown#JumpToHeader(0, 1)<CR>
 noremap  <silent> <buffer> ][ <Nop>
 noremap  <silent> <buffer> [] <Nop>
