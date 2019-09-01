@@ -1,8 +1,12 @@
-extends ruby
+snippet "\bDesc(ribe)?" "Top-level describe block" r
+RSpec.describe "$1" do
+	${0:pending "TODO: Write some tests"}
+end
+endsnippet
 
 snippet "\bdesc(ribe)?" "describe block" r
 describe "$1" do
-	$0
+	${0:pending "TODO: Write some tests"}
 end
 endsnippet
 

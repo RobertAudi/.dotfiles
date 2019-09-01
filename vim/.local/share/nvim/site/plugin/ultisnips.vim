@@ -8,3 +8,9 @@ let g:UltiSnipsExpandTrigger       = '<C-j>'
 let g:UltiSnipsListSnippets        = '<C-]>'
 let g:UltiSnipsJumpForwardTrigger  = '<C-j>'
 let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
+
+augroup RAPluginsUltiSnips
+  autocmd!
+
+  autocmd FileType ruby.rspec UltiSnipsAddFiletypes rspec
+augroup END
