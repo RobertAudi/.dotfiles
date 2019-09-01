@@ -40,38 +40,6 @@ brew "gibo"
 
 # ------------------------------------------------------------------------------
 
-tap "mkchoi212/fac", "https://github.com/mkchoi212/fac.git"
-
-# Command line User Interface for fixing git conflicts
-#   https://github.com/mkchoi212/fac
-brew "fac"
-
-# ------------------------------------------------------------------------------
-
-tap "git-chglog/git-chglog"
-
-# CHANGELOG generator implemented in Go.
-#   https://github.com/git-chglog/git-chglog
-brew "git-chglog"
-
-# ------------------------------------------------------------------------------
-
-tap "caarlos0/tap"
-
-# Clone all repos of a github organization
-#   https://github.com/caarlos0/clone-org
-brew "caarlos0/tap/clone-org"
-
-# ------------------------------------------------------------------------------
-
-tap "RobertAudi/formulae", "https://github.com/RobertAudi/homebrew-formulae.git"
-
-# Optimally fast branch name command for Git
-#   https://github.com/itchyny/git-branch-name
-brew "RobertAudi/formulae/git-branch-name", args: ["HEAD"]
-
-# ------------------------------------------------------------------------------
-
 # Tower - The most powerful Git client for Mac and Windows
 #   https://www.git-tower.com/mac
 cask "tower"

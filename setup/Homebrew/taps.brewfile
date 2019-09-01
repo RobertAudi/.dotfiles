@@ -1,0 +1,356 @@
+require_relative "helpers"
+
+# ------------------------------------------------------------------------------
+
+tap "mkchoi212/fac", "https://github.com/mkchoi212/fac.git"
+
+# Command line User Interface for fixing git conflicts
+#   https://github.com/mkchoi212/fac
+brew "fac"
+
+# ------------------------------------------------------------------------------
+
+tap "git-chglog/git-chglog"
+
+# CHANGELOG generator implemented in Go.
+#   https://github.com/git-chglog/git-chglog
+brew "git-chglog"
+
+# ------------------------------------------------------------------------------
+
+tap "caarlos0/tap"
+
+# Clone all repos of a github organization
+#   https://github.com/caarlos0/clone-org
+brew "caarlos0/tap/clone-org"
+
+# Like gofmt, but for JSON files
+#   https://github.com/caarlos0/jsonfmt
+brew "caarlos0/tap/jsonfmt"
+
+# ------------------------------------------------------------------------------
+
+tap "RobertAudi/formulae", "https://github.com/RobertAudi/homebrew-formulae.git"
+
+# Optimally fast branch name command for Git
+#   https://github.com/itchyny/git-branch-name
+brew "RobertAudi/formulae/git-branch-name", args: ["HEAD"]
+
+# list files, recursively
+#   https://github.com/chneukirchen/lr
+brew "RobertAudi/formulae/lr", args: ["HEAD"]
+
+# simple xargs and apply replacement
+#   https://github.com/chneukirchen/xe
+brew "RobertAudi/formulae/xe", args: ["HEAD"]
+
+# Angular commits minus scope and stuff.
+#   https://github.com/RobertAudi/cnsc
+brew "RobertAudi/formulae/cnsc", args: ["HEAD"]
+
+# Check directory for licenses and list what license(s) a file is under
+#   https://github.com/boyter/lc
+brew "RobertAudi/formulae/lc"
+
+# Simple command line tool for unit conversions
+#   https://xiny.sh/
+brew "RobertAudi/formulae/xiny"
+
+# Collection of tools that nobody wrote when UNIX was young
+#   https://joeyh.name/code/moreutils/
+#
+# Conflicts with:
+#   task-spooler (because Both install a `ts` executable.)
+brew "RobertAudi/formulae/moreutils", args: ["with-errno"]
+
+if macOS?
+  # Pretty-prints compiled AppleScript (.scpt) files using ANSI escape sequences.
+  #   http://hasseg.org/asprint
+  brew "RobertAudi/formulae/asprint", args: ["HEAD"]
+
+  # Switch, hide, show, quit, kill or list macOS applications from the command line or scripts.
+  #   https://sabi.net/nriley/software/#appswitch
+  brew "RobertAudi/formulae/appswitch"
+
+  # Command line tool to quickly search by filename on entire APFS and HFS+ volumes using the file system catalog.
+  #   https://sveinbjorn.org/searchfs
+  brew "RobertAudi/formulae/searchfs"
+
+  # Fast, no-nonsense disk image mounting for macOS
+  #   https://sveinbjorn.org/fastdmg
+  cask "fastdmg"
+
+  # Find and inspect macOS icon assets (.icns) on your system
+  #   https://sveinbjorn.org/iconscanner
+  cask "iconscanner"
+end
+
+# ------------------------------------------------------------------------------
+
+tap "heroku/brew"
+
+# Everything you need to get started with Heroku
+#   https://cli.heroku.com
+#
+#
+# ==> Caveats
+# To use the Heroku CLI's autocomplete, run:
+#   $ heroku autocomplete --refresh-cache
+brew "heroku"
+
+# ------------------------------------------------------------------------------
+
+tap "chrokh/tap"
+
+# A command line tool to install base16 templates and set themes globally.
+#   https://github.com/AuditeMarlow/base16-manager
+brew "base16-manager"
+
+# ------------------------------------------------------------------------------
+
+tap "universal-ctags/universal-ctags"
+
+# Maintained ctags implementation
+#   https://github.com/universal-ctags/ctags
+brew "universal-ctags/universal-ctags/universal-ctags", args: %w[with-jansson with-libyaml HEAD]
+
+# ------------------------------------------------------------------------------
+
+tap "timothyye/tap"
+
+# A simple and powerful SSH Keys Manager
+#   https://github.com/TimothyYe/skm
+brew "timothyye/tap/skm"
+
+# A command line domain query tool
+#   https://github.com/TimothyYe/namebeta
+brew "timothyye/tap/namebeta"
+
+# ------------------------------------------------------------------------------
+
+tap "aybabtme/tap"
+
+# Logs for humans to read.
+#   https://github.com/aybabtme/humanlog
+brew "aybabtme/tap/humanlog"
+
+# ------------------------------------------------------------------------------
+
+tap "dtan4/tools"
+
+# List & Describe GitHub Releases
+#   https://github.com/dtan4/ghrls
+brew "dtan4/tools/ghrls"
+
+# ------------------------------------------------------------------------------
+
+tap "Code-Hex/pget"
+
+# The fastest file download client
+#   https://github.com/Code-Hex/pget
+brew "Code-Hex/pget/pget"
+
+# ------------------------------------------------------------------------------
+
+tap "cristianoliveira/tap"
+
+# Ergo Proxy - The local multiple services development made easy.
+#   https://github.com/cristianoliveira/ergo
+brew "ergo"
+
+# ------------------------------------------------------------------------------
+
+tap "bfontaine/utils"
+
+# Interactive wc(1)
+#   https://github.com/bfontaine/iwc
+brew "bfontaine/utils/iwc"
+
+# Print the uncompressed size of a GZip file
+#   https://bfontaine.github.io/gzsize/
+brew "bfontaine/utils/gzsize"
+
+# Sorted grep
+#   https://sgrep.sourceforge.io/
+brew "bfontaine/utils/sgrep"
+
+# ------------------------------------------------------------------------------
+
+tap "soveran/tools"
+
+# Read from stdin and prepend a string to each line while preserving identation.
+#   https://github.com/soveran/prep
+brew "prep"
+
+# Read from stdin and remove a prefix from each line
+#   https://github.com/soveran/trim
+brew "trim"
+
+# Change directory entries with your text editor
+#   https://github.com/soveran/chen
+brew "chen"
+
+# Map lines from stdin to commands
+#   https://github.com/soveran/map
+brew "map"
+
+# ------------------------------------------------------------------------------
+
+tap "mingrammer/flog", "https://github.com/mingrammer/flog.git"
+
+# A fake log generator for common log formats
+#  https://github.com/mingrammer/flog
+brew "flog"
+
+# ------------------------------------------------------------------------------
+
+tap "httpu/httpu"
+
+# The terminal-first http client
+#   https://github.com/hazbo/httpu
+brew "httpu/httpu/httpu"
+
+# ------------------------------------------------------------------------------
+
+tap "octavore/tools"
+
+# Diff tool with browser-based GUI
+#   https://github.com/octavore/delta
+brew "octavore/tools/delta"
+
+# ------------------------------------------------------------------------------
+
+tap "xwjdsh/tap"
+
+# Manage your ssh alias configs easily
+#   https://github.com/xwjdsh/manssh
+brew "manssh"
+
+# ------------------------------------------------------------------------------
+
+tap "tavianator/tap"
+
+# Breadth-first version of find.
+#   https://github.com/tavianator/bfs
+brew "bfs"
+
+# ------------------------------------------------------------------------------
+
+tap "rs/tap"
+
+if macOS?
+  # iTerm2 expvar/JSON monitoring tool
+  #   https://github.com/rs/jplot
+  brew "rs/tap/jplot"
+end
+
+# JSON Aggregation CLI
+#   https://github.com/rs/jaggr
+brew "rs/tap/jaggr"
+
+# DNS resolution tracing tool
+#   https://github.com/rs/dnstrace
+brew "rs/tap/dnstrace"
+
+# The power of curl, the ease of use of httpie.
+#   https://github.com/rs/curlie
+brew "rs/tap/curlie"
+
+# ------------------------------------------------------------------------------
+
+tap "moul/moul"
+
+# retry: repeat shell commands
+#   https://github.com/moul/retry
+brew "retry"
+
+# number-to-words: convert number into words
+#   https://github.com/moul/number-to-words
+brew "number-to-words"
+
+# Draw a beautiful christmas tree in ascii
+#   https://github.com/moul/sapin
+brew "sapin", args: ["HEAD"]
+
+# ------------------------------------------------------------------------------
+
+tap "sbdchd/skim"
+
+# Fuzzy finder written in Rust
+#   https://github.com/lotabout/skim
+brew "sbdchd/skim/skim"
+
+# ------------------------------------------------------------------------------
+
+tap "miserlou/loop", "https://github.com/Miserlou/Loop.git"
+
+# UNIX's missing `loop` command
+#   https://github.com/Miserlou/Loop
+brew "loop", args: ["HEAD"]
+
+# ------------------------------------------------------------------------------
+
+tap "goles/battery"
+
+# Display your Laptop's battery status on the terminal.
+#   https://github.com/Goles/Battery
+brew "goles/battery/battery"
+
+# ------------------------------------------------------------------------------
+
+tap "keith/formulae"
+
+# A CLI for interacting with CircleCI
+#   https://github.com/keith/circle-cli
+brew "circle-cli"
+
+if macOS?
+  # A simple CLI for interacting with OS X reminders
+  #   https://github.com/keith/reminders-cli
+  brew "reminders-cli"
+
+  # Zsh completions for Xcode command line tools
+  #   https://github.com/keith/zsh-xcode-completions/
+  brew "zsh-xcode-completions"
+
+  # A CLI for cleaning up after .apps
+  #   https://github.com/keith/zap/
+  brew "zap"
+end
+
+# ------------------------------------------------------------------------------
+
+tap "koekeishiya/homebrew-formulae"
+
+if macOS?
+  # Keycode grabber for OSX.
+  #   https://github.com/koekeishiya/cev
+  brew "cev"
+end
+
+# ------------------------------------------------------------------------------
+
+tap "raggi/ale"
+
+if macOS?
+  # Simple periodic task to sync OSX Keychain certs to Homebrew installed OpenSSL & LibreSSL
+  #   https://github.com/raggi/openssl-osx-ca#readme
+  #
+  # ==> Caveats
+  # To have launchd start raggi/ale/openssl-osx-ca now and restart at login:
+  #   brew services start raggi/ale/openssl-osx-ca
+  brew "openssl-osx-ca", restart_service: :changed
+end
+
+# ------------------------------------------------------------------------------
+
+tap "lukakerr/things"
+
+if macOS?
+  # A modern, native macOS markdown editor
+  #   https://lukakerr.github.io/Pine/
+  #   https://github.com/lukakerr/Pine
+  cask "pine"
+end
+
+# ------------------------------------------------------------------------------

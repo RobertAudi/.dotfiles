@@ -104,108 +104,6 @@ brew "wallpaper"
 
 # ------------------------------------------------------------------------------
 
-tap "kiliankoe/formulae"
-
-# Search for Swift packages from your command line
-#   https://github.com/kiliankoe/apodidae
-brew "kiliankoe/formulae/apodidae"
-
-# ------------------------------------------------------------------------------
-
-tap "goles/battery"
-
-# Display your Laptop's battery status on the terminal.
-#   https://github.com/Goles/Battery
-brew "goles/battery/battery"
-
-# ------------------------------------------------------------------------------
-
-tap "BackNotGod/localizationCommand"
-
-# Command Line for Objective-C and Swift localization
-#   https://github.com/BackNotGod/localizationCommand
-brew "BackNotGod/localizationCommand/localizationCommand"
-
-# ------------------------------------------------------------------------------
-
-tap "swiftxcode/swiftxcode"
-
-# Build Swift Package Manager from within Xcode.
-#   https://swiftxcode.github.io
-brew "swift-xcode"
-
-# Build Kitura from within Xcode.
-#   https://swiftxcode.github.io
-brew "swift-xcode-kitura"
-# Run this after the installation:
-#   swift xcode link-templates
-
-# ------------------------------------------------------------------------------
-
-tap "kylef/formulae"
-
-# Swift version manager
-#   https://github.com/kylef/swiftenv
-brew "swiftenv"
-
-# ------------------------------------------------------------------------------
-
-tap "keith/formulae"
-
-# A simple CLI for interacting with OS X reminders
-#   https://github.com/keith/reminders-cli
-brew "reminders-cli"
-
-# Zsh completions for Xcode command line tools
-#   https://github.com/keith/zsh-xcode-completions/
-brew "zsh-xcode-completions"
-
-# A CLI for cleaning up after .apps
-#   https://github.com/keith/zap/
-brew "zap"
-
-# ------------------------------------------------------------------------------
-
-tap "koekeishiya/homebrew-formulae"
-
-# Keycode grabber for OSX.
-#   https://github.com/koekeishiya/cev
-brew "cev"
-
-# ------------------------------------------------------------------------------
-
-tap "liftoffcli/formulae"
-
-# CLI for creating and configuring new Xcode projects
-#   https://github.com/liftoffcli/liftoff
-brew "liftoffcli/formulae/liftoff"
-
-# ------------------------------------------------------------------------------
-
-tap "raggi/ale"
-
-# Simple periodic task to sync OSX Keychain certs to Homebrew installed OpenSSL & LibreSSL
-#   https://github.com/raggi/openssl-osx-ca#readme
-#
-# ==> Caveats
-# To have launchd start raggi/ale/openssl-osx-ca now and restart at login:
-#   brew services start raggi/ale/openssl-osx-ca
-brew "openssl-osx-ca", restart_service: :changed
-
-# ------------------------------------------------------------------------------
-
-tap "RobertAudi/formulae", "https://github.com/RobertAudi/homebrew-formulae.git"
-
-# Pretty-prints compiled AppleScript (.scpt) files using ANSI escape sequences.
-#   http://hasseg.org/asprint
-brew "RobertAudi/formulae/asprint", args: ["HEAD"]
-
-# Switch, hide, show, quit, kill or list macOS applications from the command line or scripts.
-#   https://sabi.net/nriley/software/#appswitch
-brew "RobertAudi/formulae/appswitch"
-
-# ------------------------------------------------------------------------------
-
 # Homebrew Cask {{{
 # ------------------------------------------------------------------------------
 
@@ -443,17 +341,6 @@ cask "quicklookase"
 cask "suspicious-package"
 
 # ------------------------------------------------------------------------------ }}}
-
-# ------------------------------------------------------------------------------
-
-tap "lukakerr/things"
-
-# A modern, native macOS markdown editor
-#   https://lukakerr.github.io/Pine/
-#   https://github.com/lukakerr/Pine
-cask "pine"
-
-# ------------------------------------------------------------------------------
 
 # App Store applications {{{
 # ------------------------------------------------------------------------------
