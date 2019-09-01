@@ -22,5 +22,6 @@ local project_root=$(command ghq list --exact --full-path github.com/jwilm/alacr
   gzip -c extra/alacritty.man | tee "${mandir}"/alacritty.1.gz > /dev/null
   cp -v extra/completions/_alacritty "${alacritty_dotfiles_dir}"/.zsh/completions/_alacritty
   cp -v extra/completions/alacritty.bash "${alacritty_dotfiles_dir}"/.bash/alacritty-completions.bash
+  # sudo tic -xe alacritty,alacritty-direct extra/alacritty.info
   make clean
 )
