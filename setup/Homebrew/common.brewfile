@@ -20,6 +20,10 @@ brew "mercurial"
 #   https://subversion.apache.org/
 brew "subversion"
 
+# UNIX shell (command interpreter)
+#  https://www.zsh.org/
+brew "zsh"
+
 # Additional completion definitions for zsh
 #   https://github.com/zsh-users/zsh-completions
 brew "zsh-completions"
