@@ -2,11 +2,6 @@
 zplugin ice wait"1" lucid
 zplugin snippet OMZ::plugins/safe-paste/safe-paste.plugin.zsh
 
-# It's like curl -v, with graphs and colors
-#   https://github.com/b4b4r07/httpstat
-zplugin ice as"command" cp"httpstat.sh -> httpstat" pick"httpstat" wait"1" lucid
-zplugin light b4b4r07/httpstat
-
 # Gives you helpful hints when you execute a command for which you have an alias defined
 #   https://github.com/molovo/tipz
 zplugin ice pick"tipz.zsh" atload'source $ZDOTDIR/setup/plugins/molovo/tipz.zsh' wait"2" lucid
