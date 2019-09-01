@@ -17,7 +17,7 @@ if (( ${#sessions} == 1 )); then
 else
   local status_code
   local session
-  session=$(builtin print -l -- "${sessions[@]}" | fzf --query="$1" --select-1 --exit-0)
+  session=$(builtin print -l -- "${sessions[@]}" | command fzf --no-sort --filter="$1" | fzf --select-1 --exit-0)
   status_code=$?
 
   if (( $status_code != 0 )) || [[ -z "$session" ]]; then
