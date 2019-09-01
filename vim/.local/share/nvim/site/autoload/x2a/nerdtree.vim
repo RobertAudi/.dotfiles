@@ -74,3 +74,21 @@ function! x2a#nerdtree#Refresh(...) abort
 
   call nerdtree#echo('Refreshing node. This could take a while... DONE')
 endfunction
+
+function! x2a#nerdtree#Close() abort
+  if b:NERDTree.ui.getShowHelp()
+    call b:NERDTree.ui.toggleHelp()
+    call b:NERDTree.render()
+    call b:NERDTree.ui.centerView()
+  endif
+
+  if b:NERDTree.isWinTree() && b:NERDTree.previousBuf() != -1
+    execute 'buffer ' . b:NERDTree.previousBuf()
+  else
+    if winnr('$') > 1
+      call g:NERDTree.Close()
+    else
+      execute 'bwipeout!'
+    endif
+  endif
+endfunction
