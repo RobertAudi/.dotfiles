@@ -183,6 +183,9 @@ set linespace=2
 " Don't highlight the current line
 set nocursorline
 
+" Do not redraw the screen until whatever is being done is finished
+set lazyredraw
+
 " Show matching brackets.
 set showmatch
 set matchpairs=(:),[:],{:}
