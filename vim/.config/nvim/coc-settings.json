@@ -1,0 +1,15 @@
+{
+  "suggest.echodocSupport": true,
+  "codeLens.enable": true,
+  "list.nextKeymap": "<C-n>",
+  "list.previousKeymap": "<C-p>",
+  "coc.preferences.currentFunctionSymbolAutoUpdate": true,
+  "languageserver": {
+    "bash": {
+      "command": "bash-language-server",
+      "args": ["start"],
+      "filetypes": ["sh"],
+      "ignoredRootPaths": ["~"]
+    }
+  }
+}

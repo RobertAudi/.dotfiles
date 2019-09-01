@@ -887,12 +887,6 @@ Plug 'SirVer/ultisnips'
 " Viewer & Finder for LSP symbols and tags in Vim
 Plug 'liuchengxu/vista.vim'
 
-" Language Server Protocol (LSP) support for vim and neovim.
-Plug 'autozimu/LanguageClient-neovim', {
-    \   'branch': 'next',
-    \   'do': 'bash install.sh',
-    \ }
-
 " Changes Vim working directory to project root
 " (identified by presence of known directory or file).
 Plug 'airblade/vim-rooter'
@@ -903,26 +897,8 @@ Plug 'RobertAudi/local-vimrc'
 " Completion {{{
 " ------------------------------------------------------------------------------
 
-" Dark powered asynchronous completion framework
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-
-" Syntax source for neocomplete/deoplete/ncm
-Plug 'Shougo/neco-syntax'
-
-" Zsh completion for deoplete.nvim
-Plug 'deoplete-plugins/deoplete-zsh'
-
-" Bignyanco use ruby-dictionary3 in ruby completion
-Plug 'takkii/Bignyanco'
-
-" HTML tag input completion dictionary
-Plug 'takkii/bistro'
-
-" Deoplete source for emoji codes
-Plug 'fszymanski/deoplete-emoji'
-
-" The vim source
-Plug 'Shougo/neco-vim'
+" Intellisense engine for neovim, full language server protocol support as VSCode
+Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 
 " Complete whole lines from any partial therein
 Plug 'dahu/vim-foist'

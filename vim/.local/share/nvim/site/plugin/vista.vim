@@ -8,14 +8,14 @@ let g:vista_close_on_jump = v:false
 let g:vista_stay_on_open = v:true
 
 let g:vista_executive_for = {
-  \   'javascript': 'lcn',
-  \   'ruby':       'lcn',
-  \   'sh':         'lcn',
-  \   'html':       'lcn',
-  \   'scss':       'lcn',
-  \   'css':        'lcn',
-  \   'json':       'lcn',
-  \   'yaml':       'lcn',
+  \   'javascript': 'coc',
+  \   'ruby':       'coc',
+  \   'sh':         'coc',
+  \   'html':       'coc',
+  \   'scss':       'coc',
+  \   'css':        'coc',
+  \   'json':       'coc',
+  \   'yaml':       'coc',
   \ }
 
 let g:vista_icon_indent = ["└─⊳ ", "├─⊳ "]
