@@ -1,6 +1,9 @@
 Scripts
 -------
 
+- [`ports`](https://github.com/caarlos0/ports): Easily see what's happening on your computer's ports
+- [`vspark`](https://github.com/LuRsT/vspark): Vertical graphs
+
 ### [`used-mem`](.local/bin/used-mem)
 
 Print memory status for macOS and Linux.

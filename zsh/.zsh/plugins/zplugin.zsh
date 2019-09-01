@@ -26,16 +26,6 @@ zplugin light RobertAudi/zshmarks
 zplugin ice atload'source $ZDOTDIR/setup/plugins/zsh-users/zsh-history-substring-search.zsh' wait"1" lucid
 zplugin light zsh-users/zsh-history-substring-search
 
-# Easily see what's happening on your computer's ports
-#   https://github.com/caarlos0/ports
-zplugin ice wait"1" lucid
-zplugin light caarlos0/ports
-
-# Vertical graphs
-#   https://github.com/LuRsT/vspark
-zplugin ice as"command" pick"vspark" wait"1" lucid
-zplugin light LuRsT/vspark
-
 # Syntax-highlighting for Zshell
 #   https://github.com/zdharma/fast-syntax-highlighting
 zplugin ice wait"1" lucid
