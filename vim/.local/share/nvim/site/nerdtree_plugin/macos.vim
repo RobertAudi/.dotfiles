@@ -22,3 +22,11 @@ call NERDTreeAddKeyMap(
       \   'callback': 'x2a#nerdtree#macos#RevealFileNodeInFinder',
       \   'quickhelpText': 'Reveal file in Finder'
       \ })
+
+call NERDTreeAddKeyMap(
+      \ {
+      \   'key': has('gui_vimr') ? '<D-p>' : '<Leader>p',
+      \   'scope': 'FileNode',
+      \   'callback': 'x2a#nerdtree#macos#PreviewInMarked',
+      \   'quickhelpText': 'Preview the markdown file in Marked'
+      \ })
