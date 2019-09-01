@@ -1,0 +1,10 @@
+#!/usr/bin/env zsh
+
+if type tower >/dev/null; then
+  tower "$@"
+elif type gittower >/dev/null; then
+  gittower "$@"
+else
+  builtin print -P -- "[%F{196}ERROR%f] Tower CLI not found: gittower" >&2
+  return 1
+fi

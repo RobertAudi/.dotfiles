@@ -1,0 +1,3 @@
+#!/bin/sh
+
+git reflog expire --expire=0 "$@"

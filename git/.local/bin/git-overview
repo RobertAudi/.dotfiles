@@ -1,0 +1,83 @@
+#!/usr/bin/env zsh
+
+git stats
+print
+
+git show-tree
+print
+
+function {
+  local branch tracking commit branches
+  branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"
+  tracking="$(git rev-parse --abbrev-ref HEAD@{upstream} 2>/dev/null)"
+  commit="$(git rev-parse --verify --quiet HEAD)"
+
+  [[ -n "$branch"   ]] && branches="%F{green}${branch}%f"
+  [[ -n "$tracking" ]] && branches+="...%F{magenta}${tracking}%f"
+  [[ -n "$commit" ]] && branches+=" (%F{blue}${commit[1,8]}%f)"
+
+  print -P -- "$branches"
+
+  if [[ -n "$branch" && -n "$tracking" ]]; then
+    local ahead behind divergence
+    ahead="$(git rev-list ${tracking}..${branch} --count)"
+    behind="$(git rev-list ${branch}..${tracking} --count)"
+
+    if [[ $ahead -ne 0 && $behind -ne 0 ]]; then
+      divergence="%F{green}⇡${ahead}%f commits %Bahead%b and %F{red}⇣${behind}%f commits %Bbehind%b"
+    elif [[ $ahead -ne 0 ]]; then
+      divergence="%F{green}⇡${ahead}%f commits %Bahead%b"
+    elif [[ $behind -ne 0 ]]; then
+      divergence="%F{red}⇣${behind}%f commits %Bbehind%b"
+    fi
+
+    [[ -n "$divergence" ]] && print -P -- "%F{blue}%Bdivergence%b:%f $divergence"
+  fi
+
+  local -a num_changes
+  local str git_status
+  local staged unstaged untracked
+  staged="$(git diff --cached --name-status HEAD | wc -l)"
+  unstaged="$(git diff --name-status | wc -l)"
+  untracked="$(git ls-files --other --exclude-standard | wc -l)"
+
+  if [[ $staged -gt 0 ]]; then
+    str+="%F{yellow}${staged}%f %Bstaged%b change"
+    [[ $staged -gt 1 ]] && str+="s"
+
+    num_changes+=("$str")
+  fi
+
+  if [[ $unstaged -gt 0 ]]; then
+    str="%F{green}${unstaged}%f %Bunstaged%b change"
+
+    [[ $unstaged -gt 1 ]] && str+="s"
+
+    num_changes+=("$str")
+  fi
+
+  if [[ $untracked -gt 0 ]]; then
+    str="%F{cyan}${untracked}%f %Buntracked%b file"
+
+    [[ $untracked -gt 1 ]] && str+="s"
+
+    num_changes+=("$str")
+  fi
+
+  if (( ${#num_changes} > 0 )); then
+    git_status="%F{blue}%Bgit status%b:%f "
+
+    if (( ${#num_changes} == 1 )); then
+      git_status+="${num_changes[1]}."
+    elif (( ${#num_changes} == 2 )); then
+      git_status+="${num_changes[1]} and ${num_changes[2]}."
+    elif (( ${#num_changes} == 3 )); then
+      git_status+="${num_changes[1]}, ${num_changes[2]} and ${num_changes[3]}."
+    else
+      # dafuq
+      git_status+="%F{239}...%f"
+    fi
+
+    print -P -- "$git_status"
+  fi
+}
