@@ -2,14 +2,6 @@
 " Description: A (Neo)vim plugin for formatting code
 " URL: https://github.com/sbdchd/neoformat
 
-let g:neoformat_enabled_python = [
-      \   'remark',
-      \   'prettier',
-      \   'sqlfmt',
-      \   'gofmt',
-      \   'rustfmt'
-      \ ]
-
 " Have Neoformat only msg when there is an error
 let g:neoformat_only_msg_on_error = 1
 
