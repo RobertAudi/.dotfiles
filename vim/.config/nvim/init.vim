@@ -1061,6 +1061,24 @@ Plug 'AndrewRadev/splitjoin.vim'
 " A simple Vim plugin to switch segments of text with predefined replacements
 Plug 'AndrewRadev/switch.vim'
 
+" Change an HTML(ish) opening tag and take the closing one along as well
+Plug 'AndrewRadev/tagalong.vim'
+
+" A Vim plugin to move function arguments (and other delimited-by-something items) left and right.
+Plug 'AndrewRadev/sideways.vim'
+
+" Execute a :command and show the output in a temporary buffer
+Plug 'AndrewRadev/bufferize.vim'
+
+" A vim plugin to perform diffs on blocks of code
+Plug 'AndrewRadev/linediff.vim', { 'on': ['Linediff', 'LinediffAdd', 'LinediffLast', 'LinediffShow', 'LinediffReset', 'LinediffMerge', 'LinediffPick'] }
+
+" Wrapper of some vim/neovim's :terminal functions.
+Plug 'kassio/neoterm'
+
+" Open the terminal in the floating window and toggle it quickly
+Plug 'voldikss/vim-floaterm'
+
 " Run your tests at the speed of thought
 Plug 'janko-m/vim-test', { 'on': ['TestFile', 'TestNearest', 'TestLast'] }
 
@@ -1120,6 +1138,12 @@ Plug 'RobertAudi/BlockQuote.vim', { 'on': ['BlockQuote', 'BlockQuoteFile', 'Bloc
 
 " Create banners
 Plug 'RobertAudi/bannerizor.vim'
+
+if executable('silicon')
+  " Vim plugin for generating images of source code using Aloxaf/silicon
+  "   https://github.com/Aloxaf/silicon
+  Plug 'segeljakt/vim-silicon', { 'on': 'Silicon' }
+endif
 
 " Initialize plugin system
 call plug#end()
