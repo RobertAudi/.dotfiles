@@ -4,4 +4,6 @@
 
 if has('gui_vimr')
   nnoremap <buffer> <D-p> <Cmd>MarkedOpen<CR>
+else
+  nnoremap <buffer> <Leader>p <Cmd>MarkedOpen<CR>
 endif
