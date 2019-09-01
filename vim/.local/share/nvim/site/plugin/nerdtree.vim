@@ -6,7 +6,7 @@ scriptencoding utf-8
 
 nnoremap <silent> -  <Cmd>NERDTreeToggle<CR>
 nnoremap <silent> g- <Cmd>NERDTreeFocus<CR>
-nnoremap <silent> gF <Cmd>silent! NERDTreeFind<CR>
+nnoremap <silent> gF <Cmd>call x2a#nerdtree#file#Reveal()<CR>
 
 let g:NERDTreeAutoDeleteBuffer = 1
 let g:NERDTreeCreatePrefix = 'silent keepalt keepjumps'
