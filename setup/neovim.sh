@@ -47,6 +47,29 @@ npm install -g neovim
 
 # --------------------------------------------------------------------- }}}
 
+# Other dependencies {{{
+# ---------------------------------------------------------------------
+
+# markdown2ctags {{{
+# ------------------
+# Generate ctags-compatible tags files for Markdown documents.
+#   https://github.com/jszakmeister/markdown2ctags
+typeset markdown2ctagsURL="https://raw.githubusercontent.com/jszakmeister/markdown2ctags/master/markdown2ctags.py"
+typeset markdown2ctagsDownlowdDir="${XDG_BIN_HOME-:$HOME/.local/bin}"
+
+[[ -d "$markdown2ctagsDownlowdDir" ]] || mkdir -p "$markdown2ctagsDownlowdDir"
+
+(builtin cd -q "${XDG_BIN_HOME-:$HOME/.local/bin}" && command curl -sqfLO "$markdown2ctagsURL")
+
+if $status ; then
+  chmod +x "${markdown2ctagsDownlowdDir}/markdown2ctags.py"
+fi
+
+unset markdown2ctagsURL markdown2ctagsDownlowdDir
+# -------------- }}}
+
+# --------------------------------------------------------------------- }}}
+
 # vim-plug {{{
 # ---------------------------------------------------------------------
 
