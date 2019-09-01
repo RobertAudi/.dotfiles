@@ -1,4 +1,4 @@
-#autoload
+#!/usr/bin/env zsh
 
 if ! type gittower >/dev/null; then
   builtin print -P -- "[%F{196}ERROR%f] Tower Command Line Utility (gittower) not found!" >&2
