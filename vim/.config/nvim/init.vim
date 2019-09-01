@@ -1606,9 +1606,8 @@ nnoremap <C-w>#  <C-w>s#
 " use c* to change current word. than can use . to repeat action
 nnoremap c* *Ncgn
 
-" Select, reindent or yank the entire file
+" Select or yank the entire file
 nnoremap <silent> <Leader>a <Cmd>call x2a#buffers#Select()<CR>
-nnoremap <silent> <Leader>= <Cmd>ReindentBuffer<CR>
 nnoremap <silent> <Leader>y <Cmd>YankBuffer<CR>
 
 " Complete whole line
