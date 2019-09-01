@@ -12,8 +12,15 @@ local fileargs
 
 while (( $# > 0 )); do
   if [[ "$1" =~ "^-.*" ]]; then
-    [[ "$1" == "--" ]] && fileargs="$@"
-    break
+    if [[ "$1" == "--" ]]; then
+      fileargs="$@"
+      break
+    else
+      # If at any point there is an option then stop everything
+      # and just call git checkout with the args
+      git checkout $=args
+      return $status
+    fi
   else
     query+=" $1"
     shift
@@ -21,6 +28,13 @@ while (( $# > 0 )); do
 done
 
 query="${query# }"
+
+# If the "query" points to a revision "as is" then
+# stop everytjing and just call git checkout with the args
+if git rev-parse --verify --quiet "$query" > /dev/null; then
+  git checkout $=args
+  return $status
+fi
 
 local tags branches target
 tags=$(
@@ -37,12 +51,16 @@ branches=$(
 ) || return $status
 
 target=$(
-  echo "$branches\n$tags" \
-    | fzf --exit-0 --no-hscroll --ansi --no-multi --delimiter="\t" --nth=2 --query="$query"
+  builtin print -l -- "$branches" "$tags" \
+    | command fzf --no-sort --delimiter="\t" --nth=2 --filter="$query" \
+    | fzf --exit-0 --no-hscroll --ansi --no-multi --delimiter="\t" --nth=2
 )
 
 # Script terminated by Control-C
-(( $status == 130 )) && return 130
+if (( $status == 130 )); then
+  builtin print -P -- "[%F{196}ERROR%f] Aborted..." >&2
+  return 130
+fi
 
 local branch=$(echo "$target" | awk '{print $2}')
 
