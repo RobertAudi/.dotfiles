@@ -39,9 +39,6 @@ zplugin load _local/zsh-hints
 zplugin ice wait"1" lucid
 zplugin load _local/spectrum
 
-zplugin ice wait"" lucid
-zplugin load _local/direnv
-
 for f in $ZSH_HOME/plugins/zplugin.d/*.zplugin.zsh; do
   source $f
 done
