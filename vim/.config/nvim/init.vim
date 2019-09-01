@@ -630,8 +630,8 @@ Plug 'Shougo/context_filetype.vim'
 " Better VimL syntax highlighting
 Plug 'vim-jp/syntax-vim-ex'
 
-" A Vim plugin for Vim plugins
-Plug 'tpope/vim-scriptease'
+" Prettyprint vim variables
+Plug 'thinca/vim-prettyprint', { 'for': 'vim', 'on': ['PrettyPrint', 'PP'] }
 
 " Better completion for Vim builtins
 Plug 'fcpg/vim-complimentary', { 'for': 'vim' }
