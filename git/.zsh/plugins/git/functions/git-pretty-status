@@ -9,12 +9,15 @@ if [[ $VCS_STATUS_RESULT != ok-sync ]]; then
   return 1
 fi
 
-local -a divergences num_changes
+local -a divergences num_changes_str
+local num_changes num_stashes
 local git_range git_ref tracking_ref divergence output
 local str # this will hold temporary stuff while building output strings
 
 zparseopts -D -verbose+=verbose v+=verbose
 
+num_changes=$(($VCS_STATUS_NUM_CONFLICTED + $VCS_STATUS_NUM_STAGED + $VCS_STATUS_NUM_UNSTAGED + $VCS_STATUS_NUM_UNTRACKED))
+num_stashes=$VCS_STATUS_STASHES
 output="%F{245}# =>%f"
 
 if [[ -n "$VCS_STATUS_LOCAL_BRANCH" ]]; then
@@ -57,7 +60,7 @@ else
   output+=" ${git_range}"
 fi
 
-if [[ $VCS_STATUS_HAS_STAGED == 1 || $VCS_STATUS_HAS_UNSTAGED == 1 || $VCS_STATUS_HAS_UNTRACKED == 1 ]]; then
+if [[ $VCS_STATUS_HAS_STAGED == 1 || $VCS_STATUS_HAS_UNSTAGED == 1 || $VCS_STATUS_HAS_UNTRACKED == 1 || $VCS_STATUS_HAS_CONFLICTED == 1 || $num_stashes -gt 0 ]]; then
   if [[ -n "$divergence" ]]; then
     output+="\n${divergence}"
   fi
@@ -67,15 +70,15 @@ if [[ $VCS_STATUS_HAS_STAGED == 1 || $VCS_STATUS_HAS_UNSTAGED == 1 || $VCS_STATU
 
     [[ $VCS_STATUS_NUM_STAGED -gt 1 ]] && str+="s"
 
-    num_changes+=("$str")
+    num_changes_str+=("$str")
   fi
 
-  if [[ $VCS_STATUS_HAS_UNSTAGED  == 1 ]]; then
+  if [[ $VCS_STATUS_HAS_UNSTAGED == 1 ]]; then
     str="%F{green}${VCS_STATUS_NUM_UNSTAGED}%f %Bunstaged%b change"
 
     [[ $VCS_STATUS_NUM_UNSTAGED -gt 1 ]] && str+="s"
 
-    num_changes+=("$str")
+    num_changes_str+=("$str")
   fi
 
   if [[ $VCS_STATUS_HAS_UNTRACKED == 1 ]]; then
@@ -83,17 +86,35 @@ if [[ $VCS_STATUS_HAS_STAGED == 1 || $VCS_STATUS_HAS_UNSTAGED == 1 || $VCS_STATU
 
     [[ $VCS_STATUS_NUM_UNTRACKED -gt 1 ]] && str+="s"
 
-    num_changes+=("$str")
+    num_changes_str+=("$str")
+  fi
+
+  if [[ $VCS_STATUS_HAS_CONFLICTED == 1 ]]; then
+    str="%B%F{red}${VCS_STATUS_NUM_CONFLICTED}%f%b file"
+
+    [[ $VCS_STATUS_NUM_CONFLICTED -gt 1 ]] && str+="s"
+
+    str+=" with conflicts"
+
+    num_changes_str+=("$str")
+  fi
+
+  if [[ $num_stashes -gt 0 ]]; then
+    str="%F{008}${num_stashes}%f stash"
+
+    [[ $num_stashes -gt 1 ]] && str+="s"
+
+    num_changes_str+=("$str")
   fi
 
   output+="\n%F{blue}%Bgit status%b:%f "
 
-  if (( ${#num_changes} == 1 )); then
-    output+="${num_changes[1]}."
-  elif (( ${#num_changes} == 2 )); then
-    output+="${num_changes[1]} and ${num_changes[2]}."
-  elif (( ${#num_changes} == 3 )); then
-    output+="${num_changes[1]}, ${num_changes[2]} and ${num_changes[3]}."
+  if (( ${#num_changes_str} == 1 )); then
+    output+="${num_changes_str[1]}."
+  elif (( ${#num_changes_str} == 2 )); then
+    output+="${num_changes_str[1]} and ${num_changes_str[2]}."
+  elif (( ${#num_changes_str} >= 3 )); then
+    output+="${(j:, :)num_changes_str[1, -2]} and ${num_changes_str[-1]}."
   else
     # dafuq
     output+="%F{239}...%f"
@@ -110,7 +131,7 @@ fi
 
 builtin print -P -- "$output"
 
-if (( ${#num_changes} > 0 && ${#verbose} > 0 )); then
+if (( ${num_changes} > 0 && ${#verbose} > 0 )); then
   local git_status
   git_status="$(command git -c color.status=always status --short 2>/dev/null)" || return $status
 

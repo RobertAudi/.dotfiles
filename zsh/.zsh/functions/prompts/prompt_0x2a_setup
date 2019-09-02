@@ -32,6 +32,8 @@ prompt_0x2a_git_info() {
     [[ $VCS_STATUS_HAS_STAGED      == 1 ]] && num_changes+=("%F{yello}${VCS_STATUS_NUM_STAGED}%F{red}")
     [[ $VCS_STATUS_HAS_UNSTAGED    == 1 ]] && num_changes+=("%F{green}${VCS_STATUS_NUM_UNSTAGED}%F{red}")
     [[ $VCS_STATUS_HAS_UNTRACKED   == 1 ]] && num_changes+=("%F{cyan}${VCS_STATUS_NUM_UNTRACKED}%F{red}")
+    [[ $VCS_STATUS_HAS_CONFLICTED  == 1 ]] && num_changes+=("%B${VCS_STATUS_NUM_CONFLICTED}%b")
+    [[ $VCS_STATUS_STASHES        -gt 0 ]] && num_changes+=("%F{008}${VCS_STATUS_STASHES}%F{red}")
 
     num_changes_str=" %F{red}(${(j:·:)num_changes}%)%f"
   fi
