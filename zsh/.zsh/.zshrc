@@ -1,7 +1,10 @@
 [ -n "$PROFILE_INIT" ] && zmodload zsh/zprof
 
-module_path+=("$HOME/.zplugin/bin/zmodules/Src")
-zmodload zdharma/zplugin
+[[ -v ZINIT ]] || typeset -A ZINIT
+
+# # Commented out because it doesn't work on Apple Silicon
+# module_path+=("${ZINIT_HOME}/mod-bin/zmodules/Src")
+# zmodload zdharma-continuum/zinit
 
 #   umask   directory   file
 #   002     775         664
@@ -14,11 +17,10 @@ stty -ixon -ixoff
 stty start undef
 stty stop undef
 
-export SSH_PUBLIC_KEY=$(<$HOME/.ssh/id_rsa.pub)
+export SSH_PUBLIC_KEY=$(<$HOME/.ssh/id_ed25519.pub)
 
-if [[ ! -v LESSOPEN ]] && [[ -f "/usr/local/bin/lesspipe.sh" ]]; then
-  export LESSOPEN="|/usr/local/bin/lesspipe.sh %s"
-  export LESS_ADVANCED_PREPROCESSOR=1
+if [[ (-v ITERM_SESSION_ID || -v WEZTERM_UNIX_SOCKET) && -f "${XDG_DATA_HOME}/base16/base16-shell/base16-railscasts.sh" ]]; then
+  source "${XDG_DATA_HOME}/base16/base16-shell/base16-railscasts.sh"
 fi
 
 if [[ -f "$ZDOTDIR/setup/perl.zsh" ]]; then
@@ -28,11 +30,11 @@ fi
 # Required because otherwise it goes to shit.....
 autoload -Uz zstyle+
 
-if [[ -n "$ZPLG_HOME" && -f "$ZPLG_HOME/bin/zplugin.zsh" ]]; then
-  source "$ZPLG_HOME/bin/zplugin.zsh"
+if [[ -f "${ZINIT_HOME}/zinit.zsh" ]]; then
+  source "${ZINIT_HOME}/zinit.zsh"
 
-  if [[ -n "$ZPLG_LOADFILE" && -f "$ZPLG_LOADFILE" ]]; then
-    source "$ZPLG_LOADFILE"
+  if [[ -n "$ZINIT_LOADFILE" && -f "$ZINIT_LOADFILE" ]]; then
+    source "$ZINIT_LOADFILE"
   fi
 fi
 
@@ -54,8 +56,9 @@ typeset -gU path
 typeset -gU sudo_path
 typeset -gU manpath
 typeset -gU infopath
+typeset -gU pkg_config_path
 typeset -gU fpath
 
-export PATH SUDO_PATH MANPATH INFOPATH FPATH
+export PATH SUDO_PATH MANPATH INFOPATH PKG_CONFIG_PATH FPATH
 
 [ -n "$PROFILE_INIT" ] && zprof

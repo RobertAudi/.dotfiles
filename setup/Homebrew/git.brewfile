@@ -1,10 +1,14 @@
 # Distributed revision control system
 #   https://git-scm.com
-brew "git", args: ["with-curl"]
+brew "git"
 
 # Add GitHub support to git on the command-line
 #   https://hub.github.com/
 brew "hub"
+
+# Syntax-highlighting pager for git and diff output
+#   https://github.com/dandavison/delt
+brew "git-delta"
 
 # Alias for git commit --fixup <ref>
 #   https://github.com/keis/git-fixup
@@ -38,8 +42,6 @@ brew "diff-so-fancy"
 #   https://github.com/simonwhitaker/gibo
 brew "gibo"
 
-# ------------------------------------------------------------------------------
-
-# Tower - The most powerful Git client for Mac and Windows
-#   https://www.git-tower.com/mac
-cask "tower"
+# Git repository summary on your terminal
+#   https://github.com/o2sh/onefetch
+brew "onefetch"

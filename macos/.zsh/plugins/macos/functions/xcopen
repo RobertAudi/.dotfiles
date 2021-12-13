@@ -1,12 +1,18 @@
 #autoload
 
-local proj=$(find . -maxdepth 1 -name "*.xcworkspace" | head -1)
+if is-command xcopen ; then
+  command xcopen "$@"
+else
+  local proj=$(find . -maxdepth 1 -name "*.xcworkspace" | head -1)
 
-[[ -z "$proj" ]] && proj=$(find . -maxdepth 1 -name "*.xcodeproj" | head -1)
+  [[ -z "$proj" ]] && proj=$(find . -maxdepth 1 -name "*.xcodeproj" | head -1)
 
-if [[ -z "$proj" ]]; then
-  builtin print -P -- "[%F{196}ERROR%f] No XCode project found!" >&2
-  return 1
+  # TODO: Support playgrounds
+
+  if [[ -z "$proj" ]]; then
+    builtin print -P -u 2 -- "[%F{196}ERROR%f] No XCode project found!"
+    return 1
+  fi
+
+  open -a Xcode $proj
 fi
-
-open -a Xcode $proj

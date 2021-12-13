@@ -1,0 +1,12 @@
+#autoload
+
+local line
+
+print -n -- "\e[6n" > /dev/tty
+read -t 1 -s -d 'R' line < /dev/tty
+
+line="${line##*\[}"
+line="${line%;*}"
+line=$(($line - 1))
+
+print -n -- "$line"

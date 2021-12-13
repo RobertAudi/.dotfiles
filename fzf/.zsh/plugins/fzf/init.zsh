@@ -1,3 +1,6 @@
+: ${FZF_HOME:=${HOME}/.local/opt/fzf}
+export FZF_HOME
+
 if type fd >/dev/null; then
   export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 elif type rg >/dev/null; then
@@ -28,7 +31,6 @@ function {
   local color0F='#bc9458'
 
   export FZF_DEFAULT_OPTS="
-    --select-1
     --exit-0
     --extended
     --cycle
@@ -40,15 +42,18 @@ function {
   "
 }
 
-path=($HOME/.local/opt/fzf/bin(N-/) $path)
+path=($FZF_HOME/bin(N-/) $path)
 fpath=($ZSH_HOME/plugins/fzf/{functions,functions/zle} $fpath)
-manpath=($HOME/.local/opt/fzf/man(N-/) $manpath)
+manpath=($FZF_HOME/fzf/man(N-/) $manpath)
 
 function {
   emulate -L zsh
   setopt extended_glob
   autoload -Uz $ZSH_HOME/plugins/fzf/{functions,functions/zle}/*~(*~|*.zwc)(-N.:t)
 }
+
+fs() { print-deprecated "Use PREFIX-Space instead" }
+fcoc() { print-deprecated "Use gco instead" }
 
 alias fzf="smart-fzf"
 

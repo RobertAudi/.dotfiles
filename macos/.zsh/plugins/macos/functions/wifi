@@ -2,17 +2,31 @@
 
 local interface="$(networksetup -listallhardwareports | grep -A 2 'Hardware Port: Wi-Fi' | grep 'Device:' | awk '{print $2}')"
 
-case "$1" in
+local subcommand
+subcommand="$1"
+shift
+
+case "$subcommand" in
   on) # Turn ON WiFi
     networksetup -setairportpower "$interface" on
+    print-success "WiFi turned ON"
     ;;
   off) # Turn OFF WiFi
     networksetup -setairportpower "$interface" off
+    print-success "WiFi turned OFF"
     ;;
   restart) # Restart WiFi by turning it OFF then ON
     networksetup -setairportpower "$interface" off
-    sleep 2
+    print-info "WiFi turned OFF"
+
+    local -E sleepTime
+    [[ -n "$1" ]] && sleepTime="$1" || sleepTime=2
+
+    print-info "WiFi will be turned back on int $(builtin print -f "%.1f" "$sleepTime") seconds"
+    sleep $sleepTime
+
     networksetup -setairportpower "$interface" on
+    print-success "WiFi turned back ON"
     ;;
   status) # Displays whether Wi-Fi power is ON or OFF
     networksetup -getairportpower "$interface"

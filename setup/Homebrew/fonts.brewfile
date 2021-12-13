@@ -1,5 +1,0 @@
-tap "caskroom/fonts"
-
-# Hack font
-#   https://sourcefoundry.org/hack/
-cask "font-hack"

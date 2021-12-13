@@ -8,6 +8,7 @@ setlocal textwidth=0
 setlocal wrapmargin=0
 setlocal formatoptions-=t " Don't auto-wrap text using textwidth
 setlocal formatoptions+=l " Don't format long lines automatically
+setlocal spell
 
 " Headings with ease!
 nnoremap <buffer> \3    I###<Space><Esc>

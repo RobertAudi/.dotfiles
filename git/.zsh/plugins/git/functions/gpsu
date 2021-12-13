@@ -3,13 +3,13 @@
 local gitRemotes="$(git remote)"
 
 if [[ -z "$gitRemotes" ]]; then
-  builtin print -P -- "[%F{196}ERROR%f] No tracked repository configured" >&2
+  builtin print -P -u 2 -- "[%F{196}ERROR%f] No tracked repository configured"
 
   return 128
 elif ! [[ "$gitRemotes" =~ "\borigin\b" ]]; then
-  builtin print -P -- "[%F{196}ERROR%f] Remote not found: origin" >&2
-  builtin print    -- "You can configure the 'origin' remote repository using" >&2
-  builtin print    -- "\n\tgit remote add origin <url>" >&2
+  builtin print -P -u 2 -- "[%F{196}ERROR%f] Remote not found: origin"
+  builtin print    -u 2 -- "You can configure the 'origin' remote repository using"
+  builtin print    -u 2 -- "\n\tgit remote add origin <url>"
 
   return 1
 fi

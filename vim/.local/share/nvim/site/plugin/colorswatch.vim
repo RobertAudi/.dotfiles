@@ -11,7 +11,7 @@ let g:x2a#colorswatch#exclusion_patterns =
       \   [
       \     'LightLine',
       \     'Neomake',
-      \     'NERDTree',
+      \     'NvimTree',
       \     'GitGutter',
       \     'Startify',
       \     'colorSwatch',

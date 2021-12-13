@@ -19,6 +19,15 @@
 !bower_components/
 
 --glob
+!doc/
+
+--glob
+!docs/
+
+--glob
+!vcr_cassettes/
+
+--glob
 !.gem/*
 
 --glob
@@ -62,6 +71,9 @@
 
 --glob
 !*.ico
+
+--glob
+!*.min.*
 # ------------------------------------------------------------------------------ }}}
 
 # Colors {{{

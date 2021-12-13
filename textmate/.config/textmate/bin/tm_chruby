@@ -1,6 +1,0 @@
-#!/bin/sh
-
-source /usr/local/share/chruby/chruby.sh
-chruby $(< ~/.ruby-version)
-
-exec ruby "$@"

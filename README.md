@@ -6,31 +6,13 @@ This repository contains my dotfiles managed by [GNU Stow][stow].
 Table of Contents
 -----------------
 
-- [Screenshots](#screenshots)
 - [Toolchain](#toolchain)
+- [Usage](#usage)
 - [The setup script](#the-setup-script)
 - [Homebrew](#homebrew)
   - [Install/Update](#homebrew-install-update)
   - [Packages](#homebrew-packages)
-- [Alacritty](#alacritty)
-  - [Requirements](#alacritty-requirements)
-  - [Install/Update](#alacritty-install-update)
 - [License](#license)
-
-Screenshots
------------
-
-<details>
-  <summary><strong>Alacritty</strong></summary>
-
-  ![Alacritty screenshot](./docs/screenshots/Alacritty.jpg "Alacritty screenshot")
-</details>
-
-<details>
-  <summary><strong>VimR</strong></summary>
-
-  ![VimR screenshot](./docs/screenshots/VimR.jpg "VimR screenshot")
-</details>
 
 Toolchain
 ---------
@@ -39,19 +21,25 @@ Toolchain
 - [Homebrew][brew]: Package manager for macOS
 - [Homebrew Bundle][brew-bundle]: Bundler for dependencies from Homebrew, Homebrew Cask and the Mac App Store
 - [mas][]: Mac App Store command line interface
-- [Alacritty][alacritty]: A GPU-accelerated terminal emulator
+- [Iterm2][iterm2]: Terminal emulator for macOS
 - [Zsh][zsh]: Unix shell
-- [Zplugin][zplugin]: Flexible Zsh plugin manager
+- [Zinit][zinit]: Flexible Zsh plugin manager
 - [tmux][]: Terminal multiplexer
 - [ghq][]: Manage remote repository clones
 - [fzf][]: A command-line fuzzy finder
 - [Universal Ctags][ctags]: A maintained ctags implementation
 - [Neovim][neovim]: Vim-based text editor
-- [VimR][]: Neovim GUI for macOS
 - [TextMate][]: Powerful and customizable GUI text editor for macOS
 - [Hammerspoon][hammerspoon]: Powerful macOS automation tool
 
 ...and a bunch more...
+
+Usage
+-----
+
+**Don't use this as your dotfiles. Just don't.** This setup is highly customized for my needs specifically. That's not a restriction or anything like that, it's just an advice.
+
+A better approach would be to browse the files and steal bits and pieces that you might find useful, and don't hesitate to create an issue if you have any questions and/or you found a bug, or for any reason really.
 
 The setup script
 ----------------
@@ -98,38 +86,6 @@ for f in ./Homebrew/*.brewfile(:A); do
 done
 ```
 
-Alacritty
----------
-
-[Alacritty][alacritty] is a GPU-accelerated terminal emulator written in Rust.
-
-<h3 id="alacritty-requirements">Requirements</h3>
-
-To install Alacritty, you need to have [ghq][] installed. If you haven't done so already, just run the [`setup`][setup-script] script:
-
-```console
-$ setup ghq
-```
-
-<h3 id="alacritty-install-update">Install/Update</h3>
-
-Use the [`setup`][setup-script] script to install/update Alacritty:
-
-```console
-$ setup alacritty
-```
-
-This will do several things:
-
-- Run the Rust [setup script](./setup/rust.sh)
-- Clone or update the [Alacritty git repository][alacritty]
-- Compile `Alacritty.app`
-- Copy the compiled application to `/Applications`
-- Generate the Alacritty manpage and copy it to `$XDG_DATA_HOME/man/man1`
-- Copy the ZSH and Bash completion files to the right place
-
-You can take a look at the [`alacritty.sh`](./setup/alacritty.sh) if you want to see all the details.
-
 License
 -------
 
@@ -161,15 +117,14 @@ License
 [brew]: https://brew.sh/
 [brew-bundle]: https://github.com/Homebrew/homebrew-bundle
 [mas]: https://github.com/mas-cli/mas
-[alacritty]: https://github.com/jwilm/alacritty
-[zsh]: http://zsh.sourceforge.net/
-[zplugin]: https://github.com/zdharma/zplugin
+[iterm2]: https://iterm2.com/
+[zsh]: https://zsh.sourceforge.io/
+[zinit]: https://github.com/zdharma-continuum/zinit
 [tmux]: http://tmux.github.io/
 [ghq]: https://github.com/motemen/ghq
 [fzf]: https://github.com/junegunn/fzf
 [ctags]: https://ctags.io
 [neovim]: https://neovim.io/
-[VimR]: http://vimr.org/
 [TextMate]: https://macromates.com/
 [hammerspoon]: https://www.hammerspoon.org/
 

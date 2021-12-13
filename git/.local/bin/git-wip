@@ -1,6 +1,20 @@
-#!/bin/sh
+#!/usr/bin/env zsh
 
-FILES=${@:-.}
-git add -A $FILES
-git ls-files --deleted -z $FILES | xargs -0 git rm 2>/dev/null
-git commit --no-verify --message="[WIP] $(curl -s whatthecommit.com/index.txt)"
+git-wip() {
+  local files
+  files=${@:-.}
+
+  git add -A $files
+  git ls-files --deleted -z $files | xargs -0 git rm 2> /dev/null
+
+  local commitMessage
+  commitMessage="$(curl -s whatthecommit.com/index.txt 2> /dev/null)"
+
+  if (( $status != 0 )) || [[ -z "$commitMessage" ]]; then
+    commitMessage="WORK IN PROGRESS"
+  fi
+
+  git commit --no-verify --message="[WIP] ${commitMessage}"
+}
+
+git-wip "$@"

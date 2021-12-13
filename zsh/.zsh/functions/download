@@ -8,14 +8,24 @@ fi
 local url
 for url in $@; do
   if echo "$url" | grep "github\|\.git$" &> /dev/null && ! echo "$url" | grep "raw\.github\.com\|githubusercontent\|releases\/download" &> /dev/null; then
+    print-info "Using git clone:"
+    builtin print -P -- "%F{032}==>%f git clone \"$url\""
     git clone "$url"
   elif is-callable aria2c; then
+    print-info "Using aria2"
+    builtin print -P -- "%F{032}==>%f aria2c --max-connection-per-server=4 --continue \"$url\""
     aria2c --max-connection-per-server=4 --continue "$url"
   elif is-callable axel; then
+    print-info "Using axel"
+    builtin print -P -- "%F{032}==>%f axel \"$url\""
     axel "$url"
   elif is-callable curl; then
+    print-info "Using curl"
+    builtin print -P -- "%F{032}==>%f curl --continue-at - --location --progress-bar --remote-name --remote-time \"$url\""
     curl --continue-at - --location --progress-bar --remote-name --remote-time "$url"
   elif is-callable wget; then
+    print-info "Using wget"
+    builtin print -P -- "%F{032}==>%f wget --no-check-certificate --continue --progress=bar --timestamping \"$url\""
     wget --no-check-certificate --continue --progress=bar --timestamping "$url"
   fi
 done

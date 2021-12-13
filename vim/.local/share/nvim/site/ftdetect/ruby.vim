@@ -3,6 +3,8 @@ autocmd BufRead,BufNewFile *.podspec setfiletype ruby
 autocmd BufRead,BufNewFile *pryrc    setfiletype ruby
 autocmd BufRead,BufNewFile *riplrc   setfiletype ruby
 
+autocmd BufNewFile,BufRead *.arb setfiletype ruby
+
 autocmd BufRead,BufNewFile Gemfile.local setfiletype ruby
 autocmd BufRead,BufNewFile Gemfile.local.lock setfiletype gemfilelock
 

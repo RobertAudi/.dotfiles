@@ -5,7 +5,7 @@
 
 let g:silicon = {
       \   'theme':              'TwoDark',
-      \   'font':                  'Hack',
+      \   'font':               'JetBrains Mono',
       \   'background':         '#A8C3E1',
       \   'shadow-color':       '#555555',
       \   'line-pad':                   2,
@@ -18,3 +18,5 @@ let g:silicon = {
       \   'round-corner':          v:true,
       \   'window-controls':       v:true,
       \ }
+
+let g:silicon['default-file-pattern'] = '~/Pictures/Screenshots/silicon-{time:%Y-%m-%d-%H%M%S}.png'

@@ -19,7 +19,14 @@ let g:gitgutter_max_signs = 300
 let g:gitgutter_highlight_lines = 0
 let g:gitgutter_diff_args = '--ignore-space-at-eol'
 
-nmap [c <Plug>GitGutterPrevHunk
-nmap ]c <Plug>GitGutterNextHunk
+nmap [c <Plug>(GitGutterPrevHunk)
+nmap ]c <Plug>(GitGutterNextHunk)
 
-command! -nargs=0 GG GitGutterEnable | GitGutter
+augroup RAPluginsGitGutter
+  autocmd!
+
+  autocmd BufReadPost *
+        \ if &readonly || !&modifiable
+        \ | call gitgutter#buffer_disable() |
+        \ endif
+augroup END

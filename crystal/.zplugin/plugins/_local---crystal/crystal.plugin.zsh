@@ -1,1 +1,0 @@
-../../../../crystal/.zsh/plugins/crystal/init.zsh

@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 if type pgrep >/dev/null; then
-  pgrep -l "$@" | cut -c -$COLUMNS
+  pgrep -l "$@" | command cut -c -$COLUMNS
 else
   command ps xo pid,command \
     | command tail -n +2 \

@@ -25,6 +25,7 @@ if [[ "$TERM" != dumb ]] && (( $+commands[grc] )) ; then
     ps \
     traceroute \
     traceroute6 \
+    uptime \
     wdiff \
     whois \
   );

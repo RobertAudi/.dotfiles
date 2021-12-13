@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 
 use_chruby() {
-  if ! has chruby && [[ -f /usr/local/share/chruby/chruby.sh ]]; then
-    source /usr/local/share/chruby/chruby.sh || return $?
+  if ! has chruby && [[ -f /opt/homebrew/share/chruby/chruby.sh ]]; then
+    source /opt/homebrew/share/chruby/chruby.sh || return $?
   fi
 
   return 0
 }
 
 use_gem_home() {
-  if ! has gem_home && [[ -f /usr/local/share/gem_home/gem_home.sh ]]; then
-    source /usr/local/share/gem_home/gem_home.sh || return $?
+  if ! has gem_home && [[ -f /opt/homebrew/share/gem_home/gem_home.sh ]]; then
+    source /opt/homebrew/share/gem_home/gem_home.sh || return $?
   fi
 
   return 0

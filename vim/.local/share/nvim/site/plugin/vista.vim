@@ -8,17 +8,17 @@ let g:vista_close_on_jump = v:false
 let g:vista_stay_on_open = v:true
 
 let g:vista_executive_for = {
-  \   'javascript': 'coc',
-  \   'ruby':       'coc',
-  \   'sh':         'coc',
-  \   'html':       'coc',
-  \   'scss':       'coc',
-  \   'css':        'coc',
-  \   'json':       'coc',
-  \   'yaml':       'coc',
+  \   'javascript': 'nvim_lsp',
+  \   'ruby':       'nvim_lsp',
+  \   'sh':         'nvim_lsp',
+  \   'html':       'nvim_lsp',
+  \   'scss':       'nvim_lsp',
+  \   'css':        'nvim_lsp',
+  \   'json':       'nvim_lsp',
+  \   'yaml':       'nvim_lsp',
   \ }
 
-let g:vista_icon_indent = ["└─⊳ ", "├─⊳ "]
+let g:vista_icon_indent = ["└─ ", "├─ "]
 
 " The default icons can't be suitable for all the filetypes, you can extend it as you wish.
 "    ƒ : \u0192
@@ -30,10 +30,11 @@ let g:vista_icon_indent = ["└─⊳ ", "├─⊳ "]
 let s:icons = {
       \   'function':       "ƒ",
       \   'variable':       "𝑥",
-      \   'constant':       "\ue0a2",
-      \   'method':         "",
+      \   'constant':       " ⃟",
+      \   'method':         "ƒ",
       \   'package':        "⊞",
       \   'enum':           "≣",
+      \   'loop':           "∞",
       \   'module':         "{}",
       \   'type':           "⟙",
       \   'field':          "⟡",
@@ -62,13 +63,13 @@ let g:vista#renderer#icons = {
       \   'var':            s:icons['variable'],
       \   "variable":       s:icons['variable'],
       \   'variables':      s:icons['variable'],
-      \   'const':          '',
-      \   'constant':       '',
-      \   'method':         '',
+      \   'const':          s:icons['constant'],
+      \   'constant':       s:icons['constant'],
+      \   'method':         s:icons['function'],
       \   'package':        s:icons['package'],
       \   'packages':       s:icons['package'],
       \   'enum':           s:icons['enum'],
-      \   'enumerator':     '',
+      \   'enumerator':     s:icons['loop'],
       \   'command':        s:icons['command'],
       \   'module':         s:icons['module'],
       \   'modules':        s:icons['module'],

@@ -1,0 +1,3 @@
+#!/usr/bin/env zsh
+
+git describe --all $(git rev-parse @{-1}) | sed 's/^heads\///'

@@ -1,6 +1,14 @@
-" Plugin: Colorizer
-" Description: Color hex codes and color names
-" URL: https://github.com/chrisbra/Colorizer
+" Plugin: nvim-colorizer.lua
+" Description: THE FASTEST NEOVIM COLORIZER
+" URL: https://github.com/norcalli/nvim-colorizer.lua
 
-let g:colorizer_auto_color = 0
-let g:colorizer_auto_filetype = 'css,html'
+lua <<EOF
+  require 'colorizer'.setup {
+    'css';
+    'javascript';
+    'scss';
+    'html';
+    'haml';
+    'erb';
+  }
+EOF

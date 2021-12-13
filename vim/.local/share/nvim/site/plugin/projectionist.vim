@@ -11,12 +11,15 @@ let g:rails_projections = {
       \     'alternate': 'spec/{}_spec.rb'
       \   },
       \   'app/controllers/*_controller.rb': {
-      \     'alternate': ['spec/requests/{}_spec.rb', 'spec/requests/{}_controller_spec.rb', 'spec/{}_controller_spec.rb']
+      \     'alternate': ['spec/requests/{}_spec.rb', 'spec/requests/{}_request_spec.rb', 'spec/requests/{}_controller_spec.rb', 'spec/{}_controller_spec.rb']
       \   },
       \   'spec/*_spec.rb': {
       \     'alternate': 'app/{}.rb'
       \   },
       \   'spec/requests/*_spec.rb': {
+      \     'alternate': ['app/controllers/{}_controller.rb', 'app/controllers/{}.rb']
+      \   },
+      \   'spec/requests/*_request_spec.rb': {
       \     'alternate': ['app/controllers/{}_controller.rb', 'app/controllers/{}.rb']
       \   },
       \   'config/routes.rb': {

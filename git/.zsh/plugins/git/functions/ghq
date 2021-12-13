@@ -138,16 +138,19 @@ case "$action" in
         return 130
       fi
 
+      local title
+      title="$(ghq title "$repo")"
+
       if [[ -n "$TMUX" && "$PWD" != "$HOME" ]]; then
         local default_shell update_cmd cmd title
         default_shell="$(tmux show-option -gv default-command)" || return $status
         update_cmd="$(ghq update-cmd "$repo")" || return $status
         cmd="$default_shell -c '$=update_cmd && clear && $default_shell -i'"
-        title="$(ghq title "$repo")"
 
         tmux new-window -c "$repo" -n "$title" "$cmd"
       else
         cd -q "$repo"
+        tmux rename-window "$title"
         ghq update "$repo"
       fi
     else
@@ -156,14 +159,14 @@ case "$action" in
       ghq get "$1" || return $status
 
       repo="$(ghq list "$1" | head -1)"
+      title="$(ghq title "$repo")"
 
       if [[ -n "$TMUX" && "$PWD" != "$HOME" ]]; then
-        local title
-        title="$(ghq title "$repo")"
 
         tmux new-window -c "$repo" -n "$title"
       else
         cd -q "$repo"
+        tmux rename-window "$title"
       fi
     fi
 

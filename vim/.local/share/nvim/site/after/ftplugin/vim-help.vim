@@ -22,6 +22,8 @@ setlocal bufhidden=
 setlocal tabstop=8
 setlocal textwidth=78
 
+setlocal spell
+
 if getbufvar('%', '&timeoutlen') == 0
   let &timeoutlen = get(g:, 'default_timeoutlen', 1000)
 endif

@@ -1,0 +1,1 @@
+../../../../../.zsh/plugins/grc/init.zsh

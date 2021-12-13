@@ -1,14 +1,26 @@
 #!/usr/bin/env zsh
 
+git-apple-pick-help() {
+  echo "Usage: git apple-pick <branch> <commits>"
+  echo "  <branch>: The branch to rebase (not the current branch!)"
+  echo "  <commits>: The commits to pick"
+}
+
 git-apple-pick() {
   if ! in-git-repo; then
     echo -e "\e[1;41;97m ERROR \e[0m Not a repository: $PWD" >&2
     return 1
   fi
 
-  if (( $# < 2 )); then
+  if [[ "$1" =~ "-h(elp)?" ]]; then
+    git-apple-pick-help
+
+    return
+  elif (( $# < 2 )); then
     echo -e "\e[1;41;97m ERROR \e[0m branch and commits required" >&2
-    echo "Usage: git rebase-parent-branch <branch> <commits>" >&2
+
+    git-apple-pick-help
+
     return 1
   fi
 

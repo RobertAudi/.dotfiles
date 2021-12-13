@@ -20,6 +20,6 @@ if [[ -a "$simulator_path" ]]; then
   builtin print -P -- "[%F{032}INFO%f] Launching iOS Simulator..."
   open "$simulator_path"
 else
-  builtin print -P -- "[%F{196}ERROR%f] Simulator not found" >&2
+  builtin print -P -u 2 -- "[%F{196}ERROR%f] Simulator not found"
   return 1
 fi

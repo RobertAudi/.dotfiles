@@ -439,23 +439,6 @@ brew "fzy"
 #   https://direnv.net/
 brew "direnv"
 
-# Spell checker with better logic than ispell
-#   http://aspell.net/
-brew "aspell", args: ["without-lang-de", "without-lang-es"]
-
-# Command-line outline and bitmap font editor/converter
-#   https://fontforge.github.io
-#
-# ==> Caveats
-# This formula only installs the command line utilities.
-#
-# FontForge.app can be downloaded directly from the website:
-#   https://fontforge.github.io
-#
-# Alternatively, install with Homebrew Cask:
-#   brew cask install fontforge
-brew "fontforge", args: ["with-extra-tools"]
-
 # Fast CSV toolkit written in Rust
 #   https://github.com/BurntSushi/xsv
 brew "xsv"
@@ -527,6 +510,10 @@ brew "pgcli"
 # Web-based PostgreSQL database browser
 #   https://sosedoff.github.io/pgweb/
 brew "pgweb"
+
+# A PostgreSQL SQL syntax beautifier
+#   https://github.com/darold/pgFormatter
+brew "pgformatter"
 
 # Serve a RESTful API from any PostgreSQL database
 #   https://github.com/prest/prest
@@ -675,10 +662,6 @@ brew "nss"
 #   https://www.imagemagick.org/
 brew "imagemagick"
 
-# Object-relational database system
-#   https://www.postgresql.org/
-brew "postgresql"
-
 # Persistent key-value database, with built-in net interface
 #   https://redis.io/
 brew "redis", restart_service: true
@@ -686,10 +669,6 @@ brew "redis", restart_service: true
 # Command-line interface for SQLite
 #   https://sqlite.org/
 brew "sqlite"
-
-# Open source relational database management system
-#   https://dev.mysql.com/doc/refman/8.0/en/
-brew "mysql"
 
 # Open a web search in your terminal
 #   https://github.com/zquestz/s

@@ -1,1 +1,0 @@
-../../../../vim/.zsh/plugins/vim/init.zsh

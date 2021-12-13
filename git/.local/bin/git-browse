@@ -5,6 +5,6 @@ if type git-brws >/dev/null; then
 elif type hub >/dev/null; then
   hub browse "$@"
 else
-  builtin print -P -- "[%F{196}ERROR%f] hub not installed" >&2
+  builtin print -P -u 2 -- "[%F{196}ERROR%f] hub not installed"
   return 1
 fi

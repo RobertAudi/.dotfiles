@@ -1,0 +1,13 @@
+#!/usr/bin/env zsh
+
+if ! in-git-repo; then
+  builtin print -P -u 2 -- "[%F{196}ERROR%f] Not a repository: %B%F{yellow}${PWD}%f%b"
+  return 1
+fi
+
+if (( $# == 0 )); then
+  builtin print -P -u 2 -- "[%F{196}ERROR%f] Missing branch name"
+  return 1
+fi
+
+git ls-remote --exit-code origin "$1" &> /dev/null

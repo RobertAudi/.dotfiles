@@ -3,7 +3,7 @@
 case "$1" in
   "local")
     if [[ ! -f "Gemfile.local" ]]; then
-      builtin print -P -- "[%F{196}ERROR%f] Local Gemfile not found." >&2
+      builtin print -P -u 2 -- "[%F{196}ERROR%f] Local Gemfile not found."
       return 1
     fi
 

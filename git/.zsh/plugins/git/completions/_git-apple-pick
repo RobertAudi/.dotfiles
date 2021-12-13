@@ -1,0 +1,18 @@
+#compdef git-apple-pick
+#autoload
+
+_arguments -C \
+  '1:branch:->branches' \
+  '*::commits:->commits_list' \
+  && ret=0
+
+case "$state" in
+  (branches)
+    _alternative 'local-branches:base branch:__git_branch_names' && ret=0
+    ;;
+  (commits_list)
+    _alternative 'recent-commits:commits:__git_recent_commits' && ret=0
+  ;;
+esac
+
+return 1

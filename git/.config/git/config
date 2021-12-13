@@ -19,6 +19,9 @@
   # https://git-scm.com/docs/git-update-index#_untracked_cache
   untrackedCache = true
 
+  # Read the commit-graph file (if it exists) to parse the graph structure of commits.
+  commitGraph = true
+
   # Awesome table describing this config:
   #
   # ┌───────────────┬──────────────┬──────────────┬──────────────┐
@@ -117,6 +120,7 @@
 [fetch]
   prune = true
   recurseSubmodules = true
+  fsckObjects = false
 
 [push]
   # change to maching for machines with older versions of git 1.x.x
@@ -129,13 +133,6 @@
   prune = true
   rebase = merges
 
-[merge]
-  summary = true
-
-  # Include summaries of merged commits in newly created merge commit messages
-  log = true
-  stat = true
-
 [rebase]
   autoSquash = true
   autoStash = true
@@ -147,6 +144,9 @@
 
 [blame]
   date = short
+
+[gc]
+  writeCommitGraph = true
 
 [help]
   # Don't correct and execute mistyped commands automatically.
@@ -212,6 +212,12 @@
 [diff "xml"]
   textconv = xmllint --format --recover
 
+[diff "ruby"]
+  funcname = ^ *\\(\\(class\\|module\\|def\\) .*\\)
+
+[diff "rspec"]
+  funcname = ^ *\\(\\(\\(RSpec\\.\\)\\?describe\\|context\\) .*\\)
+
 [difftool]
   prompt = false
 
@@ -246,7 +252,7 @@
   #   https://gist.github.com/492227
   head = log -n1
 
-  llf = fsck --lost-found
+  lost-found = fsck --lost-found
   todo = grep -E '(FIXME|TODO) '
 
   # Source:
@@ -291,12 +297,19 @@
   # Source: https://github.com/nvie/git-toolbelt/blob/a4f471e720afcea952308a171d65a6f8217ba59d/git-undo-merge
   undo-merge = reset --hard ORIG_HEAD
 
+  # git gui
+  ui = gui
+
+  # Source: https://carolynvanslyck.com/blog/2020/12/git-wip/
+  my-branches = for-each-ref --sort='authordate:iso8601' --format=' %(color:green)%(authordate:relative)%09%(color:white)%(refname:short)' refs/heads
+
 [url "https://github.com/"]
   insteadOf = "gh:"
 
 [url "git@github.com:"]
   pushInsteadOf = "gh:"
   insteadOf = "git://github.com/"
+  insteadOf = "https://github.com/"
 
 [url "https://gist.github.com/"]
   insteadOf = "gist:"

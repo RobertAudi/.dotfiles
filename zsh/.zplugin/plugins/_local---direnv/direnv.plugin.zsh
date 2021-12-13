@@ -1,1 +1,0 @@
-../../../../zsh/.zsh/plugins/direnv/init.zsh

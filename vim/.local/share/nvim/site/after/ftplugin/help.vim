@@ -11,6 +11,8 @@ setlocal nolist
 setlocal wrap
 setlocal bufhidden=hide
 
+setlocal nospell
+
 if getbufvar('%', '&timeoutlen') != 0
   set timeoutlen=0
 endif

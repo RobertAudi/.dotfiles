@@ -5,7 +5,7 @@
 gitstatus_query MY || return $status  # error
 
 if [[ $VCS_STATUS_RESULT != ok-sync ]]; then
-  builtin print -P -- "[%F{red}ERROR%f] Not a repository: %B${PWD}%b" >&2
+  builtin print -P -u 2 -- "[%F{red}ERROR%f] Not a repository: %B${PWD}%b"
   return 1
 fi
 

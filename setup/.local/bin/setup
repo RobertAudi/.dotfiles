@@ -11,21 +11,20 @@ function main {
 
   local -A script_aliases
 
-  script_aliases[cargo]=cargo-packages.sh
-  script_aliases[cpan]=cpan-packages.sh
-  script_aliases[go]=go-packages.sh
-  script_aliases[npm]=npm-packages.sh
-  script_aliases[gem]=ruby-gems.sh
-  script_aliases[pip]=pip-packages.sh
-  script_aliases[firefox]=firefox.rb
-  script_aliases[nvim]=neovim.sh
+  script_aliases[cargo]=cargo-packages
+  script_aliases[cpan]=cpan-packages
+  script_aliases[go]=go-packages
+  script_aliases[npm]=npm-packages
+  script_aliases[gem]=ruby-gems
+  script_aliases[pip]=pip-packages
+  script_aliases[nvim]=neovim
 
   local setup_script
 
-  if [[ -x "${scripts_dir}/${1}.sh" ]]; then
-    setup_script="${scripts_dir}/${1}.sh"
-  elif [[ -x "${scripts_dir}/${script_aliases[$1]}" ]]; then
-    setup_script="${scripts_dir}/${script_aliases[$1]}"
+  if [[ -x "${scripts_dir}/${1}.setup.sh" ]]; then
+    setup_script="${scripts_dir}/${1}.setup.sh"
+  elif [[ -x "${scripts_dir}/${script_aliases[$1]}.setup.sh" ]]; then
+    setup_script="${scripts_dir}/${script_aliases[$1]}.setup.sh"
   else
     # print error
     return 1

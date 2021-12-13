@@ -1,5 +1,32 @@
 #autoload
-
 # fkill - kill process
-local pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
-[[ -n "$pid" ]] && kill -${1:-9} $pid
+
+local -A opts
+zparseopts -D -A opts s:
+
+if (( $status != 0 )); then
+  builtin print -P -u 2 -- "[%F{196}ERROR%f] ..."
+  return 1
+fi
+
+local signal
+signal=${opts[-s]:-9}
+
+local query
+query="$@"
+
+local pids
+pids=$(ps -ef | sed 1d | command fzf --no-sort --filter="$query" | fzf --exit-0 --multi | awk '{print $2}')
+
+# Script terminated by Control-C
+if (( $status == 130 )); then
+  builtin print -P -u 2 -- "[%F{196}ERROR%f] Aborted..."
+  return 130
+fi
+
+print "Signal: $signal"
+print "PIDs: $pids"
+
+if [[ -n "$pids" ]]; then
+  kill -${signal} ${pids}
+fi

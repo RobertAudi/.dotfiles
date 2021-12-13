@@ -119,7 +119,7 @@ function! x2a#file#Delete(bang, keeplayout) abort
     call x2a#utils#echo#FatalError('Failed to delete "' . l:file . '"')
   else
     call x2a#utils#echo#Message('Deleted file: ' . l:file)
-    silent! call x2a#nerdtree#Refresh(l:directory)
+    silent! NvimTreeRefresh
   endif
 endfunction
 

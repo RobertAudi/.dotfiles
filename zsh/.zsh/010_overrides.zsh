@@ -98,9 +98,9 @@ do_sudo() {
     esac
   done
   if (( glob )); then
-    PATH="/sbin:/usr/sbin:/usr/local/sbin:$PATH" $run $~==*
+    PATH="/sbin:/usr/sbin:/opt/homebrew/sbin:$PATH" $run $~==*
   else
-    PATH="/sbin:/usr/sbin:/usr/local/sbin:$PATH" $run $==*
+    PATH="/sbin:/usr/sbin:/opt/homebrew/sbin:$PATH" $run $==*
   fi
 }
 
@@ -131,12 +131,7 @@ alias find="noglob find"
 alias history="noglob history"
 alias locate="noglob locate"
 
-# not aliasing rm -i, but if safe-rm is available, use condom.
-if (( ${+commands[safe-rm]} > 0 )); then
-  alias rm="safe-rm -v"
-else
-  alias rm="rm -v --preserve-root"
-fi
+alias rm="rm -v --preserve-root"
 
 # Be verbose
 alias cp="cp -v"
@@ -158,6 +153,8 @@ alias gzip="gzip --verbose --best --name"
 
 alias pgrep="pgrep -il"
 alias pkill="pkill -i"
+
+alias cat="smart-cat"
 
 # Replace problematic characters in filenames
 alias detox="detox -v"

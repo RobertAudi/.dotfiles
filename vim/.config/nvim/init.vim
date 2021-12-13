@@ -5,7 +5,6 @@ scriptencoding utf-8
 " Setup {{{
 " ------------------------------------------------------------------------------
 
-set t_Co=256
 set ttyfast
 set termguicolors
 
@@ -70,7 +69,11 @@ endif
 " ------------------------------------------------------------------------------
 
 " default shell
-set shell=$SHELL
+if empty($SHELL)
+  set shell=/opt/homebrew/bin/zsh
+else
+  set shell=$SHELL
+endif
 
 " Use the System Clipboard
 if has('unnamedplus')
@@ -149,8 +152,10 @@ set showcmd
 " Pop-up menu's line height
 set pumheight=20
 
-" Enable pseudo-transparency for the popup-menu
-set pumblend=5
+if exists('+pumblend')
+  " Enable pseudo-transparency for the popup-menu
+  set pumblend=5
+endif
 
 " Minimum help window height
 set helpheight=12
@@ -167,15 +172,18 @@ set titlestring=%{x2a#TitleString#build()}
 set nonumber
 set norelativenumber
 
-" Resize to accommodate multiple signs up to 4 signs
-set signcolumn=auto:4
+try
+  " Resize to accommodate multiple signs up to 4 signs
+  set signcolumn=auto:2
+catch /.*/
+endtry
 
 " ------------------------------------------------------------------------------ }}}
 
 " Stop highlighting lines midway
 " if they're too long
 set synmaxcol=1200
-set colorcolumn=121
+set colorcolumn=120
 
 " prefer a slight higher line height
 set linespace=2
@@ -184,7 +192,11 @@ set linespace=2
 set nocursorline
 
 " Do not redraw the screen until whatever is being done is finished
-set lazyredraw
+if has('gui_vimr')
+  set lazyredraw
+else
+  set nolazyredraw
+endif
 
 " Show matching brackets.
 set showmatch
@@ -349,7 +361,6 @@ set complete+=u " Scan the unloaded buffers that are in the buffer list
 set complete+=U " Scan the buffers that are not in the buffer list
 
 set completeopt=
-set completeopt+=menu     " Use a popup menu to show the possible completions
 set completeopt+=menuone  " Show menu even if only 1 item long
 set completeopt+=noselect " Do not select a match in the menu, force the user to select one
 
@@ -488,6 +499,18 @@ set foldlevelstart=99
 " Better fold text
 set foldtext=AwesomeFoldText#foldtext()
 
+" Type of commands that folds will open
+set foldopen=          " Clear the defaults, start with a blank slate
+set foldopen+=block    " "(", "{", "[[", "[{", etc.
+set foldopen+=hor      " horizontal movements: "l", "w", "fx", etc.
+set foldopen+=insert   " any command in Insert mode
+set foldopen+=mark     " jumping to a mark: "'m", CTRL-O, etc.
+set foldopen+=percent  " "%"
+set foldopen+=quickfix " ":cn", ":crew", ":make", etc.
+set foldopen+=search   " search for a pattern: "/", "n", "*", "gd", etc.
+set foldopen+=tag      " jumping to a tag: ":ta", CTRL-T, etc.
+set foldopen+=undo     " undo or redo: "u" and CTRL-R
+
 " ------------------------------------------------------------------------------ }}}
 
 " Swaps, backups, and undos {{{
@@ -511,9 +534,9 @@ if empty($SUDO_USER) || $USER ==# $SUDO_USER
   set undoreload=10000
 
   " Make important directories if they don't exist
-  for dir in [&backupdir, &directory, &undodir, &viewdir]
-    if empty(finddir(dir))
-      call mkdir(dir, 'p', 0700)
+  for s:dir in [&backupdir, &directory, &undodir, &viewdir]
+    if empty(finddir(s:dir))
+      call mkdir(s:dir, 'p', 0700)
     endif
   endfor
 else
@@ -563,6 +586,19 @@ set sessionoptions+=winsize
 " Diff {{{
 " ------------------------------------------------------------------------------
 
+" Clear the defaults, start with a blank slate
+set diffopt=
+
+" Use the internal diff library.
+set diffopt+=internal
+
+" Show filler lines, to keep the text synchronized with a
+" window that has inserted lines at the same position.
+set diffopt+=filler
+
+" Use the indent heuristic for the internal diff library.
+set diffopt+=indent-heuristic
+
 " Ignore changes in amount of white space
 set diffopt+=iwhite
 
@@ -570,7 +606,7 @@ set diffopt+=iwhite
 set diffopt+=vertical
 
 " Use the patience diff algorithm when creating a diff
-set diffopt+=internal,algorithm:patience
+set diffopt+=algorithm:patience
 
 " ------------------------------------------------------------------------------ }}}
 
@@ -596,12 +632,12 @@ set mousemodel=
 " FZF {{{
 " ------------------------------------------------------------------------------
 
-if exists("$FZF_HOME")
+if exists('$FZF_HOME')
   " A command-line fuzzy finder
   "   https://github.com/junegunn/fzf
-  set rtp+=$FZF_HOME
-elseif isdirectory(fnamemodify("~/.local/opt/fzf", ":p"))
-  set rtp+=fnamemodify("~/.local/opt/fzf", ":p")
+  set runtimepath+=$FZF_HOME
+elseif isdirectory(fnamemodify('~/.local/opt/fzf', ':p'))
+  set runtimepath+=fnamemodify('~/.local/opt/fzf', ':p')
 endif
 
 " ------------------------------------------------------------------------------ }}}
@@ -617,9 +653,6 @@ call plug#begin($XDG_DATA_HOME . '/nvim/plugged')
 "   https://github.com/junegunn/vim-plug
 " NOTE: Adding vim-plug as a plugin exposes its help
 Plug 'junegunn/vim-plug'
-
-" Base16 for Vim (colorsheme)
-Plug 'chriskempson/base16-vim'
 
 " FileType plugins {{{
 " ------------------------------------------------------------------------------
@@ -656,8 +689,8 @@ Plug 'inkarkat/SyntaxAttr.vim', { 'on': 'ShowSyntax' }
 " Syntax highlighting for AppleScript
 Plug 'RobertAudi/applescript.vim'
 
-" Apple Official swift vim plugin
-Plug 'bumaociyuan/vim-swift'
+" Vim runtime files for Swift
+Plug 'keith/swift.vim'
 
 " Vim runtime files for xcconfigs
 Plug 'keith/xcconfig.vim'
@@ -687,9 +720,6 @@ Plug 'cakebaker/scss-syntax.vim'
 
 " Read and browse info files in Vim
 Plug 'HiPhish/info.vim', { 'for': 'info' }
-
-" Vim filetype and tools support for Crystal language.
-Plug 'rhysd/vim-crystal', { 'for': 'crystal' }
 
 " Improved Lua 5.3 syntax and indentation support for Vim
 Plug 'tbastos/vim-lua', { 'for': ['lua'] }
@@ -743,6 +773,15 @@ Plug 'briancollins/vim-jst'
 
 " Standalone JSDoc syntax for vim
 Plug 'othree/jsdoc-syntax.vim'
+
+" JSX and TSX syntax pretty highlighting for vim.
+Plug 'MaxMEllon/vim-jsx-pretty'
+
+" React JSX syntax highlighting for vim and Typescript
+Plug 'peitalin/vim-jsx-typescript'
+
+" Vim bundle for http://styled-components.com based javascript files
+Plug 'styled-components/vim-styled-components'
 
 " ------------------------------------------------------------------------------ }}}
 
@@ -829,6 +868,9 @@ Plug 'noprompt/vim-yardoc'
 " The Vim RuboCop plugin runs RuboCop and displays the results in Vim
 Plug 'ngmy/vim-rubocop', { 'on': ['RuboCop'] }
 
+" Slim syntax highlighting for VIM
+Plug 'slim-template/vim-slim'
+
 " ------------------------------------------------------------------------------ }}}
 
 " Tmux {{{
@@ -845,7 +887,13 @@ Plug 'christoomey/vim-tmux-navigator', has('gui_vimr') ? { 'on': [] } : {}
 
 " ------------------------------------------------------------------------------ }}}
 
+" A Vim syntax definition for Zinit commands in any ft=zsh file
+Plug 'zdharma-continuum/zinit-vim-syntax'
+
 " ------------------------------------------------------------------------------ }}}
+
+" Nvim Treesitter configurations and abstraction layer
+Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 
 " A (Neo)vim plugin for formatting code
 Plug 'sbdchd/neoformat', { 'on': 'Neoformat' }
@@ -884,12 +932,6 @@ Plug 'tpope/vim-repeat'
 " Create repeat.vim mappings with one simple "Repeatable" command
 Plug 'kreskij/Repeatable.vim', { 'on': 'Repeatable' }
 
-" The ultimate snippet solution for Vim
-Plug 'SirVer/ultisnips'
-
-" Viewer & Finder for LSP symbols and tags in Vim
-Plug 'liuchengxu/vista.vim'
-
 " Changes Vim working directory to project root
 " (identified by presence of known directory or file).
 Plug 'airblade/vim-rooter'
@@ -897,14 +939,41 @@ Plug 'airblade/vim-rooter'
 " KISS local vimrc with hash protection
 Plug 'RobertAudi/local-vimrc'
 
-" Completion {{{
+" Completion, Snippets, LSP {{{
 " ------------------------------------------------------------------------------
 
-" Intellisense engine for neovim, full language server protocol support as VSCode
-Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+" Check syntax in Vim asynchronously and fix files, with Language Server Protocol (LSP) support
+Plug 'dense-analysis/ale'
+
+" Viewer & Finder for LSP symbols and tags in Vim
+Plug 'liuchengxu/vista.vim'
 
 " Complete whole lines from any partial therein
 Plug 'dahu/vim-foist'
+
+" Quickstart configurations for the Nvim LSP client
+Plug 'neovim/nvim-lspconfig'
+
+" nvim-cmp source for neovim builtin LSP client
+Plug 'hrsh7th/cmp-nvim-lsp'
+
+" nvim-cmp source for buffer words
+Plug 'hrsh7th/cmp-buffer'
+
+" nvim-cmp source for path
+Plug 'hrsh7th/cmp-path'
+
+" nvim-cmp source for vim's cmdline
+Plug 'hrsh7th/cmp-cmdline'
+
+" A completion plugin for neovim coded in Lua.
+Plug 'hrsh7th/nvim-cmp'
+
+" Snippet Engine for Neovim written in Lua.
+Plug 'L3MON4D3/LuaSnip'
+
+" LuaSnip completion source for nvim-cmp
+Plug 'saadparwaiz1/cmp_luasnip'
 
 " ------------------------------------------------------------------------------ }}}
 
@@ -917,30 +986,24 @@ Plug 'bogado/file-line'
 " Automatically create missing directories when saving a (new) file
 Plug 'haya14busa/vim-auto-mkdir'
 
-" NERDTree {{{
-" ------------------------------------------------------------------------------
-
-" File system explorer
-Plug 'scrooloose/nerdtree', { 'on': ['NERDTree', 'NERDTreeToggle', 'NERDTreeFocus', 'NERDTreeFind'] }
-
-" A plugin of NERDTree showing git status
-Plug 'RobertAudi/nerdtree-git-plugin', { 'on': ['NERDTree', 'NERDTreeToggle', 'NERDTreeFocus', 'NERDTreeFind'] }
+" A file explorer tree for neovim written in lua
+" Plug 'kyazdani42/nvim-tree.lua'
+Plug 'RobertAudi/nvim-tree.lua'
 
 " ------------------------------------------------------------------------------ }}}
 
-" ------------------------------------------------------------------------------ }}}
+" An implementation of the Popup API from vim in Neovim.
+Plug 'nvim-lua/popup.nvim'
 
-" A fuzzy picker for Neovim and Vim
-Plug 'srstevenson/vim-picker', {
-      \   'on': [
-      \     '<Plug>(PickerEdit)', '<Plug>(PickerSplit)', '<Plug>(PickerTabedit)', '<Plug>(PickerVsplit)',
-      \     'PickerEdit', 'PickerSplit', 'PickerTabedit', 'PickerVsplit',
-      \     '<Plug>(PickerBuffer)', '<Plug>(PickerHelp)', 'PickerBuffer', 'PickerHelp'
-      \   ]
-      \ }
+" full; complete; entire; absolute; unqualified.
+" All the lua functions I don't want to write twice.
+Plug 'nvim-lua/plenary.nvim'
 
-" Always have a nice view for vim split windows!
-Plug 'RobertAudi/GoldenView.vim'
+" Find, Filter, Preview, Pick. All lua, all the time.
+Plug 'nvim-telescope/telescope.nvim'
+
+" FZF sorter for telescope written in c
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
 " A light and configurable statusline/tabline plugin for Vim
 Plug 'itchyny/lightline.vim'
@@ -951,8 +1014,14 @@ Plug 'delphinus/vim-auto-cursorline'
 " Underlines the word under the cursor
 Plug 'itchyny/vim-cursorword'
 
+" Indent guides for Neovim
+Plug 'lukas-reineke/indent-blankline.nvim'
+
 " An ack.vim alternative mimics Ctrl-Shift-F on Sublime Text 2
 Plug 'dyng/ctrlsf.vim'
+
+" Helps you win at grep.
+Plug 'mhinz/vim-grepper'
 
 " Tame the quickfix window
 Plug 'romainl/vim-qf'
@@ -966,17 +1035,17 @@ Plug 'haya14busa/vim-asterisk'
 " Vim plugin, insert or delete brackets, parens, quotes in pair
 Plug 'jiangmiao/auto-pairs'
 
+" " Auto close (X)HTML tags
+" Plug 'alvan/vim-closetag'
+
 " A Vim alignment plugin
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 
 " Print documents in echo area.
 Plug 'Shougo/echodoc.vim'
 
-" The Vim FAQ
-Plug 'chrisbra/vim_faq'
-
-" Toggle, display and navigate marks
-Plug 'kshenoy/vim-signature'
+" A better user experience for viewing and interacting with Vim marks.
+Plug 'chentau/marks.nvim'
 
 " Create temporary file for memo, testing, etc.
 Plug 'RobertAudi/junkfile.vim',
@@ -994,7 +1063,15 @@ Plug 'andymass/vim-matchup'
 Plug 'kana/vim-niceblock'
 
 " A vim script to provide CamelCase motion through words
-Plug 'RobertAudi/CamelCaseMotion', { 'branch': 'disable-mappings' }
+Plug 'RobertAudi/CamelCaseMotion',
+      \ {
+      \   'branch': 'disable-mappings',
+      \   'on': [
+      \     '<Plug>CamelCaseMotion_w',
+      \     '<Plug>CamelCaseMotion_b',
+      \     '<Plug>CamelCaseMotion_e'
+      \   ]
+      \ }
 
 " Vimscript library of common functions
 Plug 'inkarkat/vim-ingo-library'
@@ -1016,9 +1093,6 @@ Plug 'AaronLasseigne/yank-code', { 'on': ['YankCode', '<plug>YankCode'] }
 
 " Navigation mode for Vim
 Plug 'fcpg/vim-navmode'
-
-" A vim plugin to display the indention levels with thin vertical lines
-Plug 'Yggdroot/indentLine'
 
 " Simple plugin to zoom windows
 Plug 'RobertAudi/ZoomWinTab'
@@ -1055,9 +1129,6 @@ Plug 'nixon/vim-vmath'
 " Automated bullet lists.
 Plug 'dkarter/bullets.vim'
 
-" A vim plugin to accelerate up-down moving
-Plug 'rhysd/accelerated-jk'
-
 " A vim plugin that simplifies the transition between multiline and single-line code
 Plug 'AndrewRadev/splitjoin.vim'
 
@@ -1076,20 +1147,15 @@ Plug 'AndrewRadev/bufferize.vim'
 " A vim plugin to perform diffs on blocks of code
 Plug 'AndrewRadev/linediff.vim', { 'on': ['Linediff', 'LinediffAdd', 'LinediffLast', 'LinediffShow', 'LinediffReset', 'LinediffMerge', 'LinediffPick'] }
 
-" Wrapper of some vim/neovim's :terminal functions.
-Plug 'kassio/neoterm'
-
-" Open the terminal in the floating window and toggle it quickly
+" Open built-in terminal in the floating window
 Plug 'voldikss/vim-floaterm'
+
+" Easy and high speed coding method
+"   https://mattn.github.io/vim-sonictemplate/
+Plug 'mattn/vim-sonictemplate'
 
 " Run your tests at the speed of thought
 Plug 'janko-m/vim-test', { 'on': ['TestFile', 'TestNearest', 'TestLast'] }
-
-" Asynchronous linting and make framework for Neovim/Vim
-Plug 'neomake/neomake'
-
-" Color hex codes and color names
-Plug 'chrisbra/Colorizer'
 
 " Highlights terminal color code numbers (0-255)
 Plug 'sunaku/vim-hicterm', { 'on': ['HiCterm', 'HiCtermFg', 'HiCtermBg'] }
@@ -1121,8 +1187,8 @@ Plug 'tyru/open-browser.vim'
 " ANSI escape sequences concealed, but highlighted as specified (conceal)
 Plug 'powerman/vim-plugin-AnsiEsc'
 
-" (Neo)Vim plugin for displaying the colours in the file
-Plug 'RRethy/vim-hexokinase'
+" THE FASTEST NEOVIM COLORIZER
+Plug 'norcalli/nvim-colorizer.lua'
 
 " Lord of the Registers displays a persistent view of your Vim :registers in a sidebar window.
 Plug 'dahu/vim-lotr', { 'on': ['LOTROpen', 'LOTRClose', 'LOTRToggle', '<Plug>LOTRToggle'] }
@@ -1133,20 +1199,27 @@ Plug 'tyru/open-browser-github.vim', { 'on': ['OpenGithubFile', 'OpenGithubIssue
 " Open fileformat.info page about character on current cursor / given character
 Plug 'tyru/open-browser-unicode.vim', { 'on': ['OpenBrowserUnicode'] }
 
-" Utilites around neovim's `:terminal`.
-Plug 'vimlab/split-term.vim', { 'on': ['Term', 'VTerm', 'TTerm'] }
-
 " Insert block quotes
 Plug 'RobertAudi/BlockQuote.vim', { 'on': ['BlockQuote', 'BlockQuoteFile', 'BlockUnQuote'] }
 
 " Create banners
 Plug 'RobertAudi/bannerizor.vim'
 
+" (Do)cumentation (Ge)nerator
+" NOTE: if the plugin is not lazy-loaded then it needs to be configured before the call to `plug#end()`
+Plug 'kkoomen/vim-doge', { 'on': ['DogeGenerate', 'DogeCreateDocStandard'] }
+
 if executable('silicon')
   " Vim plugin for generating images of source code using Aloxaf/silicon
   "   https://github.com/Aloxaf/silicon
   Plug 'segeljakt/vim-silicon', { 'on': 'Silicon' }
 endif
+
+" Fix CursorHold Performance.
+Plug 'antoinemadec/FixCursorHold.nvim'
+
+" Translating plugin for Vim/Neovim
+Plug 'voldikss/vim-translator', { 'on': ['Translate', 'TranslateW', 'TranslateR', 'TranslateX'] }
 
 " Initialize plugin system
 call plug#end()
@@ -1163,16 +1236,25 @@ augroup RAVimSyntaxAutocommands
   autocmd!
 
   autocmd Syntax *
-        \   call matchadd('Todo',  '\W\zs\(TODO\|FIXME\|CHANGED\|XXX\|BUG\|\!\!\!\|???\)')
-        \ | call matchadd('Todo',  '\W\zs\(NOTE\|Note\|INFO\|NOTICE\)')
-        \ | call matchadd('Debug', '\W\zs\(Debug\|DEBUG\)')
+        \   call matchadd('Todo',  '\W\zs\<\(TODO\|FIXME\|CHANGED\|XXX\|BUG\|\!\!\!\|???\)\>\ze')
+        \ | call matchadd('Todo',  '\W\zs\<\(NOTE\|INFO\|NOTICE\)\>\ze')
+        \ | call matchadd('Debug', '\W\zs\<DEBUG\>\ze')
 augroup END
 
-highlight IncSearch cterm=NONE ctermfg=Black ctermbg=154 gui=NONE guifg=#000000 guibg=#c0cd38
-highlight! link txtBold Identifier
+colorscheme railscasts
 
 " Set "TODO" & "FIXME" strings to be bold and standout as hell.
-highlight Todo term=standout ctermfg=196 ctermbg=226 guifg=#ff4500 guibg=#eeee00
+highlight Todo cterm=NONE ctermfg=196 ctermbg=226 gui=NONE guifg=#ff4500 guibg=#eeee00
+
+highlight VertSplit    ctermfg=237 guifg=#393939
+highlight CursorLine   ctermbg=237 guibg=#323232
+highlight CursorColumn ctermbg=237 guibg=#303030
+highlight ColorColumn  ctermbg=237 guibg=#303030
+highlight SignColumn   ctermbg=237
+highlight FoldColumn   ctermbg=237 guibg=#333435
+highlight IncSearch    ctermbg=154 guibg=#c0cd38
+
+highlight! link txtBold Identifier
 
 " ------------------------------------------------------------------------------ }}}
 
@@ -1311,11 +1393,7 @@ augroup RAVimAutocommands
   autocmd VimEnter,GUIEnter * set visualbell t_vb=
 
   " Set "TODO" & "FIXME" strings to be bold and standout as hell.
-  autocmd VimEnter,ColorScheme *
-        \ highlight Todo
-        \ term=standout
-        \ ctermfg=196 ctermbg=226
-        \ guifg=#ff4500 guibg=#eeee00
+  autocmd VimEnter,ColorScheme * highlight Todo cterm=NONE ctermfg=196 ctermbg=226 gui=NONE guifg=#ff4500 guibg=#eeee00
 
   " Update the 'scrolloff' according to the height of the window
   " Source: https://github.com/uplus/vimrc/blob/80b6dc96d08bf00ed59e545448ea031aee194230/autocmds.vim#L8
@@ -1325,6 +1403,9 @@ augroup RAVimAutocommands
         \ setlocal signcolumn=no |
         \ setlocal nobuflisted |
         \ setlocal nospell
+
+  autocmd TermEnter * startinsert
+  autocmd TermLeave * stopinsert
 
   " More eager than 'autoread'.
   autocmd WinEnter,FocusGained * silent! checktime
@@ -1344,7 +1425,7 @@ augroup RAVimAutocommands
 
   " Don't show whitespace in readonly and nomodifiable buffers
   autocmd BufReadPost *
-        \ if &readonly
+        \ if &readonly || !&modifiable
         \ | execute 'setlocal nolist' |
         \ endif
 
@@ -1363,8 +1444,8 @@ augroup RAVimAutocommands
 
   " Back to normal mode when Vim loses focus
   autocmd FocusLost,TabLeave *
-        \ if mode() !=# "c"
-        \ | call feedkeys("\<C-\>\<C-n>", 'n') |
+        \ if mode() !=# "c" && mode() !=# "t"
+        \ | stopinsert |
         \ endif
 augroup END
 
@@ -1373,7 +1454,7 @@ augroup END
 " Maps {{{
 " ------------------------------------------------------------------------------
 
-let mapleader = ','
+let g:mapleader = ','
 
 " Disabled keys {{{
 " ------------------------------------------------------------------------------
@@ -1584,8 +1665,7 @@ cnoremap <M-BS> <C-w>
 
 " Remove search highlight and
 " clear any message already displayed.
-nnoremap <silent> <CR>       <Cmd>nohlsearch<Bar>match<Bar>echo<CR>
-nnoremap <silent> <Esc><Esc> <Cmd>nohlsearch<Bar>match<Bar>echo<CR>
+nnoremap <silent> <CR> <Cmd>nohlsearch<Bar>match<Bar>echo<CR>
 
 " Extend a previous match
 " Source: https://github.com/thoughtstream/Damian-Conway-s-Vim-Setup/blob/master/.vimrc#L1257
@@ -1614,8 +1694,12 @@ nnoremap <silent> <Leader>y <Cmd>YankBuffer<CR>
 inoremap <C-l> <C-x><C-l>
 
 " Matchit!
-map <BS> %
-map <S-BS> g%
+nmap <BS> %
+xmap <BS> %
+omap <BS> %
+nmap <S-BS> g%
+xmap <S-BS> g%
+omap <S-BS> g%
 
 " Uppercase/Lowercase word under the cursor.
 nnoremap gU gUiw`]
@@ -1633,12 +1717,24 @@ endif
 nnoremap <silent> gt <Cmd>call x2a#tabs#TabForward(v:count1)<CR>
 nnoremap <silent> gT <Cmd>call x2a#tabs#TabBaward(v:count1)<CR>
 
+" Got to tab by index/number
+nnoremap <leader>gt gt
+
 " Next/Previous buffer
 nnoremap <silent> gb <Cmd>bnext<CR>
 nnoremap <silent> gB <Cmd>bprevious<CR>
 
 " Delete the contents of a line but not the line itself
 nnoremap dL "_cc<Esc>
+
+" Add a line below while in insert mode
+imap <S-Enter> <C-o>A<CR>
+inoremap <C-Enter> <C-o>o
+
+" Go to file/tag in vertical split
+" Source: https://stackoverflow.com/a/52548754/123016
+nnoremap <C-w><C-v>f :execute "vertical normal <C-v><C-w>f"<CR>
+nnoremap <C-w><C-v>[ :execute "vertical normal <C-v><C-w>["<CR>
 
 " Macros {{{
 " ------------------------------------------------------------------------------

@@ -4,11 +4,9 @@ require "date"
 
 # Gems {{{
 # ---------------------------------------------------------------------
-%w[hirb awesome_print did_you_mean table_flipper where_is].each do |gem|
-  begin
-    require gem
-  rescue LoadError
-  end
+%w[awesome_print did_you_mean table_flipper where_is].each do |gem|
+  require gem
+rescue LoadError
 end
 # --------------------------------------------------------------------- }}}
 
@@ -49,14 +47,13 @@ if defined?(IRB)
   IRB.conf[:SAVE_HISTORY] = 10_000
   IRB.conf[:HISTORY_FILE] ||= File.expand_path(File.join(ENV.fetch("XDG_DATA_HOME", "~/.local/share"), "irb/history"))
 
-  defined?(Hirb) and Hirb.enable
   defined?(AwesomePrint) and AwesomePrint.irb!
 end
 # --------------------------------------------------------------------- }}}
 
 if defined?(Rails)
-  Rails.logger = $logger_class.new(STDOUT)
-  ActionController::Base.logger = $logger_class.new(STDOUT)
+  Rails.logger = $logger_class.new($stdout)
+  ActionController::Base.logger = $logger_class.new($stdout)
 end
 
 # Local extensions and monkey patches {{{
@@ -65,13 +62,13 @@ module LocalExtensions
   module Console
     # IRB {{{
     # ---------------------------------------------------------------------
-    unless defined?(Pry)
-      unless respond_to?(:clear)
-        def clear
-          system 'clear'
-        end
+    unless respond_to?(:clear)
+      def clear
+        system 'clear'
       end
+    end
 
+    unless defined?(Pry)
       unless respond_to?(:cat)
         # read file contents (also see ray for ruby source files ;) )
         def cat(path)
@@ -122,11 +119,24 @@ module LocalExtensions
     end
 
     if defined?(ActiveRecord::Base)
+      if defined?(PG)
+        unless respond_to?(:unfuck_activerecord_transaction)
+          def unfuck_activerecord_transaction
+            puts "Rolling back transaction and starting a new one!"
+
+            connection = ActiveRecord::Base.connection
+            connection.rollback_db_transaction
+            connection.begin_db_transaction
+          end
+        end
+      end
+
       unless respond_to?(:redirect_active_record_log)
         def redirect_active_record_log(stream)
           ActiveRecord::Base.logger = $logger_class.new(stream)
           ActiveRecord::Base.clear_active_connections! and true
         end
+
         unless respond_to?(:redirect_activerecord_log)
           alias redirect_activerecord_log redirect_active_record_log
         end
@@ -134,7 +144,7 @@ module LocalExtensions
 
       unless respond_to?(:show_log)
         def show_log
-          redirect_active_record_log(STDOUT)
+          redirect_active_record_log($stdout)
         end
       end
 
@@ -151,7 +161,7 @@ module LocalExtensions
     if defined?(Sidekiq)
       unless respond_to?(:clear_sidekiq!)
         def clear_sidekiq!
-          require 'sidekiq/api'
+          require "sidekiq/api"
 
           Sidekiq::RetrySet.new.clear
           puts "Cleared retry set"
@@ -161,7 +171,6 @@ module LocalExtensions
 
           Sidekiq::Stats.new.reset
           puts "Cleared 'Processed' and 'Failed' jobs"
-
 
           Sidekiq::DeadSet.new.clear
           puts "Cleared 'Dead' jobs statistics"
@@ -209,8 +218,8 @@ module LocalExtensions
       #   arr.ri :pop
       def ri(method = nil)
         unless method && method =~ /^[A-Z]/ # if class isn't specified
-          klass = self.kind_of?(Class) ? name : self.class.name
-          method = [klass, method].compact.join('#')
+          klass = is_a?(Class) ? name : self.class.name
+          method = [klass, method].compact.join("#")
         end
         puts `ri '#{method}'`
       end
@@ -238,7 +247,7 @@ module LocalExtensions
       # => nil
       #
       def |(cmd)
-        IO.popen(cmd, 'r+') do |pipe|
+        IO.popen(cmd, "r+") do |pipe|
           pipe.write(self)
           pipe.close_write
           pipe.read

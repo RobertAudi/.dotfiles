@@ -4,8 +4,24 @@ if [[ -d "$HOME/Library/Mobile Documents/com~apple~CloudDocs" ]]; then
   hash -d icloud="$ICLOUD_DRIVE_DIR"
 fi
 
-path=(/usr/local/MacGPG2/bin(N-/) $path)
-fpath=("$ZSH_HOME/plugins/macos/completions" "$ZSH_HOME/plugins/macos/functions" $fpath)
+path=(
+  /Applications/Postgres.app/Contents/Versions/latest/bin(N-/)
+  /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin(N-/)
+  /usr/local/MacGPG2/bin(N-/)
+  $path
+)
+
+manpath=(
+  /Applications/Postgres.app/Contents/Versions/latest/share/man(N-/)
+  $manpath
+)
+
+fpath=(
+  "$ZSH_HOME/plugins/macos/completions"
+  "$ZSH_HOME/plugins/macos/functions"
+  $fpath
+)
+
 function {
   emulate -L zsh
   setopt extended_glob

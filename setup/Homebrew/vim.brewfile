@@ -1,5 +1,3 @@
-require_relative "helpers"
-
 # Vi 'workalike' with many additional features
 #   https://www.vim.org/
 brew "vim", args: ["HEAD"]
@@ -15,9 +13,3 @@ brew "neovim"
 # To use vimpager as your default pager, add `export PAGER=vimpager` to your
 # shell configuration.
 brew "vimpager", args: ["HEAD"]
-
-if macOS?
-  # Refined Neovim experience for macOS
-  #   http://vimr.org/
-  cask "vimr"
-end

@@ -1,6 +1,8 @@
-require_relative "helpers"
+# Modeline {{{
+# vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker : }}}
 
-# ------------------------------------------------------------------------------
+# mkchoi212/fac
+# ------------------------------------------------------------------------------ {{{
 
 tap "mkchoi212/fac", "https://github.com/mkchoi212/fac.git"
 
@@ -8,7 +10,10 @@ tap "mkchoi212/fac", "https://github.com/mkchoi212/fac.git"
 #   https://github.com/mkchoi212/fac
 brew "fac"
 
-# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------ }}}
+
+# git-chglog/git-chglog
+# ------------------------------------------------------------------------------ {{{
 
 tap "git-chglog/git-chglog"
 
@@ -16,7 +21,10 @@ tap "git-chglog/git-chglog"
 #   https://github.com/git-chglog/git-chglog
 brew "git-chglog"
 
-# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------ }}}
+
+# caarlos0/tap
+# ------------------------------------------------------------------------------ {{{
 
 tap "caarlos0/tap"
 
@@ -28,7 +36,10 @@ brew "caarlos0/tap/clone-org"
 #   https://github.com/caarlos0/jsonfmt
 brew "caarlos0/tap/jsonfmt"
 
-# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------ }}}
+
+# RobertAudi/formulae
+# ------------------------------------------------------------------------------ {{{
 
 tap "RobertAudi/formulae", "https://github.com/RobertAudi/homebrew-formulae.git"
 
@@ -56,36 +67,10 @@ brew "RobertAudi/formulae/lc"
 #   https://xiny.sh/
 brew "RobertAudi/formulae/xiny"
 
-# Collection of tools that nobody wrote when UNIX was young
-#   https://joeyh.name/code/moreutils/
-#
-# Conflicts with:
-#   task-spooler (because Both install a `ts` executable.)
-brew "RobertAudi/formulae/moreutils", args: ["with-errno"]
+# ------------------------------------------------------------------------------ }}}
 
-if macOS?
-  # Pretty-prints compiled AppleScript (.scpt) files using ANSI escape sequences.
-  #   http://hasseg.org/asprint
-  brew "RobertAudi/formulae/asprint", args: ["HEAD"]
-
-  # Switch, hide, show, quit, kill or list macOS applications from the command line or scripts.
-  #   https://sabi.net/nriley/software/#appswitch
-  brew "RobertAudi/formulae/appswitch"
-
-  # Command line tool to quickly search by filename on entire APFS and HFS+ volumes using the file system catalog.
-  #   https://sveinbjorn.org/searchfs
-  brew "RobertAudi/formulae/searchfs"
-
-  # Fast, no-nonsense disk image mounting for macOS
-  #   https://sveinbjorn.org/fastdmg
-  cask "fastdmg"
-
-  # Find and inspect macOS icon assets (.icns) on your system
-  #   https://sveinbjorn.org/iconscanner
-  cask "iconscanner"
-end
-
-# ------------------------------------------------------------------------------
+# heroku/brew
+# ------------------------------------------------------------------------------ {{{
 
 tap "heroku/brew"
 
@@ -98,23 +83,21 @@ tap "heroku/brew"
 #   $ heroku autocomplete --refresh-cache
 brew "heroku"
 
-# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------ }}}
 
-tap "chrokh/tap"
-
-# A command line tool to install base16 templates and set themes globally.
-#   https://github.com/AuditeMarlow/base16-manager
-brew "base16-manager"
-
-# ------------------------------------------------------------------------------
+# universal-ctags/universal-ctags
+# ------------------------------------------------------------------------------ {{{
 
 tap "universal-ctags/universal-ctags"
 
 # Maintained ctags implementation
 #   https://github.com/universal-ctags/ctags
-brew "universal-ctags/universal-ctags/universal-ctags", args: %w[with-jansson with-libyaml HEAD]
+brew "universal-ctags/universal-ctags/universal-ctags", args: %w[HEAD]
 
-# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------ }}}
+
+# timothyye/tap
+# ------------------------------------------------------------------------------ {{{
 
 tap "timothyye/tap"
 
@@ -126,15 +109,10 @@ brew "timothyye/tap/skm"
 #   https://github.com/TimothyYe/namebeta
 brew "timothyye/tap/namebeta"
 
-# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------ }}}
 
-tap "aybabtme/tap"
-
-# Logs for humans to read.
-#   https://github.com/aybabtme/humanlog
-brew "aybabtme/tap/humanlog"
-
-# ------------------------------------------------------------------------------
+# dtan4/tools
+# ------------------------------------------------------------------------------ {{{
 
 tap "dtan4/tools"
 
@@ -142,7 +120,10 @@ tap "dtan4/tools"
 #   https://github.com/dtan4/ghrls
 brew "dtan4/tools/ghrls"
 
-# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------ }}}
+
+# Code-Hex/pget
+# ------------------------------------------------------------------------------ {{{
 
 tap "Code-Hex/pget"
 
@@ -150,7 +131,10 @@ tap "Code-Hex/pget"
 #   https://github.com/Code-Hex/pget
 brew "Code-Hex/pget/pget"
 
-# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------ }}}
+
+# cristianoliveira/tap
+# ------------------------------------------------------------------------------ {{{
 
 tap "cristianoliveira/tap"
 
@@ -158,7 +142,10 @@ tap "cristianoliveira/tap"
 #   https://github.com/cristianoliveira/ergo
 brew "ergo"
 
-# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------ }}}
+
+# bfontaine/utils
+# ------------------------------------------------------------------------------ {{{
 
 tap "bfontaine/utils"
 
@@ -174,7 +161,10 @@ brew "bfontaine/utils/gzsize"
 #   https://sgrep.sourceforge.io/
 brew "bfontaine/utils/sgrep"
 
-# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------ }}}
+
+# soveran/tools
+# ------------------------------------------------------------------------------ {{{
 
 tap "soveran/tools"
 
@@ -194,15 +184,10 @@ brew "chen"
 #   https://github.com/soveran/map
 brew "map"
 
-# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------ }}}
 
-tap "mingrammer/flog", "https://github.com/mingrammer/flog.git"
-
-# A fake log generator for common log formats
-#  https://github.com/mingrammer/flog
-brew "flog"
-
-# ------------------------------------------------------------------------------
+# httpu/httpu
+# ------------------------------------------------------------------------------ {{{
 
 tap "httpu/httpu"
 
@@ -210,15 +195,10 @@ tap "httpu/httpu"
 #   https://github.com/hazbo/httpu
 brew "httpu/httpu/httpu"
 
-# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------ }}}
 
-tap "octavore/tools"
-
-# Diff tool with browser-based GUI
-#   https://github.com/octavore/delta
-brew "octavore/tools/delta"
-
-# ------------------------------------------------------------------------------
+# xwjdsh/tap
+# ------------------------------------------------------------------------------ {{{
 
 tap "xwjdsh/tap"
 
@@ -226,37 +206,10 @@ tap "xwjdsh/tap"
 #   https://github.com/xwjdsh/manssh
 brew "manssh"
 
-# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------ }}}
 
-tap "tavianator/tap"
-
-# Breadth-first version of find.
-#   https://github.com/tavianator/bfs
-brew "bfs"
-
-# ------------------------------------------------------------------------------
-
-tap "rs/tap"
-
-if macOS?
-  # iTerm2 expvar/JSON monitoring tool
-  #   https://github.com/rs/jplot
-  brew "rs/tap/jplot"
-end
-
-# JSON Aggregation CLI
-#   https://github.com/rs/jaggr
-brew "rs/tap/jaggr"
-
-# DNS resolution tracing tool
-#   https://github.com/rs/dnstrace
-brew "rs/tap/dnstrace"
-
-# The power of curl, the ease of use of httpie.
-#   https://github.com/rs/curlie
-brew "rs/tap/curlie"
-
-# ------------------------------------------------------------------------------
+# moul/moul
+# ------------------------------------------------------------------------------ {{{
 
 tap "moul/moul"
 
@@ -268,11 +221,10 @@ brew "retry"
 #   https://github.com/moul/number-to-words
 brew "number-to-words"
 
-# Draw a beautiful christmas tree in ascii
-#   https://github.com/moul/sapin
-brew "sapin", args: ["HEAD"]
+# ------------------------------------------------------------------------------ }}}
 
-# ------------------------------------------------------------------------------
+# sbdchd/skim
+# ------------------------------------------------------------------------------ {{{
 
 tap "sbdchd/skim"
 
@@ -280,7 +232,10 @@ tap "sbdchd/skim"
 #   https://github.com/lotabout/skim
 brew "sbdchd/skim/skim"
 
-# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------ }}}
+
+# miserlou/loop
+# ------------------------------------------------------------------------------ {{{
 
 tap "miserlou/loop", "https://github.com/Miserlou/Loop.git"
 
@@ -288,7 +243,10 @@ tap "miserlou/loop", "https://github.com/Miserlou/Loop.git"
 #   https://github.com/Miserlou/Loop
 brew "loop", args: ["HEAD"]
 
-# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------ }}}
+
+# goles/battery
+# ------------------------------------------------------------------------------ {{{
 
 tap "goles/battery"
 
@@ -296,61 +254,4 @@ tap "goles/battery"
 #   https://github.com/Goles/Battery
 brew "goles/battery/battery"
 
-# ------------------------------------------------------------------------------
-
-tap "keith/formulae"
-
-# A CLI for interacting with CircleCI
-#   https://github.com/keith/circle-cli
-brew "circle-cli"
-
-if macOS?
-  # A simple CLI for interacting with OS X reminders
-  #   https://github.com/keith/reminders-cli
-  brew "reminders-cli"
-
-  # Zsh completions for Xcode command line tools
-  #   https://github.com/keith/zsh-xcode-completions/
-  brew "zsh-xcode-completions"
-
-  # A CLI for cleaning up after .apps
-  #   https://github.com/keith/zap/
-  brew "zap"
-end
-
-# ------------------------------------------------------------------------------
-
-tap "koekeishiya/homebrew-formulae"
-
-if macOS?
-  # Keycode grabber for OSX.
-  #   https://github.com/koekeishiya/cev
-  brew "cev"
-end
-
-# ------------------------------------------------------------------------------
-
-tap "raggi/ale"
-
-if macOS?
-  # Simple periodic task to sync OSX Keychain certs to Homebrew installed OpenSSL & LibreSSL
-  #   https://github.com/raggi/openssl-osx-ca#readme
-  #
-  # ==> Caveats
-  # To have launchd start raggi/ale/openssl-osx-ca now and restart at login:
-  #   brew services start raggi/ale/openssl-osx-ca
-  brew "openssl-osx-ca", restart_service: :changed
-end
-
-# ------------------------------------------------------------------------------
-
-tap "lukakerr/things"
-
-if macOS?
-  # A modern, native macOS markdown editor
-  #   https://lukakerr.github.io/Pine/
-  #   https://github.com/lukakerr/Pine
-  cask "pine"
-end
-
-# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------ }}}

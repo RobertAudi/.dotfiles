@@ -1,0 +1,23 @@
+#!/usr/bin/env zsh
+
+__is_callable__() {
+  (( $+builtins[$1] )) || (( $+functions[$1] )) || (( $+aliases[$1] )) || (( $+commands[$1] ))
+}
+
+regenerate-tags() {
+  if __is_callable__ ripper-tags && ([[ -f Gemfile ]] || fd -1 -e rb -t f -c never &> /dev/null); then
+    builtin print -P -- "%F{blue}==>%f Running ripper-tags"
+    ripper-tags --verbose --recursive \
+      app \
+      lib \
+      config \
+      spec
+  fi
+
+  if __is_callable__ ctags ; then
+    builtin print -P -- "%F{blue}==>%f Running ctags (appending to ./tags)"
+    ctags --verbose -R -a -f ./tags .
+  fi
+}
+
+regenerate-tags "$@"

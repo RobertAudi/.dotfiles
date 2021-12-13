@@ -24,12 +24,12 @@ function! x2a#buffers#Count() abort
 endfunction
 
 function! x2a#buffers#BufOnly(bang) abort
-  if getbufvar('%', '&filetype') ==# 'nerdtree'
-    silent! NERDTreeClose
+  if getbufvar('%', '&buftype') ==# 'NvimTree'
+    silent! NvimTreeClose
 
     call x2a#buffers#BufDeleteAll(a:bang)
 
-    silent! NERDTreeToggle
+    silent! NvimTreeOpen
 
     return
   endif
@@ -42,7 +42,9 @@ function! x2a#buffers#BufOnly(bang) abort
   let l:currentWindow = winnr()
   let l:currentBuffer = bufnr('%')
   let l:buffers = filter(getbufinfo(), 'v:val.listed || v:val.loaded')
-  let l:reopenNERDTree = exists('g:NERDTree') && g:NERDTree.IsOpen()
+
+  " FIXME: Adapt to NvimTree
+  " let l:reopenNERDTree = exists('g:NERDTree') && g:NERDTree.IsOpen()
   let l:deletedCount = 0
 
   let l:eventignore_keep = &eventignore
@@ -54,21 +56,25 @@ function! x2a#buffers#BufOnly(bang) abort
   " Close all tabs
   silent! tabonly
 
-  " Close NERDTree in the current tab
-  silent! NERDTreeClose
+  " Close NvimTree in the current tab
+  silent! NvimTreeClose
 
   for l:buffer in l:buffers
     if l:buffer.bufnr == l:currentBuffer
       continue
     endif
 
-    if getbufvar(l:buffer.bufnr, '&filetype') ==# 'nerdtree'
-      silent! NERDTreeClose
+    if getbufvar(l:buffer.bufnr, '&buftype') ==# 'terminal'
+      continue
+    endif
+
+    if getbufvar(l:buffer.bufnr, '&filetype') ==# 'NvimTree'
+      silent! NvimTreeClose
 
       continue
     endif
 
-    if l:buffer.changed && !a:bang
+    if l:buffer.changed && l:buffer.listed && !a:bang
       let l:message = 'No write since last change for buffer ' . l:buffer.bufnr . ' (add ! to override)'
 
       call x2a#utils#echo#Warning(l:message)
@@ -76,16 +82,21 @@ function! x2a#buffers#BufOnly(bang) abort
       continue
     endif
 
-    silent execute l:bdelete . ' ' . l:buffer.bufnr
+    try
+      silent execute l:bdelete . ' ' . l:buffer.bufnr
+    catch /.*/
+      continue
+    endtry
 
     let l:deletedCount += 1
   endfor
 
   silent! only
 
-  if l:reopenNERDTree
-    execute 'keepjumps keepalt NERDTreeToggle | keepjumps keepalt ' . l:currentWindow . 'wincmd w'
-  endif
+  " FIXME: Adapt to NvimTree
+  " if l:reopenNERDTree
+  "   execute 'keepjumps keepalt NERDTreeToggle | keepjumps keepalt ' . l:currentWindow . 'wincmd w'
+  " endif
 
   let &eventignore = l:eventignore_keep
   let &lazyredraw  = l:lazyredraw_keep
@@ -110,11 +121,13 @@ function! x2a#buffers#BufDeleteInactive(bang) abort
   for l:buffer in l:buffers
     let l:buffer_filetype = getbufvar(l:buffer.bufnr, '&filetype')
 
-    if l:buffer_filetype ==# 'nerdtree' || l:buffer_filetype ==# 'vista'
+    if l:buffer_filetype ==# 'NvimTree'
+      continue
+    elseif l:buffer_filetype ==# 'vista' || !l:buffer.listed
       silent! bwipeout!
 
       continue
-    elseif l:buffer.changed && !a:bang
+    elseif l:buffer.changed && l:buffer.listed && !a:bang
       let l:message = 'No write since last change for buffer ' . l:buffer.bufnr . ' (add ! to override)'
 
       call x2a#utils#echo#Warning(l:message)
@@ -151,41 +164,51 @@ function! x2a#buffers#BufDeleteAll(bang) abort
 
   let l:buffers = filter(getbufinfo(), 'v:val.listed || v:val.loaded')
 
-  let l:NERDTree_bufnr = exists('t:NERDTreeBufName') ? bufnr(t:NERDTreeBufName) : ''
-  let l:reopenNERDTree = exists('g:NERDTree') && g:NERDTree.ExistsForTab()
+  " FIXME: Adapt to NvimTree
+  " let l:reopenNERDTree = exists('g:NERDTree') && g:NERDTree.ExistsForTab()
   let l:deletedCount = 0
 
   " Close all tabs
   silent! tabonly
 
-  " Close NERDTree in the current tab
-  silent! NERDTreeClose
-
   for l:buffer in l:buffers
     let l:buffer_filetype = getbufvar(l:buffer.bufnr, '&filetype')
 
-    if l:buffer_filetype ==# 'nerdtree' && l:reopenNERDTree && l:buffer.bufnr == l:NERDTree_bufnr
-      continue
-    elseif l:buffer_filetype ==# 'vista'
+    if l:buffer_filetype ==# 'vista'
       silent! Vista!
 
       continue
-    elseif l:buffer.changed && !a:bang
+    elseif l:buffer_filetype ==# 'floaterm'
+      call x2a#floaterm#hide()
+
+      continue
+    elseif getbufvar(l:buffer.bufnr, '&buftype') ==# 'terminal'
+      continue
+    elseif !l:buffer.listed
+      silent! bwipeout!
+
+      continue
+    elseif l:buffer.changed && l:buffer.listed && !a:bang
       let l:message = 'No write since last change for buffer ' . l:buffer.bufnr . ' (add ! to override)'
 
       call x2a#utils#echo#Warning(l:message)
 
       continue
     else
-      silent execute l:bdelete . ' ' . l:buffer.bufnr
+      try
+        silent execute l:bdelete . ' ' . l:buffer.bufnr
+      catch /.*/
+        continue
+      endtry
     endif
 
     let l:deletedCount += 1
   endfor
 
-  if l:reopenNERDTree
-    execute 'keepjumps keepalt NERDTreeToggle | keepjumps keepalt wincmd w'
-  endif
+  " FIXME: Adapt to NvimTree
+  " if l:reopenNERDTree
+  "   execute 'keepjumps keepalt NERDTreeToggle | keepjumps keepalt wincmd w'
+  " endif
 
   let l:message = l:deletedCount . ' buffer' . (l:deletedCount > 1 ? 's' : '') . ' deleted'
 

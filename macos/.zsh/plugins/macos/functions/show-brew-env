@@ -12,7 +12,7 @@ function __show-brew-env::hr {
 
 function show-brew-env {
   if (( $# > 0 )); then
-    builtin print -P -- "[%F{221}WARN%f] Arguments ignored: $@" >&2
+    builtin print -P -u 2 -- "[%F{221}WARN%f] Arguments ignored: $@"
   fi
 
   __show-brew-env::info "brew --config"

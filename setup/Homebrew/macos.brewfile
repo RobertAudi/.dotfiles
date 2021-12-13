@@ -1,3 +1,11 @@
+# Dependency manager that installs and runs Swift command-line tool packages
+#   https://github.com/yonaskolb/Mint
+brew "mint"
+
+# Easily script with third-party Swift dependencies.
+#   https://github.com/mxcl/swift-sh
+brew "swift-sh"
+
 # Send macOS User Notifications from the command-line
 #   https://github.com/julienXX/terminal-notifier
 brew "terminal-notifier"
@@ -17,10 +25,6 @@ brew "cliclick"
 # Tool for managing dock items
 #   https://github.com/kcrawford/dockutil
 brew "dockutil"
-
-# CLI tool that moves files or folder to the trash
-#   https://hasseg.org/trash/
-brew "trash"
 
 # List USB devices, just like the Linux lsusb command
 #   https://github.com/jlhonora/lsusb
@@ -42,22 +46,6 @@ brew "pngpaste"
 #   https://github.com/rauchg/wifi-password
 brew "wifi-password"
 
-# Makes it easy to write, run and manage your Swift scripts
-#   https://github.com/JohnSundell/Marathon
-brew "marathon-swift"
-
-# Swift code generator for assets, storyboards, Localizable.strings, …
-#   https://github.com/SwiftGen/SwiftGen
-brew "swiftgen"
-
-# Tool to enforce Swift style and conventions
-#   https://github.com/realm/SwiftLint
-brew "swiftlint"
-
-# Incrementally update your Strings files
-#   https://github.com/Flinesoft/BartyCrouch
-brew "bartycrouch"
-
 # Change macOS audio source from the command-line
 #   https://github.com/deweller/switchaudio-osx/
 brew "switchaudio-osx"
@@ -78,10 +66,6 @@ brew "osxutils"
 #   https://github.com/nriley/brightness
 brew "brightness"
 
-# Dependency manager that installs and runs Swift command-line tool packages
-#   https://github.com/yonaskolb/Mint
-brew "mint"
-
 # Trigger notifications when a process completes
 #   https://github.com/variadico/noti
 brew "noti"
@@ -90,10 +74,6 @@ brew "noti"
 #   https://www.w3.org/Tools/HTML-XML-utils/
 brew "html-xml-utils"
 
-# Generate your Xcode project from a spec file and your folder structure
-#   https://github.com/yonaskolb/XcodeGen
-brew "xcodegen"
-
 # Keep your Mac's application settings in sync
 #   https://github.com/lra/mackup
 brew "mackup"
@@ -101,318 +81,6 @@ brew "mackup"
 # Manage the desktop wallpaper on macOS
 #   https://github.com/sindresorhus/macos-wallpaper
 brew "wallpaper"
-
-# ------------------------------------------------------------------------------
-
-# Homebrew Cask {{{
-# ------------------------------------------------------------------------------
-
-# Password manager
-#   https://1password.com/
-cask "1password"
-
-# 1Password command-line tool
-#   https://support.1password.com/command-line/
-cask "1password-cli"
-
-# Alfred is an application launcher and productivity
-# application for macOS
-#   https://www.alfredapp.com/
-cask "alfred"
-
-# Organize your menu bar icons
-#   https://www.macbartender.com/
-cask "bartender"
-
-# Quickly change your screen resolution from the menubar
-#   https://bestres.wojtek.im/
-cask "bestres"
-
-# Dash is an API Documentation Browser and Code Snippet Manager
-#   https://kapeli.com/dash
-cask "dash"
-
-# Default Folder X enhances the Open and Save dialogs
-#   https://www.stclairsoft.com/DefaultFolderX/
-cask "default-folder-x"
-
-# Web browser
-#   https://www.google.com/chrome/
-cask "google-chrome"
-
-# Better web browser
-#   https://www.mozilla.org/firefox/
-cask "firefox"
-
-# Hosts file editor for OS X
-#   http://clockwise.ee/
-cask "gas-mask"
-
-# ImageOptim makes images load faster
-#   https://imageoptim.com/mac
-cask "imageoptim"
-
-# Terminal emulator for macOS
-#   https://www.iterm2.com/
-cask "iterm2"
-
-# Prevents your Mac from going to sleep
-#   https://github.com/newmarcel/KeepingYouAwake
-cask "keepingyouawake"
-
-# Key Codes is an utility that displays the key code,
-# unicode value, and modifier keys state for any key
-# combination you press
-#   https://manytricks.com/keycodes/
-cask "key-codes"
-
-# Command-line tool to seamlessly integrate Kaleidoscope
-#   https://www.kaleidoscopeapp.com/ksdiff2
-cask "ksdiff"
-
-# Software Update Checker
-#   https://max.codes/latest
-cask "latest"
-
-# MailMate is an IMAP email client for macOS
-#   https://freron.com/
-cask "mailmate"
-
-# Spam filter for mail clients on macOS
-#   https://c-command.com/spamsieve/
-cask "spamsieve"
-
-# Marked is a previewer for Markdown files.
-#   http://marked2app.com/
-cask "marked"
-
-# Move/Resize windows using modifiers and the mouse
-#   https://github.com/keith/modmove
-cask "modmove"
-
-# Beautiful calculator app for Mac
-#   https://numi.io/
-cask "numi"
-
-# The most advanced API tool for Mac
-#   https://paw.cloud/
-cask "paw"
-
-# A Modern PostgreSQL Client for the Mac
-#   https://eggerapps.at/postico/
-cask "postico"
-
-# Postgres.app is a full-featured PostgreSQL installation
-# packaged as a standard Mac app
-#   https://postgresapp.com/
-cask "postgres"
-
-# Powerful and customizable text editor
-#   https://macromates.com/
-cask "textmate"
-
-# Open any archive in seconds
-#   https://theunarchiver.com/
-cask "the-unarchiver"
-
-# The most powerful Git client
-#   https://www.git-tower.com/mac
-cask "tower"
-
-# A free, open source, and cross-platform media player
-#   https://mpv.io/
-cask "mpv"
-
-# A tool for powerful automation of OS X
-#   https://www.hammerspoon.org/
-cask "hammerspoon"
-
-# A powerful and stable keyboard customizer for macOS.
-#   https://pqrs.org/osx/karabiner
-cask "karabiner-elements"
-
-# A simple Timer app for Mac
-#   https://github.com/michaelvillar/timer-app
-cask "michaelvillar-timer"
-
-# App/window/tab switcher. For when ⌘-Tab simply doesn't cut it.
-#   https://manytricks.com/witch/
-cask "witch"
-
-# Back up your computer to the cloud
-#   https://www.arqbackup.com/
-cask "arq"
-
-# Catch is a Mac application that runs in the menu bar, and will automatically
-# download episodes found in your ShowRSS feed using your favorite BitTorrent client.
-#   http://giorgiocalderolla.com/catch.html
-cask "catch"
-
-# Media server
-#   https://www.plex.tv/
-cask "plex-media-server"
-
-# VLC media player
-#   https://www.videolan.org/vlc/index.html
-cask "vlc"
-
-# Transmission is a cross-platform BitTorrent client
-#   https://transmissionbt.com/
-cask "transmission"
-
-# The open source video transcoder
-#   https://handbrake.fr/
-cask "handbrake"
-
-# X Lossless Decoder: Lossless audio decoder for Mac OS X
-#   http://tmkk.undo.jp/xld/index_e.html
-cask "xld"
-
-# A simple and elegant open-source markdown editor that
-# focused on speed and usability.
-#   https://github.com/marktext/marktext
-cask "mark-text"
-
-# A Mac menu bar utility that hides your inactive windows.
-#   https://hocusfoc.us/
-cask "hocus-focus"
-
-# Lightweight clipboard manager for macOS
-#   https://maccy.app/
-#   https://github.com/p0deje/Maccy
-cask "maccy"
-
-# Finder Toolbar app for macOS to open the current directory in Terminal, iTerm, Hyper or Alacritty.
-#   https://github.com/Ji4n1ng/OpenInTerminal
-#   https://github.com/Ji4n1ng/OpenInTerminal/blob/master/Resources/README-Lite.md
-#
-# Setup: Hold the Command key and drag the app to the Finder toolbar.
-#
-# Run the following command to set the default terminal
-#
-#   defaults write wang.jianing.OpenInTerminal-Lite OIT_TerminalBundleIdentifier io.alacritty
-#
-cask "openinterminal-lite"
-
-# QuickLook plugins {{{
-# ------------------------------------------------------------------------------
-
-# Quick Look plugin for apps and provisioning profile files
-#   https://github.com/ealeksandrov/ProvisionQL
-cask "provisionql"
-
-# QuickLook plugin to display the dimensions and
-# size of an image in the title bar instead of
-# the filename.
-#   https://github.com/Nyx0uf/qlImageSize
-cask "qlimagesize"
-
-# QuickLook generator for patch files
-#   https://github.com/atnan/QLPrettyPatch
-cask "qlprettypatch"
-
-# A QuickLook plugin that lets you view
-# plain text files without a file extension
-#   https://whomwah.github.io/qlstephen/
-cask "qlstephen"
-
-# Display thumbnails, static QuickLook previews,
-# cover art and metadata for most types of video files.
-#   https://github.com/Marginal/QLVideo
-cask "qlvideo"
-
-# A QuickLook plugin for CSV files
-#   https://github.com/p2/quicklook-csv
-cask "quicklook-csv"
-
-# Quick look plugin to preview JSON files.
-#   http://www.sagtau.com/quicklookjson.html
-cask "quicklook-json"
-
-# Quicklook plugin to view Adobe Photoshop pattern files
-#   https://github.com/pixelrowdies/quicklook-pat
-cask "quicklook-pat"
-
-# Mac quicklook for ASE files (Adobe Swatch Exchange)
-#   https://github.com/rsodre/QuickLookASE
-cask "quicklookase"
-
-# An Application for Inspecting macOS Installer Packages
-#   https://www.mothersruin.com/software/SuspiciousPackage/
-cask "suspicious-package"
-
-# ------------------------------------------------------------------------------ }}}
-
-# App Store applications {{{
-# ------------------------------------------------------------------------------
-
-# Powerful, full-featured image editor for Mac.
-#   https://www.pixelmator.com/mac/
-mas "Pixelmator", id: 407963104
-
-# Color Palette Editor
-#    http://giantrobot.army/gamut/
-mas "Gamut", id: 1271226665
-
-# Color picker app for designers & developers
-#   https://colorsnapper.com/
-mas "ColorSnapper2", id: 969418666
-
-# The calendar app you won't be able to live without.
-#   https://flexibits.com/fantastical
-mas "Fantastical 2", id: 975937182
-
-# GitStatX is a FREE GUI application for gitstats
-#   https://tickplant.com/gitstatx/
-mas "GitStatX", id: 592679713
-
-# Mind map editor
-#   https://mindnode.com/
-mas "MindNode", id: 1289197285
-
-# Database design tool
-#   https://www.navicat.com/en/products/navicat-data-modeler
-mas "Navicat Data Modeler Ess", id: 532423082
-
-# Presentations editor
-#   https://www.apple.com/keynote/
-mas "Keynote", id: 409183694
-
-# Spreadsheets editor
-#   https://www.apple.com/numbers/
-mas "Numbers", id: 409203825
-
-# Word processor
-#   https://www.apple.com/pages/
-mas "Pages", id: 409201541
-
-# Diff tool
-#   https://www.kaleidoscopeapp.com/
-mas "Kaleidoscope", id: 587512244
-
-# Powerful JSON editor
-#   https://tickplant.com/powerjsoneditor/
-mas "Power JSON Editor", id: 499768540
-
-# HTTP Debugging Proxy
-#   https://proxie.app/
-mas "Proxie", id: 897814548
-
-# Mac app for monitoring the status of cloud services
-#   https://mahdi.jp/apps/stts
-mas "stts", id: 1187772509
-
-# Apple Configurator 2 makes it easy to deploy iPad, iPhone, iPod touch, and Apple TV devices.
-#   https://itunes.apple.com/fr/app/apple-configurator-2/id1037126344?l=en
-mas "Apple Configurator 2", id: 1037126344
-
-# Apple IDE
-#   https://developer.apple.com/xcode/
-mas "Xcode", id: 497799835
-
-# ------------------------------------------------------------------------------ }}}
-
-# ------------------------------------------------------------------------------ }}}
 
 # Modeline {{{
 # vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker : }}}

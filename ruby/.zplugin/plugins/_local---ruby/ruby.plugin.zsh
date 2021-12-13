@@ -1,1 +1,0 @@
-../../../../ruby/.zsh/plugins/ruby/init.zsh

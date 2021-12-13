@@ -1,5 +1,9 @@
-" " Uncomment to reset the config to the ones in this file
-" sanitise tridactyllocal tridactylsync
+" Uncomment to reset the config to the ones in this file
+sanitise tridactyllocal tridactylsync
+
+" Just use a blank page for new tab. It would be nicer to use the standard
+" Firefox homepage, but Tridactyl doesn't support this yet.
+set newtab about:blank
 
 " Profile directory to use with native messenger
 set profiledir default
@@ -67,6 +71,18 @@ bind gp pin
 " Git{Hub,Lab} git clone via SSH yank
 bind yg composite js document.location.href.replace(/https?:\/\//, "git@").replace("/", ":").replace(/$/, ".git") | clipboard yank
 
+" Ex-mode bindings {{{
+" --------------------
+
+bind --mode=ex <C-n> ex.next_completion
+bind --mode=ex <C-p> ex.prev_completion
+
+" -------------------- }}}
+
+" Ignore mode on GitHub
+bindurl github.com --mode=normal <S-I> mode ignore
+bindurl github.com --mode=ignore <S-I> mode normal
+
 " ------------------------------------------------------------------------------- }}}
 
 " Make gu take you back to subreddit from comments
@@ -76,14 +92,8 @@ bindurl reddit.com gu urlparent 4
 bindurl www.google.com f hint -Jc .rc > .r > a
 bindurl www.google.com F hint -Jtc .rc>.r>a
 
-" Disable the 't' binding in github
-unbindurl github.com t
-
-" Allow pages (not necessarily github) to override `/`, which is a default Firefox binding.
-set leavegithubalone true
-
 " Don't display the mode indicator.
-set modeindicator false
+set modeindicator true
 
 " Sane hinting mode
 set hintfiltermode vimperator-reflow

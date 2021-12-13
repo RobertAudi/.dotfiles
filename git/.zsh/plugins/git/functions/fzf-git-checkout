@@ -58,7 +58,7 @@ target=$(
 
 # Script terminated by Control-C
 if (( $status == 130 )); then
-  builtin print -P -- "[%F{196}ERROR%f] Aborted..." >&2
+  builtin print -P -u 2 -- "[%F{196}ERROR%f] Aborted..."
   return 130
 fi
 

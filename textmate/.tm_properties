@@ -1,14 +1,13 @@
 TM_FULLNAME = "Robert Audi"
-TM_GIT = "/usr/local/bin/git"
-TM_RUBY = "$HOME/.config/textmate/bin/tm_chruby"
+TM_GIT = "/opt/homebrew/bin/git"
 
 # Homebrew tools
-PATH = "$PATH:/usr/local/bin"
+PATH = "$PATH:/opt/homebrew/bin"
 
 excludeDirectories = "{.{git,hg,svn,gem},node_modules,bower_components,doc,.yardoc,tmp,log,}"
 
-fontName = Hack
-fontSize = 12
+fontName = "JetBrains Mono"
+fontSize = 13
 
 softTabs = true
 tabSize  = 2

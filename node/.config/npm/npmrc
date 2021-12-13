@@ -1,0 +1,36 @@
+# Don't submit audit reports alongside `npm install`
+audit = false
+
+# Tells npm to create symlinks for package executables
+bin-links = true
+
+# The browser that is called by the npm docs command to open websites
+browser = "open"
+
+# The location of npm’s cache directory
+cache = "${XDG_CACHE_HOME}/npm"
+
+# Only prints color codes for tty file descriptors
+color = true
+
+# Show the description in npm search
+description = true
+
+# The command to run for npm edit or npm config edit.
+editor = "${VISUAL}"
+
+# What level of logs to report
+# On failure, all logs are written to 'npm-debug.log' in the current working directory
+loglevel = "warn"
+
+# Show extended information in npm ls and npm search
+long = true
+
+# The location to install global items
+prefix = "${XDG_DATA_HOME}/npm"
+
+# Do SSL key validation when making requests to the registry via https
+strict-ssl = true
+
+# Use unicode characters in the tree output
+unicode = true

@@ -5,7 +5,7 @@ local proj=$(find . -maxdepth 1 -name "*.xcworkspace" | head -n 1)
 [[ -z "$proj" ]] && proj=$(find . -maxdepth 1 -name "*.xcodeproj" | head -n 1)
 
 if [[ -z "$proj" ]]; then
-  builtin print -P -- "[%F{196}ERROR%f] No XCode project found!" >&2
+  builtin print -P -u 2 -- "[%F{196}ERROR%f] No XCode project found!"
   return 1
 fi
 

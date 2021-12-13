@@ -1,19 +1,21 @@
 #!/usr/bin/env zsh
 
 git-nuke() {
-  if ! git rev-parse 2> /dev/null; then
-    echo -e "\e[1;41;97m ERROR \e[0m Not a repository: $PWD" >&2
+  if ! in-git-repo; then
+    builtin print -P -u 2 -- "[%F{196}ERROR%f] Not a repository: %B%F{yellow}${PWD}%f%b"
     return 1
   fi
 
   if (( $# == 0 )); then
-    echo -e "\e[1;41;97m ERROR \e[0m Missing branch name" >&2
+    builtin print -P -u 2 -- "[%F{196}ERROR%f] Missing branch name"
     return 1
   fi
 
   # TODO: Add confirmation
+  git branch -D "$1"
+
   # TODO: Do not hardcode the remote
-  git branch -D "$1" && git push origin :"$1"
+  git push origin :"$1"
 }
 
 git-nuke $@

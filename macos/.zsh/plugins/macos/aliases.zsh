@@ -4,13 +4,12 @@ alias -s {md,mmd,markdown}="marked"
 # Misc (random shit really...)
 alias brews="brew list -1"
 
-# See $ZDOTDIR/plugins/macos/functions/xcopen
-alias xco="xcopen"
-
 # Open web browsers easily
 alias firefox="open -a Firefox"
-alias chrome="open -a Google\ Chrome"
 alias safari="open -a Safari"
+
+# Open Xcode project
+alias xco="xcopen"
 
 # Mute/Un-mute volume
 alias mute="osascript -e 'set volume output muted true'"
@@ -37,32 +36,6 @@ alias "macos-version"="sw_vers -productVersion"
 
 # Print screen resolution on OS X
 alias "screen-resolution"="system_profiler SPDisplaysDataType |  awk -F ':' '/Resolution/ {print \$2}'"
-
-# List IP addresses
-alias "ls-ip"="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
-
-# Hall of the Mountain King
-alias cello='say -v cellos "di di di di di di di di di di di di di di di di di di di di di di di di di di"'
-
-if ! type aapt >/dev/null && [[ -x "$HOME/Library/Android/sdk/build-tools/26.0.0/aapt" ]]; then
-  alias aapt="$HOME/Library/Android/sdk/build-tools/26.0.0/aapt"
-fi
-
-# One of @janmoesen’s ProTip™s
-typeset method
-for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
-  alias "$method"="lwp-request -m '$method'"
-done
-unset method
-
-if [[ -x "/System/Library/Frameworks/JavascriptCore.framework/Versions/A/Resources/jsc" ]]; then
-  alias jsc="/System/Library/Frameworks/JavascriptCore.framework/Versions/A/Resources/jsc"
-fi
-
-if [[ -x "/System/Library/CoreServices/Applications/Network Utility.app/Contents/Resources/stroke" ]]; then
-  # Port Scanner
-  alias stroke="/System/Library/CoreServices/Applications/Network\\ Utility.app/Contents/Resources/stroke"
-fi
 
 # CLI Airport
 if [[ -x "/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport" ]]; then
@@ -95,9 +68,3 @@ if type flu.sh >/dev/null; then
   # Flush DNS cache
   alias flushdns="sudo flu.sh"
 fi
-
-{
-  if type swiftenv >/dev/null; then
-    eval "$(swiftenv init -)"
-  fi
-} &!

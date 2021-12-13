@@ -2,7 +2,7 @@
 
 # regenerate tmp/routes if it is not already generated or it is older than the routes config file
 if [[ ! -f tmp/routes ]] || [[ ! -s tmp/routes ]] || [[ tmp/routes -ot config/routes.rb ]]; then
-  run_with_bundler rake routes >! tmp/routes 2>/dev/null
+  rails routes >! tmp/routes 2>/dev/null
 fi
 
 if (( $# > 0 )); then

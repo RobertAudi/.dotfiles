@@ -1,7 +1,7 @@
 #autoload
 
 if (( $# == 0 )); then
-  builtin print -P -- "[%F{red}ERROR%f] tpane: not enough arguments" >&2
+  builtin print -P -u 2 -- "[%F{red}ERROR%f] tpane: not enough arguments"
   return 1
 fi
 
@@ -13,7 +13,7 @@ fi
 zparseopts -D -interactive+=interactive i+=interactive -horizontal+=horizontal h+=horizontal -vertical+=vertical v+=vertical
 
 if (( $# == 0 )); then
-  builtin print -P -- "[%F{red}ERROR%f] tpane: not enough arguments" >&2
+  builtin print -P -u 2 -- "[%F{red}ERROR%f] tpane: not enough arguments"
   return 1
 fi
 

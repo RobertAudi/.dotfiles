@@ -62,7 +62,7 @@ Subcommands
 
 ### git-wip
 
-store a current "work in progress" commit
+Store a current "work in progress" commit
 
 *Stolen from [git-utils][].*
 

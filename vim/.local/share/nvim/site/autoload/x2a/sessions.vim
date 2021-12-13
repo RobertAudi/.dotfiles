@@ -48,36 +48,6 @@ function! s:parseopts(...) abort
   return [l:opts, l:name, l:directory, l:file]
 endfunction
 
-function! s:restore_drawers() abort
-  let l:nerdtree_tabs = []
-  let l:buffers = []
-
-  for l:tabpage in range(1, tabpagenr('$'))
-    for l:buffer in tabpagebuflist(l:tabpage)
-      let l:bufname = bufname(l:buffer)
-
-      if l:bufname =~# 'NERD_tree'
-        call add(l:nerdtree_tabs, l:tabpage)
-        call add(l:buffers, l:buffer)
-      endif
-    endfor
-  endfor
-
-  if !empty(l:buffers)
-    silent execute 'bwipeout ' . join(uniq(l:buffers), ' ')
-  endif
-
-  let l:active_tabpage = tabpagenr()
-
-  if !empty(l:nerdtree_tabs) && exists(':NERDTree')
-    for l:nerdtree_tab in l:nerdtree_tabs
-      silent execute l:nerdtree_tab . 'tabdo NERDTree | wincmd p'
-    endfor
-
-    silent execute l:active_tabpage . 'tabnext'
-  endif
-endfunction
-
 function! x2a#sessions#directory(...) abort
   if a:0
     if filereadable(a:1)
@@ -202,8 +172,6 @@ function! x2a#sessions#load(...) abort
 
   silent execute 'source ' . l:file
 
-  call s:restore_drawers()
-
   let &lazyredraw = l:lazyredraw_keep
 
   call x2a#utils#echo#Message('Session loaded: ' . l:name . ' (file: ' . l:file . ')')
@@ -289,4 +257,25 @@ function! x2a#sessions#delete(...) abort
   call x2a#utils#echo#Message('Session deleted: ' . l:name . ' (file: ' . l:file . ')')
 
   return v:true
+endfunction
+
+function! x2a#sessions#purge() abort
+  let l:sessions_directory = fnamemodify(x2a#sessions#directory(), ':p')
+  let l:session_files = globpath(l:sessions_directory, '*.vim', v:true, v:true)
+
+  let l:deleted_sessions_count = 0
+
+  for l:session_file in l:session_files
+    let l:deleted = delete(l:session_file)
+
+    if l:deleted == -1
+      let l:message = 'Error: The session could not be deleted: ' . l:session_file
+
+      call x2a#utils#echo#Warning(l:message)
+    else
+      let l:deleted_sessions_count += 1
+    endif
+  endfor
+
+  call x2a#utils#echo#Message('Number of sessions deleted: ' . l:deleted_sessions_count)
 endfunction

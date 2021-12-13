@@ -17,30 +17,30 @@ path=(
   $HOME/.cargo/bin(N-/)
   $HOME/perl5/bin(N-/)
   ${GOPATH:+$GOPATH/bin}(N-/)
-  /Applications/Postgres.app/Contents/Versions/latest/bin(N-/)
-  /usr/local/opt/ncurses/bin(N-/)
-  /usr/local/opt/sqlite/bin(N-/)
-  /usr/local/opt/llvm/bin(N-/)
-  /usr/local/opt/ruby/bin(N-/)
-  /usr/local/opt/python/libexec/bin(N-/)
-  /usr/local/opt/binutils/bin(N-/)
-  /usr/local/opt/coreutils/libexec/gnubin(N-/)
-  /usr/local/opt/ed/libexec/gnubin(N-/)
-  /usr/local/opt/file-formula/bin(N-/)
-  /usr/local/opt/findutils/libexec/gnubin(N-/)
-  /usr/local/opt/gettext/bin(N-/)
-  /usr/local/opt/gnu-indent/libexec/gnubin(N-/)
-  /usr/local/opt/gnu-sed/libexec/gnubin(N-/)
-  /usr/local/opt/gnu-tar/libexec/gnubin(N-/)
-  /usr/local/opt/grep/libexec/gnubin(N-/)
-  /usr/local/opt/m4/bin(N-/)
-  /usr/local/opt/make/libexec/gnubin(N-/)
-  /usr/local/opt/nss/bin(N-/)
-  /usr/local/opt/unzip/bin(N-/)
-  /usr/local/bin(N-/)
+  /opt/homebrew/opt/openssl/bin(N-/)
+  /opt/homebrew/opt/ncurses/bin(N-/)
+  /opt/homebrew/opt/sqlite/bin(N-/)
+  /opt/homebrew/opt/llvm/bin(N-/)
+  /opt/homebrew/opt/ruby/bin(N-/)
+  /opt/homebrew/opt/python/libexec/bin(N-/)
+  /opt/homebrew/opt/binutils/bin(N-/)
+  /opt/homebrew/opt/coreutils/libexec/gnubin(N-/)
+  /opt/homebrew/opt/ed/libexec/gnubin(N-/)
+  /opt/homebrew/opt/file-formula/bin(N-/)
+  /opt/homebrew/opt/findutils/libexec/gnubin(N-/)
+  /opt/homebrew/opt/gettext/bin(N-/)
+  /opt/homebrew/opt/gnu-indent/libexec/gnubin(N-/)
+  /opt/homebrew/opt/gnu-sed/libexec/gnubin(N-/)
+  /opt/homebrew/opt/gnu-tar/libexec/gnubin(N-/)
+  /opt/homebrew/opt/grep/libexec/gnubin(N-/)
+  /opt/homebrew/opt/m4/bin(N-/)
+  /opt/homebrew/opt/make/libexec/gnubin(N-/)
+  /opt/homebrew/opt/nss/bin(N-/)
+  /opt/homebrew/opt/unzip/bin(N-/)
+  /opt/homebrew/bin(N-/)
   /usr/bin(N-/)
   /bin(N-/)
-  /usr/local/sbin(N-/)
+  /opt/homebrew/sbin(N-/)
   /usr/sbin(N-/)
   /sbin(N-/)
   $path
@@ -57,7 +57,7 @@ typeset -xT SUDO_PATH sudo_path
 sudo_path=(
   $sudo_path
   /opt/local/sbin(N-/)
-  /usr/local/sbin(N-/)
+  /opt/homebrew/sbin(N-/)
   /usr/sbin(N-/)
   /sbin(N-/)
 )
@@ -71,22 +71,22 @@ manpath=(
   $HOME/.local/share/man(N-/)
   $HOME/.man(N-/)
   $HOME/perl5/man(N-/)
-  /usr/local/opt/ncurses/share/man(N-/)
-  /usr/local/opt/sqlite/share/man(N-/)
-  /usr/local/opt/binutils/share/man(N-/)
-  /usr/local/opt/coreutils/libexec/gnuman(N-/)
-  /usr/local/opt/ed/libexec/gnuman(N-/)
-  /usr/local/opt/file-formula/share/man(N-/)
-  /usr/local/opt/findutils/libexec/gnuman(N-/)
-  /usr/local/opt/gettext/share/man(N-/)
-  /usr/local/opt/gnu-indent/libexec/gnuman(N-/)
-  /usr/local/opt/gnu-sed/libexec/gnuman(N-/)
-  /usr/local/opt/gnu-tar/libexec/gnuman(N-/)
-  /usr/local/opt/grep/libexec/gnuman(N-/)
-  /usr/local/opt/m4/share/man(N-/)
-  /usr/local/opt/make/libexec/gnuman(N-/)
-  /usr/local/opt/unzip/share/man(N-/)
-  /usr/local/share/man(N-/)
+  /opt/homebrew/opt/ncurses/share/man(N-/)
+  /opt/homebrew/opt/sqlite/share/man(N-/)
+  /opt/homebrew/opt/binutils/share/man(N-/)
+  /opt/homebrew/opt/coreutils/libexec/gnuman(N-/)
+  /opt/homebrew/opt/ed/libexec/gnuman(N-/)
+  /opt/homebrew/opt/file-formula/share/man(N-/)
+  /opt/homebrew/opt/findutils/libexec/gnuman(N-/)
+  /opt/homebrew/opt/gettext/share/man(N-/)
+  /opt/homebrew/opt/gnu-indent/libexec/gnuman(N-/)
+  /opt/homebrew/opt/gnu-sed/libexec/gnuman(N-/)
+  /opt/homebrew/opt/gnu-tar/libexec/gnuman(N-/)
+  /opt/homebrew/opt/grep/libexec/gnuman(N-/)
+  /opt/homebrew/opt/m4/share/man(N-/)
+  /opt/homebrew/opt/make/libexec/gnuman(N-/)
+  /opt/homebrew/opt/unzip/share/man(N-/)
+  /opt/homebrew/share/man(N-/)
   /Applications/Xcode.app/Contents/Developer/usr/share/man(N-/)
   /usr/share/man(N-/)
   $manpath
@@ -101,11 +101,25 @@ manpath=(
 typeset -T INFOPATH infopath
 
 infopath=(
-  /usr/local/opt/binutils/share/info(N-/)
-  /usr/local/opt/m4/share/info(N-/)
-  /usr/local/share/info(N-/)
+  /opt/homebrew/opt/binutils/share/info(N-/)
+  /opt/homebrew/opt/m4/share/info(N-/)
+  /opt/homebrew/share/info(N-/)
   /usr/share/info(N-/)
   $infopath
+)
+
+# ------------------------------------------------------------------------------ }}}
+
+# PKG_CONFIG_PATH
+# ------------------------------------------------------------------------------ {{{
+
+# Tie PKG_CONFIG_PATH and pkg_config_path together
+typeset -T PKG_CONFIG_PATH pkg_config_path
+
+pkg_config_path=(
+  /opt/homebrew/opt/openssl/lib/pkgconfig(N-/)
+  /opt/homebrew/opt/libffi/lib/pkgconfig(N-/)
+  $pkg_config_path
 )
 
 # ------------------------------------------------------------------------------ }}}
@@ -115,7 +129,7 @@ infopath=(
 
 fpath=(
   $ZDOTDIR/{functions,functions/{utils,prompts,zle},completions}(N-/)
-  /usr/local/share/zsh-completions(N-/)
+  /opt/homebrew/share/zsh-completions(N-/)
   /usr/share/zsh/site-functions(N-/)
   $fpath
 )

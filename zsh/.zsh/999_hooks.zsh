@@ -16,6 +16,7 @@ _chpwd-vcs-status-overview() {
 }
 
 autoload -Uz add-zsh-hook
+
 add-zsh-hook chpwd _chpwd-show-pwd-info
 add-zsh-hook chpwd _chpwd-show-pwd-contents
 add-zsh-hook chpwd _chpwd-vcs-status-overview

@@ -64,6 +64,7 @@ unset key
 bindkey -e
 bindkey -M emacs "$key_info[MetaLeft]"  backward-word
 bindkey -M emacs "$key_info[MetaRight]" forward-word
+
 bindkey -M emacs "$key_info[BackTab]"   reverse-menu-complete
 bindkey -M emacs "$key_info[Control]]"  copy-prev-shell-word
 

@@ -1,0 +1,11 @@
+#compdef git-nuke
+#autoload
+
+ret=1
+_arguments -C '1:branch:->branches' && ret=0
+
+if [[ "$state" == "branches" ]]; then
+  _alternative 'local-branches:base branch:__git_branch_names' && ret=0
+fi
+
+return $ret

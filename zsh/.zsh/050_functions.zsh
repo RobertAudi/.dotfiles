@@ -4,7 +4,8 @@
 typeset dirname
 typeset -a fns
 for dirname in $fpath; do
-  if ! [[ $dirname =~ ($ZDOTDIR/plugins|${ZPLG_HOME:-$HOME/.zplugin})/* ]]; then
+  if ! [[ $dirname =~ ($ZDOTDIR/plugins|${ZINIT[HOME_DIR]:-$HOME/.zinit})/* ]]; then
+    #              [^_]*[^~](N.:t)
     fns=( $dirname/*~(*~|*.zwc)(-N.:t) )
     (( $#fns > 0 )) && autoload -Uz -- "$fns[@]"
   fi

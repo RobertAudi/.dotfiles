@@ -125,15 +125,15 @@ function __update::commands::npm {
 }
 
 function __update::commands::zsh {
-  if __update::utils::is-callable zplugin; then
-    __update::utils::log::info "zplugin self-update"
-    zplugin self-update > /dev/null
+  if __update::utils::is-callable zinit; then
+    __update::utils::log::info "zinit self-update"
+    zinit self-update > /dev/null
 
-    __update::utils::log::info "zplugin update --all"
-    zplugin update --all --quiet > /dev/null
+    __update::utils::log::info "zinit update --all"
+    zinit update --all --quiet > /dev/null
 
-    __update::utils::log::info "zplugin compile --all"
-    zplugin compile --all > /dev/null
+    __update::utils::log::info "zinit compile --all"
+    zinit compile --all > /dev/null
   fi
 }
 

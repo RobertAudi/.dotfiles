@@ -4,7 +4,7 @@ export FORTUNES_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/fortunes"
 
 typeset -ga fortunes cows
 fortunes=($(sort -u <(zargs -n1 $FORTUNES_DIR/*(:t:r))))
-cows=($(sort -u <(zargs -n1 /usr/local/share/cows/*.cow(:t:r))))
+cows=($(sort -u <(zargs -n1 /opt/homebrew/share/cows/*.cow(:t:r))))
 
 function {
   for f in $fortunes; do

@@ -10,10 +10,10 @@ for f in ${HOME}/.zshenv.zwc*(-N.) ${ZDOTDIR}/***/*.zsh.zwc*(-N.) ${ZDOTDIR}/***
     builtin print -P -- "[%F{032}INFO%f] Removed ${f:A}"
 
     if [[ -L $f ]] && ! command rm -f -- $f; then
-      builtin print -P -- "[%F{196}ERROR%f] Failed to remove $f (symlink)" >&2
+      builtin print -P -u 2 -- "[%F{196}ERROR%f] Failed to remove $f (symlink)"
     fi
   else
-    builtin print -P -- "[%F{196}ERROR%f] Failed to remove ${f:A}" >&2
+    builtin print -P -u 2 -- "[%F{196}ERROR%f] Failed to remove ${f:A}"
     [[ -L $f ]] && command rm -f -- $f 2>/dev/null
   fi
 done

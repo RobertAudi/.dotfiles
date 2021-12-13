@@ -39,9 +39,15 @@ else
   alias l="${aliases[ls]:-ls} -og"
 fi
 
+# The parameters ZLS_COLORS and ZLS_COLOURS are the lowest-level part of the system used by zsh/complist and describe how
+# matches are highlighted. It has essentially the same format as $LS_COLORS.
+#
+# See: http://zsh.sourceforge.net/Doc/Release/Zsh-Modules.html#The-zsh_002fcomplist-Module
+export ZLS_COLORS=$LS_COLORS
+
 if is-callable exa; then
   alias exa="exa --time-style=long-iso --group-directories-first --colour=always"
-  alias ll="exa -lgh"
+  alias ll="exa -lgh --git"
   alias la="exa -a"
   alias lla="ll -a"
 else

@@ -5,7 +5,3 @@ brew "tmux"
 # Reattach process (e.g., tmux) to background
 #   https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
 brew "reattach-to-user-namespace"
-
-# Awesome tmux-based terminal divider
-#   https://github.com/greymd/tmux-xpanes
-brew "tmux-xpanes"

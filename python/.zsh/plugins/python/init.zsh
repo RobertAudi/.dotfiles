@@ -1,5 +1,5 @@
-is-callable pyenv || return 0
-is-callable pyenv-virtualenv-init || return 0
+whence pyenv > /dev/null || return 0
+whence pyenv-virtualenv-init > /dev/null || return 0
 
 : ${PYENV_ROOT:=$HOME/.pyenv}
 export PYENV_ROOT
@@ -21,3 +21,5 @@ fi
 source "$pyenv_cache_file"
 source "$pyenv_virtualenv_cache_file"
 unset pyenv_cache_file pyenv_virtualenv_cache_file
+
+path=( $(pyenv root)/shims(N-/) $path )

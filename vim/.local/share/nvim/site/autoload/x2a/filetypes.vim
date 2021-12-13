@@ -6,7 +6,7 @@ function! x2a#filetypes#setFileType(bang, ...) abort
       execute 'setfiletype ' . a:1
     endif
   else
-    if x2a#utils#plugins#isInstalled('denite.nvim')
+    if x2a#vim#plugins#isInstalled('denite.nvim')
       Denite filetype
     else
       throw 'E471: Argument required'

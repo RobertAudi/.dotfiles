@@ -1,57 +1,174 @@
-#/usr/bin/env bash
+_alacritty() {
+  local i cur prev opts cmds
+  COMPREPLY=()
+  cur="${COMP_WORDS[COMP_CWORD]}"
+  prev="${COMP_WORDS[COMP_CWORD-1]}"
+  cmd=""
+  opts=""
 
-# Load completion function
-complete -F _alacritty alacritty
+  for i in ${COMP_WORDS[@]}
+  do
+    case "${i}" in
+      alacritty)
+        cmd="alacritty"
+        ;;
 
-# Completion function
-_alacritty()
-{
-    local cur prev prevprev opts
-    COMPREPLY=()
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    prev="${COMP_WORDS[COMP_CWORD-1]}"
-    prevprev="${COMP_WORDS[COMP_CWORD-2]}"
-    opts="-h --help -V --version --live-config-reload --no-live-config-reload --persistent-logging --print-events -q -qq -v -vv -vvv --ref-test -e --command --config-file -d --dimensions --position -t --title --class --working-directory"
-
-    # If `--command` or `-e` is used, stop completing
-    for i in "${!COMP_WORDS[@]}"; do
-        if [[ "${COMP_WORDS[i]}" == "--command" ]] \
-            || [[ "${COMP_WORDS[i]}" == "-e" ]] \
-            && [[ "${#COMP_WORDS[@]}" -gt "$(($i + 2))" ]]
-        then
-            return 0
-        fi
-    done
-
-    # Make sure the Y dimension isn't completed
-    if [[ "${prevprev}" == "--dimensions" ]] || [[ "${prevprev}" == "-d" ]]; then
-        return 0
-    fi
-
-    # Match the previous word
-    case "${prev}" in
-        --command | -e)
-            # Complete all commands in $PATH
-            COMPREPLY=( $(compgen -c -- "${cur}") )
-            return 0;;
-        --config-file)
-            # Path based completion
-            local IFS=$'\n'
-            compopt -o filenames
-            COMPREPLY=( $(compgen -f -- "${cur}") )
-            return 0;;
-        --dimensions | -d | --class | --title | -t)
-            # Don't complete here
-            return 0;;
-        --working-directory)
-            # Directory completion
-            local IFS=$'\n'
-            compopt -o filenames
-            COMPREPLY=( $(compgen -d -- "${cur}") )
-            return 0;;
+      create-window)
+        cmd+="__create__window"
+        ;;
+      help)
+        cmd+="__help"
+        ;;
+      msg)
+        cmd+="__msg"
+        ;;
+      *)
+        ;;
     esac
+  done
 
-    # Show all flags if there was no previous word
-    COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-    return 0
+  case "${cmd}" in
+    alacritty)
+      opts=" -q -v -h -V -t -o -e  --print-events --ref-test --hold --help --version --title --class --embed --config-file --socket --option --working-directory --command   msg help"
+      if [[ ${cur} == -* || ${COMP_CWORD} -eq 1 ]] ; then
+        COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+        return 0
+      fi
+      case "${prev}" in
+
+        --title)
+          COMPREPLY=($(compgen -f "${cur}"))
+          return 0
+          ;;
+        -t)
+          COMPREPLY=($(compgen -f "${cur}"))
+          return 0
+          ;;
+        --class)
+          COMPREPLY=($(compgen -f "${cur}"))
+          return 0
+          ;;
+        --embed)
+          COMPREPLY=($(compgen -f "${cur}"))
+          return 0
+          ;;
+        --config-file)
+          COMPREPLY=($(compgen -f "${cur}"))
+          return 0
+          ;;
+        --socket)
+          COMPREPLY=($(compgen -f "${cur}"))
+          return 0
+          ;;
+        --option)
+          COMPREPLY=($(compgen -f "${cur}"))
+          return 0
+          ;;
+        -o)
+          COMPREPLY=($(compgen -f "${cur}"))
+          return 0
+          ;;
+        --working-directory)
+          COMPREPLY=($(compgen -f "${cur}"))
+          return 0
+          ;;
+        --command)
+          COMPREPLY=($(compgen -f "${cur}"))
+          return 0
+          ;;
+        -e)
+          COMPREPLY=($(compgen -f "${cur}"))
+          return 0
+          ;;
+        *)
+          COMPREPLY=()
+          ;;
+      esac
+      COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+      return 0
+      ;;
+
+    alacritty__help)
+      opts=" -h -V  --help --version  "
+      if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
+        COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+        return 0
+      fi
+      case "${prev}" in
+
+        *)
+          COMPREPLY=()
+          ;;
+      esac
+      COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+      return 0
+      ;;
+    alacritty__msg)
+      opts=" -h -V -s  --help --version --socket   create-window help"
+      if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
+        COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+        return 0
+      fi
+      case "${prev}" in
+
+        --socket)
+          COMPREPLY=($(compgen -f "${cur}"))
+          return 0
+          ;;
+        -s)
+          COMPREPLY=($(compgen -f "${cur}"))
+          return 0
+          ;;
+        *)
+          COMPREPLY=()
+          ;;
+      esac
+      COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+      return 0
+      ;;
+    alacritty__msg__create__window)
+      opts=" -h -V -e  --hold --help --version --working-directory --command  "
+      if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
+        COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+        return 0
+      fi
+      case "${prev}" in
+
+        --working-directory)
+          COMPREPLY=($(compgen -f "${cur}"))
+          return 0
+          ;;
+        --command)
+          COMPREPLY=($(compgen -f "${cur}"))
+          return 0
+          ;;
+        -e)
+          COMPREPLY=($(compgen -f "${cur}"))
+          return 0
+          ;;
+        *)
+          COMPREPLY=()
+          ;;
+      esac
+      COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+      return 0
+      ;;
+    alacritty__msg__help)
+      opts=" -h -V  --help --version  "
+      if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
+        COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+        return 0
+      fi
+      case "${prev}" in
+
+        *)
+          COMPREPLY=()
+          ;;
+      esac
+      COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+      return 0
+      ;;
+  esac
 }
+
+complete -F _alacritty -o bashdefault -o default alacritty

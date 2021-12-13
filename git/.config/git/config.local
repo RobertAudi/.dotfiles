@@ -1,13 +1,10 @@
 [core]
   excludesFile   = ~/.config/git/ignore
   attributesFile = ~/.config/git/attributes
+  pager = delta --dark
 
 [init]
   templateDir = ~/.dotfiles/git/.config/git/templates
-
-[pager]
-  diff = diff-so-fancy | smartless
-  show = diff-so-fancy | smartless
 
 [commit]
   template = ~/.config/git/commit.txt
@@ -17,6 +14,10 @@
 
 [merge]
   tool = GitMergeTool
+
+[alias]
+  # git tower
+  tower = gui
 
 [difftool "GitDiffTool"]
   cmd = ~/.local/bin/difftool --local \"$LOCAL\" --remote \"$REMOTE\" --base \"$BASE\"

@@ -1,0 +1,1 @@
+runtime! ftplugin/ruby.vim

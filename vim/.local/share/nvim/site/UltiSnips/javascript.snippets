@@ -27,7 +27,7 @@ ${1:var }${2:function_name} = function $2(${3}) {
 endsnippet
 
 snippet timeout "setTimeout function" b
-setTimeout(function() {
+setTimeout(() => {
 	${VISUAL}$0
 }${2:.bind(${3:this})}, ${1:10});
 endsnippet
@@ -96,8 +96,14 @@ snippet ret "return" b
 return${0: result};
 endsnippet
 
-snippet ready "document ready" b
-$(document).on("ready", function() {
+snippet ready "document.ready" b
+$(document).ready(() => {
+	$0
+});
+endsnippet
+
+snippet onready "document.on('ready', () => {})" b
+$(document).on("ready", () => {
 	$0
 });
 endsnippet
@@ -106,4 +112,44 @@ snippet ff "Immediately-Invoked Function Expression (IIFE)" b
 (function(win, doc, $) {
 	$0
 })(window, document, jQuery);
+endsnippet
+
+###########
+#  Mocha  #
+###########
+
+snippet desc "describe('thing', function() { ... })" b
+	describe("${1:}", function() {
+		${0}
+	});
+endsnippet
+
+snippet it "it('should do', function() { ... })" b
+	it("${1:}", function() {
+		${0}
+	});
+endsnippet
+
+snippet before "before(function() { ... })" b
+	before(function() {
+		${0}
+	});
+endsnippet
+
+snippet before "beforeEach(function() { ... })" b
+	beforeEach(function() {
+		${0}
+	});
+endsnippet
+
+snippet after "after(function() { ... })" b
+	after(function() {
+		${0}
+	});
+endsnippet
+
+snippet after "afterEach(function() { ... })" b
+	afterEach(function() {
+		${0}
+	});
 endsnippet

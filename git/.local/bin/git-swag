@@ -1,3 +1,15 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
-git commit -m "$(curl -s whatthecommit.com/index.txt)"
+git-swag() {
+  local commitMessage
+  commitMessage="$(curl -s whatthecommit.com/index.txt 2> /dev/null)"
+
+  if (( $status != 0 )) || [[ -z "$commitMessage" ]]; then
+    builtin print -P -u 2 -- "[%F{196}ERROR%f] Failed to get a swaggy message :("
+    return $commandStatus
+  fi
+
+  git commit -m "$commitMessage"
+}
+
+git-swag

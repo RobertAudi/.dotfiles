@@ -1,6 +1,7 @@
 Homebrew/*
 packages/*
 ruby/*
+terminfo/*
 \.gitignore
 .*\.sh
 .*\.rb

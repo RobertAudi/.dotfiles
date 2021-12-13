@@ -54,7 +54,7 @@ alias -g ":map"="| xargs -n1"
 #  VIM related aliases ;o) btw. ``$SHELL:t'' is a modifiers from the Z
 #  Shell. In other shells you can use ``${SHELL##*/}'' instead. Valid
 #  Modifiers can be found in ``info -f zsh -n Modifiers''.
-alias :{w,q,wq,qa,wqa,x}{,!}='echo "This is $SHELL:t and not Vi(m)"'
+alias :{w,q,wa,wq,qa,wqa,x}{,!}='echo "This is $SHELL:t and not Vi(m)"'
 alias :{Q,Qa,QA,Wa,WA,Wq,WQ,Wqa,WQa,WQA}{,!}='echo "This is $SHELL:t and not Vi(m)"'
 
 if is-callable ag; then
@@ -91,10 +91,10 @@ alias '???=cat-which'
 alias mvi="mv-interactive"
 
 # Output total time to load zsh.
-alias loadtime="time zsh -i -c exit >/dev/null"
+alias loadtime="time zsh -i -l -c exit >/dev/null"
 
 # Profile the run time of this file.
-alias whyslow="PROFILE_INIT=true zsh -i -c exit"
+alias whyslow="PROFILE_INIT=true zsh -i -l -c exit"
 
 # Copy the pwd to the clipboard
 alias pc="pcf \$PWD"
@@ -120,6 +120,7 @@ alias parrot="curl -q parrot.live"
 
 if is-callable prettyping; then
   alias pping="prettyping"
+  alias ppong="prettyping www.google.com"
 fi
 
 # List zombie processes
@@ -166,6 +167,14 @@ fi
 
 if is-callable dfc; then
   alias dfc="dfc -Tdsow"
+fi
+
+if is-callable pstree; then
+  alias pstree="pstree -g 3"
+fi
+
+if ! is-callable alacritty && [[ -x "/Applications/Alacritty.app/Contents/MacOS/alacritty" ]]; then
+  alias alacritty="/Applications/Alacritty.app/Contents/MacOS/alacritty"
 fi
 
 # Modeline {{{

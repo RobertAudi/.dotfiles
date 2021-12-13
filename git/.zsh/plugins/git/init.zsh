@@ -4,8 +4,8 @@
 #
 # Credits to Alexander Groß (@agross)
 #   https://github.com/agross/dotfiles/commit/4938bc8987a5b4ef0c7411a2c4b988d89a3ade11
-[[ -f /usr/local/share/zsh/site-functions/_git ]] && \
-  rm -f /usr/local/share/zsh/site-functions/_git
+[[ -f /opt/homebrew/share/zsh/site-functions/_git ]] && \
+  rm -f /opt/homebrew/share/zsh/site-functions/_git
 
 path=("$ZSH_HOME/plugins/git/bin" $path)
 fpath=("$ZSH_HOME/plugins/git/completions" "$ZSH_HOME/plugins/git/functions" $fpath)
@@ -16,8 +16,8 @@ function {
 }
 source "$ZSH_HOME/plugins/git/aliases.zsh"
 
-if [[ -f "/usr/local/opt/git-extras/share/git-extras/git-extras-completion.zsh" ]]; then
-  source "/usr/local/opt/git-extras/share/git-extras/git-extras-completion.zsh"
+if [[ -f "/opt/homebrew/opt/git-extras/share/git-extras/git-extras-completion.zsh" ]]; then
+  source "/opt/homebrew/opt/git-extras/share/git-extras/git-extras-completion.zsh"
 fi
 
 # 10x faster implementation of `git status` command.
@@ -44,6 +44,8 @@ compdef -a _git  \
   gc=git-commit  \
   gac=git-commit \
   gb=git-branch  \
+  gpsf=git-push  \
+  gcl=git-clone  \
   fzf-git-checkout=git-checkout
 
 git-insert-branch-name() {
@@ -54,8 +56,6 @@ git-insert-branch-name() {
 }
 zle -N git-insert-branch-name
 bindkey -M emacs '^x^g' git-insert-branch-name
-
-zstyle -g existing_user_commands ':completion:*:*:git:*' user-commands
 
 zstyle ':completion:*:*:git:*' user-commands $existing_user_commands \
   author-stats:'Output number of lines added / removed by author' \
@@ -78,6 +78,7 @@ zstyle ':completion:*:*:git:*' user-commands $existing_user_commands \
   pruneall:'Prune branches from specified remotes, or all remotes when <remote> not specified' \
   remotes:'Show all remotes' \
   reset-file:'Reset one file to a certain commit' \
+  show-merged-branches:'Show branches that have been merged' \
   submodule-purge:'Purges the copies of obsoleted submodule repositories' \
   submodule-rm:'Remove submodules from current repo' \
   submodule-update:'Updates submodules in the current working directory' \

@@ -25,12 +25,6 @@ def initialize${1:(${2:*args})}
 end
 endsnippet
 
-snippet do "do |<key>| ... end" i
-do ${1:|${2:args}|}
-	$0
-end
-endsnippet
-
 snippet begin "begin ... rescue ... end" b
 begin
 	$1
@@ -51,11 +45,6 @@ case ${1:variable}
 when ${2:expression}
 	$0
 end
-endsnippet
-
-snippet when "when (case)"
-when ${1:condition}
-	$0
 endsnippet
 
 snippet "^\s*cla(ss)?" "class <class_name> def initialize ... end end" r

@@ -3,7 +3,7 @@
 # Undo your last N push of current branch
 
 if ! in-git-repo; then
-  builtin print -P -- "[%F{196}ERROR%f] Not a repository: %B%F{yellow}${PWD}%f%b" >&2
+  builtin print -P -u 2 -- "[%F{196}ERROR%f] Not a repository: %B%F{yellow}${PWD}%f%b"
   return 1
 fi
 
@@ -14,7 +14,7 @@ if [[ -z "$upstream" ]]; then
   local current_branch
   current_branch="$(git rev-parse --abbrev-ref HEAD)"
 
-  builtin print -P -- "[%F{196}ERROR%f] Current branch has no tracking branch: %F{green}${current_branch}%f" >&2
+  builtin print -P -u 2 -- "[%F{196}ERROR%f] Current branch has no tracking branch: %F{green}${current_branch}%f"
   return 1
 fi
 

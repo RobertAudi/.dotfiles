@@ -9,18 +9,23 @@ let g:better_whitespace_filetypes_blacklist =
       \   'qf',
       \   'man',
       \   'ctrlsf',
-      \   'nerdtree',
       \   'vim-plug',
+      \   'vista',
+      \   'TelescopePrompt',
+      \   'TelescopeResults',
+      \   'floaterm',
       \   'diff',
+      \   'git',
       \   'gitcommit',
-      \   'gitrebase'
+      \   'gitrebase',
+      \   'gitblame'
       \ ]
 
 augroup RAPluginsBetterWhitespace
   autocmd!
 
   autocmd BufReadPost *
-        \ if &readonly
+        \ if &readonly || !&modifiable
         \ | execute 'DisableWhitespace' |
         \ endif
 augroup END

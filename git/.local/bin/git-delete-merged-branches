@@ -2,18 +2,31 @@
 
 function {
   if [[ $(command git rev-parse --is-inside-work-tree 2> /dev/null) != 'true' ]]; then
-    builtin print -P -- "[%F{196}ERROR%f] Not in a git repository." >&2
+    builtin print -P -u 2 -- "[%F{196}ERROR%f] Not in a git repository."
     return 1
   fi
 
-  local branches
-  branches="$(command git branch --no-color --merged \
-    | command grep -v "\*" \
-    | command grep -v master \
-    | command grep -v develop \
-    | command grep -v svn)"
-  if [[ -n "$branches" ]]; then
-    builtin print -l -- "$branches" | xargs -n 1 git branch -d
+  local -a branches
+  branches=(
+    $(command git branch --no-color --merged \
+      | command grep -v "\*" \
+      | command grep -v master \
+      | command grep -v develop \
+      | command grep -v staging \
+      | command grep -v svn)
+  )
+
+  if (( ${#branches} > 0 )); then
+    local branch
+    for branch in ${branches[@]}; do
+      builtin print -P -n -- "%F{032}=>%f Deleting %B${branch}%b..."
+
+      if git branch -d "${branch}" &> /dev/null ; then
+        builtin print -P -- "%F{034}Done%f"
+      else
+        builtin print -P -- "%F{196}Error%f"
+      fi
+    done
   else
     builtin print -P -- "[%F{032}INFO%f] No remote branches were merged."
   fi

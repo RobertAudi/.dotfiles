@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
 begin
-  require 'sidekiq/api'
+  require "sidekiq/api"
 rescue LoadError
-  $stderr.puts "\e[31mSidekiq not found\e[0m"
+  warn "\e[31mSidekiq not found\e[0m"
   exit(1)
 end
 
@@ -15,7 +15,6 @@ puts "\e[32mCleared scheduled jobs\e[0m"
 
 Sidekiq::Stats.new.reset
 puts "\e[32mCleared 'Processed' and 'Failed' jobs\e[0m"
-
 
 Sidekiq::DeadSet.new.clear
 puts "\e[32mCleared 'Dead' jobs statistics\e[0m"

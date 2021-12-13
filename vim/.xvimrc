@@ -1,0 +1,74 @@
+set clipboard=unnamed
+set ignorecase
+set incsearch
+set smartcase
+set hlsearch
+set wrap
+set wrapscan
+set number
+set laststatus=2
+set nostartofline
+
+nnoremap <CR> <Nop>
+vnoremap <CR> <Nop>
+
+nnoremap H ^
+nnoremap L $
+
+nnoremap vH v^
+nnoremap vL v$
+
+vnoremap H ^
+vnoremap L $
+
+nnoremap <Backspace> %
+vnoremap <Backspace> %
+
+nnoremap * *Nzz
+nnoremap % *NNzz
+
+nnoremap n nzz
+nnoremap N Nzz
+
+nnoremap G Gzz
+nnoremap <C-o> <C-o>zz
+nnoremap <C-i> <C-i>zz
+
+nnoremap Y y$
+
+nnoremap K :xcmenucmd Show Quick Help for Selected Item<CR>
+
+nnoremap gb :njump<CR>
+nnoremap gB :pjump<CR>
+
+nnoremap gcc :xcmenucmd Comment Selection<CR>
+vnoremap gc :xcmenucmd Comment Selection<CR>
+
+nnoremap gt :xcmenucmd Show Next Tab<CR>
+nnoremap gT :xcmenucmd Show Previous Tab<CR>
+
+nnoremap <C-p> :xcmenucmd Open Quickly...<CR>
+
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+nnoremap <C-f> :xcmenucmd Find in Project...<CR>
+vnoremap <C-f> :xcmenucmd Find Selected Text in Project<CR>
+
+nnoremap vv ^v$
+
+nnoremap ,a ggVG
+nnoremap ,= ggVG=<C-o><C-o>
+nnoremap ,y ggVGy<C-o><C-o>
+
+vnoremap > >gv
+vnoremap < >gv
+
+nnoremap ,s :xcmenucmd Find and Replace...<CR>
+
+nnoremap <C-w>s :xcmenucmd Editor Below<CR>
+nnoremap <C-w>v :xcmenucmd Editor<CR>
+
+nnoremap <C-e> :xcmenucmd Show Document Items<CR>

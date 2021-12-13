@@ -23,13 +23,21 @@ end
 -- -- --
 
 local function maximizeWindow()
-  hs.window.focusedWindow():maximize()
+  local win = hs.window.focusedWindow()
+  if not win:isFullScreen() then
+    win:maximize()
+  end
 end
 
 local function centerWindow()
   local win = hs.window.focusedWindow()
-  win:moveToUnit(hs.geometry.unitrect(0.125, 0.125, 0.35, 0.5))
-  win:centerOnScreen()
+
+  if not win:isFullScreen() then
+    local screen = win:screen():frame()
+
+    win:setSize(hs.geometry.size(screen.w / 2, screen.h / 1.75))
+    win:centerOnScreen()
+  end
 end
 
 local function layoutSequenceIterator()
@@ -100,25 +108,60 @@ end
 
 local function cycleLayout(position, reverse)
   local win = hs.window.focusedWindow()
-  win:moveToUnit(layoutSequenceIterator()(win, position, reverse))
+
+  if not win:isFullScreen() then
+    win:moveToUnit(layoutSequenceIterator()(win, position, reverse))
+  end
 end
 
 local function cycleCenterLayout(reverse)
   local win = hs.window.focusedWindow()
-  win:moveToUnit(centerLayoutIteration()(win, reverse))
-  win:centerOnScreen()
+
+  if not win:isFullScreen() then
+    win:moveToUnit(centerLayoutIteration()(win, reverse))
+    win:centerOnScreen()
+  end
+end
+
+local function toggleApplication(applicationName)
+  local app = hs.appfinder.appFromName(applicationName)
+
+  if app and app:isFrontmost() then
+    app:hide()
+  else
+    hs.application.launchOrFocus(applicationName)
+  end
 end
 
 -- Disable animations
 hs.window.animationDuration = 0
 
-hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "Left",  function() cycleLayout("Left")  end)
-hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "Right", function() cycleLayout("Right") end)
+-- Load the hs.ipc module to be able to use the hs CLI tool
+require("hs.ipc")
 
-hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "Up",   function() cycleCenterLayout(false) end)
-hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "Down", function() cycleCenterLayout(true)  end)
+local hyper = { "Shift", "Cmd", "Alt", "Ctrl" }
 
-hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "M",  function() maximizeWindow() end)
-hs.hotkey.bind({ "cmd", "alt", "ctrl" }, "C",  function() centerWindow()   end)
+hs.hotkey.bind(hyper, "Left",  function() cycleLayout("Left")  end)
+hs.hotkey.bind(hyper, "Right", function() cycleLayout("Right") end)
 
-require "monitor-management"
+hs.hotkey.bind(hyper, "Up",   function() cycleCenterLayout(false) end)
+hs.hotkey.bind(hyper, "Down", function() cycleCenterLayout(true)  end)
+
+hs.hotkey.bind(hyper, "Z", function() maximizeWindow() end)
+hs.hotkey.bind(hyper, "C", function() centerWindow()   end)
+
+hs.hotkey.bind(hyper, "F", function() hs.application.launchOrFocus("Finder") end)
+hs.hotkey.bind(hyper, "N", function() toggleApplication("Numi") end)
+hs.hotkey.bind(hyper, "M", function() hs.application.launchOrFocus("MailMate") end)
+hs.hotkey.bind(hyper, "Q", function() hs.application.launchOrFocus("Quiver") end)
+hs.hotkey.bind(hyper, "A", function() hs.application.launchOrFocus("Alacritty") end)
+hs.hotkey.bind(hyper, "I", function() hs.application.launchOrFocus("iTerm") end)
+hs.hotkey.bind(hyper, "T", function() hs.application.launchOrFocus("Things3") end)
+hs.hotkey.bind(hyper, "S", function() hs.application.launchOrFocus("System Preferences") end)
+hs.hotkey.bind(hyper, "1", function() hs.application.launchOrFocus("1Password 7") end)
+hs.hotkey.bind(hyper, "2", function() hs.application.launchOrFocus("Authy Desktop") end)
+hs.hotkey.bind(hyper, "`", function() hs.application.launchOrFocus("Launchpad") end)
+hs.hotkey.bind(hyper, "Space", function() toggleApplication("Dash") end)
+
+hs.loadSpoon("WifiNotifier")
+spoon.WifiNotifier:start()

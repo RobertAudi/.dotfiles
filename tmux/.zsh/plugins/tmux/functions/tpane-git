@@ -1,7 +1,7 @@
 #autoload
 
 if (( $# == 0 )); then
-  builtin print -P -- "[%F{red}ERROR%f] tpane-git: not enough arguments" >&2
+  builtin print -P -u 2 -- "[%F{red}ERROR%f] tpane-git: not enough arguments"
   return 1
 fi
 

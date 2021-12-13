@@ -1,0 +1,174 @@
+#autoload
+
+#
+# https://github.com/oilervoss/transmission
+#
+
+if ! is-callable transmission-remote; then
+  print-error "Command not found: transmission-remote"
+  return 127
+fi
+
+local torrents
+torrents=$(transmission-remote --list 2>/dev/null)
+
+if (( $status != 0 )); then
+  print-error "Fail on transmission. Aborting."
+  return 1
+fi
+
+if (( $# == 0 )); then
+  print -- "Usage:\n"
+  print -- "  addtracker             -  List current torrents (and show usage help)"
+  print -- '  addtracker $n1 $n2...  -  Add trackers to torrent of number $n1 and $n2'
+  print -- '  addtracker $s1 $s2...  -  Add trackers to first torrent with part of name $s1 and $s2'
+  print -- "  addtracker .           -  Add trackers to all torrents"
+  print -- "\nNames are case insensitive\n"
+
+  if (( $(print -- "$torrents" | wc -l) == 2 )); then
+    print -- "${fg[yellow]}No torrents found${reset_color}"
+  else
+    print -- "${fg[blue]}Current torrents:${reset_color}"
+    print -- "$torrents" | awk '{print $1"    "$NF}'
+  fi
+
+  return 0
+fi
+
+# Below is a command that will get a list of trackers with one tracker per line
+# command can be 'cat /some/path/trackers.txt' for a static list
+local tracker_list_url="https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all.txt"
+local tracker_list
+tracker_list=$(curl -fs --url $tracker_list_url)
+
+if (( $status != 0)) || [[ -z "$tracker_list" ]]; then
+  tracker_list="udp://tracker.coppersurfer.tk:6969/announce
+    udp://tracker.leechers-paradise.org:6969/announce
+    udp://tracker.opentrackr.org:1337/announce
+    udp://p4p.arenabg.com:1337/announce
+    udp://9.rarbg.to:2710/announce
+    udp://9.rarbg.me:2710/announce
+    udp://exodus.desync.com:6969/announce
+    udp://tracker.pomf.se:80/announce
+    udp://tracker.openbittorrent.com:80/announce
+    udp://tracker.tiny-vps.com:6969/announce
+    udp://open.stealth.si:80/announce
+    udp://denis.stalker.upeer.me:6969/announce
+    udp://tracker.torrent.eu.org:451/announce
+    udp://tracker.moeking.me:6969/announce
+    udp://tracker.cyberia.is:6969/announce
+    udp://tracker3.itzmx.com:6961/announce
+    udp://open.demonii.si:1337/announce
+    udp://ipv4.tracker.harry.lu:80/announce
+    udp://explodie.org:6969/announce
+    udp://xxxtor.com:2710/announce
+    udp://valakas.rollo.dnsabr.com:2710/announce
+    udp://tracker.yoshi210.com:6969/announce
+    udp://tracker.uw0.xyz:6969/announce
+    udp://tracker.tvunderground.org.ru:3218/announce
+    udp://tracker.swateam.org.uk:2710/announce
+    udp://tracker.nyaa.uk:6969/announce
+    udp://tracker.iamhansen.xyz:2000/announce
+    udp://tracker.filemail.com:6969/announce
+    udp://tracker.ds.is:6969/announce
+    udp://tracker.dler.org:6969/announce
+    udp://tracker-udp.gbitt.info:80/announce
+    udp://retracker.sevstar.net:2710/announce
+    udp://retracker.netbynet.ru:2710/announce
+    udp://retracker.akado-ural.ru:80/announce
+    udp://opentor.org:2710/announce
+    udp://newtoncity.org:6969/announce
+    udp://bt2.archive.org:6969/announce
+    udp://bt1.archive.org:6969/announce
+    https://tracker.nanoha.org:443/announce
+    https://tracker.lelux.fi:443/announce
+    https://tracker.fastdownload.xyz:443/announce
+    https://opentracker.xyz:443/announce
+    https://opentracker.co:443/announce
+    http://www.proxmox.com:6969/announce
+    http://tracker.tvunderground.org.ru:3218/announce
+    http://tracker.opentrackr.org:1337/announce
+    http://tracker.bz:80/announce
+    http://tracker.bt4g.com:2095/announce
+    http://t.nyaatracker.com:80/announce
+    http://retracker.sevstar.net:2710/announce
+    http://opentracker.xyz:80/announce
+    http://open.trackerlist.xyz:80/announce
+    http://open.acgtracker.com:1096/announce
+    http://h4.trakx.nibba.trade:80/announce
+    http://explodie.org:6969/announce
+    http://bt1.xxxxbt.cc:6969/announce
+    udp://tracker4.itzmx.com:2710/announce
+    udp://tracker2.itzmx.com:6961/announce
+    udp://tracker.nextrp.ru:6969/announce
+    udp://tracker.lelux.fi:6969/announce
+    udp://tr.bangumi.moe:6969/announce
+    udp://chihaya.toss.li:9696/announce
+    udp://bt2.54new.com:8080/announce
+    https://tracker.vectahosting.eu:2053/announce
+    https://tracker.gbitt.info:443/announce
+    https://opentracker.acgnx.se:443/announce
+    https://1337.abcvg.info:443/announce
+    http://www.loushao.net:8080/announce
+    http://vps02.net.orel.ru:80/announce
+    http://tracker4.itzmx.com:2710/announce
+    http://tracker3.itzmx.com:6961/announce
+    http://tracker2.itzmx.com:6961/announce
+    http://tracker1.itzmx.com:8080/announce
+    http://tracker01.loveapp.com:6789/announce
+    http://tracker.yoshi210.com:6969/announce
+    http://tracker.torrentyorg.pl:80/announce
+    http://tracker.lelux.fi:80/announce
+    http://tracker.gbitt.info:80/announce
+    http://tracker.frozen-layer.net:6969/announce
+    http://sukebei.tracker.wf:8888/announce
+    http://sub4all.org:2710/announce
+    http://opentracker.acgnx.se:80/announce
+    http://open.acgnxtracker.com:80/announce
+    http://newtoncity.org:6969/announce
+    http://mail2.zelenaya.net:80/announce
+    http://bt2.54new.com:8080/announce
+    http://bt-tracker.gamexp.ru:2710/announce
+    http://acg.rip:6699/announce"
+fi
+
+local -a targets
+if [[ "$1" == "." ]]; then
+  targets+=($(print "$torrents" | sed -nr '1d;/^Sum:/d;s: :0:g;s:^(....).*:\1:p' | sed -E 's/0*([1-9]+)/\1/g'))
+else
+  targets+=($(print "$torrents" | sed -nr '1d;/^Sum:/d;s:(^.{4}).{64}:\1:p' | grep -i "${(j:\|:)@}" | sed -nr 's:(^.{4}).*:\1:;s: ::gp'))
+fi
+
+local -i torrents_count
+torrents_count="${#targets}"
+
+if (( $torrents_count == 0 )); then
+  if (( $# == 0 )); then
+    print-error "No torrents found"
+  else
+    print-error "Unable to find torrents with the text/number: %B$@%b"
+  fi
+
+  return 1
+fi
+
+local target torrent tracker
+
+for target in $targets; do
+  print -n -- "${fg[blue]}For the Torrent: ${reset_color}"
+  transmission-remote -t $target -i | sed -nr 's/ *Name: ?(.*)/\1/p'
+
+  print -- "$tracker_list" | while read tracker; do
+    if [[ -n "$tracker" ]]; then
+      print -n -- "${fg[green]}Adding ${tracker}${reset_color}"
+
+      if transmission-remote -t $target -td $tracker &>/dev/null; then
+        print-success
+      else
+        print-error
+      fi
+    fi
+  done
+
+  builtin print -Pn -- "%B%F{019}"; hr "⋅"; builtin print -Pn -- "%f%b"
+done

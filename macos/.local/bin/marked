@@ -9,6 +9,6 @@ if osascript -e 'id of application "Marked 2"' &> /dev/null; then
     open -a "Marked 2.app"
   fi
 else
-  builtin print -P -- "[%F{196}ERROR%f] Marked not installed!" >&2
+  builtin print -P -u 2 -- "[%F{196}ERROR%f] Marked not installed!"
   return 1
 fi

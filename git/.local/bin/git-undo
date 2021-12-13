@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 if ! in-git-repo; then
-  builtin print -P -- "[%F{196}ERROR%f] Not a repository: %B%F{yellow}${PWD}%f%b" >&2
+  builtin print -P -u 2 -- "[%F{196}ERROR%f] Not a repository: %B%F{yellow}${PWD}%f%b"
   return 1
 fi
 

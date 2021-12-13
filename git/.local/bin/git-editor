@@ -37,22 +37,22 @@
 : ${GIT_EDITOR:="${EDITOR}"}
 
 if [ -z "$GIT_EDITOR" ]; then
-    case "$TERM" in
-        dumb|'')
-	    echo "$0: Terminal is dumb but no VISUAL nor EDITOR defined." >&2
-            exit 1
-            ;;
-        *)
-            GIT_EDITOR=vi
-            ;;
-    esac
+  case "$TERM" in
+    dumb|'')
+      echo "$0: Terminal is dumb but no VISUAL nor EDITOR defined." >&2
+      exit 1
+      ;;
+    *)
+      GIT_EDITOR=vi
+      ;;
+  esac
 fi
 
 case "$GIT_EDITOR" in
-    *["\$ 	'"]*)
-        exec /bin/sh -c "$GIT_EDITOR \"\$@\"" . "$@"
-        ;;
-    *)
-        exec "$GIT_EDITOR" "$@"
-        ;;
+  *["\$ 	'"]*)
+    exec /bin/sh -c "$GIT_EDITOR \"\$@\"" . "$@"
+    ;;
+  *)
+    exec "$GIT_EDITOR" "$@"
+    ;;
 esac

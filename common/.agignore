@@ -1,3 +1,4 @@
+vcr_cassettes/
 bower_components/
 node_modules/
 build/
@@ -22,6 +23,7 @@ i18n/translations.js
 *.zwc
 *.xml
 *.log
+*.min.*
 .gitkeep
 .keep
 .git/

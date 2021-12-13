@@ -1,9 +1,9 @@
 function! x2a#help#alternate(bang, ...) abort
   if a:0 == 0
-    if x2a#utils#plugins#isInstalled('denite.nvim')
+    if x2a#vim#plugins#isInstalled('denite.nvim')
       Denite help
       return
-    elseif x2a#utils#plugins#isInstalled('vim-picker')
+    elseif x2a#vim#plugins#isInstalled('vim-picker')
       PickerHelp
       return
     else

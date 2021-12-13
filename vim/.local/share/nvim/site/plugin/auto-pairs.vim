@@ -7,3 +7,5 @@ let g:AutoPairsShortcutToggle = ''
 let g:AutoPairsShortcutFastWrap = ''
 let g:AutoPairsShortcutJump = ''
 let g:AutoPairsShortcutBackInsert = ''
+
+let g:AutoPairsMultilineClose = 0

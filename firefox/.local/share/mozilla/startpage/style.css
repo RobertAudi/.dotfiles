@@ -1,0 +1,80 @@
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  margin: 0px;
+  display: flex;
+  background-color: rgb(249, 249, 251);
+}
+
+#container {
+  max-width: 960px;
+  margin: auto;
+  padding: 0px 20px;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 10px;
+}
+
+#icons {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+
+.tile {
+  padding: 20px;
+  margin: 20px;
+  border-radius: 8px;
+}
+
+.tile:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.tile a {
+  text-decoration: none;
+}
+
+.icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0 2px 6px rgba(58, 57, 68, 0.2);
+  transition: box-shadow 0.2s ease-in-out;
+
+  border-radius: 8px;
+  width: 80px;
+  height: 80px;
+}
+
+.icon a img {
+  width: 48px;
+  height: 48px;
+}
+
+input {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #5d5d5d;
+  margin: 0 10px;
+  background-color: #fafafa;
+  color: #231f20;
+  width: 40px;
+}
+
+@media only screen and (max-width: 599px) {
+  .icon a img {
+    width: 32px;
+    height: 32px;
+  }
+}

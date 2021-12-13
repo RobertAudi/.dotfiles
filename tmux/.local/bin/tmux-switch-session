@@ -1,0 +1,36 @@
+#!/usr/bin/env zsh
+
+if [[ -z "$TMUX" ]]; then
+  builtin print -P -u 2 -- "[%F{196}ERROR%f] Not inside a tmux session"
+  return 1
+fi
+
+if ! type fzf >/dev/null; then
+  tmux display-message "[ERROR] Command not found: fzf" >&2
+  return 1
+fi
+
+local -a sessions
+sessions=($(tmux list-sessions -F "#{session_name}"))
+
+local current_session
+current_session="$(tmux display-message -p "#S")"
+
+if (( ${#sessions} == 1 )); then
+  tmux display-message "The active tmux session is the only one."
+  return 1
+else
+  local status_code
+  local session
+
+  session=$(builtin print -l -- "${sessions[@]}" | command grep -v "^${current_session}\$" | fzf --height="100%")
+  status_code=$?
+
+  if (( $status_code != 0 )) || [[ -z "$session" ]]; then
+    (( $status_code == 0 )) && status_code=1
+
+    return $status_code
+  fi
+
+  tmux switch-client -t "$session"
+fi

@@ -1,0 +1,13 @@
+#!/usr/bin/env zsh
+
+# Usage: git-edit-conflicts
+# Edit files in a conflict state.
+local conflicts
+conflicts=$(git-conflicts)
+
+if (( ${#conflicts} == 0 )); then
+  builtin print -P -- "[%F{032}INFO%f] There are no conflicts"
+  return 1
+fi
+
+$(git-editor) "$conflicts"

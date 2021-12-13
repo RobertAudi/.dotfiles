@@ -1,0 +1,97 @@
+#autoload
+
+if (( $# == 0 )) || [[ ! -t 1 ]]; then
+  command cat ${=@}
+  return $status
+fi
+
+local i
+local fileMimeType
+local catCommandPath
+catCommandPath="$(builtin whence -av cat | grep -m1 "cat is /" | cut -d' ' -f3-)" || catCommandPath="cat"
+
+for i in $@; do
+  if [[ -d "$i" ]]; then
+    print -P -- "%U%F{yellow}${i}%f%u"
+
+    ls "$i"
+
+    builtin print -Pn -- "%B%F{019}"; hr "⋅"; builtin print -Pn -- "%f%b"
+
+    continue
+  elif [[ ! -f "$i" ]]; then
+    print-error "File not found: $i"
+
+    { builtin print -Pn -- "%B%F{019}"; hr "⋅"; builtin print -Pn -- "%f%b" } >&2
+
+    continue
+  fi
+
+  fileMimeType=$(file -b --mime-type "$i")
+
+  case "$fileMimeType" in
+    inode/x-empty)
+      print-info "This file is empty: $i"
+      ;;
+    application/octet-stream)
+      print-error "This is a binary file: $i"
+      ;;
+    application/zip|application/gzip|application/x-tar)
+      # TODO: List the contents of the archive
+      print-info "Taking a QuickLook at this archive: $i"
+      ql "$i"
+      ;;
+    video/*|image/*|audio/*)
+      print-info "Taking a QuickLook at this file: $i"
+      ql "$i"
+      ;;
+    text/plain)
+      case ${i:e} in
+        md|mkd|mdown|markdown)
+          if is-callable mdcat; then
+            mdcat "$i" | smartless
+          elif is-callable bat; then
+            {
+              print-warning "Command not found: mdcat"
+              builtin print -- "Using bat instead"
+            } >&2
+
+            bat --language "Markdown" --style header,grid "$i"
+          else
+            {
+              print-warning "Commands not found: mdcat, bat"
+              builtin print -- "Using $catCommandPath instead"
+            } >&2
+
+            command cat "$i" | smartless
+          fi
+          ;;
+        txt|)
+          if is-callable bat; then
+            bat --language "Plain Text" --style header,grid "$i"
+          else
+            command cat "$i" | smartless
+          fi
+          ;;
+        *)
+          if is-callable bat; then
+            bat "$i"
+          else
+            {
+              print-warning "Command not found: bat"
+              builtin print -- "Using $catCommandPath instead"
+            } >&2
+
+            command cat "$i" | smartless
+          fi
+          ;;
+      esac
+      ;;
+    *)
+      print-warning "Couldn't be smart about this file: $i" >&2
+      command cat "$i" | smartless
+      ;;
+  esac
+
+  builtin print -Pn -- "%B%F{019}"; hr "⋅"; builtin print -Pn -- "%f%b"
+done

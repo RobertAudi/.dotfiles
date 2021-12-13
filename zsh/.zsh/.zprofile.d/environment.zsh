@@ -4,7 +4,12 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_BIN_HOME="$HOME/.local/bin"
 export XDG_LIB_HOME="$HOME/.local/lib"
-export XDG_CACHE_HOME="$HOME/.cache"
+
+# Full credits to @tsutsu
+#   https://github.com/tsutsu
+#   https://gist.github.com/tsutsu/2c11fc0a36000a46566e9fd62c60dea4
+export XDG_CACHE_HOME="$HOME/Library/Caches/org.freedesktop"
+
 export XDG_RUNTIME_DIR="$XDG_CACHE_HOME"
 export XDG_DESKTOP_DIR="$HOME/Desktop"
 export XDG_DOCUMENTS_DIR="$HOME/Documents"
@@ -32,23 +37,11 @@ export ZSH_LOCAL_DIR="$HOME/.local/zsh"
 export ZSH_COMPDUMP="$ZSH_CACHE_DIR/zcompdump"
 export ZSH_COMPCACHE="$ZSH_CACHE_DIR/zcompcache"
 
-# Where zplugin lives
-# See: https://github.com/zdharma/zplugin
-export ZPLG_HOME="$HOME/.zplugin"
-export ZPLG_LOADFILE="$ZSH_HOME/plugins/zplugin.zsh"
+# Where Zinit lives
+# See: https://github.com/zdharma-continuum/zinit
+export ZINIT_HOME="$XDG_DATA_HOME/zinit"
+export ZINIT_LOADFILE="$ZSH_HOME/plugins/zinit.zsh"
 # --------------------------------------------------------------------- }}}
-
-{
-  /bin/mkdir -p -m 700   \
-    "$XDG_CONFIG_HOME"   \
-    "$XDG_CACHE_HOME"    \
-    "$XDG_DATA_HOME"     \
-    "$XDG_DEVELOPER_DIR" \
-    "$ZSH_HOME"          \
-    "$ZSH_CACHE_DIR"     \
-    "$ZSH_TMP_DIR"       \
-    "$ZSH_LOCAL_DIR"
-} &!
 
 # Watch for everybody but me
 # And check every 5 min for login/logout activity
@@ -106,8 +99,14 @@ typeset -g -a LESS_OPTIONS=(
 # Set options as string and remove temporary array.
 export LESS="${LESS_OPTIONS[@]}" && unset LESS_OPTIONS
 
-# Try both `lesspipe` and `lesspipe.sh` as either might exist on a system.
-if (($#commands[(i)lesspipe(|.sh)])); then
+# First try to use lesspipe.sh provided by Homebrew
+#   Install with: brew install lesspipe
+# If that doesn't work, try both `lesspipe` and `lesspipe.sh` as either might exist on a system.
+if [[ -f "/opt/homebrew/bin/lesspipe.sh" ]]; then
+  export LESS="$LESS -X"
+  export LESSOPEN="| /opt/homebrew/bin/lesspipe.sh %s"
+  export LESS_ADVANCED_PREPROCESSOR=1
+elif (( $#commands[(i)lesspipe(|.sh)] )); then
   export LESS="$LESS -X"
   export LESSOPEN="| /usr/bin/env $commands[(i)lesspipe(|.sh)] %s 2>&-"
 fi
@@ -277,8 +276,8 @@ export BUNDLER_EDITOR="$VISUAL"
 export GEMEDITOR="$VISUAL"
 # --------------------------------------------------------------------- }}}
 
-if [[ -z "$HELPDIR" && -d "/usr/local/share/zsh/help" ]]; then
-  export HELPDIR=/usr/local/share/zsh/help
+if [[ -z "$HELPDIR" && -d "/opt/homebrew/share/zsh/help" ]]; then
+  export HELPDIR=/opt/homebrew/share/zsh/help
 fi
 
 # ENV variables
@@ -296,10 +295,17 @@ export PROJECTS="$HOME/Developer"
 
 unset DISPLAY
 
-export FZF_HOME="$HOME/.local/opt/fzf"
+export LUA_LSP_HOME="$HOME/.local/opt/lua-language-server"
 
 # If we're 64bit, let everything know!
-[[ "x86_64" == "$(/usr/bin/uname -m)" ]] && export ARCHFLAGS="-arch x86_64 ${ARCHFLAGS}"
+case "$(/usr/bin/uname -m)" in
+  "x86_64")
+    export ARCHFLAGS="-arch x86_64 ${ARCHFLAGS}"
+    ;;
+  "arm64")
+    export ARCHFLAGS="-arch arm64 ${ARCHFLAGS}"
+    ;;
+esac
 
 # Readline config
 export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
@@ -315,6 +321,9 @@ export CURL_HOME="$XDG_CONFIG_HOME/curl"
 
 # npm global configuration file
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
+
+# Specifies the directory in which the database is stored.
+export _ZO_DATA_DIR="$XDG_DATA_HOME"
 
 # Homebrew {{{
 # ---------------------------------------------------------------------
@@ -352,16 +361,26 @@ export HOMEBREW_FORCE_BREWED_CURL=1
 # Always use a Homebrew-installed git rather than the system version
 export HOMEBREW_FORCE_BREWED_GIT=1
 
-# --no-quarantine
-#        Prevent Gatekeeper from enforcing its security restrictions
-#        on the Cask. This will let you run it straightaway.
-export HOMEBREW_CASK_OPTS="--no-quarantine --verbose"
+# Don't generate lock files when running `brew bundle install`
+export HOMEBREW_BUNDLE_NO_LOCK=1
 
 # --------------------------------------------------------------------- }}}
 
 # JAVA home
 if [[ -f /usr/libexec/java_home ]]; then
   export JAVA_HOME=$(/usr/libexec/java_home)
+fi
+
+if [[ -d "/opt/homebrew/opt/openssl/include" ]]; then
+  export CPPFLAGS="$CPPFLAGS -I/opt/homebrew/opt/openssl/include"
+fi
+
+if [[ -d "/opt/homebrew/opt/openssl/lib" ]]; then
+  export LDFLAGS="$LDFLAGS -L/opt/homebrew/opt/openssl/lib"
+fi
+
+if [[ -d "/opt/homebrew/opt/libffi/lib" ]]; then
+  export LDFLAGS="$LDFLAGS -L/opt/homebrew/opt/libffi/lib"
 fi
 
 # Modeline {{{

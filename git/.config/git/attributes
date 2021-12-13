@@ -27,7 +27,6 @@
 *.png  binary
 *.psb  binary
 *.psd  binary
-*.svg  text -crlf
 *.svgz binary
 *.tif  binary
 *.tiff binary
@@ -97,6 +96,7 @@ yarn.lock binary
 *.plist diff=plist
 *.mobileprovision diff=provision
 *.scpt diff=applescript
-Gemfile.lock merge=bundlelock
 db/schema.rb merge=railsschema
 *.rb diff=ruby
+*.rake diff=ruby
+*_spec.rb diff=rspec

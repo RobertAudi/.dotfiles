@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 if ! type gittower >/dev/null; then
-  builtin print -P -- "[%F{196}ERROR%f] Tower Command Line Utility (gittower) not found!" >&2
+  builtin print -P -u 2 -- "[%F{196}ERROR%f] Tower Command Line Utility (gittower) not found!"
   return 1
 fi
 
@@ -14,7 +14,7 @@ else
 fi
 
 if ! [[ -d "$repo" ]]; then
-  builtin print -P -- "[%F{196}ERROR%f] Repo not found: %B${repo}%b" >&2
+  builtin print -P -u 2 -- "[%F{196}ERROR%f] Repo not found: %B${repo}%b"
   return 1
 fi
 
@@ -24,7 +24,7 @@ local repo_path
 repo_path="$(builtin cd -q "$repo" ; git rev-parse --show-toplevel 2>/dev/null)"
 
 if [[ $status -ne 0 || -z "$repo_path" ]]; then
-  builtin print -P -- "[%F{196}ERROR%f] This directory doesn't seem to be in a git repo: %F{yellow}${repo}%f" >&2
+  builtin print -P -u 2 -- "[%F{196}ERROR%f] This directory doesn't seem to be in a git repo: %F{yellow}${repo}%f"
   return 1
 fi
 

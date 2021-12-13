@@ -9,7 +9,7 @@ if (( $# > 0 )); then
     qlmanage -p "$@" &> /dev/null
   fi
 else
-  builtin print -P -- "[%F{196}ERROR%f] No file was specified to be viewed with Quick Look." >&2
+  builtin print -P -u 2 -- "[%F{196}ERROR%f] No file was specified to be viewed with Quick Look."
   ql -h
   return 1
 fi

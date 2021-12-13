@@ -18,8 +18,8 @@
 
 # Use the text that has already been typed as the prefix for searching through
 # commands (basically more intelligent Up/Down behavior)
-"\C-p":history-search-backward
-"\C-n":history-search-forward
+"\C-p": history-search-backward
+"\C-n": history-search-forward
 
 # Flip through autocompletion matches with Shift-Tab
 "\e[Z": menu-complete

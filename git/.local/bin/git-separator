@@ -2,7 +2,7 @@
 
 # Make sure we don't accidentally commit staged files
 if ! command git diff-index --cached --quiet --ignore-submodules --exit-code HEAD; then
-  builtin print -P -- "[%F{red}ERROR%f] git-separator: Index not clean" >&2
+  builtin print -P -u 2 -- "[%F{red}ERROR%f] git-separator: Index not clean"
   return 1
 fi
 

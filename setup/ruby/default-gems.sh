@@ -7,6 +7,23 @@ typeset -a defaultLibGems
 #   https://yardoc.org/
 defaultExecutableGems+=("yard")
 
+# Ruby Style Guide, with linter & automatic code fixer
+#   https://github.com/testdouble/standard
+defaultExecutableGems+=("standard")
+
+# Code smell detector for Ruby
+#   https://github.com/troessner/reek
+defaultExecutableGems+=("reek")
+
+# A Ruby language server.
+#   https://solargraph.org
+#   https://github.com/castwide/solargraph
+defaultExecutableGems+=("solargraph")
+
+# A Reek diagnostics reporter for the Solargraph language server.
+#   https://github.com/castwide/solargraph-reek
+defaultLibGems+=("solargraph-reek")
+
 # Conservative bundler updates
 #   https://github.com/livingsocial/bundler-patch
 defaultExecutableGems+=("bundler-patch")

@@ -103,6 +103,9 @@ zstyle ':completion:*:rm:*' file-patterns '*:all-files'
 # Media Players
 zstyle ':completion:*:*:mocp:*' file-patterns '*.(wav|WAV|mp3|MP3|ogg|OGG|flac):ogg\ files *(-/):directories'
 
+# ping hosts
+zstyle ':completion:*:ping:*' hosts 8.8.8.8 google.com github.com
+
 # ---------------------------------------------------------------------
 # History
 # ---------------------------------------------------------------------

@@ -49,7 +49,8 @@
  *                                                                    *
  **********************************************************************/
 
-.octotree_sidebar {
-  min-width: 320px;
-  width: 320px;
+@media print {
+  .TridactylStatusIndicator {
+    display: none !important;
+  }
 }

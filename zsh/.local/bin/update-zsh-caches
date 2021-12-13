@@ -1,0 +1,10 @@
+#!/usr/bin/env zsh -i
+
+if zuncompile-all && zrecompile-all ; then
+  (cd -q ~dotfiles && stow alacritty fzf git grc macos python ruby tmux vim zsh)
+fi
+
+zinit compile --all
+
+(cd -q "${ZINIT[HOME_DIR]:-$HOME/.zinit}/plugins/skywind3000---z.lua" &&
+  source $ZDOTDIR/setup/plugins/skywind3000/z/atclone.zsh)

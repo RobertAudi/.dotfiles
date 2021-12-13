@@ -29,7 +29,6 @@ let g:x2a#lightline#ignored_special_filetypes =
 let g:x2a#lightline#ignored_plugin_filetypes =
       \ [
       \   'fzf',
-      \   'nerdtree',
       \   'ctrlsf',
       \   'vista',
       \ ]
@@ -44,7 +43,6 @@ let g:x2a#lightline#special_filetypes =
 let g:x2a#lightline#plugin_filetypes =
       \ {
       \   'fzf':      'FZF',
-      \   'nerdtree': 'NERDTree',
       \   'ctrlsf':   'CtrlSF',
       \   'vista':    'Vista',
       \ }
