@@ -1,0 +1,12 @@
+# Powerful, lightweight programming language
+#   https://www.lua.org/
+brew "lua"
+
+# Package manager for the Lua programming language
+#   https://luarocks.org/
+# LuaRocks supports multiple versions of Lua. By default it is configured
+# to use Lua5.4, but you can require it to use another version at runtime
+# with the `--lua-dir` flag, like this:
+#
+#   luarocks --lua-dir=/opt/homebrew/opt/lua@5.1 install say
+brew "luarocks"

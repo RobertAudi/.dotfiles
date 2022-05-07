@@ -1,140 +1,142 @@
 #!/usr/bin/env zsh
 
-typeset -a defaultExecutableGems
-typeset -a defaultLibGems
+function {
+  function ___install {
+    builtin print -P -- "%F{blue}==>%f ${@}"
+    gem install $=@ || true
+  }
 
-# Documentation generation tool
-#   https://yardoc.org/
-defaultExecutableGems+=("yard")
+  function ___install-executable {
+    SKIP_RIPPER_TAGS=1 ___install ${1} --no-document --env-shebang
+  }
 
-# Ruby Style Guide, with linter & automatic code fixer
-#   https://github.com/testdouble/standard
-defaultExecutableGems+=("standard")
+  # Debugging functionality for Ruby.
+  # This is completely rewritten debug.rb which was
+  # contained by the ancient Ruby versions.
+  ___install-executable debug
 
-# Code smell detector for Ruby
-#   https://github.com/troessner/reek
-defaultExecutableGems+=("reek")
+  # Documentation generation tool
+  #   https://yardoc.org/
+  ___install-executable yard
 
-# A Ruby language server.
-#   https://solargraph.org
-#   https://github.com/castwide/solargraph
-defaultExecutableGems+=("solargraph")
+  # Provides an implementation of the XDG Base Directory Specification
+  #   https://github.com/bkuhlmann/xdg
+  ___install xdg
 
-# A Reek diagnostics reporter for the Solargraph language server.
-#   https://github.com/castwide/solargraph-reek
-defaultLibGems+=("solargraph-reek")
+  # Ruby Style Guide, with linter & automatic code fixer
+  #   https://github.com/testdouble/standard
+  ___install-executable standard
 
-# Conservative bundler updates
-#   https://github.com/livingsocial/bundler-patch
-defaultExecutableGems+=("bundler-patch")
+  # A Ruby language server.
+  #   https://solargraph.org
+  #   https://github.com/castwide/solargraph
+  ___install-executable solargraph
 
-# Patch-level verification for Bundled apps.
-#   https://github.com/rubysec/bundler-audit
-defaultExecutableGems+=("bundler-audit")
+  # Lint your ERB or HTML files
+  #   https://github.com/Shopify/erb-lint
+  ___install erb_lint
 
-# Looks through your lockfile and tries to identify
-# problematic use of dependencies
-#   https://github.com/jmmastey/bundler-stats
-defaultExecutableGems+=("bundler-stats")
+  # Conservative bundler updates
+  #   https://github.com/livingsocial/bundler-patch
+  ___install-executable bundler-patch
 
-# Pretty print Ruby objects to visualize their structure.
-#   https://github.com/awesome-print/awesome_print
-defaultExecutableGems+=("awesome_print")
+  # Patch-level verification for Bundled apps.
+  #   https://github.com/rubysec/bundler-audit
+  ___install-executable bundler-audit
 
-# An IRB alternative and runtime developer console
-#   https://pryrepl.org/
-defaultExecutableGems+=("pry")
+  # Looks through your lockfile and tries to identify
+  # problematic use of dependencies
+  #   https://github.com/jmmastey/bundler-stats
+  ___install-executable bundler-stats
 
-# An easy way to customize Pry colors via theme files
-#   https://github.com/kyrylo/pry-theme
-defaultExecutableGems+=("pry-theme")
+  # Pretty print your Ruby objects with style -- in full color and with proper indentation
+  #   https://github.com/amazing-print/amazing_print
+  ___install-executable amazing_print
 
-# View state in pry session
-#   https://github.com/SudhagarS/pry-state
-defaultExecutableGems+=("pry-state")
+  # Byebug is a simple to use and feature rich debugger for Ruby
+  #   https://github.com/deivid-rodriguez/byebug
+  ___install-executable byebug
 
-# Automate the bundle/migration tedium of Rails with Git hooks
-#   https://github.com/tpope/hookup
-defaultExecutableGems+=("hookup")
+  # An IRB alternative and runtime developer console
+  #   https://pryrepl.org/
+  ___install-executable pry
 
-# - gem edit: edit a library file you can require.
-# - gem open: edit a gem by name.
-# - gem clone: clone a gem from GitHub.
-# - gem browse: open a gem's homepage in your browser
-defaultExecutableGems+=("gem-browse")
+  # An easy way to customize Pry colors via theme files
+  #   https://github.com/kyrylo/pry-theme
+  ___install-executable pry-theme
 
-# Compare versions of the given gem.
-#   https://github.com/fedora-ruby/gem-compare
-defaultExecutableGems+=("gem-compare")
+  # View state in pry session
+  #   https://github.com/SudhagarS/pry-state
+  ___install-executable pry-state
 
-# Search gems for content directory
-#   https://github.com/mpapis/gem-content
-defaultExecutableGems+=("gem-content")
+  # Adds step-by-step debugging and stack navigation capabilities to pry using byebug.
+  #   https://github.com/deivid-rodriguez/pry-byebug
+  ___install-executable pry-byebug
 
-# Display a man page for an installed RubyGem.
-#   https://github.com/defunkt/gem-man
-defaultExecutableGems+=("gem-man")
+  # Automate the bundle/migration tedium of Rails with Git hooks
+  #   https://github.com/tpope/hookup
+  ___install-executable hookup
 
-# Find the path for a given gem or require path for editing or greping
-#   https://github.com/godfat/gem-path
-defaultExecutableGems+=("gem-path")
+  # - gem edit: edit a library file you can require.
+  # - gem open: edit a gem by name.
+  # - gem clone: clone a gem from GitHub.
+  # - gem browse: open a gem's homepage in your browser
+  ___install-executable gem-browse
 
-# Release your ruby gems with ease
-#   https://github.com/svenfuchs/gem-release
-defaultExecutableGems+=("gem-release")
+  # Compare versions of the given gem.
+  #   https://github.com/fedora-ruby/gem-compare
+  ___install-executable gem-compare
 
-# This library contains some useful functionality to support the
-# development of Ruby Gems
-#   https://github.com/flori/gem_hadar
-defaultExecutableGems+=("gem_hadar")
+  # Search gems for content directory
+  #   https://github.com/mpapis/gem-content
+  ___install-executable gem-content
 
-# Open REAME file of specified gem
-#   https://github.com/jugyo/gem_readme
-defaultExecutableGems+=("gem_readme")
+  # Display a man page for an installed RubyGem.
+  #   https://github.com/defunkt/gem-man
+  ___install-executable gem-man
 
-# Command-line utility to find source repositories for ruby gems, open
-# common GitHub pages, compare gem versions, and simplify gem update
-# workflow in git.
-#   https://github.com/teeparham/gemdiff
-defaultExecutableGems+=("gemdiff")
+  # Find the path for a given gem or require path for editing or greping
+  #   https://github.com/godfat/gem-path
+  ___install-executable gem-path
 
-# A useless gem prepending (╯°□°）╯︵ ┻━┻ to exception messages
-#   https://github.com/iridakos/table_flipper
-defaultLibGems+=("table_flipper")
+  # Release your ruby gems with ease
+  #   https://github.com/svenfuchs/gem-release
+  ___install-executable gem-release
 
-# Fast, accurate ctags generator for ruby source code using Ripper
-#   https://github.com/tmm1/ripper-tags
-defaultExecutableGems+=("ripper-tags")
+  # This library contains some useful functionality to support the
+  # development of Ruby Gems
+  #   https://github.com/flori/gem_hadar
+  ___install-executable gem_hadar
 
-# A little Ruby gem for finding the source location of classes and methods
-#   https://github.com/daveallie/where_is
-defaultLibGems+=("where_is")
+  # Open REAME file of specified gem
+  #   https://github.com/jugyo/gem_readme
+  ___install-executable gem_readme
 
-# Ruby gem information, stats and usage for your terminal
-#   https://github.com/zverok/whatthegem
-defaultExecutableGems+=("whatthegem")
+  # Command-line utility to find source repositories for ruby gems, open
+  # common GitHub pages, compare gem versions, and simplify gem update
+  # workflow in git.
+  #   https://github.com/teeparham/gemdiff
+  ___install-executable gemdiff
 
-# The instafailing RSpec progress bar formatter
-#   https://github.com/thekompanee/fuubar
-defaultLibGems+=("fuubar")
+  # A useless gem prepending (╯°□°）╯︵ ┻━┻ to exception messages
+  #   https://github.com/iridakos/table_flipper
+  ___install table_flipper
 
-# RSpec formatter for the macOS Notification Center
-#   https://github.com/twe4ked/rspec-nc
-defaultLibGems+=("rspec-nc")
+  # Fast, accurate ctags generator for ruby source code using Ripper
+  #   https://github.com/tmm1/ripper-tags
+  ___install-executable ripper-tags
 
-# Nyan Cat inspired RSpec formatter!
-#   https://github.com/mattsears/nyan-cat-formatter
-defaultLibGems+=("nyan-cat-formatter")
+  # A little Ruby gem for finding the source location of classes and methods
+  #   https://github.com/daveallie/where_is
+  ___install where_is
 
-builtin print -P -- "%F{blue}==>%f Installing default executable gems:"
-builtin print -P -- "%B${(j: :)defaultExecutableGems}%b"
+  # Ruby gem information, stats and usage for your terminal
+  #   https://github.com/zverok/whatthegem
+  ___install-executable whatthegem
 
-SKIP_RIPPER_TAGS=1 gem install ${defaultExecutableGems[@]} --no-document --env-shebang
+  # Ruby support for Neovim
+  #   https://github.com/neovim/neovim-ruby
+  ___install-executable neovim
 
-builtin print -P -- "%F{blue}==>%f Installing default lib gems:"
-builtin print -P -- "%B${(j: :)defaultLibGems}%b"
-
-gem install ${defaultLibGems[@]}
-
-unset defaultExecutableGems
-unset defaultLibGems
+  unfunction ___install ___install-executable
+}

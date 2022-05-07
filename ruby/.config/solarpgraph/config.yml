@@ -1,5 +1,3 @@
-plugins:
-  - solargraph-reek
 include:
   - "**/*.rb"
 exclude:
@@ -7,6 +5,4 @@ exclude:
   - "test/**/*"
   - "vendor/**/*"
   - ".bundle/**/*"
-reporters:
-  - reek
 max_files: 5000

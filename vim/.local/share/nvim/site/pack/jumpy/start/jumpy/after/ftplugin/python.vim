@@ -3,4 +3,4 @@
 " URL: https://github.com/arp242/jumpy.vim
 
 " Function, method, class
-call jumpy#map('\v^(class|\s*def|\s*async def)>')
+let b:jumpy_pattern = '\v^(class|\s*def|\s*async def)>'

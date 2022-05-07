@@ -13,7 +13,7 @@ done
 unset dirname fns
 
 # Modern Make: https://github.com/tj/mmake
-if is-callable mmake; then
+if is-callable mmake ; then
   function make() { mmake "$@" }
 fi
 
@@ -45,7 +45,7 @@ which-less() {
   if (( $# > 0 )); then
     less --quit-if-one-screen $(which $1)
   else
-    print-error 'Nothing to show...'
+    print-error "Nothing to show..."
   fi
 }
 
@@ -90,13 +90,13 @@ stats() {
 
 # Displays user owned processes status.
 psu() {
-  ps -U "${1:-$LOGNAME}" -o 'pid,%cpu,%mem,command' "${(@)argv[2,-1]}"
+  ps -U "${1:-$LOGNAME}" -o "pid,%cpu,%mem,command" "${(@)argv[2,-1]}"
 }
 
 # Inline calculator
 function = {
   local operation result
-  operation="$(builtin print -n -- "$@" | tr 'x' '*')"
+  operation="$(builtin print -n -- "$@" | tr "x" "*")"
 
   if is-command eva ; then
     result="$(builtin print -n -- "$operation" | eva)"

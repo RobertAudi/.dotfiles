@@ -53,3 +53,20 @@ Themes can be found on [Slack Themes](https://slackthemes.net/) website and must
 
 1. Open Slack > Team Preferences > Sidebar Theme
 2. Paste the contents of the `<theme>.colors` file into the "Custom Theme" field
+
+256 Colors Cheat Sheet
+----------------------
+
+List of 256 colors for Xterm prompt (console). Contains displayed color, Xterm Name, Xterm Number, HEX, RGB and HSL codes.
+
+- Data in JSON format: [JSON data](.local/share/256-colors.json).
+
+_Source: https://www.ditig.com/256-colors-cheat-sheet_
+
+UNIX Exit code
+--------------
+
+See reference [here](./.local/share/exit-codes.md).
+
+_Source: [https://github.com/SixArm/sixarm-unix-shell-functions](https://github.com/SixArm/sixarm-unix-shell-functions/blob/4e9d01964b6d3de036eff96024091e0e087fad02/README.md?plain=1#L145-L294)_
+

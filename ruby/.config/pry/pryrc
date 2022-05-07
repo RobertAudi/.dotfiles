@@ -11,11 +11,11 @@ Pry.config.prompt = Pry::Prompt.new("default", "The default prompt", [
 ])
 
 Pry.config.print = proc do |output, value|
-  if defined?(AwesomePrint)
+  if defined?(AmazingPrint)
     # Stolen from https://github.com/sheerun/dotfiles
     #   https://github.com/sheerun/dotfiles/blob/2b6a49718048f772f6ab80211e1072caac5c31dc/pryrc#L20-L22
     #
-    # The following line enables awesome_print for all pry output,
+    # The following line enables amazing_print for all pry output,
     # and it also enables paging
     Pry::Helpers::BaseHelpers.stagger_output("=> #{value.ai}", output)
   else
@@ -27,9 +27,7 @@ if defined?(PryTheme)
   Pry.config.theme = "railscasts"
 end
 
-if defined?(AwesomePrint)
-  AwesomePrint.pry!
-end
+defined?(AmazingPrint) and AmazingPrint.pry!
 
 Pry.config.exception_handler = proc do |output, exception, _pry_|
   output.puts "#{exception.class}: #{exception.message}"

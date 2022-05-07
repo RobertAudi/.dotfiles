@@ -16,12 +16,14 @@ function {
 if type chruby-exec >/dev/null; then
   if ! type chruby >/dev/null; then
     chruby_file="${commands[chruby-exec]:h:h}/share/chruby/chruby.sh"
+
     if [[ -f "$chruby_file" ]]; then
       source "$chruby_file"
       chruby $RUBY_VERSION &>/dev/null
     else
       builtin print -P -u 2 -- "[%F{196}ERROR%f] Failed to load chruby"
     fi
+
     unset chruby_file
   fi
 fi

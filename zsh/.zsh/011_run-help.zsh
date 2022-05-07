@@ -55,12 +55,12 @@ function H-Glob () {
   print *(Lk+50)        # Files bigger than 50 kilobytes
   print *(Lk-50)        # Files smaller than 50 kilobytes
   print **/*.c          # All *.c files recursively starting in \$PWD
-  print **/*.c~file.c   # Same as above, but excluding 'file.c'
-  print (foo|bar).*     # Files starting with 'foo' or 'bar'
+  print **/*.c~file.c   # Same as above, but excluding \"file.c\"
+  print (foo|bar).*     # Files starting with \"foo\" or \"bar\"
   print *~*.*           # All Files that do not contain a dot
   chmod 644 *(.^x)      # make all plain non-executable files publically readable
   print -l *(.c|.h)     # Lists *.c and *.h
-  print **/*(g:users:)  # Recursively match all files that are owned by group 'users'
+  print **/*(g:users:)  # Recursively match all files that are owned by group \"users\"
   echo /proc/*/cwd(:h:t:s/self//) # Analogous to >ps ax | awk '{print $1}'<"
 }
 alias help-zshglob=H-Glob

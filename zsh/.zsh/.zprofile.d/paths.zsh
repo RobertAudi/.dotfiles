@@ -17,6 +17,7 @@ path=(
   $HOME/.cargo/bin(N-/)
   $HOME/perl5/bin(N-/)
   ${GOPATH:+$GOPATH/bin}(N-/)
+  /opt/homebrew/opt/curl/bin(N-/)
   /opt/homebrew/opt/openssl/bin(N-/)
   /opt/homebrew/opt/ncurses/bin(N-/)
   /opt/homebrew/opt/sqlite/bin(N-/)
@@ -37,6 +38,7 @@ path=(
   /opt/homebrew/opt/make/libexec/gnubin(N-/)
   /opt/homebrew/opt/nss/bin(N-/)
   /opt/homebrew/opt/unzip/bin(N-/)
+  /opt/homebrew/opt/ssh-copy-id/bin(N-/)
   /opt/homebrew/bin(N-/)
   /usr/bin(N-/)
   /bin(N-/)
@@ -71,6 +73,7 @@ manpath=(
   $HOME/.local/share/man(N-/)
   $HOME/.man(N-/)
   $HOME/perl5/man(N-/)
+  /opt/homebrew/opt/curl/share/man(N-/)
   /opt/homebrew/opt/ncurses/share/man(N-/)
   /opt/homebrew/opt/sqlite/share/man(N-/)
   /opt/homebrew/opt/binutils/share/man(N-/)
@@ -86,8 +89,8 @@ manpath=(
   /opt/homebrew/opt/m4/share/man(N-/)
   /opt/homebrew/opt/make/libexec/gnuman(N-/)
   /opt/homebrew/opt/unzip/share/man(N-/)
+  /opt/homebrew/opt/ssh-copy-id/share/man(N-/)
   /opt/homebrew/share/man(N-/)
-  /Applications/Xcode.app/Contents/Developer/usr/share/man(N-/)
   /usr/share/man(N-/)
   $manpath
 )
@@ -119,6 +122,7 @@ typeset -T PKG_CONFIG_PATH pkg_config_path
 pkg_config_path=(
   /opt/homebrew/opt/openssl/lib/pkgconfig(N-/)
   /opt/homebrew/opt/libffi/lib/pkgconfig(N-/)
+  /opt/homebrew/opt/curl/lib/pkgconfig(N-/)
   $pkg_config_path
 )
 

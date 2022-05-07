@@ -3,4 +3,4 @@
 " URL: https://github.com/arp242/jumpy.vim
 
 " Header and horizontal rule
-call jumpy#map('\v^#{1,6}.*$|^.+\n%(\-+|\=+)$')
+let b:jumpy_pattern = '\v^#{1,6}.*$|^.+\n%(\-+|\=+)$'

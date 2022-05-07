@@ -39,7 +39,7 @@ set-window-option -g mode-style     "fg=#2b2b2b,bg=#5a647e"
 # Window {{{
 # ------------------------------------------------------------------------------
 
-set-window-option -g window-status-separator "#[fg=#5a647e]┊#[fg=default]"
+set-window-option -g window-status-separator "#[fg=#5a647e]│#[fg=default]"
 set-window-option -g window-status-bell-style       "fg=#da4939"
 set-window-option -g window-status-activity-style   "fg=#6d9cbe"
 

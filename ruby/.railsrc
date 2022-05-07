@@ -1,4 +1,10 @@
 --skip-bundle
 --skip-test
---skip-coffee
+--skip-jbuilder
+--skip-active-storage
+--skip-action-mailbox
+--skip-action-text
+--skip-active-storage
+--skip-action-cable
 --skip-spring
+--skip-webpack-install

@@ -1,7 +1,7 @@
 #autoload
 
 # Colorize the output of cal(1)
-if ! is-callable cal >/dev/null; then
+if ! is-callable cal ; then
   print-error "Please install cal before trying to use it!"
   return 1
 fi

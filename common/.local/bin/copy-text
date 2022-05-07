@@ -1,0 +1,3 @@
+#!/usr/bin/env zsh
+
+builtin print -n "${@}" | copy

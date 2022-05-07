@@ -1,29 +1,51 @@
 #autoload
 
 _rake_does_tasks_list_need_generating() {
-  [[ -f .rake_tasks_list ]] || return 0
+  local cache_file
+  cache_file=".rake_tasks_list"
+
+  [[ -d tmp ]] && cache_file="tmp/${cache_file}"
+  [[ -f "$cache_file" ]] || return 0
+
   if [[ "$OSTYPE" = darwin* ]] && ! type gstat >/dev/null; then
-    accurate=$(stat -f%m .rake_tasks_list)
+    accurate=$(stat -f%m $cache_file)
     changed=$(stat -f%m Rakefile)
   else
-    accurate=$(gstat -c%Y .rake_tasks_list)
+    accurate=$(gstat -c%Y $cache_file)
     changed=$(gstat -c%Y Rakefile)
   fi
+
   return $(expr $accurate '>=' $changed)
 }
 
 _rake_generate() {
-  local _tmpfile=$(mktemp)
-  run_with_bundler rake --silent --tasks 2>/dev/null >! $_tmpfile || return $?
-  mv -f $_tmpfile .rake_tasks_list
+  local cache_file
+  cache_file=".rake_tasks_list"
+
+  [[ -d tmp ]] && cache_file="tmp/${cache_file}"
+
+  local _tmpfile
+  _tmpfile=$(mktemp)
+
+  run_with_bundler rake --silent --tasks 2>/dev/null >! $_tmpfile || return $status
+  mv -f $_tmpfile $cache_file
 }
 
 rakes() {
   [[ -f Rakefile ]] || return 1
+
   if _rake_does_tasks_list_need_generating; then
-    _rake_generate || return $?
+    _rake_generate || return $status
   fi
-  cat .rake_tasks_list | ${PAGER:-less -FRX}
+
+  local cache_file
+  cache_file=".rake_tasks_list"
+
+  [[ -d tmp && -f "tmp/${cache_file}" ]] && cache_file="tmp/${cache_file}"
+
+  [[ -f "$cache_file" ]] || return 1
+
+  cat "$cache_file" | ${PAGER:-less -FRX}
 }
 
 rakes

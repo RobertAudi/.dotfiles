@@ -18,8 +18,8 @@ function ___install {
     builtin print -P -- "%B%F{blue}==>%f%b Installing %B%U${package}%u%b: %B${description}%b"
   fi
 
-  builtin print -P -- "%B%F{blue}==>%f go get -u -v ${package}%b"
-  go get -u -v "$package"
+  builtin print -P -- "%B%F{blue}==>%f go install -v ${package}@latest%b"
+  go install -v "${package}@latest"
 
   builtin print -Pn -- "%B%F{019}"; hr "⋅"; builtin print -Pn -- "%f%b"
 }
@@ -80,3 +80,7 @@ ___install github.com/mholt/archiver/cmd/arc 'Easily create & extract archives, 
 # 🎄 draw a beautiful christmas tree in ascii
 #   https://github.com/moul/sapin
 ___install github.com/moul/sapin/cmd/sapin '🎄 draw a beautiful christmas tree in ascii using Golang'
+
+# 💡 Unobtrusive directory information fetcher
+#   https://github.com/gennaro-tedesco/archimede
+___install github.com/gennaro-tedesco/archimede '💡 Unobtrusive directory information fetcher'

@@ -8,7 +8,7 @@ cat-which() {
       if file -bL --mime "$command_path" | grep -q "charset=binary"; then
         print-info "${1} is a binary file: ${command_path}"
       else
-        if is-callable bat; then
+        if is-callable bat ; then
           bat "$command_path"
         else
           cat "$command_path"

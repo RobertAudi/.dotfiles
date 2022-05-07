@@ -1,0 +1,6 @@
+#!/usr/bin/env zsh
+
+# Taco - Stolen from https://github.com/neg-serg/dotfiles
+#   https://github.com/neg-serg/dotfiles/blob/5c13bf4a435082a38817f702dae1d79c6ac97e94/zsh/.zsh/05-cmds.zsh#L526
+curl -L git.io/taco
+echo

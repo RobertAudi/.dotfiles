@@ -23,3 +23,7 @@ alias gs="git-pretty-status -vv"
 alias gss="git-pretty-status -v"
 alias gsh="fzf-git-show"
 alias gco="fzf-git-checkout"
+
+if is-callable onefetch ; then
+  alias onefetch="onefetch --no-merges --no-bots --hidden"
+fi

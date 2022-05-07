@@ -1,4 +1,4 @@
-if is-callable dircolors; then
+if is-callable dircolors ; then
   # GNU Core Utilities
   # ------------------
   # LS_COLORS
@@ -45,7 +45,7 @@ fi
 # See: http://zsh.sourceforge.net/Doc/Release/Zsh-Modules.html#The-zsh_002fcomplist-Module
 export ZLS_COLORS=$LS_COLORS
 
-if is-callable exa; then
+if is-callable exa ; then
   alias exa="exa --time-style=long-iso --group-directories-first --colour=always"
   alias ll="exa -lgh --git"
   alias la="exa -a"

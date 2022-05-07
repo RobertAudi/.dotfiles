@@ -43,10 +43,6 @@ brew "caarlos0/tap/jsonfmt"
 
 tap "RobertAudi/formulae", "https://github.com/RobertAudi/homebrew-formulae.git"
 
-# Optimally fast branch name command for Git
-#   https://github.com/itchyny/git-branch-name
-brew "RobertAudi/formulae/git-branch-name", args: ["HEAD"]
-
 # list files, recursively
 #   https://github.com/chneukirchen/lr
 brew "RobertAudi/formulae/lr", args: ["HEAD"]
@@ -253,5 +249,48 @@ tap "goles/battery"
 # Display your Laptop's battery status on the terminal.
 #   https://github.com/Goles/Battery
 brew "goles/battery/battery"
+
+# ------------------------------------------------------------------------------ }}}
+
+# itchyny/tap
+# ------------------------------------------------------------------------------ {{{
+
+tap "itchyny/tap"
+
+# Rename multiple files with editor
+#   https://github.com/itchyny/mmv
+brew "itchyny/tap/mmv"
+
+# Fill-in your command and execute
+#   https://github.com/itchyny/fillin
+brew "itchyny/tap/fillin"
+
+
+# Homebrew formula managing script
+#   https://github.com/itchyny/formulate
+brew "itchyny/tap/formulate"
+
+# Optimally fast branch name command for Git
+#   https://github.com/itchyny/git-branch-name
+brew "itchyny/tap/git-branch-name"
+
+# A maze command written in Go
+#   https://github.com/itchyny/maze
+brew "itchyny/tap/maze"
+
+# Cross-platform audio volume control library for Go
+#   https://github.com/itchyny/volume-go
+brew "itchyny/tap/volume"
+
+# ------------------------------------------------------------------------------ }}}
+
+# homeport/tap
+# ------------------------------------------------------------------------------ {{{
+
+tap "homeport/tap"
+
+# /ˈdʏf/ - diff tool for YAML files, and sometimes JSON
+#  https://github.com/homeport/dyff
+brew "homeport/tap/dyff"
 
 # ------------------------------------------------------------------------------ }}}

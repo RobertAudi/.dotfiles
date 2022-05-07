@@ -19,11 +19,6 @@ gems+=("git_pissed")
 #   https://github.com/abhshkdz/graf
 gems+=("graf")
 
-
-# A Ruby client for Neovim
-#   https://github.com/alexgenco/neovim-ruby
-gems+=("neovim")
-
 # Transpec converts your specs to the latest RSpec syntax with static
 # and dynamic code analysis.
 #   http://yujinakayama.me/transpec/
@@ -33,9 +28,17 @@ gems+=("transpec")
 #   http://rtomayko.github.io/ronn/
 gems+=("ronn")
 
-# Manage complex tmux sessions easily
-#   https://github.com/tmuxinator/tmuxinator
-gems+=("tmuxinator")
+# The instafailing RSpec progress bar formatter
+#   https://github.com/thekompanee/fuubar
+defaultLibGems+=("fuubar")
+
+# RSpec formatter for the macOS Notification Center
+#   https://github.com/twe4ked/rspec-nc
+defaultLibGems+=("rspec-nc")
+
+# Nyan Cat inspired RSpec formatter!
+#   https://github.com/mattsears/nyan-cat-formatter
+defaultLibGems+=("nyan-cat-formatter")
 
 builtin print -P -- "%F{blue}==>%f Installing gems:"
 builtin print -P -- "%B${(j: :)gems}%b"

@@ -3,4 +3,4 @@
 " URL: https://github.com/arp242/jumpy.vim
 
 " File
-call jumpy#map('^diff ')
+let b:jumpy_pattern = '^diff '

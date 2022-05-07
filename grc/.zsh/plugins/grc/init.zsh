@@ -4,10 +4,8 @@ if [[ "$TERM" != dumb ]] && (( $+commands[grc] )) ; then
     cc \
     configure \
     cvs \
-    df \
     diff \
     dig \
-    du \
     gcc \
     gmake \
     ifconfig \
@@ -20,8 +18,6 @@ if [[ "$TERM" != dumb ]] && (( $+commands[grc] )) ; then
     mtr \
     netstat \
     nmap \
-    ping \
-    ping6 \
     ps \
     traceroute \
     traceroute6 \
@@ -36,6 +32,22 @@ if [[ "$TERM" != dumb ]] && (( $+commands[grc] )) ; then
       alias $cmd="grc --stderr --stdout --colour=auto $(whence $cmd)"
     fi
   done
+
+  if ! is-callable dust ; then
+    alias du="grc --stderr --stdout --colour=auto $(whence du)"
+  fi
+
+  if ! is-callable duf ; then
+    alias df="grc --stderr --stdout --colour=auto $(whence df)"
+  fi
+
+  if ! is-callable gping ; then
+    alias ping="grc --stderr --stdout --colour=auto $(whence ping)"
+
+    if is-callable ping6 ; then
+      alias ping6="grc --stderr --stdout --colour=auto $(whence ping6)"
+    fi
+  fi
 
   # Clean up variables
   unset cmds cmd

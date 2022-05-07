@@ -1,0 +1,12 @@
+#autoload
+
+# Run the commands in a subshell so that the PATH stays unchanged
+(
+  # Remove some paths to use native build libs
+  path-remove /opt/homebrew/opt/binutils/bin
+  path-remove /opt/homebrew/opt/coreutils/libexec/gnubin
+  path-remove /opt/homebrew/opt/m4/bin
+  path-remove /opt/homebrew/opt/make/libexec/gnubin
+
+  ruby-install $@
+)

@@ -27,6 +27,7 @@
 *.png  binary
 *.psb  binary
 *.psd  binary
+# *.svg  text -crlf
 *.svgz binary
 *.tif  binary
 *.tiff binary
@@ -87,7 +88,7 @@
 *.DOCX diff=astextplain
 
 # Yarn lockfile
-yarn.lock binary
+yarn.lock linguist-generated
 
 *.iterm2.plist binary
 
@@ -96,7 +97,9 @@ yarn.lock binary
 *.plist diff=plist
 *.mobileprovision diff=provision
 *.scpt diff=applescript
-db/schema.rb merge=railsschema
+Gemfile.lock linguist-generated
+db/schema.rb merge=railsschema linguist-generated
 *.rb diff=ruby
 *.rake diff=ruby
 *_spec.rb diff=rspec
+vendor/* linguist-vendored

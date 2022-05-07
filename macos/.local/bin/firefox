@@ -1,0 +1,12 @@
+#!/usr/bin/env zsh
+
+if osascript -e 'id of application "Firefox"' &> /dev/null; then
+  if (( $# > 0 )); then
+    command open -a "Firefox" "$1"
+  else
+    command open -a "Firefox"
+  fi
+else
+  builtin print -P -u 2 -- "[%F{196}ERROR%f] Firefox not installed!"
+  return 1
+fi

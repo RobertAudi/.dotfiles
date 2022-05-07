@@ -48,9 +48,9 @@ for i in $@; do
     text/plain)
       case ${i:e} in
         md|mkd|mdown|markdown)
-          if is-callable mdcat; then
+          if is-callable mdcat ; then
             mdcat "$i" | smartless
-          elif is-callable bat; then
+          elif is-callable bat ; then
             {
               print-warning "Command not found: mdcat"
               builtin print -- "Using bat instead"
@@ -67,14 +67,14 @@ for i in $@; do
           fi
           ;;
         txt|)
-          if is-callable bat; then
+          if is-callable bat ; then
             bat --language "Plain Text" --style header,grid "$i"
           else
             command cat "$i" | smartless
           fi
           ;;
         *)
-          if is-callable bat; then
+          if is-callable bat ; then
             bat "$i"
           else
             {

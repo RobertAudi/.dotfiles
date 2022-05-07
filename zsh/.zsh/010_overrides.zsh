@@ -4,7 +4,7 @@
 #
 # - cd /etc/fstab → cd /etc
 # - corrections on the given dirname (if directory could not be found)
-# - all(?) other possible invocations of the builtin 'cd'
+# - all(?) other possible invocations of the builtin "cd"
 # ------------------------------------------------------------------------------
 
 smart_cd() {
@@ -112,11 +112,11 @@ tree() {
   #   -C             Colors
   #   -A             ANSI line graphics
   #   -F             Classify (directory: /, executable file: *, etc.)
-  #   -a             All files (including hidden files, but not '.' and '..')
+  #   -a             All files (including hidden files, but not "." and "..")
   #   -I pattern     Don't list files matching the pattern
   #   --dirsfirst    List directories before files
   #   -L level       Max depth
-  local treeopts="-CAFa -I 'rhel.*.*.package|.git|.gem' --dirsfirst"
+  local treeopts="-CAFa -I \"rhel.*.*.package|.git|.gem\" --dirsfirst"
   if [[ "$1" =~ "^[1-9][0-9]*$" ]]; then
     treeopts="$treeopts -L $1"
     shift
@@ -135,7 +135,7 @@ alias rm="rm -v --preserve-root"
 
 # Be verbose
 alias cp="cp -v"
-alias chgrp='chgrp --preserve-root -v'
+alias chgrp="chgrp --preserve-root -v"
 alias chmod="chmod --preserve-root -v"
 alias chown="chown --preserve-root -v"
 alias mkdir="mkdir -vp"
@@ -143,10 +143,10 @@ alias mv="mv -v"
 alias ln="ln -v"
 
 # used when you press M-? on a command line
-alias which-command='builtin whence -sva'
+alias which-command="builtin whence -sva"
 
 # List everything
-alias type='type -a'
+alias type="type -a"
 
 alias grep="grep --binary-files=without-match --exclude=.git{,ignore,modules} --exclude-dir=.{cvs,git,hg,svn} --color=auto"
 alias gzip="gzip --verbose --best --name"
@@ -164,9 +164,6 @@ alias jobs="jobs -lpd"
 
 # Print directory stack with numbers and one directory per line.
 alias dirs="dirs -v -p"
-
-# fancy top
-alias top="top -ocpu -R -F -s 2 -n30"
 
 alias fetchmail="fetchmail --check"
 

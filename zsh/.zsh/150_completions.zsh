@@ -1,5 +1,9 @@
 autoload -Uz $ZSH_HOME/completions/*(:t)
 
+# zinit completions
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+
 # Cache stuff
 zstyle ':completion:*' use-cache true
 zstyle ':completion:*' cache-path "$ZSH_COMPCACHE"

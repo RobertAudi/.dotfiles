@@ -27,5 +27,5 @@ set -euf -o pipefail
 ##
 
 curl -s http://brewformulas.org/$1 |
-hxselect -c 'blockquote > p' 2>/dev/null |
-sed '$a\'
+  hxselect -c 'blockquote > p' 2>/dev/null |
+  sed '$a\'

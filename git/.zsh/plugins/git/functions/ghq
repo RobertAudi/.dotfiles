@@ -2,30 +2,17 @@
 
 is-callable ghq || { print-error "ghq not installed"; return 1 }
 
+# FIXME: Remove the tree/blob/reference from GitHub URLs
+
 # TODO: Fucking do something...
 (( $# > 0 )) || { command ghq help; return 1 }
 
 local repo
 local action="$1"; shift
+
 case "$action" in
   "title")
-    repo="$1"
-
-    if [[ -z "$repo" ]]; then
-      print-error "Missing argument"
-      return 1
-    fi
-
-    local title ghq_root
-    ghq_root="$(command ghq root)"
-
-    if [[ "$repo" =~ "${ghq_root}" ]]; then
-      title="${repo##${repo:h:h}/}"
-    else
-      title="${repo:t}"
-    fi
-
-    builtin print -- "$title"
+    ghq-title "$1"
     ;;
   "update-cmd")
     if (($# == 0)); then
@@ -174,7 +161,7 @@ case "$action" in
     ;;
   "list")
     local query
-    query="$(echo -n "$1" | sed -E "s/^.*:|\.git\$|\/\$//g" | rev | cut -d/ -f-2 | rev)"
+    query="$(builtin print -n -- "$1" | sed -E "s/^.*:|\.git\$|\/\$//g" | rev | cut -d/ -f-2 | rev)"
 
     command ghq list --full-path "$query"
     ;;

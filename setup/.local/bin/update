@@ -125,7 +125,7 @@ function __update::commands::npm {
 }
 
 function __update::commands::zsh {
-  if __update::utils::is-callable zinit; then
+  if __update::utils::is-callable zinit ; then
     __update::utils::log::info "zinit self-update"
     zinit self-update > /dev/null
 
@@ -138,7 +138,7 @@ function __update::commands::zsh {
 }
 
 function __update::commands::nvim {
-  if __update::utils::is-callable nvim; then
+  if __update::utils::is-callable nvim ; then
     nvim -e +PlugInstall +PlugUpgrade +PlugUpdate +PlugClean! +qall &>/dev/null
   fi
 }
@@ -153,7 +153,7 @@ function __update::commands::macos {
   __update::utils::log::info "softwareupdate --install --all"
   softwareupdate --install --all
 
-  if __update::utils::is-callable mas; then
+  if __update::utils::is-callable mas ; then
     __update::utils::log::info "mas upgrade"
     mas upgrade
   fi
@@ -176,12 +176,6 @@ function __update::commands::brew {
   __update::utils::log::info "brew upgrade --display-times"
   __update::utils::log::separator "⋅"
   command brew upgrade
-
-  builtin print
-  __update::utils::log::separator
-  __update::utils::log::info "brew cask upgrade"
-  __update::utils::log::separator "⋅"
-  command brew cask upgrade
 
   builtin print
   __update::utils::log::separator

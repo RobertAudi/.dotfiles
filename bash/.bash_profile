@@ -42,11 +42,6 @@ else
   export VIM_COMMAND="vim"
 fi
 
-if command -v vimr >/dev/null; then
-  export GVIM_COMMAND="vimr"
-  export GVIEW_COMMAND="$=GVIM_COMMAND --nvim -R"
-fi
-
 if [[ -d "/usr/local/MacGPG2/bin" ]]; then
   export PATH="/usr/local/MacGPG2/bin:$PATH"
 fi

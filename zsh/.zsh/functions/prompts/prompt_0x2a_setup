@@ -1,6 +1,6 @@
 #autoload
 
-typeset -g ZSH_DEFAULT_PROMPT_CHAR="○"
+typeset -g ZSH_DEFAULT_PROMPT_CHAR="◯"
 typeset -g ZSH_GIT_PROMPT_CHAR="±"
 typeset -g ZSH_HG_PROMPT_CHAR="☿"
 

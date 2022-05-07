@@ -6,6 +6,10 @@ brew "git"
 #   https://hub.github.com/
 brew "hub"
 
+# GitHub’s official command line tool
+#   https://github.com/cli/cli
+brew "gh"
+
 # Syntax-highlighting pager for git and diff output
 #   https://github.com/dandavison/delt
 brew "git-delta"
@@ -45,3 +49,11 @@ brew "gibo"
 # Git repository summary on your terminal
 #   https://github.com/o2sh/onefetch
 brew "onefetch"
+
+# Easy TOC creation for GitHub README.md (in go)
+#   https://github.com/ekalinin/github-markdown-toc.go
+brew "github-markdown-toc"
+
+#  Static checker for GitHub Actions workflow files
+#   https://github.com/rhysd/actionlint
+brew "actionlint"

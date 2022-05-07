@@ -1,7 +1,3 @@
 ---
-plugins:
-  - solargraph-reek
 exclude:
   - ruby/.local/share/solargraph/rails.rb
-reporters:
-  - reek

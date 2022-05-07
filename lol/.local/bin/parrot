@@ -1,0 +1,5 @@
+#!/usr/bin/env zsh
+
+# Display an animated party parrot
+curl -q parrot.live
+echo

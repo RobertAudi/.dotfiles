@@ -11,8 +11,8 @@ else
   return 1
 fi
 
-if is-callable terminal-notifier; then
-  if is-callable reattach-to-user-namespace; then
+if is-callable terminal-notifier ; then
+  if is-callable reattach-to-user-namespace ; then
     ds reattach-to-user-namespace terminal-notifier -message "$message"
   else
     ds terminal-notifier -message "$message"

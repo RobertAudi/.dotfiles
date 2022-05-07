@@ -1,0 +1,14 @@
+#!/usr/bin/env zsh
+
+# Source: https://github.com/GitAlias/gitalias/blob/a0bd5343f4dcc6e11ee9f5e04c36ebd1166eb4c0/doc/git-optimizer/index.md
+
+# Do everything we can to optimize the repository.
+#
+# This command takes a long time to run, perhaps even overnight.
+#
+# Currently, this command simply calls `git pruner` and `git repacker`,
+# then one step (that may be unnecessary) calling `git prune-packed`.
+
+git pruner
+git repacker
+git prune-packed

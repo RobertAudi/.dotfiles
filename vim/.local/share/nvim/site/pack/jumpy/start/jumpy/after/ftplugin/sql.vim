@@ -3,4 +3,4 @@
 " URL: https://github.com/arp242/jumpy.vim
 
 " CREATE and BEGIN
-call jumpy#map('\c\v^\s*%(create|begin)>')
+let b:jumpy_pattern = '\c\v^\s*%(create|begin)>'

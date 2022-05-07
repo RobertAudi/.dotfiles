@@ -5,8 +5,14 @@ git-swag() {
   commitMessage="$(curl -s whatthecommit.com/index.txt 2> /dev/null)"
 
   if (( $status != 0 )) || [[ -z "$commitMessage" ]]; then
-    builtin print -P -u 2 -- "[%F{196}ERROR%f] Failed to get a swaggy message :("
-    return $commandStatus
+    local commitMessages
+    commitMessages="${XDG_DATA_HOME:-$HOME/.local/share}/git/commit_messages.txt"
+    commitMessage="$(shuf -n 1 ${commitMessages} 2> /dev/null)"
+
+    if (( $status != 0 )) || [[ -z "$commitMessage" ]]; then
+      builtin print -P -u 2 -- "[%F{196}ERROR%f] Failed to get a swaggy message :("
+      return 1
+    fi
   fi
 
   git commit -m "$commitMessage"

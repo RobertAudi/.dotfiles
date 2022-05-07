@@ -10,4 +10,4 @@ if (( ${#conflicts} == 0 )); then
   return 1
 fi
 
-$(git-editor) "$conflicts"
+git editor "$conflicts"

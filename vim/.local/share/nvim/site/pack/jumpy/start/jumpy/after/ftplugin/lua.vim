@@ -3,4 +3,4 @@
 " URL: https://github.com/arp242/jumpy.vim
 
 " Function definition
-call jumpy#map('^\s*function\>')
+let b:jumpy_pattern = '\v^%(local\s+)?%([^ \t]+\s+\=)?\s*<function>'

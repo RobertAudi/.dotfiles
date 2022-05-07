@@ -5,9 +5,12 @@ function main {
   scripts_dir="${DOTFILES_DIR:-${HOME}/.dotfiles}/setup"
 
   if [[ ! -d "$scripts_dir" ]]; then
-    # print error
+    builtin print -P -u 2 -- "[%F{red}ERROR%f] scripts directory not found: ${scripts_dir}"
     return 1
   fi
+
+  local -A opts
+  zparseopts -D -E -A opts -init
 
   local -A script_aliases
 
@@ -21,21 +24,33 @@ function main {
 
   local setup_script
 
+  if [[ "$1" == "brew" && "$2" == "bundle" && -n "$3" && -f "${scripts_dir}/Homebrew/${3}.brewfile" ]] ; then
+    if [[ -s "${scripts_dir}/Homebrew/${3}.brewfile" ]]; then
+      builtin print -P -u 2 -- "[%F{red}ERROR%f] The brewfile is empty: ${scripts_dir}/Homebrew/${3}.brewfile"
+      return 1
+    fi
+
+    command brew bundle --file "${scripts_dir}/Homebrew/${3}.brewfile" --no-lock
+    return $status
+  fi
+
   if [[ -x "${scripts_dir}/${1}.setup.sh" ]]; then
     setup_script="${scripts_dir}/${1}.setup.sh"
   elif [[ -x "${scripts_dir}/${script_aliases[$1]}.setup.sh" ]]; then
     setup_script="${scripts_dir}/${script_aliases[$1]}.setup.sh"
   else
-    # print error
+    builtin print -P -u 2 -- "[%F{red}ERROR%f] setup script not found: ${scripts_dir}/${1}.setup.sh"
     return 1
   fi
 
+  # The -f condition is not redundant, directories are executable
+  # so we need to check that the script is actually a file.
   if ! [[ -f "$setup_script" && -s "$setup_script" ]]; then
-    # print error
+    builtin print -P -u 2 -- "[%F{red}ERROR%f] setup script is not a file or is empty: ${scripts_dir}/${1}.setup.sh"
     return 1
   fi
 
-  $=setup_script "$@"
+  $=setup_script ${(kv)opts[@]} "$@"
 }
 
 main "$@"

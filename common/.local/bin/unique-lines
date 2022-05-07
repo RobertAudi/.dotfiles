@@ -1,0 +1,25 @@
+#!/bin/sh
+set -euf -o pipefail
+
+# Source: https://github.com/SixArm/unique-lines/blob/123ceca2356f0eee34983765ba64c83017dae120/unique-lines
+
+##
+# Show unique lines i.e. filter out any duplicate lines.
+#
+# This implementation uses the command `awk` to do the filtering.
+# This finds duplicate lines without the need to sort all the lines.
+#
+# Example using a file:
+#
+#     unique-lines myfile.txt
+#
+# Example using a stream:
+#
+#     cat myfile.txt | unique-lines
+#
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
+
+awk '!x[$0]++'

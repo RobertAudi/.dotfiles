@@ -1,29 +1,20 @@
 #autoload
 
-# Run the commands in a subshell so that the PATH stays unchanged
-(
-  # Remove GNU coreutils from the path because it doesn't know about the M1 chip
-  path-remove /opt/homebrew/opt/coreutils/libexec/gnubin
-
-  # ruby-install: Remove sources, archives, and all that shit.
-  #
-  # Options:
-  #   --jobs=JOBS         Number of jobs to run in parallel when compiling
-  #   --src-dir DIR       Directory to download source-code into
-  #   --cleanup           Remove archive and unpacked source-code after installation
-  #   --no-reinstall      Skip installation if another Ruby is detected in same location
-  env RUBY_CONFIGURE_OPTS="--with-openssl-dir=/opt/homebrew/opt/openssl@1.1" \
-    LDFLAGS="-L/opt/homebrew/opt/readline/lib" \
-    CPPFLAGS="-I/opt/homebrew/opt/readline/include" \
-    PKG_CONFIG_PATH="/opt/homebrew/opt/readline/lib/pkgconfig" \
-    optflags="-Wno-error=implicit-function-declaration" \
-    LDFLAGS="-L/opt/homebrew/opt/libffi/lib" \
-    CPPFLAGS="-I/opt/homebrew/opt/libffi/include" \
-    PKG_CONFIG_PATH="/opt/homebrew/opt/libffi/lib/pkgconfig" \
-    command ruby-install \
-    --jobs=$(sysctl -n hw.ncpu) \
-    --src-dir ${XDG_CACHE_HOME:-$HOME/.cache}/rubies \
-    --cleanup \
-    --no-reinstall \
-    $@
-)
+# ruby-install: Remove sources, archives, and all that shit.
+#
+# Options:
+#   --jobs=JOBS         Number of jobs to run in parallel when compiling
+#   --src-dir DIR       Directory to download source-code into
+#   --cleanup           Remove archive and unpacked source-code after installation
+#   --no-reinstall      Skip installation if another Ruby is detected in same location
+env RUBY_CONFIGURE_OPTS="--with-openssl-dir=/opt/homebrew/opt/openssl@1.1" \
+  LDFLAGS="-L/opt/homebrew/opt/openssl@1.1/lib -L/opt/homebrew/opt/readline/lib -L/opt/homebrew/opt/libffi/lib" \
+  CPPFLAGS="-I/opt/homebrew/opt/openssl@1.1/include -I/opt/homebrew/opt/readline/include -I/opt/homebrew/opt/libffi/include" \
+  PKG_CONFIG_PATH="/opt/homebrew/opt/openssl@1.1/lib/pkgconfig:/opt/homebrew/opt/readline/lib/pkgconfig:/opt/homebrew/opt/libffi/lib/pkgconfig" \
+  optflags="-Wno-error=implicit-function-declaration" \
+  command ruby-install \
+  --jobs=$(sysctl -n hw.ncpu) \
+  --src-dir ${XDG_CACHE_HOME:-$HOME/.cache}/rubies \
+  --cleanup \
+  --no-reinstall \
+  $@

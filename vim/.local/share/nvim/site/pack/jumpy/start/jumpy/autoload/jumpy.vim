@@ -1,8 +1,31 @@
 " Plugin: jumpy.vim
+" Requires: foldutil.vim
 " Description: Filetype-specific mappings for [[ and ]]
 " Author: Martin Tournoij <martin@arp242.net>
 " License: MIT license
 " URL: https://github.com/arp242/jumpy.vim
+
+function! jumpy#outline(...) abort
+  if a:0 > 0
+    let l:pattern = join(a:000, '\|')
+  elseif exists('b:jumpy_pattern')
+    let l:pattern = b:jumpy_pattern
+  elseif !exists('b:jumpy_outlined')
+    echoerr 'No b:jumpy_pattern for this buffer'
+  endif
+
+  if exists('b:jumpy_outlined') " Un-outline it
+    FoldEndFolding
+
+    unlet b:jumpy_outlined
+  else
+    execute 'FoldMatching ' . l:pattern . ' -1'
+
+    let b:jumpy_outlined = v:true
+
+    setlocal foldenable
+  endif
+endfunction
 
 function! jumpy#map(pattern) abort
   let l:map = get(g:, 'jumpy_map', [']]', '[['])

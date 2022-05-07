@@ -674,5 +674,81 @@ brew "sqlite"
 #   https://github.com/zquestz/s
 brew "s-search"
 
+# Version Control Visualization Tool
+#   https://github.com/acaudwell/Gource
+brew "gource"
+
+# Convert your ascii diagram scribbles into happy little SVG
+#   https://ivanceras.github.io/svgbob-editor/
+brew "svgbob"
+
+# Select, put and delete data from JSON, TOML, YAML, XML and CSV files with a single tool.
+# Supports conversion between formats and can be used as a Go package.
+#   https://github.com/TomWright/dasel
+brew "dasel"
+
+# Moar is a pager. It's designed to just do the right thing without any configuration.
+#   https://github.com/walles/moar
+brew "moar"
+
+# Render markdown on the CLI, with pizzazz!
+#   https://github.com/charmbracelet/glow
+brew "glow"
+
+# A significantly faster alternative to the classic Unix cp(1) command,
+# copying large files and directories in a fraction of the time.
+#   https://github.com/Svetlitski/fcp
+brew "fcp"
+
+# Granddaddy of HTML tools, with support for modern standards
+#   https://www.html-tidy.org/
+brew "tidy-html5"
+
+# Friendly and fast tool for sending HTTP requests
+#   https://github.com/ducaale/xh
+brew "xh"
+
+# A command-line DNS client
+#   https://github.com/ogham/dog
+#   https://dns.lookup.dog/
+brew "dog"
+
+# A more intuitive version of du in rust
+#   https://github.com/bootandy/dust
+brew "dust"
+
+# Disk Usage/Free Utility - a better 'df' alternative
+#   https://github.com/muesli/duf
+brew "duf"
+
+# A minimal, fast alternative to 'du -sh'
+#   https://github.com/sharkdp/diskus
+brew "diskus"
+
+# A tool to conveniently learn about the disk usage of directories, fast!
+#   https://github.com/Byron/dua-cli
+brew "dua-cli"
+
+# A modern replacement for ps written in Rust
+#   https://github.com/dalance/procs
+brew "procs"
+
+# Ping, but with a graph
+#   https://github.com/orf/gping
+brew "gping"
+
+# Yet another cross-platform graphical process/system monitor.
+#   https://github.com/ClementTsang/bottom#homebrew
+#   https://clementtsang.github.io/bottom
+brew "bottom"
+
+# Intuitive find & replace CLI (sed alternative)
+#   https://github.com/chmln/sd
+brew "sd"
+
+# A human-friendly and fast alternative to cut and (sometimes) awk
+#   https://github.com/theryangeary/choose
+brew "choose-rust"
+
 # Modeline {{{
 # vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker : }}}

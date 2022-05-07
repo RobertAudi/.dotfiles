@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-# Credits: Suraj N. Kurapati (sunaku)
-# URL: https://github.com/sunaku
-# Source: https://github.com/sunaku/home/blob/24441a94e1bfc5b7eebb1ee81dc62184626b694f/.zsh/config/alias/git.sh#L342-L343
-git reflogs | awk -F: '{ print "reflog/" $0; system("git -c color.diff=always --no-pager show -p " $1) }' | git pager

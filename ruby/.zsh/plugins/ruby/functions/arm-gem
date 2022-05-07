@@ -1,0 +1,17 @@
+#autoload
+
+(
+  # Remove some paths to use native build libs
+  path-remove /opt/homebrew/opt/binutils/bin
+  path-remove /opt/homebrew/opt/coreutils/libexec/gnubin
+  path-remove /opt/homebrew/opt/m4/bin
+  path-remove /opt/homebrew/opt/make/libexec/gnubin
+  path-remove /opt/homebrew/opt/openssl/bin
+
+  pkg_config_path=("${(@)pkg_config_path:#/opt/homebrew/opt/openssl/lib/pkgconfig}")
+
+  export CPPFLAGS="$(echo $CPPFLAGS | awk '{gsub(/-I\/opt\/homebrew\/opt\/openssl\/include/, "")}1')"
+  export LDFLAGS="$(echo $LDFLAGS | awk '{gsub(/-L\/opt\/homebrew\/opt\/openssl\/lib/, "")}1')"
+
+  command gem $=@
+)

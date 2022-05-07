@@ -39,7 +39,7 @@ export ZSH_COMPCACHE="$ZSH_CACHE_DIR/zcompcache"
 
 # Where Zinit lives
 # See: https://github.com/zdharma-continuum/zinit
-export ZINIT_HOME="$XDG_DATA_HOME/zinit"
+export ZINIT_HOME="$XDG_DATA_HOME/zinit/zinit.git"
 export ZINIT_LOADFILE="$ZSH_HOME/plugins/zinit.zsh"
 # --------------------------------------------------------------------- }}}
 
@@ -371,6 +371,14 @@ if [[ -f /usr/libexec/java_home ]]; then
   export JAVA_HOME=$(/usr/libexec/java_home)
 fi
 
+if [[ -d "/opt/homebrew/opt/curl/include" ]]; then
+  export CPPFLAGS="$CPPFLAGS -I/opt/homebrew/opt/curl/include"
+fi
+
+if [[ -d "/opt/homebrew/opt/curl/lib" ]]; then
+  export LDFLAGS="$LDFLAGS -L/opt/homebrew/opt/curl/lib"
+fi
+
 if [[ -d "/opt/homebrew/opt/openssl/include" ]]; then
   export CPPFLAGS="$CPPFLAGS -I/opt/homebrew/opt/openssl/include"
 fi
@@ -381,6 +389,14 @@ fi
 
 if [[ -d "/opt/homebrew/opt/libffi/lib" ]]; then
   export LDFLAGS="$LDFLAGS -L/opt/homebrew/opt/libffi/lib"
+fi
+
+if [[ -d "/opt/homebrew/opt/binutils/lib" ]]; then
+  export LDFLAGS="$LDFLAGS -L/opt/homebrew/opt/binutils/lib"
+fi
+
+if [[ -d "/opt/homebrew/opt/binutils/include" ]]; then
+  export CPPFLAGS="$CPPFLAGS -I/opt/homebrew/opt/binutils/include"
 fi
 
 # Modeline {{{

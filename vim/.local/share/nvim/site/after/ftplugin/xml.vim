@@ -1,2 +1,0 @@
-setlocal omnifunc=xmlcomplete#CompleteTags
-setlocal foldmethod=syntax

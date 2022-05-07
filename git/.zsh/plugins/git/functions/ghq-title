@@ -1,0 +1,22 @@
+#autoload
+
+is-callable ghq || { print-error "ghq not installed"; return 1 }
+
+# TODO: Fucking do something...
+(( $# > 0 )) || { command ghq help; return 1 }
+
+if [[ -z "$1" ]]; then
+  print-error "Missing argument"
+  return 1
+fi
+
+local repo
+
+repo="$(builtin print -n -- "$1" | sed -E "s/^.*:|\.git\$|\/\$//g" | rev | cut -d/ -f-2 | rev)"
+
+if (( $(wc -l < <(ghq list "$repo")) == 0 )); then
+  print-error "Repo not found"
+  return 1
+fi
+
+builtin print -- "$repo"

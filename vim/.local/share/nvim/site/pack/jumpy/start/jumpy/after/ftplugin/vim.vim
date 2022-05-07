@@ -3,4 +3,4 @@
 " URL: https://github.com/arp242/jumpy.vim
 
 " Function/augroup definition
-call jumpy#map('\v^\s*%(fu%[nction]>|aug%[roup]\s%(\s*[eE][nN][dD])@!)')
+let b:jumpy_pattern = '\v^\s*%(fu%[nction]>|def>|com%[mand]>|aug%[roup]\s%(\s*[eE][nN][dD])@!)'

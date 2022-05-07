@@ -1,0 +1,10 @@
+#!/usr/bin/env zsh
+
+if type vimr >/dev/null; then
+  command vimr --nvim -R $=@
+elif type neovide >/dev/null ; then
+  command neovide $=@ -- -R
+else
+  builtin print -P -u 2 -- "[%F{red}ERROR%f] No GUI vim client found."
+  return 1
+fi

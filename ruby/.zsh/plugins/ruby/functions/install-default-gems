@@ -1,0 +1,28 @@
+#autoload
+
+(
+  local scripts_dir
+  scripts_dir="${DOTFILES_DIR:-${HOME}/.dotfiles}/setup/ruby"
+
+  if ! [[ -f "${scripts_dir}/rubygems.sh" ]]; then
+    print-error "setup script not found: ${scripts_dir}/rubygems.sh"
+    return 1
+  fi
+
+  if ! [[ -f "${scripts_dir}/default-gems.sh" ]]; then
+    print-error "setup script not found: ${scripts_dir}/default-gems.sh"
+    return 1
+  fi
+
+  if [[ -n "$1" ]] ; then
+    if ! is-callable chruby-exec ; then
+      print-error "command not found: chruby-exec"
+      return 1
+    fi
+
+    chruby-exec $1 -- source "${scripts_dir}/rubygems.sh" || return $status
+    chruby-exec $1 -- source "${scripts_dir}/default-gems.sh" || return $status
+  else
+    source "${scripts_dir}/rubygems.sh" && source "${scripts_dir}/default-gems.sh"
+  fi
+)

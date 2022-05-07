@@ -1,6 +1,6 @@
 #autoload
 
-if ! is-callable jackd || ! is-callable jack_wait; then
+if ! is-callable jackd || ! is-callable jack_wait ; then
   print-error "JACK server not found"
   print "not found"
   return 127

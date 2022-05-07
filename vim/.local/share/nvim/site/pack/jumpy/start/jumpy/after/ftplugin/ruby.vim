@@ -2,5 +2,4 @@
 " Description: Filetype-specific mappings for [[ and ]]
 " URL: https://github.com/arp242/jumpy.vim
 
-" Function, class, or module
-call jumpy#map('\v^\s*%(def|class|module)>')
+let b:jumpy_pattern = '\v^\s*(def|class|module|public|protected|private|(attr_\k{-})|test)(\s|$)'

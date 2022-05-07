@@ -5,7 +5,7 @@ __print_localip() {
 }
 
 __print_publicip() {
-  print "Public IP: $(dig +short myip.opendns.com @resolver1.opendns.com)"
+  print "Public IP: $(command curl -q -f -s -4 http://checkip.amazonaws.com)"
 }
 
 ip() {

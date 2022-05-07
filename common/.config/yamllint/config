@@ -26,7 +26,7 @@ rules:
   new-line-at-end-of-file: enable
   new-lines: enable
   octal-values: disable
-  quoted-strings: disable
+  quoted-strings: enable
   trailing-spaces: enable
   truthy:
     level: warning

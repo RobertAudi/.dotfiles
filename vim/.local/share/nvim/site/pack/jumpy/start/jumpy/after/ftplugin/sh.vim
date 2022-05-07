@@ -3,4 +3,4 @@
 " URL: https://github.com/arp242/jumpy.vim
 
 " Function declaration
-call jumpy#map('^\%(function \)\?\w\+()[ \n]*{')
+let b:jumpy_pattern = '^\%(function \)\?\w\+()[ \n]*{'

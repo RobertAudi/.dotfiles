@@ -2,6 +2,8 @@
 # ------------------------------------------------------------------------------
 
 [core]
+  defaultBranch = main
+
   # Treat spaces before tabs and all kinds of trailing whitespace as an error
   # [default] trailing-space: looks for spaces at the end of a line
   # [default] space-before-tab: looks for spaces before tabs at the beginning of a line
@@ -235,6 +237,8 @@
   laa = log --topo-order --graph --abbrev-commit --branches --tags --all
   ld  = log --topo-order --stat --patch --full-diff --pretty=detailed
 
+  show-tree = log --all --graph --decorate --oneline --simplify-by-decoration
+
   # Stolen from https://github.com/posquit0/dotfiles
   #   https://github.com/posquit0/dotfiles/blob/ef942a01566abfe7874e99bf6dbbfa3e3611e36d/git/.gitconfig#L48-L53
   today     = log --topo-order --graph --abbrev-commit --since=midnight
@@ -285,14 +289,7 @@
   tags = tag -n1 --list
   branches = branch --all --verbose --verbose
 
-  # Pretty format taken from https://github.com/sunaku/home
-  # Source:
-  #   https://github.com/sunaku/home/blob/24441a94e1bfc5b7eebb1ee81dc62184626b694f/.zsh/config/alias/git.sh#L83-L84
-  stashes = stash list --pretty=\"%C(auto,yellow)%gd%C(auto,reset): %C(auto,green)%ci (%cr)%C(auto,reset):%C(auto,blue)%d%C(auto,reset) %gs\"
-
-  # More readable reflog
-  # Source: https://github.com/sunaku/home/blob/24441a94e1bfc5b7eebb1ee81dc62184626b694f/.zsh/config/alias/git.sh#L339-L340
-  reflogs = reflog --pretty=\"%C(auto,yellow)%h%C(auto,reset): %C(auto,green)%ci (%cr)%C(auto,reset):%C(auto,blue)%d%C(auto,reset) %gs\"
+  stash-all = stash push --no-keep-index --include-untracked
 
   # Source: https://github.com/nvie/git-toolbelt/blob/a4f471e720afcea952308a171d65a6f8217ba59d/git-undo-merge
   undo-merge = reset --hard ORIG_HEAD

@@ -3,7 +3,7 @@
 # l33t - auto l33t converter. Perl, Unix.
 #
 # This program converts text to l33t-speak. This is helpful to convert text
-# that has been written in a formal and confusing manner, into text that 
+# that has been written in a formal and confusing manner, into text that
 # is easy to follow.
 #
 # 16-Jun-2005   ver 0.80
@@ -56,7 +56,7 @@ $BASIC = 1  if $opt_b || $opt_a || $opt_u || $opt_n;
 $NORMAL = 1 if $opt_n || $opt_a || $opt_u;
 $ULTRA = 1  if $opt_u || $opt_a;
 $VERBOSE = 1 if $opt_v || $opt_a;
-if (($BASIC + $NORMAL + $ULTRA) == 0) { 
+if (($BASIC + $NORMAL + $ULTRA) == 0) {
 	$BASIC = 1;
 	$NORMAL = 1;
 }
@@ -107,7 +107,7 @@ sub basic_l33t {
 	### word conversions
 	$line =~ s/\byou\b/int(rand(2))==0?"u":"you"/ieg;
 	$line =~ s/\bare\b/int(rand(2))==0?"r":"are"/ieg;
-	
+
 	### combo conversions
 	$line =~ s/s\b/int(rand(5))!=0?"z":"s"/eg;
 	$line =~ s/\bf/int(rand(2))==0?"ph":"f"/ieg;
@@ -141,7 +141,7 @@ sub normal_l33t {
 	### word conversions
 	$line =~ s/\broot\b/w00t/ig;
 	$line =~ s/\bfiles?\b/int(rand(2))==0?"warez":"files"/ieg;
-	
+
 	### combo conversions
 	$line =~ s/cks\b/int(rand(2))==0?"x":"cks"/eg;
 	$line =~ s/er\b/int(rand(2))==0?"or":"er"/eg;
@@ -183,7 +183,7 @@ sub ultra_l33t {
 
 	### word conversions
 	$line =~ s/\broot\b/w00t/ig;
-	
+
 	### combo conversions
 	$line =~ s/\bf/int(rand(2))==0?"ph":"f"/eg;
 

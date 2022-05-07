@@ -8,11 +8,15 @@ path=(
   /Applications/Postgres.app/Contents/Versions/latest/bin(N-/)
   /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin(N-/)
   /usr/local/MacGPG2/bin(N-/)
+  /Library/TeX/Distributions/Programs/texbin(N-/)
   $path
 )
 
 manpath=(
+  /Applications/Xcode.app/Contents/Developer/usr/share/man(N-/)
   /Applications/Postgres.app/Contents/Versions/latest/share/man(N-/)
+  /usr/local/MacGPG2/share/man(N-/)
+  /Library/TeX/Distributions/Programs/texbin/man(N-/)
   $manpath
 )
 

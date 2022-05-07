@@ -28,6 +28,10 @@ unbind [c
 " open Firefox reader mode
 unbind gr
 
+" Go to home
+unbind gh
+unbind gH
+
 " zoom in
 unbind zi
 
@@ -55,6 +59,10 @@ unbind a
 bind <C-n> tabnext_gt
 bind <C-p> tabprev
 
+# Move tab relative to the next/previous tab
+bind gL tabmove +1
+bind gH tabmove \-1
+
 bind <C-b> fillcmdline tab
 bind <C-t> fillcmdline tabopen
 
@@ -67,6 +75,9 @@ bind gw tabdetach
 
 " Pin current tab
 bind gp pin
+
+" copy (yank) link's target to clipboard
+bind Y hint -p
 
 " Git{Hub,Lab} git clone via SSH yank
 bind yg composite js document.location.href.replace(/https?:\/\//, "git@").replace("/", ":").replace(/$/, ".git") | clipboard yank

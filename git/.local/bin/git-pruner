@@ -1,0 +1,14 @@
+#!/usr/bin/env zsh
+
+# Source: https://github.com/GitAlias/gitalias/blob/a0bd5343f4dcc6e11ee9f5e04c36ebd1166eb4c0/doc/git-pruner/index.md
+
+# pruner: prune everything that is unreachable now.
+#
+# This command takes a long time to run, perhaps even overnight.
+#
+# This is useful for removing unreachable objects from all places.
+#
+# By [CodeGnome](http://www.codegnome.com/)
+
+git prune --expire=now
+git reflog expire --expire-unreachable=now --rewrite --all

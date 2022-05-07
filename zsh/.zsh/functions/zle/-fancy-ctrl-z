@@ -1,10 +1,10 @@
 #autoload
 
 if (( ${#jobstates} == 0 )); then
-  zle -M 'No background jobs. Doing nothing.'
+  zle -M "No background jobs. Doing nothing."
 else
-  (( $#BUFFER > 0 )) && zle .push-input
+  (( $#BUFFER > 0 )) && zle .push-input -w
   [[ -o hist_ignore_space ]] && BUFFER=' ' || BUFFER=''
   BUFFER="${BUFFER}fg"
-  zle .accept-line
+  zle .accept-line -w
 fi

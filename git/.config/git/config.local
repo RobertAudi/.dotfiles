@@ -45,6 +45,10 @@
   commit = true
   menu = git-fixup-menu
 
+[delta]
+  side-by-side = true
+  line-numbers = false
+
 # ------------------------------------------------------------------------------ }}}
 
 [alias]

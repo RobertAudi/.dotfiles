@@ -3,4 +3,4 @@
 " URL: https://github.com/arp242/jumpy.vim
 
 " Selector
-call jumpy#map('^[^ \t{}/]')
+let b:jumpy_pattern = '^[^ \t{}/]'

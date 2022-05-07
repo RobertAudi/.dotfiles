@@ -4,7 +4,7 @@ brew "vim", args: ["HEAD"]
 
 # Ambitious Vim-fork focused on extensibility and agility
 #   https://neovim.io/
-brew "neovim"
+brew "neovim", args: ["HEAD"]
 
 # Use ViM as PAGER
 #   https://github.com/rkitover/vimpager

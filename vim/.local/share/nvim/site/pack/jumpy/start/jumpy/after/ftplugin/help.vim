@@ -3,4 +3,4 @@
 " URL: https://github.com/arp242/jumpy.vim
 
 " Include space and * so it won't jump to next tag on the same line.
-call jumpy#map('\*[a-zA-Z0-9:_<> *-]\+\*')
+let b:jumpy_pattern = '\*[a-zA-Z0-9:_<> *-]\+\*'

@@ -5,12 +5,12 @@
 
 function ___install {
   builtin print -P -- "%F{blue}==>%f npm install --global \"$1\""
-  npm install --global "$1"
+  npm install --global "$1" || true
 }
 
 function ___install-peerdeps {
   builtin print -P -- "%F{blue}==>%f npx install-peerdeps --global \"$1\""
-  npx install-peerdeps --global "$1"
+  npx install-peerdeps --global "$1" || true
 }
 
 # ------------------------------------------------------------------------------ }}}
@@ -74,17 +74,64 @@ ___install open-pip-cli
 #   https://github.com/BubuAnabelas/markcat
 ___install markcat
 
+# Virtual file format for text processing used in @unifiedjs
+#   https://github.com/vfile/vfile
+___install vfile
+
+# Utility to create a vfile from a filepath
+#   https://github.com/vfile/to-vfile
+___install to-vfile
+
+# Utility to create a report for a vfile
+#   https://github.com/vfile/vfile-reporter
+___install vfile-reporter
+
 # Command-line interface for remark: Markdown processor
 #   https://github.com/remarkjs/remark
 ___install remark-cli
 
-# Auto-link references like in GitHub issues, PRs, and comments
+# Remark plugin to support GFM (autolink literals, footnotes,
+# strikethrough, tables, tasklists)
+#   https://github.com/remarkjs/remark-gfm
+___install remark-gfm
+
+# Remark plugin to link references to commits, issues, pull-requests,
+# and users, like on GitHub
 #   https://github.com/remarkjs/remark-github
 ___install remark-github
+
+# Plugin to generate a table of contents (TOC)
+#   https://github.com/remarkjs/remark-toc
+___install remark-toc
+
+# Plugin to compile markdown to man pages
+#   https://github.com/remarkjs/remark-man
+___install remark-man
 
 # Prettier is an opinionated code formatter
 #   https://prettier.io/
 ___install prettier
+
+# prettier, as a daemon, for ludicrous formatting speed.
+#   https://github.com/fsouza/prettierd
+___install @fsouza/prettierd
+
+# A mighty, modern linter that helps you avoid errors and
+# enforce conventions in your styles
+#   https://github.com/stylelint/stylelint
+___install stylelint
+
+# The recommended shareable config for Stylelint
+#   https://github.com/stylelint/stylelint-config-recommended
+___install stylelint-config-recommended
+
+# A stylelint Language Server
+#   https://github.com/bmatcuk/stylelint-lsp
+___install stylelint-lsp
+
+# A versatile, feature-rich TOML toolkit.
+#   https://taplo.tamasfe.dev/cli/
+___install @taplo/cli
 
 # Check whether a website is up or down using the isitup.org API
 #   https://github.com/sindresorhus/is-up-cli
@@ -121,3 +168,5 @@ ___install csslint
 # The static code analysis tool you need for your HTML
 #   https://github.com/htmlhint/HTMLHint
 ___install htmlhint
+
+unfunction ___install ___install-peerdeps

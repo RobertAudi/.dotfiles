@@ -4,13 +4,6 @@ source "${${(%):-%x}:A:h}/rust.setup.sh"
 
 builtin print -Pn -- "%B%F{019}"; hr "⋅"; builtin print -Pn -- "%f%b"
 
-if ! cargo install --list | grep -q 'cargo-update'; then
-  builtin print -P -- "%F{blue}==>%f Installing cargo-update"
-  cargo install cargo-update || return $?
-
-  builtin print -Pn -- "%B%F{019}"; hr "⋅"; builtin print -Pn -- "%f%b"
-fi
-
 typeset -a cargoPackages
 
 # A cargo subcommand for checking and applying updates to installed executables
@@ -66,22 +59,6 @@ cargoPackages+=("simple-http-server")
 #   https://github.com/brocode/fw
 cargoPackages+=("fw")
 
-# A minimal, fast alternative to 'du -sh'
-#   https://github.com/sharkdp/dup
-cargoPackages+=("du-dup")
-
-# A more intuitive version of du in rust
-#   https://github.com/bootandy/dust
-cargoPackages+=("du-dust")
-
-# A tool to analyze file system usage written in Rust
-#   https://github.com/nachoparker/dutree
-cargoPackages+=("dutree")
-
-# A tool to conveniently learn about the disk usage of directories, fast!
-#   https://github.com/Byron/dua-cli
-cargoPackages+=("dua-cli")
-
 # svgcleaner could help you to clean up your SVG files from the unnecessary data.
 #   https://github.com/RazrFalcon/svgcleaner
 cargoPackages+=("svgcleaner")
@@ -89,10 +66,6 @@ cargoPackages+=("svgcleaner")
 # Find and replace text in source files
 #   https://github.com/TankerHQ/ruplacer
 cargoPackages+=("ruplacer")
-
-# Intuitive find & replace CLI (sed alternative)
-#   https://github.com/chmln/sd
-cargoPackages+=("sd")
 
 # A fast and reliable alternative to rsync for synchronizing local files
 #   https://github.com/wchang22/LuminS
@@ -106,10 +79,6 @@ cargoPackages+=("eva")
 #   https://github.com/sharkdp/pastel
 cargoPackages+=("pastel")
 
-# A minimal, fast alternative to 'du -sh'
-#   https://github.com/sharkdp/diskus
-cargoPackages+=("diskus")
-
 # A tool and Rust crate for making text title case
 #   https://github.com/wezm/titlecase
 cargoPackages+=("titlecase")
@@ -121,6 +90,22 @@ cargoPackages+=("fontfor")
 # A command line utility to easily make dank memes.
 #   https://github.com/TheRawMeatball/meme-cli
 cargoPackages+=("meme-cli")
+
+# A terminal filter to colorize output
+#   https://github.com/dalance/pipecolor
+cargoPackages+=("pipecolor")
+
+# An opinionated Lua code formatter
+#   https://github.com/JohnnyMorganz/StyLua
+cargoPackages+=("stylua")
+
+# Find files (ff) by name, fast!
+#   https://github.com/vishaltelangre/ff
+cargoPackages+=("find-files")
+
+# Create beautiful image of your source code.
+#   https://github.com/Aloxaf/silicon
+cargoPackages+=("silicon")
 
 builtin print -P -- "%F{blue}==>%f Installing or updating cargo packages:"
 builtin print -P -- "      %B${(j: :)cargoPackages}%b\n"

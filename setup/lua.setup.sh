@@ -1,44 +1,15 @@
 #!/usr/bin/env zsh
 
-# Repo: https://github.com/sumneko/lua-language-server
-function install-lua-language-server {
-  emulate -L zsh
+emulate -L zsh
 
-  setopt pipe_fail
+setopt pipe_fail
 
-  if ! (( $+commands[ninja] )) &>/dev/null; then
-    command brew install ninja
-  fi
+brew bundle install --file="${${(%):-%x}:A:h}/Homebrew/lua.brewfile"
 
-  : ${LUA_LSP_HOME:=${HOME}/.local/opt/lua-language-server}
-  export LUA_LSP_HOME
+luarocks install luacheck
 
-  if [[ ! -d $LUA_LSP_HOME ]]; then
-    command git clone https://github.com/sumneko/lua-language-server $LUA_LSP_HOME
-  fi
+if ! type cargo ; then
+  source "${${(%):-%x}:A:h}/rust.setup.sh"
 
-  builtin cd -q $LUA_LSP_HOME
-
-  command git submodule update --init --recursive
-
-  builtin cd -q 3rd/luamake
-
-  ninja -f compile/ninja/macos.ninja
-
-  unalias luamake &> /dev/null
-  alias luamake="${LUA_LSP_HOME}/3rd/luamake/luamake"
-
-  builtin cd -q ../..
-
-  ./3rd/luamake/luamake rebuild
-}
-
-function main {
-  emulate -L zsh
-
-  setopt pipe_fail
-
-  install-lua-language-server
-}
-
-main
+  cargo install-update stylua
+fi

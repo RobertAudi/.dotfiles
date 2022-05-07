@@ -1,0 +1,7 @@
+#autoload
+
+if is-callable grunt ; then
+  print-warning "Command not found: grunt"
+else
+  grunt --list
+fi
