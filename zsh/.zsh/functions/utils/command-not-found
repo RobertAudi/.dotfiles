@@ -1,0 +1,4 @@
+#autoload
+
+print-error -q "୧( ಠ Д ಠ )୨ command not found: $1"
+return 127

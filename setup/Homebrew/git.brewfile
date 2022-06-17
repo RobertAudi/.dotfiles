@@ -57,3 +57,36 @@ brew "github-markdown-toc"
 #  Static checker for GitHub Actions workflow files
 #   https://github.com/rhysd/actionlint
 brew "actionlint"
+
+# Taps
+# ------------------------------------------------------------------------------
+
+# Command line User Interface for fixing git conflicts
+#   https://github.com/mkchoi212/fac
+tap "mkchoi212/fac", "https://github.com/mkchoi212/fac.git"
+brew "fac"
+
+# CHANGELOG generator implemented in Go.
+#   https://github.com/git-chglog/git-chglog
+tap "git-chglog/git-chglog"
+brew "git-chglog"
+
+# Clone all repos of a github organization
+#   https://github.com/caarlos0/clone-org
+tap "caarlos0/tap"
+brew "caarlos0/tap/clone-org"
+
+# List & Describe GitHub Releases
+#   https://github.com/dtan4/ghrls
+tap "dtan4/tools"
+brew "dtan4/tools/ghrls"
+
+# Optimally fast branch name command for Git
+#   https://github.com/itchyny/git-branch-name
+tap "itchyny/tap"
+brew "itchyny/tap/git-branch-name"
+
+# Git plugin that allows you to save multiple user profiles and set them as project defaults
+#   https://github.com/gesquive/git-user
+tap "gesquive/tap"
+brew "git-user"

@@ -2,12 +2,8 @@
 
 # Check for merge conflicts
 
-# Tested on Linux and Mac
+conflicts=`git diff --cached --name-only -G"<<<<<|=====|>>>>>" -- ':(exclude)*.md'`
 
-# Simple check for merge conflics
-conflicts=`git diff --cached --name-only -G"<<<<<|=====|>>>>>"`
-
-# Something went wrong
 if [[ -n "$conflicts" ]]; then
   echo
   echo "Unresolved merge conflicts in these files:"

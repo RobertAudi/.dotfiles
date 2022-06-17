@@ -1,7 +1,7 @@
 ---
 cmdargs:
   # Checking more strictly
-  severity: style_problem
+  severity: "style_problem"
 
   # Colorize human-readable output.
   color: true

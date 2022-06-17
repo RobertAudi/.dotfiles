@@ -3,13 +3,13 @@
 --   - L3MON4D3/LuaSnip
 
 local ls = require("luasnip")
-local s = ls.snippet
-local t = ls.text_node
-local i = ls.insert_node
+local snip = ls.snippet
+local text = ls.text_node
+local insert = ls.insert_node
 local fmt = require("luasnip.extras.fmt").fmt
 
 ls.add_snippets("ruby", {
-  s(
+  snip(
     { trig = "module", name = "module ... end", dscr = "Module" },
     fmt(
       [[
@@ -17,11 +17,11 @@ ls.add_snippets("ruby", {
           {}
         end
       ]],
-      { i(1), i(0) }
+      { insert(1), insert(0) }
     )
   ),
 
-  s(
+  snip(
     { trig = "class", name = "class ... end", dscr = "Class" },
     fmt(
       [[
@@ -29,11 +29,11 @@ ls.add_snippets("ruby", {
           {}
         end
       ]],
-      { i(1), i(0) }
+      { insert(1), insert(0) }
     )
   ),
 
-  s(
+  snip(
     { trig = "controller", name = "Controller", dscr = "Ruby on Rails controller" },
     fmt(
       [[
@@ -41,11 +41,11 @@ ls.add_snippets("ruby", {
           {}
         end
       ]],
-      { i(1), i(0) }
+      { insert(1), insert(0) }
     )
   ),
 
-  s(
+  snip(
     { trig = "helper", name = "Helper", dscr = "Ruby on Rails helper" },
     fmt(
       [[
@@ -53,11 +53,11 @@ ls.add_snippets("ruby", {
           {}
         end
       ]],
-      { i(1), i(0) }
+      { insert(1), insert(0) }
     )
   ),
 
-  s(
+  snip(
     { trig = "if", hidden = true },
     fmt(
       [[
@@ -65,11 +65,11 @@ ls.add_snippets("ruby", {
           {}
         end
       ]],
-      { i(1), i(0) }
+      { insert(1), insert(0) }
     )
   ),
 
-  s(
+  snip(
     { trig = "unless", hidden = true },
     fmt(
       [[
@@ -77,11 +77,11 @@ ls.add_snippets("ruby", {
           {}
         end
       ]],
-      { i(1), i(0) }
+      { insert(1), insert(0) }
     )
   ),
 
-  s(
+  snip(
     { trig = "ife", hidden = true },
     fmt(
       [[
@@ -91,22 +91,22 @@ ls.add_snippets("ruby", {
           # ...
         end
       ]],
-      { i(1), i(0) }
+      { insert(1), insert(0) }
     )
   ),
 
-  s(
+  snip(
     { trig = "elsif", hidden = true },
     fmt(
       [[
         elsif {}
           {}
       ]],
-      { i(1), i(0) }
+      { insert(1), insert(0) }
     )
   ),
 
-  s(
+  snip(
     { trig = "def", hidden = true },
     fmt(
       [[
@@ -114,11 +114,11 @@ ls.add_snippets("ruby", {
           {}
         end
       ]],
-      { i(1), i(0) }
+      { insert(1), insert(0) }
     )
   ),
 
-  s(
+  snip(
     { trig = "init", name = "def initialize", dscr = "" },
     fmt(
       [[
@@ -126,11 +126,11 @@ ls.add_snippets("ruby", {
           {}
         end
       ]],
-      { i(0) }
+      { insert(0) }
     )
   ),
 
-  s(
+  snip(
     { trig = "case", name = "case ... when ... end", dscr = "case statement" },
     fmt(
       [[
@@ -139,11 +139,11 @@ ls.add_snippets("ruby", {
           {}
         end
       ]],
-      { i(1), i(2), i(0) }
+      { insert(1), insert(2), insert(0) }
     )
   ),
 
-  s("pry", t("binding.pry")),
-  s("pry!", t("require \"pry\"; binding.pry")),
-  s("#frozen", t("# frozen_string_literal: true")),
+  snip("pry", text("binding.pry")),
+  snip("pry!", text("require \"pry\"; binding.pry")),
+  snip("#frozen", text("# frozen_string_literal: true")),
 })

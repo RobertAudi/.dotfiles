@@ -1,7 +1,7 @@
 -- Module: 0x2a.plugins.marks
--- Plugin: chentau/marks.nvim
+-- Plugin: chentoast/marks.nvim
 -- Description: A better user experience for viewing and interacting with Vim marks.
--- URL: https://github.com/chentau/marks.nvim
+-- URL: https://github.com/chentoast/marks.nvim
 
 local M = {}
 

@@ -3,12 +3,12 @@
 --   - L3MON4D3/LuaSnip
 
 local ls = require("luasnip")
-local s = ls.snippet
-local i = ls.insert_node
+local snip = ls.snippet
+local insert = ls.insert_node
 local fmt = require("luasnip.extras.fmt").fmt
 
 ls.add_snippets("rake", {
-  s(
+  snip(
     { trig = "task", dscr = "Rake task" },
     fmt(
       [[
@@ -17,7 +17,7 @@ ls.add_snippets("rake", {
           {}
         end
       ]],
-      { i(1), i(2, "name: :environment"), i(0) }
+      { insert(1), insert(2, "name: :environment"), insert(0) }
     )
   ),
 })

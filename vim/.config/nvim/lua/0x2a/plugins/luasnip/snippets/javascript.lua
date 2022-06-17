@@ -3,14 +3,14 @@
 --   - L3MON4D3/LuaSnip
 
 local ls = require("luasnip")
-local s = ls.snippet
-local i = ls.insert_node
+local snip = ls.snippet
+local insert = ls.insert_node
 local fmt = require("luasnip.extras.fmt").fmt
 
 ls.add_snippets("javascript", {
-  s({ trig = "log", dscr = "console.log" }, fmt("console.log({});", i(0))),
+  snip({ trig = "log", dscr = "console.log" }, fmt("console.log({});", insert(0))),
 
-  s(
+  snip(
     { trig = "fun", name = "const ... = (...) => {} ", dscr = "Arrow function" },
     fmt(
       [[
@@ -18,11 +18,11 @@ ls.add_snippets("javascript", {
           {}
         }};
       ]],
-      { i(1), i(2), i(0) }
+      { insert(1), insert(2), insert(0) }
     )
   ),
 
-  s(
+  snip(
     { trig = "fun", name = "(...) => {} ", dscr = "Anonymous function" },
     fmt(
       [[
@@ -30,11 +30,11 @@ ls.add_snippets("javascript", {
           {}
         }};
       ]],
-      { i(1), i(0) }
+      { insert(1), insert(0) }
     )
   ),
 
-  s(
+  snip(
     { trig = "if", name = "if ... ", dscr = "if statement" },
     fmt(
       [[
@@ -42,11 +42,11 @@ ls.add_snippets("javascript", {
           {}
         }}
       ]],
-      { i(1), i(0) }
+      { insert(1), insert(0) }
     )
   ),
 
-  s(
+  snip(
     { trig = "ife", name = "if ... else ...", dscr = "if-else statement" },
     fmt(
       [[
@@ -56,11 +56,11 @@ ls.add_snippets("javascript", {
           // ...
         }}
       ]],
-      { i(1), i(0) }
+      { insert(1), insert(0) }
     )
   ),
 
-  s(
+  snip(
     { trig = "switch", name = "switch ... case ...", dscr = "switch statement" },
     fmt(
       [[
@@ -72,11 +72,11 @@ ls.add_snippets("javascript", {
             // ...
         }}
       ]],
-      { i(1), i(2), i(0) }
+      { insert(1), insert(2), insert(0) }
     )
   ),
 
-  s(
+  snip(
     { trig = "case", name = [[case "...":]], dscr = "" },
     fmt(
       [[
@@ -84,11 +84,11 @@ ls.add_snippets("javascript", {
           {}
           break;
       ]],
-      { i(1), i(0) }
+      { insert(1), insert(0) }
     )
   ),
 
-  s(
+  snip(
     { trig = "try", name = "try ... catch ...", dscr = "" },
     fmt(
       [[
@@ -96,11 +96,11 @@ ls.add_snippets("javascript", {
           {}
         }} catch (e) {{}}
       ]],
-      i(0)
+      insert(0)
     )
   ),
 
-  s(
+  snip(
     { trig = "ready", name = "document.ready", dscr = "" },
     fmt(
       [[
@@ -108,7 +108,7 @@ ls.add_snippets("javascript", {
           {}
         }});
       ]],
-      i(0)
+      insert(0)
     )
   ),
 })

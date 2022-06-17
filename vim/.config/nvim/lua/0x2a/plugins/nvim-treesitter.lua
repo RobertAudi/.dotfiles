@@ -12,6 +12,7 @@ M.config = function()
     -- One of "all", "maintained" (parsers with maintainers), or a list of languages
     ensure_installed = {
       "ruby",
+      "rust",
       "javascript",
       "lua",
 
@@ -61,6 +62,41 @@ M.config = function()
     autotag = {
       enable = true,
       filetypes = { "html", "xml" },
+    },
+
+    context_commentstring = {
+      enable = true,
+      enable_autocmd = false,
+      config = {
+        swift = "// %s",
+        objc = "// %s",
+        cfg = "# %s",
+        gitconfig = "# %s",
+        gitignore = "# %s",
+        eruby = "<%# %s %>",
+        dosini = "# %s",
+        yaml = "#%s",
+        zinit = "# %s",
+      },
+    },
+
+    textobjects = {
+      move = {
+        enable = true,
+        set_jumps = true, -- whether to set jumps in the jumplist
+        goto_next_start = {
+          ["]]"] = "@function.outer",
+        },
+        goto_next_end = {
+          ["]["] = "@function.outer",
+        },
+        goto_previous_start = {
+          ["[["] = "@function.outer",
+        },
+        goto_previous_end = {
+          ["[]"] = "@function.outer",
+        },
+      },
     },
 
     playground = {

@@ -23,6 +23,7 @@ vim.api.nvim_create_autocmd({ "VimEnter", "ColorScheme" }, {
 -- Update the 'scrolloff' according to the height of the window
 -- Source: https://github.com/uplus/vimrc/blob/80b6dc96d08bf00ed59e545448ea031aee194230/autocmds.vim#L8
 vim.api.nvim_create_autocmd({ "VimEnter", "WinEnter", "VimResized" }, {
+  desc = "Update the 'scrolloff' according to the height of the window",
   group = augroup,
   pattern = "*",
   callback = function()
@@ -105,6 +106,7 @@ end
 
 -- Don't show whitespace in readonly and nomodifiable buffers
 vim.api.nvim_create_autocmd("BufReadPost", {
+  desc = "Don't show whitespace in readonly and nomodifiable buffers",
   group = augroup,
   pattern = "*",
   callback = function()
@@ -116,6 +118,7 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 
 -- Open new tabs at the end
 vim.api.nvim_create_autocmd("TabNew", {
+  desc = "Open new tabs at the end",
   group = augroup,
   pattern = "*",
   callback = function()
@@ -131,15 +134,16 @@ vim.api.nvim_create_autocmd("BufEnter", {
   pattern = "*",
   callback = function()
     if vim.bo.filetype == "help" or vim.bo.filetype == "man" or vim.bo.filetype == "bufferize" then
-      vim.fn["x2a#vim#remove_timeout"]()
+      vim.o.timeoutlen = 0
     else
-      vim.fn["x2a#vim#restore_timeout"]()
+      vim.o.timeoutlen = vim.g.default_timeoutlen or 1000
     end
   end,
 })
 
 -- Back to normal mode when Vim loses focus
 vim.api.nvim_create_autocmd({ "FocusLost", "TabLeave" }, {
+  desc = "Leave insert mode when Vim loses focus",
   group = augroup,
   pattern = "*",
   callback = function()
@@ -157,5 +161,17 @@ vim.api.nvim_create_autocmd("BufWritePost", {
   pattern = "*",
   callback = function()
     require("0x2a.utils.files").make_executable()
+  end,
+})
+
+-- Highlight yanked region
+vim.api.nvim_create_autocmd("TextYankPost", {
+  desc = "Highlight yanked text",
+  group = augroup,
+  pattern = "*",
+  callback = function()
+    vim.highlight.on_yank({
+      higroup = vim.fn.hlexists("HighlightedyankRegion") > 0 and "HighlightedyankRegion" or "IncSearch",
+    })
   end,
 })

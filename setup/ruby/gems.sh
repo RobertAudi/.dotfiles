@@ -40,6 +40,16 @@ defaultLibGems+=("rspec-nc")
 #   https://github.com/mattsears/nyan-cat-formatter
 defaultLibGems+=("nyan-cat-formatter")
 
+# A library for generating fake data such as names,
+# addresses, and phone numbers.
+#   https://github.com/faker-ruby/faker
+defaultLibGems+=("faker")
+
+# A tool to make it easier to pick the right Faker
+# methods to generate the fake data you need. 🔍
+#   https://github.com/faker-ruby/faker-bot
+defaultLibGems+=("faker-bot")
+
 builtin print -P -- "%F{blue}==>%f Installing gems:"
 builtin print -P -- "%B${(j: :)gems}%b"
 

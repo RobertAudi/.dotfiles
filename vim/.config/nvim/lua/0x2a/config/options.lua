@@ -97,7 +97,7 @@ vim.o.history = 2000
 -- certain numberformats (e.g. 007 will be incremented to 010, because vim thinks its octal)
 vim.o.nrformats = ""
 
-vim.opt.iskeyword:append({ ",", "_", "$", "@", "%", "#", "-" })
+vim.opt.iskeyword:append({ "_", "$", "@", "%", "#", "-" })
 
 -- Automatically update buffers when the
 -- filesystem file changes
@@ -134,6 +134,9 @@ vim.o.cmdheight = 2
 vim.o.cmdwinheight = 3
 vim.o.more = false
 
+-- Show the current file's name at the top of buffers
+require("0x2a.winbar").setup()
+
 -- Always show status line.
 vim.o.laststatus = 2
 
@@ -146,6 +149,9 @@ vim.o.showcmd = true
 
 -- Pop-up menu's line height
 vim.o.pumheight = 20
+
+-- Pop-up menu's minimum width
+vim.o.pumwidth = 25
 
 -- Enable pseudo-transparency for the popup-menu
 vim.o.pumblend = 5
@@ -508,9 +514,9 @@ if utils.is_empty(os.getenv("SUDO_USER")) or os.getenv("USER") ~= os.getenv("SUD
   vim.o.swapfile = false
   vim.o.undofile = true
 
-  vim.o.directory = vim.env.XDG_DATA_HOME .. "/nvim/swap//,.,/var/tmp"
-  vim.o.backupdir = vim.env.XDG_DATA_HOME .. "/nvim/backup//,.,/var/tmp"
-  vim.o.undodir = vim.env.XDG_DATA_HOME .. "/nvim/undo//,.,/var/tmp"
+  vim.o.directory = vim.env.XDG_STATE_HOME .. "/nvim/swap//,.,/var/tmp"
+  vim.o.backupdir = vim.env.XDG_STATE_HOME .. "/nvim/backup//,.,/var/tmp"
+  vim.o.undodir = vim.env.XDG_STATE_HOME .. "/nvim/undo//,.,/var/tmp"
 
   vim.o.undolevels = 1000
   vim.o.undoreload = 10000
@@ -530,8 +536,8 @@ if utils.is_empty(os.getenv("SUDO_USER")) or os.getenv("USER") ~= os.getenv("SUD
 else
   vim.o.shada = ""
 
-  vim.opt.directory:remove({ vim.env.XDG_DATA_HOME .. "/nvim/swap//", "~/tmp" })
-  vim.opt.backupdir:remove({ vim.env.XDG_DATA_HOME .. "/nvim/backup//", "~/tmp" })
+  vim.opt.directory:remove({ vim.env.XDG_STATE_HOME .. "/nvim/swap//", "~/tmp" })
+  vim.opt.backupdir:remove({ vim.env.XDG_STATE_HOME .. "/nvim/backup//", "~/tmp" })
 
   vim.o.undodir = ""
   vim.o.viewdir = ""

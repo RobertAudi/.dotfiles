@@ -27,8 +27,8 @@ pman() {
       done
     else
       unfunction pman &>/dev/null
-      print-error "zsh: command not found: \e[1;4mpman\e[0m"
-      return 127
+      command-not-found "pman"
+      return $status
     fi
   else
     print-error 'What manual page do you want?'

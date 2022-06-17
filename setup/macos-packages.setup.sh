@@ -6,7 +6,7 @@ if type mint >/dev/null; then
   #   https://github.com/erica/xcopen
   mint install erica/xcopen
 else
-  builtin print -P -u 2 -- "[%F{196}ERROR%f] Command not found: mint"
+  builtin print -u 2 -- "୧( ಠ Д ಠ )୨ command not found: mint"
 fi
 
 (

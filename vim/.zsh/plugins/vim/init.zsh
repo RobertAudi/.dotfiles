@@ -1,4 +1,3 @@
-path=(/Applications/Neovide.app/Contents/MacOS(N-/) $path)
 fpath=("$ZSH_HOME/plugins/vim/completions" $fpath)
 
 function {

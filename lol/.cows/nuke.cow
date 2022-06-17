@@ -1,0 +1,48 @@
+# nuke
+# by <authorName>
+# Generated with Charc0al's cowsay file converter http://charc0al.github.io/cowsay-files/converter
+
+$x = "\e[49m  ";          #reset color
+$t = "$thoughts ";
+$a = "\e[48;5;160m  ";
+$b = "\e[48;5;202m  ";
+$c = "\e[48;5;228m  ";
+$d = "\e[48;5;214m  ";
+$e = "\e[48;5;250m  ";
+
+$the_cow = <<EOC
+          $t
+            $t
+              $t
+                $t
+        $a  $x                    $b$a  $x  $b$x          $a$x
+            $b$x    $a    $x    $a$c  $b$a$x    $a      $x
+              $a    $b    $a$x$a$c  $b      $a  $b        $x  $b  $x
+      $a$x  $a$b        $a  $b      $c$d    $b        $c  $b$x
+        $b$x$a$b      $d  $b$a  $b$d    $b    $d    $c$b$c  $x
+            $b    $d    $c$b$a$c    $d$c  $a$c      $d$b  $c$x
+          $b    $d$c    $b    $c    $d$c$a      $c  $d  $b$c$x
+          $a    $d  $c  $b$c$b  $c    $d$c    $a$b    $d$b    $x
+          $a$d$a  $b      $c  $d      $b  $c  $b$d  $b$d$b    $x
+          $b$d  $b$d$c  $a  $b$d$c        $a  $c  $d$b$d$b    $a  $x
+        $a    $d$b$d$c$a  $d$c    $b$c      $a$c  $d$b$d$b  $a$x
+      $a$x  $a$d$b$d  $b$d  $c    $b$c$d$c  $b$d    $b$d$b$a$x
+            $a  $b      $d$c      $b  $d  $c$b$d  $b      $a$x  $a$x
+              $a  $b$a$b$d    $b$a$c$a$b$d    $b    $a    $x
+                $b$x    $a  $x$a$c  $a$b$a    $b$a$b$x  $a$x
+                              $a$c  $a$c$a$b$x
+                            $e$a$c  $a$c$a$b$e      $x
+                    $e      $x$a$b$c$b$c$b$a$x      $e      $x
+                $e  $x        $a$b$c$b$c$b$a$x          $e  $x
+                  $e          $a  $c$a$c$a$e              $x
+                              $e            $x
+                            $a$b$c  $b$c  $b$x
+                            $a$b$c  $b$c  $b$x
+                            $a$b$c  $b$a$c$b  $x
+                            $b  $c        $b  $x
+                      $b$x  $b  $c    $b$c$b  $x
+        $b  $x    $b      $x$b$c      $b      $x$b    $x  $b  $x
+        $b          $d    $b      $c  $b        $d  $b          $x
+      $b  $d  $b      $d  $b  $d$b              $d  $b  $d    $b  $x
+      $b$d          $b  $d          $b    $d                    $b$x
+EOC

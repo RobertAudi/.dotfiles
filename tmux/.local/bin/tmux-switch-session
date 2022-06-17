@@ -6,8 +6,8 @@ if [[ -z "$TMUX" ]]; then
 fi
 
 if ! type fzf >/dev/null; then
-  tmux display-message "[ERROR] Command not found: fzf" >&2
-  return 1
+  tmux display-message "୧( ಠ Д ಠ )୨ command not found: fzf" >&2
+  return 127
 fi
 
 local -a sessions

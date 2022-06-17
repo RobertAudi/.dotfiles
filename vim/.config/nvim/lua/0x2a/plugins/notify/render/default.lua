@@ -10,17 +10,16 @@
 --   - rcarriga/nvim-notify
 --   - 0x2a.plugins.notify.utils
 
-local config = require("notify.config")
 local base = require("notify.render.base")
 local wrap = require("0x2a.plugins.notify.utils").wrap
 local is_empty = require("0x2a.utils").is_empty
 
-return function(bufnr, notif, highlights)
+return function(bufnr, notif, highlights, config)
   if is_empty(notif.title[1]) then
     return require("0x2a.plugins.notify.render.minimal")(bufnr, notif, highlights)
   end
 
-  notif.message = wrap(notif)
+  notif.message = wrap(notif, config)
 
   local left_icon = notif.icon .. " "
   local max_message_width = math.max(math.max(unpack(vim.tbl_map(function(line)

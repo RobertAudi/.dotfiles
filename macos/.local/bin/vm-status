@@ -1,0 +1,22 @@
+#!/usr/bin/env zsh
+
+if ! type prlctl &> /dev/null ; then
+  print -u 2 -- "command not found: prlctl"
+  print -u 2 -- "Parallels might not be installed"
+  return 1
+fi
+
+if ! type fzf &> /dev/null ; then
+  print -u 2 -- "command not found: fzf"
+  return 1
+fi
+
+local vmid
+vmid="$(prlctl list --all | fzf --header-lines=1 | cut -d\  -f1 | sed 's/[{}]//g')"
+
+if [[ -z "$vmid" ]] ; then
+  print -u 2 -- "VM not found"
+  return 1
+fi
+
+prlctl status $vmid | cut -d\  -f4

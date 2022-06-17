@@ -3,17 +3,17 @@
 --   - L3MON4D3/LuaSnip
 
 local ls = require("luasnip")
-local s = ls.snippet
-local t = ls.text_node
-local i = ls.insert_node
+local snip = ls.snippet
+local text = ls.text_node
+local insert = ls.insert_node
 local fmt = require("luasnip.extras.fmt").fmt
 
 ls.add_snippets("eruby", {
-  s({ trig = "%", hidden = true }, fmt("<% {} %>", i(0))),
-  s({ trig = "=", hidden = true }, fmt("<%= {} %>", i(0))),
-  s({ trig = "#", hidden = true }, fmt("<%# {} %>", i(0))),
+  snip({ trig = "%", hidden = true }, fmt("<% {} %>", insert(0))),
+  snip({ trig = "=", hidden = true }, fmt("<%= {} %>", insert(0))),
+  snip({ trig = "#", hidden = true }, fmt("<%# {} %>", insert(0))),
 
-  s(
+  snip(
     { trig = "if", hidden = true },
     fmt(
       [[
@@ -21,11 +21,11 @@ ls.add_snippets("eruby", {
           {}
         <% end %>
       ]],
-      { i(1), i(0) }
+      { insert(1), insert(0) }
     )
   ),
 
-  s(
+  snip(
     { trig = "unless", hidden = true },
     fmt(
       [[
@@ -33,11 +33,11 @@ ls.add_snippets("eruby", {
           {}
         <% end %>
       ]],
-      { i(1), i(0) }
+      { insert(1), insert(0) }
     )
   ),
 
-  s(
+  snip(
     { trig = "ife", hidden = true },
     fmt(
       [[
@@ -47,26 +47,26 @@ ls.add_snippets("eruby", {
           # ...
         <% end %>
       ]],
-      { i(1), i(0) }
+      { insert(1), insert(0) }
     )
   ),
 
-  s(
+  snip(
     { trig = "elsif", hidden = true },
     fmt(
       [[
         <% elsif {} %>
           {}
       ]],
-      { i(1), i(0) }
+      { insert(1), insert(0) }
     )
   ),
 
-  s({ trig = "else", hidden = true }, { t("<% else %>") }),
-  s({ trig = "end", hidden = true }, { t("<% end %>") }),
+  snip({ trig = "else", hidden = true }, { text("<% else %>") }),
+  snip({ trig = "end", hidden = true }, { text("<% end %>") }),
 
-  s({ trig = "lt", name = "link_to", dscr = "" }, fmt("<%= link_to {} %>", i(0))),
-  s(
+  snip({ trig = "lt", name = "link_to", dscr = "" }, fmt("<%= link_to {} %>", insert(0))),
+  snip(
     { trig = "lt", name = "link_to ... do", dscr = "link_to with a block" },
     fmt(
       [[
@@ -74,17 +74,17 @@ ls.add_snippets("eruby", {
           {}
         <% end %>
       ]],
-      { i(1), i(0) }
+      { insert(1), insert(0) }
     )
   ),
 
-  s({ trig = "t", hidden = true }, fmt("<%= t {} %>", i(0))),
-  s({ trig = "t", hidden = true }, fmt("<%= l {} %>", i(0))),
+  snip({ trig = "t", hidden = true }, fmt("<%= t {} %>", insert(0))),
+  snip({ trig = "t", hidden = true }, fmt("<%= l {} %>", insert(0))),
 
-  s({ trig = "debug", hidden = true }, fmt("<%= debug {} %>", i(0))),
-  s({ trig = "yield", hidden = true }, t("<%= yield %>")),
-  s({ trig = "yield" }, fmt("<%= yield :{} %>", i(0))),
+  snip({ trig = "debug", hidden = true }, fmt("<%= debug {} %>", insert(0))),
+  snip({ trig = "yield", hidden = true }, text("<%= yield %>")),
+  snip({ trig = "yield" }, fmt("<%= yield :{} %>", insert(0))),
 
-  s({ trig = "render", hidden = true }, fmt("<%= render {} %>", i(0))),
-  s({ trig = "renderp", name = "render partial", dscr = "" }, fmt("<%= render partial: {} %>", i(0))),
+  snip({ trig = "render", hidden = true }, fmt("<%= render {} %>", insert(0))),
+  snip({ trig = "renderp", name = "render partial", dscr = "" }, fmt("<%= render partial: {} %>", insert(0))),
 })

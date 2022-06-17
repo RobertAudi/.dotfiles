@@ -52,14 +52,15 @@ for i in $@; do
             mdcat "$i" | smartless
           elif is-callable bat ; then
             {
-              print-warning "Command not found: mdcat"
+              command-not-found "mdcat"
               builtin print -- "Using bat instead"
             } >&2
 
             bat --language "Markdown" --style header,grid "$i"
           else
             {
-              print-warning "Commands not found: mdcat, bat"
+              command-not-found "bat"
+              command-not-found "mdcat"
               builtin print -- "Using $catCommandPath instead"
             } >&2
 

@@ -25,3 +25,4 @@ _darcs
 
 ^/README.*
 ^/LICENSE.*
+^/doc/*

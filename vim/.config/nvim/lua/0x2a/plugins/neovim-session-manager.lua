@@ -15,7 +15,7 @@ M.config = function()
   })
 
   vim.api.nvim_create_user_command("SaveSession", "SessionManager save_current_session", { nargs = 0 })
-  vim.api.nvim_create_user_command("LoadSession", "SessionManager load_session", { nargs = 0 })
+  vim.api.nvim_create_user_command("LoadSession", "SessionManager load_current_dir_session", { nargs = 0 })
 end
 
 return M

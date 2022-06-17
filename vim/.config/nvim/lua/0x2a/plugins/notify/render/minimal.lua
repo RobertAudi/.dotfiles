@@ -12,8 +12,8 @@
 local base = require("notify.render.base")
 local wrap = require("0x2a.plugins.notify.utils").wrap
 
-return function(bufnr, notif, highlights)
-  notif.message = wrap(notif, { icon = true })
+return function(bufnr, notif, highlights, config)
+  notif.message = wrap(notif, config, { icon = true })
 
   local namespace = base.namespace()
 

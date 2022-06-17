@@ -4,7 +4,6 @@
 -- URL: https://github.com/nvim-telescope/telescope.nvim
 -- Requires:
 --   - stevearc/aerial.nvim
---   - 0x2a.plugins.telescope.picker.yanky
 
 local M = {}
 
@@ -62,21 +61,33 @@ M.config = function()
   telescope.load_extension("fzf")
   telescope.load_extension("ui-select")
 
-  local aerial_ok, _ = pcall(require, "aerial")
-
-  if aerial_ok then
-    telescope.load_extension("aerial")
+  if pcall(require, "urlview") then
+    telescope.load_extension("urlview")
   end
 
-  vim.keymap.set("n", "<C-p>", [[<Cmd>lua require("telescope.builtin").find_files()<CR>]])
-  vim.keymap.set("n", "<C-b>", [[<Cmd>lua require("telescope.builtin").buffers()<CR>]])
-  vim.keymap.set("n", "<C-Space>", [[<Cmd>lua require("telescope.builtin").builtin()<CR>]])
+  vim.keymap.set("n", "<C-p>", [[<Cmd>lua require("telescope.builtin").find_files()<CR>]], { noremap = true })
+  vim.keymap.set("n", "<C-b>", [[<Cmd>lua require("telescope.builtin").buffers()<CR>]], { noremap = true })
+  vim.keymap.set("n", "<C-Space>", [[<Cmd>lua require("telescope.builtin").builtin()<CR>]], { noremap = true })
 
-  local yanky_ok, _ = pcall(require, "yanky")
+  vim.keymap.set("n", "gr", function()
+    require("telescope.builtin").lsp_references({
+      layout_config = {
+        horizontal = {
+          preview_width = 80,
+        },
+      },
+    })
+  end, { noremap = true })
 
-  if yanky_ok then
-    vim.keymap.set("n", "<C-y>", [[<Cmd>lua require("0x2a.plugins.telescope.pickers.yanky").yank_history({})<CR>]])
-  end
+  vim.keymap.set("n", "gd", function()
+    require("telescope.builtin").lsp_definitions({
+      layout_config = {
+        horizontal = {
+          preview_width = 80,
+        },
+      },
+    })
+  end, { noremap = true })
 end
 
 return M

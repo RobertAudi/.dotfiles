@@ -1,0 +1,59 @@
+# Peter Griffin (Family Guy)
+# by Charc0al (original art for cowsay)
+# Generated with Charc0al's cowsay file converter http://charc0al.github.io/cowsay-files/converter
+
+$x = "\e[49m  ";          #reset color
+$t = "$thoughts ";
+$a = "\e[48;5;235m  ";
+$b = "\e[48;5;94m  ";
+$c = "\e[48;5;223m  ";
+$d = "\e[48;5;255m  ";
+$e = "\e[48;5;236m  ";
+$f = "\e[48;5;216m  ";
+$g = "\e[48;5;248m  ";
+
+$the_cow = <<EOC
+            $t
+              $t                    $a                  $x
+                $t                $a$b                  $a$x
+                  $t          $a  $b                      $a  $x
+                            $a$b    $a          $b            $a  $x
+                            $a      $c          $a              $b$a$x
+                            $a$d    $a$c      $a      $c      $a$b  $a$x
+                          $a$d        $a$c  $e$d      $a$c    $a$b    $a$x
+                          $a$d  $a$d  $a    $d          $a              $x
+                    $a      $d  $a      $c$a$d    $a$d  $a$c  $a$c  $f$a$x
+                  $a$c    $a$d$a$c      $a$c$a$d        $a$c        $f  $a$x
+                $a$c        $a$c            $a$d      $a$c          $f  $a$x
+              $a$c          $a$c              $a      $c              $f  $a$x
+              $a$c          $f$a$c      $a$c                          $f  $a$x
+            $a$c              $f$a      $c          $a$c              $f  $a$x
+            $a$c            $a$c                  $a    $c            $f  $a$x
+            $a$c            $a                      $c                $f  $a$x
+            $a$c          $a$c  $f                  $c                  $f  $a$x
+            $a$c          $a$c                                          $f  $a$x
+          $a$c              $a$c                                        $f  $a$x
+          $a$c                $a$c                                      $f  $a$x
+          $a$c                  $a$c                                    $f  $a$x
+          $a$c                  $a$c                                    $f  $a$x
+          $a$c              $a  $c                                      $f  $a$x
+          $a$c            $a$c                $a$c                      $f  $a$x
+          $a$c            $a$c                $f$a$c                    $f  $a$x
+          $a$c            $a$c        $f$c    $f$a$c                    $f  $a$x
+          $a$c              $a$c    $f  $c    $f$a$c                    $f  $a$x
+          $a$c                $a        $f    $a$c                      $f  $a  $x
+          $a$c                          $a    $c                        $f$a$g$a$x
+          $a$c                                                          $a$g  $a  $x
+          $a$c                                                        $a$g  $a$g  $a$x
+          $a  $c                                                    $a$d  $a$g      $a$x
+          $a$d$a$c                                              $a  $d  $a$g          $a$x
+      $a      $d$a$c                                        $a  $d      $a$d    $g      $a$x
+    $a$d  $g$a$d  $a$c                                $a    $d        $a$d          $g    $a$x
+  $a$d      $g$a$d  $a$c                          $a  $d            $a$d              $g    $x
+$a$d          $g$a$d  $a$c                    $a  $d            $a  $d                  $g  $x
+$d              $a$d    $a  $c        $a      $d            $a  $g$d                      $g$x
+$d              $g$a$d      $a$c    $a$g$d              $a  $g$d                            $x
+$d                $g$a$d$a                $d        $a  $g$d                                $x
+$d                  $g$a  $d  $g$a$d    $a$g$d$a    $g$d                                    $x
+$d                            $a$g$d    $a      $g$d                                        $x
+EOC

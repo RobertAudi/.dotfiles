@@ -107,10 +107,25 @@ cargoPackages+=("find-files")
 #   https://github.com/Aloxaf/silicon
 cargoPackages+=("silicon")
 
+# Painless compression and decompression for your terminal
+#   https://github.com/ouch-org/ouch
+cargoPackages+=("ouch")
+
+# A local Rust playground.
+# A tool to help you running your Rust code file without manually setting up a Cargo project.
+#   https://github.com/fanzeyi/cargo-play
+cargoPackages+=("cargo-play")
+
+# Like lolcat but with noise and more colorful.
+#   https://github.com/mazznoer/lolcrab
+cargoPackages+=("lolcrab")
+
+# ------------------------------------------------------------------------------
+
 builtin print -P -- "%F{blue}==>%f Installing or updating cargo packages:"
 builtin print -P -- "      %B${(j: :)cargoPackages}%b\n"
 
-cargo install-update ${cargoPackages[@]}
+cargo install-update -i ${cargoPackages[@]}
 
 # cha(rs) is a commandline tool to display information about unicode characters
 #   https://github.com/antifuchs/chars

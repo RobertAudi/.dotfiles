@@ -1,36 +1,10 @@
 # Modeline {{{
 # vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker : }}}
 
-# mkchoi212/fac
-# ------------------------------------------------------------------------------ {{{
-
-tap "mkchoi212/fac", "https://github.com/mkchoi212/fac.git"
-
-# Command line User Interface for fixing git conflicts
-#   https://github.com/mkchoi212/fac
-brew "fac"
-
-# ------------------------------------------------------------------------------ }}}
-
-# git-chglog/git-chglog
-# ------------------------------------------------------------------------------ {{{
-
-tap "git-chglog/git-chglog"
-
-# CHANGELOG generator implemented in Go.
-#   https://github.com/git-chglog/git-chglog
-brew "git-chglog"
-
-# ------------------------------------------------------------------------------ }}}
-
 # caarlos0/tap
 # ------------------------------------------------------------------------------ {{{
 
 tap "caarlos0/tap"
-
-# Clone all repos of a github organization
-#   https://github.com/caarlos0/clone-org
-brew "caarlos0/tap/clone-org"
 
 # Like gofmt, but for JSON files
 #   https://github.com/caarlos0/jsonfmt
@@ -104,17 +78,6 @@ brew "timothyye/tap/skm"
 # A command line domain query tool
 #   https://github.com/TimothyYe/namebeta
 brew "timothyye/tap/namebeta"
-
-# ------------------------------------------------------------------------------ }}}
-
-# dtan4/tools
-# ------------------------------------------------------------------------------ {{{
-
-tap "dtan4/tools"
-
-# List & Describe GitHub Releases
-#   https://github.com/dtan4/ghrls
-brew "dtan4/tools/ghrls"
 
 # ------------------------------------------------------------------------------ }}}
 
@@ -265,14 +228,9 @@ brew "itchyny/tap/mmv"
 #   https://github.com/itchyny/fillin
 brew "itchyny/tap/fillin"
 
-
 # Homebrew formula managing script
 #   https://github.com/itchyny/formulate
 brew "itchyny/tap/formulate"
-
-# Optimally fast branch name command for Git
-#   https://github.com/itchyny/git-branch-name
-brew "itchyny/tap/git-branch-name"
 
 # A maze command written in Go
 #   https://github.com/itchyny/maze
@@ -292,5 +250,16 @@ tap "homeport/tap"
 # /ˈdʏf/ - diff tool for YAML files, and sometimes JSON
 #  https://github.com/homeport/dyff
 brew "homeport/tap/dyff"
+
+# ------------------------------------------------------------------------------ }}}
+
+# sstadick/hck
+# ------------------------------------------------------------------------------ {{{
+
+tap "sstadick/hck"
+
+# A sharp cut(1) clone.
+#   https://github.com/sstadick/hck
+brew "hck"
 
 # ------------------------------------------------------------------------------ }}}

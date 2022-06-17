@@ -38,6 +38,10 @@ M.config = function()
     end,
   })
 
+  -- Javascript / Typescript
+  -- https://github.com/typescript-language-server/typescript-language-server
+  lspconfig.tsserver.setup({})
+
   -- HTML / CSS / JSON
   -- https://github.com/hrsh7th/vscode-langservers-extracted
   lspconfig.html.setup({
@@ -71,6 +75,17 @@ M.config = function()
     settings = {
       stylelintplus = {
         configFile = os.getenv("XDG_CONFIG_HOME") .. "/stylelint/config.json",
+      },
+    },
+  })
+
+  -- Rust
+  lspconfig.rls.setup({
+    settings = {
+      rust = {
+        unstable_features = true,
+        build_on_save = false,
+        all_features = true,
       },
     },
   })
@@ -119,7 +134,11 @@ M.config = function()
     },
 
     on_attach = function(client, bufnr)
-      client.resolved_capabilities.document_formatting = false
+      -- client.resolved_capabilities.document_formatting = false -- deprecated
+      -- client.resolved_capabilities.document_range_formatting = false -- deprecated
+      client.server_capabilities.document_formatting = false
+      client.server_capabilities.document_range_formatting = false
+
       vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
       require("aerial").on_attach(client, bufnr)

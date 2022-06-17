@@ -1,0 +1,23 @@
+#!/usr/bin/env zsh
+
+if [[ -z "$1" ]]; then
+  print -- "usage: ${${${(%):-%x}:t}/brew-/brew } stable|HEAD" >&2
+  return 1
+fi
+
+local version="$1"
+
+case "$1" in
+  "stable")
+    brew unlink neovim
+    brew link neovim --force
+    ;;
+  "HEAD")
+    brew unlink neovim
+    brew link neovim --HEAD --force
+    ;;
+  "*")
+    print -- "usage: ${${${(%):-%x}:t}/brew-/brew } stable|HEAD" >&2
+    return 1
+    ;;
+esac

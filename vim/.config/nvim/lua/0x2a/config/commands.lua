@@ -17,25 +17,47 @@ vim.api.nvim_create_user_command("BufDeleteAll", "call x2a#buffers#BufDeleteAll(
 -- ------------------------------------------------------------------------------
 
 -- Copy (to the system clipboard) the path to current file
-vim.api.nvim_create_user_command("CopyFilePath", "call x2a#file#CopyRelativePath()", { nargs = 0 })
-vim.api.nvim_create_user_command("CopyFullFilePath", "call x2a#file#CopyFullPath()", { nargs = 0 })
-vim.api.nvim_create_user_command("CopyRelativeFilePath", "call x2a#file#CopyRelativePath()", { nargs = 0 })
+vim.api.nvim_create_user_command(
+  "CopyFullFilePath",
+  "call x2a#file#CopyFullPath()",
+  { nargs = 0, desc = "Copy the full path to the current file" }
+)
+
+vim.api.nvim_create_user_command(
+  "CopyRelativeFilePath",
+  "call x2a#file#CopyRelativePath()",
+  { nargs = 0, desc = "Copy the relative path to the current file" }
+)
+
 vim.api.nvim_create_user_command(
   "CopyRelativeFilePathWithLineNumber",
   "call x2a#file#CopyRelativePathWithLineNumber()",
-  { nargs = 0 }
+  { nargs = 0, desc = "Copy the relative path to the current file with line number(s)" }
 )
 
-vim.api.nvim_create_user_command("Chmod", "call x2a#file#Chmod(<bang>0, <f-args>)", { bang = true, nargs = "+" })
+vim.api.nvim_create_user_command(
+  "Chmod",
+  "call x2a#file#Chmod(<bang>0, <f-args>)",
+  { bang = true, nargs = "+", desc = "Change the permissions of the current file" }
+)
 
 vim.api.nvim_create_user_command(
   "Rename",
   "call x2a#file#Rename(<f-args>, <bang>0)",
-  { bang = true, nargs = 1, complete = "custom,x2a#file#Rename#complete" }
+  { bang = true, nargs = 1, complete = "custom,x2a#file#Rename#complete", desc = "Rename the current file" }
 )
 
-vim.api.nvim_create_user_command("Delete", "call x2a#file#Delete(<q-bang>, v:false)", { bang = true, nargs = 0 })
-vim.api.nvim_create_user_command("Remove", "call x2a#file#Delete(<q-bang>, v:true)", { bang = true, nargs = 0 })
+vim.api.nvim_create_user_command(
+  "Delete",
+  "call x2a#file#Delete(<q-bang>, v:false)",
+  { bang = true, nargs = 0, desc = "Delete a file and its buffer" }
+)
+
+vim.api.nvim_create_user_command(
+  "Remove",
+  "call x2a#file#Delete(<q-bang>, v:true)",
+  { bang = true, nargs = 0, desc = "Delete a file and its buffer while preserving the windows layout" }
+)
 
 -- ------------------------------------------------------------------------------ }}}
 
@@ -68,20 +90,30 @@ vim.api.nvim_create_user_command("ReloadFiletype", "call x2a#filetypes#ReloadFil
 -- ------------------------------------------------------------------------------
 
 if require("0x2a.utils").is_mac() then
-  vim.api.nvim_create_user_command("RevealInFinder", "call x2a#macos#RevealInFinder(expand('%:p'))", { nargs = 0 })
+  vim.api.nvim_create_user_command(
+    "RevealInFinder",
+    "silent! call system('open -R ' . shellescape(expand('%:p')) . '')",
+    { nargs = 0, desc = "Reveal a file in the Finder" }
+  )
+
+  vim.api.nvim_create_user_command(
+    "QuickLook",
+    "silent! call system('qlmanage -p ' . shellescape(expand('%:p')) . '')",
+    { nargs = 0, desc = "Preview file in QuickLook" }
+  )
 
   if require("0x2a.utils.files").is_executable("mate") then
     vim.api.nvim_create_user_command(
       "TextMate",
       "silent! call x2a#TextMate#Open(<f-args>)",
-      { nargs = "?", complete = "file" }
+      { nargs = "?", complete = "file", desc = "Open a file in TextMate" }
     )
   end
 end
 
 -- ------------------------------------------------------------------------------ }}}
 
-vim.api.nvim_create_user_command("GG", "silent !git gui", { nargs = 0 })
+vim.api.nvim_create_user_command("GG", "silent !git gui", { nargs = 0, desc = "Open the Git GUI client" })
 
 vim.api.nvim_create_user_command(
   "NormalizeWhitespace",
@@ -89,8 +121,13 @@ vim.api.nvim_create_user_command(
   { nargs = 0 }
 )
 
-vim.api.nvim_create_user_command("WhatSyntax", "call x2a#utils#WhatSyntax()", { nargs = 0 })
-vim.api.nvim_create_user_command("Scratch", "call x2a#utils#scratch()", { nargs = 0 })
+vim.api.nvim_create_user_command(
+  "WhatSyntax",
+  "call x2a#utils#WhatSyntax()",
+  { nargs = 0, desc = "Show highlight groups under cursor" }
+)
+
+vim.api.nvim_create_user_command("Scratch", "call x2a#utils#scratch()", { nargs = 0, desc = "Open a scratch buffer" })
 
 -- Author: Andrew Radev
 -- URL: https://github.com/AndrewRadev/Vimfiles
@@ -103,4 +140,4 @@ vim.api.nvim_create_user_command("UnfuckScreen", "syntax sync fromstart | :redra
 
 -- Clear messages
 -- Source: https://github.com/koturn/vim-config/blob/b88f05f6bdf230dd3250451fc6eea4b7a6c4bd3a/.vimrc#L655
-vim.api.nvim_create_user_command("ClearMessages", "messages clear", { nargs = 0, bar = true })
+vim.api.nvim_create_user_command("ClearMessages", "messages clear", { nargs = 0, bar = true, desc = "Clear messages" })

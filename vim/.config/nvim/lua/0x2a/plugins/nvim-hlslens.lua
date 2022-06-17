@@ -18,20 +18,43 @@ M.config = function()
     "n",
     "n",
     [[<Cmd>execute("normal! " . v:count1 . "n")<CR><Cmd>lua require("hlslens").start()<CR>]],
-    { silent = true }
+    { noremap = true, silent = true }
   )
 
   vim.keymap.set(
     "n",
     "N",
     [[<Cmd>execute("normal! " . v:count1 . "N")<CR><Cmd>lua require("hlslens").start()<CR>]],
-    { silent = true }
+    { noremap = true, silent = true }
   )
 
-  vim.keymap.set({ "n", "x" }, "*", [[<Plug>(asterisk-z*)<Cmd>lua require("hlslens").start()<CR>]], { silent = true })
-  vim.keymap.set({ "n", "x" }, "#", [[<Plug>(asterisk-z#)<Cmd>lua require("hlslens").start()<CR>]], { silent = true })
-  vim.keymap.set({ "n", "x" }, "g*", [[<Plug>(asterisk-gz*)<Cmd>lua require("hlslens").start()<CR>]], { silent = true })
-  vim.keymap.set({ "n", "x" }, "g#", [[<Plug>(asterisk-gz#)<Cmd>lua require("hlslens").start()<CR>]], { silent = true })
+  vim.keymap.set(
+    { "n", "x" },
+    "*",
+    [[<Plug>(asterisk-z*)<Cmd>lua require("hlslens").start()<CR>]],
+    { noremap = true, silent = true }
+  )
+
+  vim.keymap.set(
+    { "n", "x" },
+    "#",
+    [[<Plug>(asterisk-z#)<Cmd>lua require("hlslens").start()<CR>]],
+    { noremap = true, silent = true }
+  )
+
+  vim.keymap.set(
+    { "n", "x" },
+    "g*",
+    [[<Plug>(asterisk-gz*)<Cmd>lua require("hlslens").start()<CR>]],
+    { noremap = true, silent = true }
+  )
+
+  vim.keymap.set(
+    { "n", "x" },
+    "g#",
+    [[<Plug>(asterisk-gz#)<Cmd>lua require("hlslens").start()<CR>]],
+    { noremap = true, silent = true }
+  )
 end
 
 return M

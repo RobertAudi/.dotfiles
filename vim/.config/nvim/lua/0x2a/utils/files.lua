@@ -48,8 +48,32 @@ M.make_executable = function(file)
   end
 end
 
-M.copy_absolute_file_path = function()
-  local file_path = Path:new(vim.fn.expand("%", false, false)):absolute()
+M.shorten_path = function(file_or_directory, len, exclude)
+  file_or_directory = file_or_directory or vim.fn.expand("%", false, false)
+  len = len or 1
+  exclude = exclude or { -1 }
+  shortened_path = Path:new(file_or_directory):shorten(len, exclude)
+
+  -- Remove the leading "./"
+  shortened_path = string.gsub(shortened_path, "^(%./)(.*)", "%2")
+
+  return shortened_path
+end
+
+M.absolute_path = function(file_or_directory)
+  file_or_directory = file_or_directory or vim.fn.expand("%", false, false)
+
+  return Path:new(file_or_directory):absolute()
+end
+
+M.relative_path = function(file_or_directory)
+  file_or_directory = file_or_directory or vim.fn.expand("%", false, false)
+
+  return Path:new(file_or_directory):make_relative()
+end
+
+M.copy_absolute_file_path = function(file)
+  local file_path = M.absolute_path(file)
 
   utils.copy_to_clipboard(file_path, {
     success = function()
@@ -63,7 +87,7 @@ M.copy_absolute_file_path = function()
 end
 
 M.copy_relative_file_path = function()
-  local file_path = Path:new(vim.fn.expand("%", false, false)):make_relative()
+  local file_path = M.relative_path(file)
 
   utils.copy_to_clipboard(file_path, {
     success = function()

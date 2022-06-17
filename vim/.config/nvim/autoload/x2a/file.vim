@@ -1,13 +1,29 @@
+" Description: Get the full path to current file
+function! x2a#file#GetFullPath() abort
+  return expand('%:p')
+endfunction
+
+" Description: Get the path to current file (relative to PWD)
+function! x2a#file#GetRelativePath() abort
+  return substitute(expand('%'), getcwd() . '/', '', '')
+endfunction
+
+" Description: Get the path to current file (relative to PWD)
+"              with the line number ('my_folder/myfile:12')
+function! x2a#file#GetRelativePathWithLineNumber() abort
+  return expand('%') . ':' . line('.')
+endfunction
+
 " Description: Copy (to the system clipboard) the full path to current file
 function! x2a#file#CopyFullPath() abort
-  let l:path = expand('%:p')
+  let l:path = x2a#file#GetFullPath()
   call setreg('+', l:path)
   echo 'Copied file path to system clipboard: ' . l:path
 endfunction
 
 " Description: Copy (to the system clipboard) the path to current file (relative to PWD)
 function! x2a#file#CopyRelativePath() abort
-  let l:path = substitute(expand('%'), getcwd() . '/', '', '')
+  let l:path = x2a#file#GetRelativePath()
   call setreg('+', l:path)
   echo 'Copied file path to system clipboard: ' . l:path
 endfunction
@@ -15,7 +31,7 @@ endfunction
 " Description: Copy (to the system clipboard) the path to current file (relative to PWD)
 "              with the line number ('my_folder/myfile:12')
 function! x2a#file#CopyRelativePathWithLineNumber() abort
-  let l:path = expand('%') . ':' . line('.')
+  let l:path = x2a#file#GetRelativePathWithLineNumber()
   call setreg('+', l:path)
   echo 'Copied file path to system clipboard: ' . l:path
 endfunction
@@ -24,7 +40,7 @@ endfunction
 " Credits:     Tim Pope <http://tpo.pe/>
 " URL:         https://github.com/tpope/vim-eunuch
 function! x2a#file#Rename(name, bang) abort
-  let l:src = expand('%:p')
+  let l:src = x2a#file#GetFullPath()
   let l:dst = fnamemodify(expand('%:h') . '/' . a:name, ':p')
 
   if isdirectory(l:dst) || l:dst[-1:-1] =~# '[\\/]'
@@ -45,7 +61,7 @@ function! x2a#file#Rename(name, bang) abort
 
     execute 'keepalt saveas! ' . fnameescape(l:dst)
 
-    if l:src !=# expand('%:p')
+    if l:src !=# x2a#file#GetFullPath()
       execute 'bwipeout ' . fnameescape(l:src)
     endif
 
@@ -121,8 +137,4 @@ function! x2a#file#Delete(bang, keeplayout) abort
     call x2a#utils#echo#Message('Deleted file: ' . l:file)
     silent! NvimTreeRefresh
   endif
-endfunction
-
-function! x2a#file#has_fast_find_command() abort
-  return executable('fd') || executable('rg') || executable('ag')
 endfunction

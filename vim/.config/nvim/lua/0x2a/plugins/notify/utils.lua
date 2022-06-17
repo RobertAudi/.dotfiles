@@ -4,7 +4,6 @@
 --   - 0x2a.utils
 
 local utils = require("0x2a.utils")
-local config = require("notify.config")
 
 local M = {}
 
@@ -43,7 +42,7 @@ local function wrap(inputstr, limit, indent, indent1)
     end)
 end
 
-M.wrap = function(notif, opts)
+M.wrap = function(notif, config, opts)
   opts = utils.normalize_options(opts)
 
   local max_width = config.max_width() or math.ceil(math.max(vim.opt.columns:get() / 3, 10))

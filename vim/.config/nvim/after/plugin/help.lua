@@ -1,1 +1,1 @@
-vim.keymap.set("n", "gK", require("0x2a.utils.help").keyword)
+vim.keymap.set("n", "gK", require("0x2a.utils.help").keyword, { noremap = true })

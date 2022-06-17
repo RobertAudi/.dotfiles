@@ -1,0 +1,212 @@
+/**
+* Text Cell
+*/
+
+.text-cell {
+  font-family: "Andale Mono", "Lucida Console", Monaco, monospace;
+  font-size: 13px;
+}
+
+/**
+* Code Cell
+*/
+
+.code-cell .editor {
+  font-size: 13px;
+}
+
+/**
+* LaTeX Cell
+*/
+
+.latex-cell .editor {
+  font-size: 11px;
+}
+
+/**
+* Markdown Cell
+*/
+
+.markdown-cell .ace_editor {
+  background-color: #FFFFFF;
+  color: #333;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* # Heading 1 */
+.markdown-cell .ace_heading.ace_1, .markdown-cell .ace_heading.ace_1 ~ .ace_heading {
+  color: #009BC7;
+}
+
+/* ## Heading 2 */
+.markdown-cell .ace_heading.ace_2, .markdown-cell .ace_heading.ace_2 ~ .ace_heading {
+  color: #009BC7;
+}
+
+/* ### Heading 3 */
+.markdown-cell .ace_heading.ace_3, .markdown-cell .ace_heading.ace_3 ~ .ace_heading {
+  color: #009BC7;
+}
+
+/* #### Heading 4 */
+.markdown-cell .ace_heading.ace_4, .markdown-cell .ace_heading.ace_4 ~ .ace_heading {
+  color: #009BC7;
+}
+
+/* ##### Heading 5 */
+.markdown-cell .ace_heading.ace_5, .markdown-cell .ace_heading.ace_5 ~ .ace_heading {
+  color: #009BC7;
+}
+
+/* ###### Heading 6 */
+.markdown-cell .ace_heading.ace_6, .markdown-cell .ace_heading.ace_6 ~ .ace_heading {
+  color: #009BC7;
+}
+
+/* `code` */
+.markdown-cell .ace_support.ace_function {
+  color: #888;
+}
+
+/* ordered list, unordered list */
+.markdown-cell .ace_list {
+  color: #6C6C6C;
+}
+
+/* blockquote */
+.markdown-cell .ace_blockquote {
+  color: #A1B1C1;
+}
+
+/* _emphasis_ */
+.markdown-cell .ace_emphasis {
+  color: #6C6C6C;
+  font-style: italic;
+}
+
+/* **strong** */
+.markdown-cell .ace_strong {
+  color: #000;
+}
+
+/* Code cells */
+
+.railscasts .code-cell .ace_editor {
+	background-color: #2b2b2b !important;
+	color: #e6e1dc !important;
+}
+
+.railscasts .code-cell .ace_editor .ace_gutter {
+	background: #333435 !important;
+	color: #5a647e !important;
+}
+
+.railscasts .code-cell .ace_editor .ace_gutter-active-line {
+	background-color: #333435 !important;
+}
+
+.railscasts .code-cell .ace_editor .ace_active-line {
+	background-color: #333435 !important;
+}
+
+.railscasts .code-cell .ace_editor .ace_print-margin {
+	width: 1px !important;
+	background: #333435 !important;
+}
+
+.railscasts .code-cell .ace_editor .ace_fold {
+	background-color: #3a4055 !important;
+}
+
+.railscasts .code-cell .ace_editor .ace_cursor {
+	color: #e6e1dc !important;
+}
+
+.railscasts .code-cell .ace_editor .ace_invisible {
+	color: #5a647e !important;
+}
+
+.railscasts .code-cell .ace_editor .ace_storage,
+  .railscasts .code-cell .ace_editor .ace_keyword {
+	color: #b6b3eb !important;
+}
+
+.railscasts .code-cell .ace_editor .ace_constant.ace_library {
+	color: #06960e !important;
+}
+
+.railscasts .code-cell .ace_editor .ace_invalid {
+	background-color: #da4939 !important;
+	color: #f9f7f3 !important;
+}
+
+.railscasts .code-cell .ace_editor .ace_support.ace_constant {
+	color: #06960e !important;
+}
+
+.railscasts .code-cell .ace_editor .ace_constant,
+  .railscasts .code-cell .ace_editor .ace_support.ace_type,
+  .railscasts .code-cell .ace_editor .ace_support.ace_class {
+	color: #ffc66d !important;
+}
+
+.railscasts .code-cell .ace_editor .ace_string {
+	color: #a5c261 !important;
+}
+
+.railscasts .code-cell .ace_editor .ace_comment {
+	color: #5a647e !important;
+}
+
+.railscasts .code-cell .ace_editor .ace_comment.ace_doc {
+	color: #5a647e !important;
+}
+
+.railscasts .code-cell .ace_editor .ace_comment.ace_doc.ace_tag {
+	color: #5a647e !important;
+}
+
+.railscasts .code-cell .ace_editor .ace_constant.ace_boolean,
+  .railscasts .code-cell .ace_editor .ace_constant.ace_numeric {
+	color: #cc7833 !important;
+}
+
+.railscasts .code-cell .ace_editor .ace_variable {
+	color: #da4939 !important;
+}
+
+.railscasts .code-cell .ace_editor .ace_identifier {
+	color: #e6e1dc !important;
+}
+
+.railscasts .code-cell .ace_editor .ace_keyword.ace_operator,
+  .railscasts .code-cell .ace_editor .ace_support.ace_function,
+  .railscasts .code-cell .ace_editor .ace_entity.ace_name.ace_function {
+	color: #6d9cbe !important;
+}
+
+.railscasts .code-cell .ace_editor .ace_heading {
+	color: #6d9cbe !important;
+}
+
+.railscasts .code-cell .ace_editor .ace_list {
+	color: #da4939 !important;
+}
+
+.railscasts .code-cell .ace_editor .ace_meta.ace_tag {
+	color: #da4939 !important;
+}
+
+.railscasts .code-cell .ace_editor .ace_string.ace_regex {
+	color: #519f50 !important;
+}
+
+.railscasts .code-cell .ace_editor .ace_marker-layer .ace_selection {
+	background: #3a4055 !important;
+	color: #d4cfc9 !important;
+}
+
+.railscasts .code-cell .ace_editor .ace_indent-guide {
+	background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAEklEQVQImWNgYGBgYHB3d/8PAAOIAdULw8qMAAAAAElFTkSuQmCC) right repeat-y !important;
+}

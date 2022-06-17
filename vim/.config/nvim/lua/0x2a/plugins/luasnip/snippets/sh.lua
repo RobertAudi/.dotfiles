@@ -3,12 +3,12 @@
 --   - L3MON4D3/LuaSnip
 
 local ls = require("luasnip")
-local s = ls.snippet
-local i = ls.insert_node
+local snip = ls.snippet
+local insert = ls.insert_node
 local fmt = require("luasnip.extras.fmt").fmt
 
 ls.add_snippets("sh", {
-  s(
+  snip(
     { trig = "case", name = "case ... in ... esac", dscr = "case statement" },
     fmt(
       [[
@@ -18,11 +18,11 @@ ls.add_snippets("sh", {
             ;;
         esac
       ]],
-      { i(1), i(2), i(0) }
+      { insert(1), insert(2), insert(0) }
     )
   ),
 
-  s(
+  snip(
     { trig = "if", name = "if ... then ... fi", dscr = "if statement" },
     fmt(
       [[
@@ -30,11 +30,11 @@ ls.add_snippets("sh", {
           {}
         fi
       ]],
-      { i(1), i(0) }
+      { insert(1), insert(0) }
     )
   ),
 
-  s(
+  snip(
     { trig = "ifel", name = "if ... then ... else ... fi", dscr = "if-else statement" },
     fmt(
       [[
@@ -44,11 +44,11 @@ ls.add_snippets("sh", {
           # ...
         fi
       ]],
-      { i(1), i(0) }
+      { insert(1), insert(0) }
     )
   ),
 
-  s(
+  snip(
     { trig = "ifelif", name = "if ... then ... else ... fi", dscr = "if-else statement" },
     fmt(
       [[
@@ -60,7 +60,7 @@ ls.add_snippets("sh", {
           # ...
         fi
       ]],
-      { i(1), i(2), i(0) }
+      { insert(1), insert(2), insert(0) }
     )
   ),
 })

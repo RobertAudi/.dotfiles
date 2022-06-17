@@ -750,5 +750,9 @@ brew "sd"
 #   https://github.com/theryangeary/choose
 brew "choose-rust"
 
+# 🌟 For when you really just want to serve some files over HTTP right now!
+#   https://github.com/svenstaro/miniserve
+brew "miniserve"
+
 # Modeline {{{
 # vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker : }}}

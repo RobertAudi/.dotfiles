@@ -12,7 +12,7 @@ local M = {}
 --- @param ... abbreviations
 --- @usage command("wqa", "Wqa", "WQa", "WQA")
 M.command = function(input, ...)
-  local cmd = [[cnoreabbrev %s <C-r>=getcmdpos() == 1 && getcmdtype() == ":" ? "%s" : %s<CR>]]
+  local cmd = [[cnoreabbrev %s <C-r>=getcmdpos() == 1 && getcmdtype() == ":" ? "%s" : "%s"<CR>]]
 
   for _, abbreviation in pairs({ ... }) do
     vim.cmd(cmd:format(abbreviation, input, abbreviation))

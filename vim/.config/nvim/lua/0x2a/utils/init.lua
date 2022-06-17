@@ -29,11 +29,6 @@ M.is_present = function(item)
   return not M.is_blank(item)
 end
 
-M.PP = function(v)
-  print(vim.inspect(v))
-  return v
-end
-
 M.RELOAD = function(...)
   return require("plenary.reload").reload_module(...)
 end
@@ -51,6 +46,10 @@ M.normalize_options = function(opts)
   end
 
   return opts
+end
+
+M.table_has_key = function(tbl, key)
+  return tbl[key] ~= nil
 end
 
 M.table_has_value = function(tbl, value)

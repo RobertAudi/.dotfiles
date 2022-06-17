@@ -21,7 +21,7 @@
       ]
     },
     {
-      "description": "Change right_option to command+control+option+shift.",
+      "description": "Change right_option to Command+Control+Option+Shift.",
       "manipulators": [
         {
           "type": "basic",

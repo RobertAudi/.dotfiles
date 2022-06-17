@@ -42,6 +42,8 @@ readonly -g __gl_without_tpane__
 gd() { tpane-git diff $@ }
 gl() { tpane-git log $@ }
 
+unfuck-tsm-resume() { tmux list-panes -a -F '#{session_name}:#{window_index}.#{pane_index}' | xargs -I PANE tmux send-keys -t PANE Enter }
+
 compdef -a _git \
   gd=git-diff   \
   gl=git-log

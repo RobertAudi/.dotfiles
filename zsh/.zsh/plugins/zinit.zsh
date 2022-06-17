@@ -10,6 +10,10 @@ zinit light willghatch/zsh-hooks
 #     Simple bookmarking plugin
 #       https://github.com/RobertAudi/zshmarks
 #
+# - mnowotnik/fzshell
+#     Fuzzy shell completions you didn't know you needed
+#       https://github.com/mnowotnik/fzshell
+#
 # - zsh-users/zsh-history-substring-search
 #     ZSH port of Fish history search
 #       https://github.com/zsh-users/zsh-history-substring-search
@@ -21,6 +25,7 @@ zinit wait"1" light-mode for \
   OMZ::plugins/safe-paste/safe-paste.plugin.zsh \
   pick"tipz.zsh" atload"source \$ZDOTDIR/setup/plugins/molovo/tipz/atload.zsh" molovo/tipz \
   atload"source \$ZDOTDIR/setup/plugins/RobertAudi/zshmarks/atload.zsh" RobertAudi/zshmarks \
+  atclone"./scripts/install.sh --no-instructions" mnowotnik/fzshell \
   atload"source \$ZDOTDIR/setup/plugins/zsh-users/zsh-history-substring-search/atload.zsh" zsh-users/zsh-history-substring-search \
   atinit"source \$ZDOTDIR/setup/plugins/zdharma-continuum/fast-syntax-highlighting/atinit.zsh" zdharma-continuum/fast-syntax-highlighting
 

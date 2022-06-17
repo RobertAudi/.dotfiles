@@ -27,6 +27,9 @@ if [[ -f "$ZDOTDIR/setup/perl.zsh" ]]; then
   source "$ZDOTDIR/setup/perl.zsh"
 fi
 
+# Custom keybinding to trigger fzshell
+export FZSHELL_BIND_KEY="^x^n"
+
 # Required because otherwise it goes to shit.....
 autoload -Uz zstyle+
 

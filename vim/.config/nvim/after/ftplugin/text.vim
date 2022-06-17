@@ -1,2 +1,0 @@
-setlocal nosmartindent
-setlocal indentexpr=

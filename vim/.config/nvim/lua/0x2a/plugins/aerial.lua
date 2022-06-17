@@ -224,7 +224,7 @@ M.config = function()
     },
   })
 
-  vim.keymap.set("n", "_", "<Cmd>AerialToggle<CR>", { silent = true })
+  vim.keymap.set("n", "_", "<Cmd>AerialToggle<CR>", { noremap = true, silent = true })
 end
 
 return M

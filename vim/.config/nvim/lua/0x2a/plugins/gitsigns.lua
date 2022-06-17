@@ -16,7 +16,7 @@ M.config = function()
         hl = "GitSignsAdd",
         text = symbols.gitsigns.add,
         numhl = "GitSignsAddNr",
-        linehl = "GitSignsAddLn"
+        linehl = "GitSignsAddLn",
       },
 
       change = {
@@ -87,7 +87,7 @@ M.config = function()
       local gs = package.loaded.gitsigns
 
       local function map(mode, l, r, opts)
-        opts = opts or {}
+        opts = opts or { noremap = true }
         opts.buffer = bufnr
         vim.keymap.set(mode, l, r, opts)
       end
@@ -102,7 +102,7 @@ M.config = function()
 
           return "<Ignore>"
         end
-      end, { expr = true })
+      end, { noremap = true, expr = true })
 
       map("n", "[c", function()
         if vim.wo.diff then
@@ -114,7 +114,7 @@ M.config = function()
 
           return "<Ignore>"
         end
-      end, { expr = true })
+      end, { noremap = true, expr = true })
     end,
   })
 end

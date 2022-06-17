@@ -9,44 +9,6 @@ local M = {}
 
 M.config = function()
   local symbols = require("0x2a.symbols")
-
-  vim.g.nvim_tree_icons = {
-    default = "",
-    symlink = symbols.tree.symlink,
-
-    git = {
-      unstaged = symbols.git.unstaged,
-      staged = symbols.git.staged,
-      unmerged = symbols.git.unmerged,
-      renamed = symbols.git.renamed,
-      untracked = symbols.git.untracked,
-      deleted = symbols.git.deleted,
-      ignored = symbols.git.ignored,
-    },
-
-    folder = {
-      arrow_open = symbols.tree.folder.arrow_open,
-      arrow_closed = symbols.tree.folder.arrow_closed,
-      default = symbols.tree.folder.default,
-      open = symbols.tree.folder.open,
-      empty = symbols.tree.folder.empty,
-      empty_open = symbols.tree.folder.empty_open,
-      symlink = symbols.tree.folder.symlink,
-      symlink_open = symbols.tree.folder.symlink_open,
-    },
-  }
-
-  vim.api.nvim_set_var("nvim_tree_show_icons", {
-    git = 1,
-    folders = 1,
-    files = 1,
-    folder_arrows = 1,
-  })
-
-  vim.api.nvim_set_var("nvim_tree_symlink_arrow", " ➛ ")
-  vim.api.nvim_set_var("nvim_tree_respect_buf_cwd", 1)
-  vim.api.nvim_set_var("nvim_tree_add_trailing", 1)
-
   local callbacks = require("0x2a.plugins.nvim-tree.callbacks")
 
   local mappings = {
@@ -56,7 +18,7 @@ M.config = function()
 
     { key = "A", action = "zoom", action_cb = callbacks.zoom },
     { key = { "O" }, action = "edit_no_picker" },
-    { key = { "<C-v>", "s" }, action = "vsplit" },
+    { key = { "<C-v>", "v", "s" }, action = "vsplit" },
     { key = { "<C-x>", "i" }, action = "split" },
     { key = { "<C-t>", "t" }, action = "tabnew" },
 
@@ -103,14 +65,44 @@ M.config = function()
   require("nvim-tree").setup({
     disable_netrw = true,
     hijack_netrw = true,
-    open_on_setup = false,
+
+    -- Will automatically open the tree when running setup if
+    -- startup buffer is a directory, is empty or is unnamed.
+    -- nvim-tree window will be focused.
+    open_on_setup = true,
+
+    -- Will ignore the buffer, when deciding to open the tree on setup
     ignore_buffer_on_setup = false,
+
+    -- List of filetypes that will make `open_on_setup` not open.
     ignore_ft_on_setup = {},
+
+    -- Reloads the explorer every time a buffer is written to
     auto_reload_on_write = true,
+
+    -- Creating a file when the cursor is on a closed folder
+    -- will set the path to be inside the closed folder
+    create_in_closed_folder = true,
+
+    -- Don't open the tree automatically when switching
+    -- tabpage or opening a new tabpage
     open_on_tab = false,
+
+    -- Don't force the cursor to stay on the first letter
+    -- of the filename when moving in the tree
     hijack_cursor = true,
+
+    -- Don't open in place of the unnamed buffer if it's empty
     hijack_unnamed_buffer_when_opening = false,
+
+    -- Never change the tree root directory
     update_cwd = false,
+
+    -- Change cwd of nvim-tree to that of new buffer's when opening nvim-tree.
+    respect_buf_cwd = true,
+
+    -- Automatically reloads the tree on `BufEnter` nvim-tree
+    reload_on_bufenter = true,
 
     diagnostics = {
       enable = false,
@@ -178,6 +170,67 @@ M.config = function()
       relativenumber = false,
     },
 
+    renderer = {
+      -- Appends a trailing slash to folder names
+      add_trailing = true,
+
+      group_empty = false,
+      highlight_git = false,
+      highlight_opened_files = "none",
+      root_folder_modifier = ":~",
+      indent_markers = {
+        enable = false,
+        icons = {
+          corner = "└ ",
+          edge = "│ ",
+          none = "  ",
+        },
+      },
+
+      icons = {
+        webdev_colors = false,
+        padding = " ",
+        git_placement = "before",
+        symlink_arrow = " ➛ ",
+
+        show = {
+          git = true,
+          folder = true,
+          file = true,
+          folder_arrow = true,
+        },
+
+        glyphs = {
+          default = "",
+          symlink = symbols.tree.symlink,
+
+          git = {
+            unstaged = symbols.git.unstaged,
+            staged = symbols.git.staged,
+            unmerged = symbols.git.unmerged,
+            renamed = symbols.git.renamed,
+            untracked = symbols.git.untracked,
+            deleted = symbols.git.deleted,
+            ignored = symbols.git.ignored,
+          },
+
+          folder = {
+            arrow_open = symbols.tree.folder.arrow_open,
+            arrow_closed = symbols.tree.folder.arrow_closed,
+            default = symbols.tree.folder.default,
+            open = symbols.tree.folder.open,
+            empty = symbols.tree.folder.empty,
+            empty_open = symbols.tree.folder.empty_open,
+            symlink = symbols.tree.folder.symlink,
+            symlink_open = symbols.tree.folder.symlink_open,
+          },
+        },
+      },
+
+      -- A list of filenames that gets highlighted with `NvimTreeSpecialFile`
+      special_files = { "Cargo.toml", "Makefile", "README.md", "readme.md", "Gemfile" },
+    },
+
     trash = {
       cmd = "trash",
       require_confirm = true,
@@ -196,7 +249,7 @@ M.config = function()
           enable = true,
           chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
           exclude = {
-            filetype = { "notify", "vim-plug", "qf", "diff", "ctrlsf", "aerial" },
+            filetype = { "notify", "packer", "vim-plug", "qf", "diff", "ctrlsf", "aerial" },
             buftype = { "nofile", "terminal", "help" },
           },
         },
@@ -204,9 +257,9 @@ M.config = function()
     },
   })
 
-  vim.keymap.set("n", "-", "<Cmd>NvimTreeToggle<CR>", { silent = true })
-  vim.keymap.set("n", "g-", "<Cmd>NvimTreeFocus<CR>", { silent = true })
-  vim.keymap.set("n", "gF", "<Cmd>NvimTreeFindFile<CR>", { silent = true })
+  vim.keymap.set("n", "-", "<Cmd>NvimTreeToggle<CR>", { noremap = true, silent = true })
+  vim.keymap.set("n", "g-", "<Cmd>NvimTreeFocus<CR>", { noremap = true, silent = true })
+  vim.keymap.set("n", "gF", "<Cmd>NvimTreeFindFile<CR>", { noremap = true, silent = true })
 end
 
 return M

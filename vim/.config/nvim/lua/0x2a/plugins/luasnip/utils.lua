@@ -2,9 +2,6 @@
 -- Requires:
 --   - L3MON4D3/LuaSnip
 
-local ls = require("luasnip")
-local f = ls.function_node
-
 local M = {}
 
 M.TM_FILENAME = function()
@@ -30,7 +27,7 @@ M.CLIPBOARD = function(options)
 end
 
 M.same = function(index)
-  return f(function(args)
+  return require("luasnip").function_node(function(args)
     return args[1]
   end, { index })
 end

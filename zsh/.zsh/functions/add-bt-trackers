@@ -5,8 +5,8 @@
 #
 
 if ! is-callable transmission-remote ; then
-  print-error "Command not found: transmission-remote"
-  return 127
+  command-not-found "transmission-remote"
+  return $status
 fi
 
 local torrents

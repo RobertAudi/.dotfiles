@@ -12,9 +12,9 @@ _within_bundled_project() {
 run_with_bundler() {
   if type bundle >/dev/null 2>&1 && _within_bundled_project; then
     if [ -f "./bin/${1}" ]; then
-      ./bin/${1} ${@:2}
+      direnv_exec ./bin/${1} ${@:2}
     else
-      bundle exec ${1} ${@:2}
+      direnv_exec bundle exec ${1} ${@:2}
     fi
   else
     $=1 ${@:2}

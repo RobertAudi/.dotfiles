@@ -4,13 +4,13 @@
 --   - 0x2a.luasnip.utils
 
 local ls = require("luasnip")
-local s = ls.snippet
-local sn = ls.sn
-local t = ls.text_node
-local c = ls.choice_node
-local i = ls.insert_node
-local f = ls.function_node
-local d = ls.dynamic_node
+local snip = ls.snippet
+local node = ls.snippet_node
+local text = ls.text_node
+local choice = ls.choice_node
+local insert = ls.insert_node
+local func = ls.function_node
+local dynamic = ls.dynamic_node
 local fmt = require("luasnip.extras.fmt").fmt
 
 local utils = require("0x2a.utils")
@@ -26,10 +26,10 @@ local lua_require_variable = function(args, _)
 
   local options = {}
   for len = 0, #split - 1 do
-    table.insert(options, t(table.concat(vim.list_slice(split, #split - len, #split), "_")))
+    table.insert(options, text(table.concat(vim.list_slice(split, #split - len, #split), "_")))
   end
 
-  return sn(nil, { c(1, options) })
+  return node(nil, { choice(1, options) })
 end
 
 local plugin_from_clipboard = function(_, _, opts)
@@ -99,7 +99,7 @@ local plugin_header_component = function(_, snip, opts)
 end
 
 ls.add_snippets("lua", {
-  s(
+  snip(
     { trig = "header", name = "Vim plugin header", dscr = "Header for vim plugin files" },
     fmt(
       [[
@@ -109,11 +109,11 @@ ls.add_snippets("lua", {
 
         {}
       ]],
-      { f(TM_FILENAME(), {}), f(TM_FILENAME(), {}), i(0) }
+      { func(TM_FILENAME(), {}), func(TM_FILENAME(), {}), insert(0) }
     )
   ),
 
-  s(
+  snip(
     { trig = "mod", name = "Lua module" },
     fmt(
       [[
@@ -125,11 +125,11 @@ ls.add_snippets("lua", {
 
         return {}
       ]],
-      { f(module_name, {}), i(1), i(0), same(1) }
+      { func(module_name, {}), insert(1), insert(0), same(1) }
     )
   ),
 
-  s(
+  snip(
     { trig = "plugconf", name = "Plugin config file" },
     fmt(
       [[
@@ -149,15 +149,15 @@ ls.add_snippets("lua", {
         return M
       ]],
       {
-        f(plugin_header_component, {}, { user_args = { { component = "module" } } }),
-        f(plugin_header_component, {}, { user_args = { { component = "plugin" } } }),
-        f(plugin_header_component, {}, { user_args = { { component = "url" } } }),
-        i(0),
+        func(plugin_header_component, {}, { user_args = { { component = "module" } } }),
+        func(plugin_header_component, {}, { user_args = { { component = "plugin" } } }),
+        func(plugin_header_component, {}, { user_args = { { component = "url" } } }),
+        insert(0),
       }
     )
   ),
 
-  s(
+  snip(
     { trig = "fun", name = "function", dscr = "Lua function" },
     fmt(
       [[
@@ -165,11 +165,11 @@ ls.add_snippets("lua", {
           {}
         end
       ]],
-      { i(1), i(2), i(0) }
+      { insert(1), insert(2), insert(0) }
     )
   ),
 
-  s(
+  snip(
     { trig = "fun", name = "anonymous function", dscr = "Lua anonymous function" },
     fmt(
       [[
@@ -177,18 +177,18 @@ ls.add_snippets("lua", {
           {}
         end
       ]],
-      { i(1), i(0) }
+      { insert(1), insert(0) }
     )
   ),
 
-  s(
+  snip(
     { trig = "req", name = "require", dscr = "require file" },
-    fmt([[local {} = require("{}")]], { d(2, lua_require_variable, { 1 }), i(1) })
+    fmt([[local {} = require("{}")]], { dynamic(2, lua_require_variable, { 1 }), insert(1) })
   ),
 
-  s({ trig = "ins", name = "Inspect var" }, fmt("print(vim.inspect({})){}", { i(1), i(0) })),
+  snip({ trig = "ins", name = "Inspect var" }, fmt("print(vim.inspect({})){}", { insert(1), insert(0) })),
 
-  s(
+  snip(
     { trig = "use", name = [[use({ "..." })]], dscr = "Packer plugin definition" },
     fmt(
       [[
@@ -197,9 +197,9 @@ ls.add_snippets("lua", {
         use({{ "{}", config = require("0x2a.plugins.{}").config }})
       ]],
       {
-        f(lsutils.CLIPBOARD, {}, { user_args = { { strip = true } } }),
-        f(plugin_from_clipboard, {}),
-        f(plugin_from_clipboard, {}, { user_args = { { only_repo = true } } }),
+        func(lsutils.CLIPBOARD, {}, { user_args = { { strip = true } } }),
+        func(plugin_from_clipboard, {}),
+        func(plugin_from_clipboard, {}, { user_args = { { only_repo = true } } }),
       }
     )
   ),

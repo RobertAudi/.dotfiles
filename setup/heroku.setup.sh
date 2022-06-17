@@ -1,8 +1,8 @@
 #!/usr/bin/env zsh
 
 if ! type heroku >/dev/null; then
-  builtin print -P -u 2 -- "[%F{196}ERROR%f] Command not found: heroku"
-  return 1
+  builtin print -u 2 -- "୧( ಠ Д ಠ )୨ command not found: heroku"
+  return 127
 fi
 
 # A heroku plugin for awesome pg:* commands that are also great and fun and super.

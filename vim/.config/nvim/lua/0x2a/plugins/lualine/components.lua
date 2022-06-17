@@ -70,7 +70,7 @@ M.filename = function()
     return ""
   end
 
-  local data = lualine.utils.stl_escape(vim.fn.expand("%:t"))
+  local data = lualine.utils.stl_escape(vim.fn.expand("%:t", false, false))
 
   if utils.is_empty(data) then
     data = "[No Name]"

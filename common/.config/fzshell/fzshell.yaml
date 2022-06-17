@@ -1,0 +1,6 @@
+completions:
+  - pattern: "git pusho"
+    selectSingle: true
+    cmd: "git rev-parse --abbrev-ref HEAD"
+    map: "push -u origin {{.item}}"
+    replacement: "git {{.item}}"

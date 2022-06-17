@@ -1,0 +1,7 @@
+#!/usr/bin/env zsh
+
+if [[ -f ".envrc" ]]; then
+  DIRENV_LOG_FORMAT= direnv exec . $=@
+else
+  $=@
+fi

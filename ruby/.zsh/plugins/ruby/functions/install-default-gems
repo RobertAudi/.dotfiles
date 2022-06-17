@@ -16,8 +16,8 @@
 
   if [[ -n "$1" ]] ; then
     if ! is-callable chruby-exec ; then
-      print-error "command not found: chruby-exec"
-      return 1
+      command-not-found "chruby-exec"
+      return $status
     fi
 
     chruby-exec $1 -- source "${scripts_dir}/rubygems.sh" || return $status

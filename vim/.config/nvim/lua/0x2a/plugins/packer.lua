@@ -8,7 +8,6 @@
 local M = {}
 
 M.config = function()
-  local notifications = require("0x2a.notifications")
   local packer_autocmd_group = vim.api.nvim_create_augroup("RAPacker", { clear = true })
 
   vim.api.nvim_create_autocmd({ "User" }, {
@@ -17,7 +16,8 @@ M.config = function()
     callback = function()
       require("0x2a.notifications").info(
         "Packer install, update, clean, or sync operation complete.",
-        { title = "Packer" }
+        { title = "Packer" },
+        "bottom_up"
       )
     end,
   })
@@ -26,7 +26,7 @@ M.config = function()
     group = packer_autocmd_group,
     pattern = { "PackerCompileDone" },
     callback = function()
-      require("0x2a.notifications").info("PackerCompile done.", { title = "Packer" })
+      require("0x2a.notifications").info("PackerCompile done.", { title = "Packer" }, "bottom_up")
     end,
   })
 end

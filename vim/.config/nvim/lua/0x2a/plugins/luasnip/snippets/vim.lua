@@ -4,15 +4,15 @@
 --   - 0x2a.luasnip.utils
 
 local ls = require("luasnip")
-local s = ls.snippet
-local i = ls.insert_node
-local f = ls.function_node
+local snip = ls.snippet
+local insert = ls.insert_node
+local func = ls.function_node
 local fmt = require("luasnip.extras.fmt").fmt
 
 local utils = require("0x2a.plugins.luasnip.utils")
 
 ls.add_snippets("vim", {
-  s(
+  snip(
     { trig = "header", name = "Header for vim plugin files", dscr = "" },
     fmt(
       [[
@@ -22,11 +22,11 @@ ls.add_snippets("vim", {
 
         {}
       ]],
-      { f(utils.TM_FILENAME(), {}), f(utils.TM_FILENAME(), {}), i(0) }
+      { func(utils.TM_FILENAME(), {}), func(utils.TM_FILENAME(), {}), insert(0) }
     )
   ),
 
-  s(
+  snip(
     { trig = "if", name = "if ... endif", dscr = "if statement" },
     fmt(
       [[
@@ -34,11 +34,11 @@ ls.add_snippets("vim", {
           {}
         endif
       ]],
-      { i(1), i(0) }
+      { insert(1), insert(0) }
     )
   ),
 
-  s(
+  snip(
     { trig = "ifel", name = "if ... else ... endif", dscr = "if-else statement" },
     fmt(
       [[
@@ -48,11 +48,11 @@ ls.add_snippets("vim", {
           " ...
         endif
       ]],
-      { i(1), i(0) }
+      { insert(1), insert(0) }
     )
   ),
 
-  s(
+  snip(
     { trig = "while", name = "while ... endwhile", dscr = "while loop" },
     fmt(
       [[
@@ -60,11 +60,11 @@ ls.add_snippets("vim", {
           {}
         endwhile
       ]],
-      { i(1), i(0) }
+      { insert(1), insert(0) }
     )
   ),
 
-  s(
+  snip(
     { trig = "for", name = "for ... in ... endfor", dscr = "for...in loop" },
     fmt(
       [[
@@ -72,7 +72,7 @@ ls.add_snippets("vim", {
           {}
         endfor
       ]],
-      { i(1), i(2), i(0) }
+      { insert(1), insert(2), insert(0) }
     )
   ),
 })

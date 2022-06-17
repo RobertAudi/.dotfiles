@@ -10,6 +10,8 @@ local utils = require("0x2a.utils")
 local string_utils = require("0x2a.utils.string")
 local notify = require("notify")
 
+local instances = {}
+
 local M = {}
 
 local function normalize_options(message, notification_type, opts)
@@ -33,44 +35,142 @@ local function normalize_options(message, notification_type, opts)
   return message, opts
 end
 
-M.error = function(message, opts)
-  message, opts = normalize_options(message, "error", opts)
+local instance = function(stages)
+  if not stages then
+    return
+  end
 
-  notify(message, "error", opts)
+  if instances[stages] then
+    return instances[stages]
+  end
+
+  local ok, custom_stages = pcall(require, "0x2a.plugins.notify.stages." .. stages)
+
+  if ok then
+    instances[stages] = notify.instance({ stages = custom_stages }, true)
+  end
+
+  return instances[stages]
 end
 
-M.warning = function(message, opts)
+M.notify = function(message, level, opts, stages)
+  message, opts = normalize_options(message, level, opts)
+
+  local notify_instance = instance(stages)
+
+  if notify_instance then
+    notify_instance.notify(message, level, opts)
+  else
+    notify(message, level, opts)
+  end
+end
+
+M.fatal = function(message, opts, stages)
+  message, opts = normalize_options(message, "error", opts)
+
+  local notify_instance = instance(stages)
+
+  if notify_instance then
+    notify_instance.notify(message, "error", opts)
+  else
+    notify(message, "error", opts)
+  end
+
+  vim.defer_fn(function()
+    vim.api.nvim_err_writeln(message)
+  end, 100)
+end
+
+M.error = function(message, opts, stages)
+  message, opts = normalize_options(message, "error", opts)
+
+  local notify_instance = instance(stages)
+
+  if notify_instance then
+    notify_instance.notify(message, "error", opts)
+  else
+    notify(message, "error", opts)
+  end
+
+  vim.defer_fn(function()
+    vim.api.nvim_echo({ { message, "WarningMsg" } }, true, {})
+  end, 100)
+end
+
+M.warning = function(message, opts, stages)
   message, opts = normalize_options(message, "warning", opts)
 
-  notify(message, "warn", opts)
+  local notify_instance = instance(stages)
+
+  if notify_instance then
+    notify_instance.notify(message, "warn", opts)
+  else
+    notify(message, "warn", opts)
+  end
+
+  vim.defer_fn(function()
+    vim.api.nvim_echo({ { message, "WarningMsg" } }, true, {})
+  end, 100)
 end
 
 M.warn = M.warning
 
-M.debug = function(message, opts)
+M.debug = function(message, opts, stages)
   message, opts = normalize_options(message, "debug", opts)
 
-  notify(message, "debug", opts)
+  local notify_instance = instance(stages)
+
+  if notify_instance then
+    notify_instance.notify(message, "debug", opts)
+  else
+    notify(message, "debug", opts)
+  end
+
+  vim.defer_fn(function()
+    vim.api.nvim_echo({ { message } }, true, {})
+  end, 100)
 end
 
-M.trace = function(message, opts)
+M.trace = function(message, opts, stages)
   message, opts = normalize_options(message, "trace", opts)
 
-  notify(message, "trace", opts)
+  local notify_instance = instance(stages)
+
+  if notify_instance then
+    notify_instance.notify(message, "trace", opts)
+  else
+    notify(message, "trace", opts)
+  end
+
+  vim.defer_fn(function()
+    vim.api.nvim_echo({ { message } }, true, {})
+  end, 100)
 end
 
-M.info = function(message, opts)
+M.info = function(message, opts, stages)
   message, opts = normalize_options(message, "info", opts)
 
-  notify(message, "info", opts)
+  local notify_instance = instance(stages)
+
+  if notify_instance then
+    notify_instance.notify(message, "info", opts)
+  else
+    notify(message, "info", opts)
+  end
+
+  vim.defer_fn(function()
+    vim.api.nvim_echo({ { message } }, true, {})
+  end, 100)
 end
 
 M.success = function(message, opts)
   message, opts = normalize_options(message, "success", opts)
-
   opts.icon = opts.icon or symbols.codicon.SUCCESS
-
   notify(message, "info", opts)
+
+  vim.defer_fn(function()
+    vim.api.nvim_echo({ { message } }, true, {})
+  end, 100)
 end
 
 --- Display a notification to the user.
@@ -90,14 +190,23 @@ M.provider = function(msg, level, opts)
   end
 
   if level == vim.log.levels.ERROR then
-    M.error(summary, { title = "An error occurred. See :messages for details" })
-    vim.api.nvim_err_writeln(msg)
+    M.notify(summary, "error", { title = "An error occurred. See :messages for details" })
+
+    vim.defer_fn(function()
+      vim.api.nvim_err_writeln(msg)
+    end, 100)
   elseif level == vim.log.levels.WARN then
-    M.warning(summary)
-    vim.api.nvim_echo({ { msg, "WarningMsg" } }, true, {})
+    M.notify(summary, "warn")
+
+    vim.defer_fn(function()
+      vim.api.nvim_echo({ { msg, "WarningMsg" } }, true, {})
+    end, 100)
   else
-    M.info(summary)
-    vim.api.nvim_echo({ { msg } }, true, {})
+    M.notify(summary, "info")
+
+    vim.defer_fn(function()
+      vim.api.nvim_echo({ { msg } }, true, {})
+    end, 100)
   end
 end
 

@@ -1,0 +1,120 @@
+.railscasts .code-cell .ace_editor, .railscasts .ace_static_highlight {
+  background-color: #2b2b2b !important;
+  color: #e6e1dc !important;
+
+  .ace_gutter {
+    background: #333435 !important;
+    color: #5a647e !important;
+  }
+
+  .ace_gutter-active-line {
+    background-color: #333435 !important;
+  }
+
+  .ace_active-line {
+    background-color: #333435 !important;
+  }
+
+  .ace_print-margin {
+    width: 1px !important;
+    background: #333435 !important;
+  }
+
+  .ace_fold {
+    background-color: #3a4055 !important;
+  }
+
+  .ace_cursor {
+    color: #e6e1dc !important;
+  }
+
+  .ace_invisible {
+    color: #5a647e !important;
+  }
+
+  .ace_storage,
+  .ace_keyword {
+    color: #b6b3eb !important;
+  }
+
+  .ace_constant.ace_library {
+    color: rgb(6, 150, 14) !important;
+  }
+
+  .ace_invalid {
+    background-color: #da4939 !important;
+    color: #f9f7f3 !important;
+  }
+
+  .ace_support.ace_constant {
+    color: rgb(6, 150, 14) !important;
+  }
+
+
+  .ace_constant,
+  .ace_support.ace_type,
+  .ace_support.ace_class {
+    color: #ffc66d !important;
+  }
+
+  .ace_string {
+    color: #a5c261 !important;
+  }
+
+  .ace_comment {
+    color: #5a647e !important;
+  }
+
+  .ace_comment.ace_doc {
+    color: #5a647e !important;
+  }
+
+  .ace_comment.ace_doc.ace_tag {
+    color: #5a647e !important;
+  }
+
+  .ace_constant.ace_boolean,
+  .ace_constant.ace_numeric {
+    color: #cc7833 !important;
+  }
+
+  .ace_variable {
+    color: #da4939 !important;
+  }
+
+  .ace_identifier {
+    color: #e6e1dc !important;
+  }
+
+  .ace_keyword.ace_operator,
+  .ace_support.ace_function,
+  .ace_entity.ace_name.ace_function {
+    color: #6d9cbe !important;
+  }
+
+
+  .ace_heading {
+    color: #6d9cbe !important;
+  }
+
+  .ace_list {
+    color: #da4939 !important;
+  }
+
+  .ace_meta.ace_tag {
+    color:#da4939 !important;
+  }
+
+  .ace_string.ace_regex {
+    color: #519f50 !important;
+  }
+
+  .ace_marker-layer .ace_selection {
+    background: #3a4055 !important;
+    color: #d4cfc9 !important;
+  }
+
+  .ace_indent-guide {
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAEklEQVQImWNgYGBgYHB3d/8PAAOIAdULw8qMAAAAAElFTkSuQmCC) right repeat-y !important;
+  }
+}

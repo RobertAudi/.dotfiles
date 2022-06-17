@@ -1,0 +1,7 @@
+#autoload
+
+if ! is-callable rails ; then
+  direnv_exec command rake "$@"
+else
+  command-not-found "rake"
+fi

@@ -54,8 +54,8 @@ alias -g ":map"="| xargs -n1"
 #  VIM related aliases ;o) btw. ``$SHELL:t'' is a modifiers from the Z
 #  Shell. In other shells you can use ``${SHELL##*/}'' instead. Valid
 #  Modifiers can be found in ``info -f zsh -n Modifiers''.
-alias :{w,q,wa,wq,qa,wqa,x}{,!}="echo \"This is $SHELL:t and not Vi(m)\""
-alias :{Q,Qa,QA,Wa,WA,Wq,WQ,Wqa,WQa,WQA}{,!}="echo \"This is $SHELL:t and not Vi(m)\""
+alias :{w,q,wa,wq,qa,wqa,x}{,!}="tableflip; echo \"This is $SHELL:t and not Vi(m)\""
+alias :{W,Q,Qa,QA,Wa,WA,Wq,WQ,Wqa,WQa,WQA}{,!}="tableflip; echo \"This is $SHELL:t and not Vi(m)\""
 
 if is-callable ag ; then
   # Make ag pretty
@@ -177,6 +177,10 @@ if is-callable btm ; then
 else
   # fancy top
   alias top="top -ocpu -R -F -s 2 -n30"
+fi
+
+if is-callable cmatrix ; then
+  alias cmatrix="cmatrix -fsba"
 fi
 
 # Modeline {{{

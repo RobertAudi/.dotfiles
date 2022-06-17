@@ -15,14 +15,6 @@ function! s:exec(cmd) abort
   let &lazyredraw  = l:lazyredraw_keep
 endfunction
 
-function! x2a#buffers#CountModifiedBuffers() abort
-  return len(filter(getbufinfo(), 'getbufvar(v:val.bufnr, "&modified")'))
-endfunction
-
-function! x2a#buffers#Count() abort
-  return len(filter(getbufinfo(), 'v:val.listed && empty(getbufvar(v:val.bufnr, "&buftype")) && !empty(v:val.name)'))
-endfunction
-
 function! x2a#buffers#BufOnly(bang) abort
   if getbufvar('%', '&buftype') ==# 'NvimTree'
     silent! NvimTreeClose

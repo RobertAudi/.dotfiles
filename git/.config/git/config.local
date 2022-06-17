@@ -3,6 +3,11 @@
   attributesFile = ~/.config/git/attributes
   pager = delta --dark
 
+[user]
+  # Config file for git-user
+  #   https://github.com/gesquive/git-user
+  profiles = ~/.config/git/profiles
+
 [init]
   templateDir = ~/.dotfiles/git/.config/git/templates
 
@@ -16,6 +21,8 @@
   tool = GitMergeTool
 
 [alias]
+  ls-conflicts = conflicts
+
   # git tower
   tower = gui
 
@@ -50,9 +57,6 @@
   line-numbers = false
 
 # ------------------------------------------------------------------------------ }}}
-
-[alias]
-  ls-conflicts = conflicts
 
 # Modeline {{{
 # vim: set filetype=gitconfig foldmarker={{{,}}} foldlevel=0 foldmethod=marker : }}}

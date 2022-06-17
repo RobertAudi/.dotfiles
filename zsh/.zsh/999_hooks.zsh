@@ -1,10 +1,10 @@
 command_not_found_handler() {
-  print -- "୧( ಠ Д ಠ )୨ command not found: $@" >&2
+  builtin print -u 2 -- "୧( ಠ Д ಠ )୨ command not found: $@"
   return 127
 }
 
 _chpwd-show-pwd-info() {
-  print -P -- "%F{245}In: %F{yellow}%~%f"
+  builtin print -P -- "%F{245}In: %F{yellow}%~%f"
 }
 
 _chpwd-show-pwd-contents() {

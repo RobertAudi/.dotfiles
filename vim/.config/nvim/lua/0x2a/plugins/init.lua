@@ -167,6 +167,14 @@ return require("packer").startup({
       end,
     })
 
+    -- A neovim plugin that helps managing crates.io dependencies
+    --   https://github.com/Saecki/crates.nvim
+    use({
+      "saecki/crates.nvim",
+      requires = { "nvim-lua/plenary.nvim" },
+      config = require("0x2a.plugins.crates").config,
+    })
+
     -- SQL {{{
     -- ------------------------------------------------------------------------------
 
@@ -343,7 +351,7 @@ return require("packer").startup({
       "itchyny/vim-gitbranch",
       config = function()
         -- Show git branch with ctrl-g info
-        vim.keymap.set("n", "<C-g>", "<Cmd>call x2a#gitbranch#ctrl_g(v:count)<CR>")
+        vim.keymap.set("n", "<C-g>", "<Cmd>call x2a#gitbranch#ctrl_g(v:count)<CR>", { noremap = true })
       end,
     })
 
@@ -475,6 +483,14 @@ return require("packer").startup({
         -- Treesitter playground integrated into Neovim
         --   https://github.com/nvim-treesitter/playground
         { "nvim-treesitter/playground", after = "nvim-treesitter" },
+
+        -- Neovim treesitter plugin for setting the commentstring based on the cursor location in a file.
+        --   https://github.com/JoosepAlviste/nvim-ts-context-commentstring
+        { "JoosepAlviste/nvim-ts-context-commentstring", after = "nvim-treesitter" },
+
+        -- Syntax aware text-objects, select, move, swap, and peek support.
+        --   https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+        { "nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter" },
       },
 
       config = require("0x2a.plugins.nvim-treesitter").config,
@@ -482,12 +498,22 @@ return require("packer").startup({
 
     -- Quoting/parenthesizing made simple
     --   https://github.com/tpope/vim-surround
-    use("tpope/vim-surround")
+    use({
+      "tpope/vim-surround",
+      config = function()
+        -- Toggle between single/double quotes
+        vim.keymap.set("n", "['", [[cs'"]], { silent = true, remap = true })
+        vim.keymap.set("n", "]'", [[cs"']], { silent = true, remap = true })
+        vim.keymap.set("n", "[\"", [[cs"']], { silent = true, remap = true })
+        vim.keymap.set("n", "]\"", [[cs'"]], { silent = true, remap = true })
+      end,
+    })
 
     -- Smart and powerful comment plugin for neovim.
     --   https://github.com/numToStr/Comment.nvim
     use({
       "numToStr/Comment.nvim",
+      after = "nvim-ts-context-commentstring",
       config = require("0x2a.plugins.Comment").config,
     })
 
@@ -535,9 +561,18 @@ return require("packer").startup({
       end,
     })
 
-    -- KISS local vimrc with hash protection
-    --   https://github.com/RobertAudi/local-vimrc
-    use("RobertAudi/local-vimrc")
+    -- Secure load local config files for neovim
+    --   https://github.com/klen/nvim-config-local
+    use({
+      "klen/nvim-config-local",
+      config = function()
+        require("config-local").setup({})
+      end,
+    })
+
+    -- Multiple cursors plugin for vim/neovim
+    --   https://github.com/mg979/vim-visual-multi
+    use({ "mg979/vim-visual-multi" })
 
     -- Completion, Snippets, LSP {{{
     -- ------------------------------------------------------------------------------
@@ -678,10 +713,6 @@ return require("packer").startup({
     --   https://github.com/max397574/lua-dev.nvim
     use("max397574/lua-dev.nvim")
 
-    -- Improved Yank and Put functionalities for Neovim
-    --   https://github.com/gbprod/yanky.nvim
-    use({ "gbprod/yanky.nvim", config = require("0x2a.plugins.yanky").config })
-
     -- Find, Filter, Preview, Pick. All lua, all the time.
     --   https://github.com/nvim-telescope/telescope.nvim
     use({
@@ -696,7 +727,7 @@ return require("packer").startup({
         },
         { "nvim-telescope/telescope-ui-select.nvim" },
       },
-      keys = { "<C-p>", "<C-b>", "<C-Space>", "<C-y>" },
+      keys = { "<C-p>", "<C-b>", "<C-Space>" },
       config = require("0x2a.plugins.telescope").config,
     })
 
@@ -723,10 +754,6 @@ return require("packer").startup({
       event = "BufRead",
       config = require("0x2a.plugins.indent-blankline").config,
     })
-
-    -- Auto-Focusing and Auto-Resizing Splits/Windows
-    --   https://github.com/beauwilliams/focus.nvim
-    use({ "beauwilliams/focus.nvim", config = require("0x2a.plugins.focus").config })
 
     -- An ack.vim alternative mimics Ctrl-Shift-F on Sublime Text 2
     --   https://github.com/dyng/ctrlsf.vim
@@ -766,31 +793,34 @@ return require("packer").startup({
     use({
       "junegunn/vim-easy-align",
       config = function()
-        vim.keymap.set("v", "<Space>", "<Plug>(EasyAlign)")
+        vim.keymap.set("v", "<Space>", "<Plug>(EasyAlign)", { noremap = true })
       end,
     })
 
     -- A better user experience for viewing and interacting with Vim marks.
-    --   https://github.com/chentau/marks.nvim
-    use({ "chentau/marks.nvim", config = require("0x2a.plugins.marks").config })
+    --   https://github.com/chentoast/marks.nvim
+    use({ "chentoast/marks.nvim", config = require("0x2a.plugins.marks").config })
 
     -- Create temporary file for memo, testing, etc.
-    --   https://github.com/RobertAudi/junkfile.vim
+    --   https://github.com/RobertAudi/junkfile.nvim
     use({
-      "RobertAudi/junkfile.vim",
+      "RobertAudi/junkfile.nvim",
       cmd = {
         "JunkfileOpen",
         "JunkfileEdit",
         "JunkfileSplit",
         "JunkfileVsplit",
         "JunkfileTabEdit",
+        "JunkfileWrite",
         "JunkfileSave",
         "JunkfileSplitSave",
         "JunkfileVsplitSave",
         "JunkfileTabSave",
       },
       config = function()
-        vim.g["junkfile#directory"] = os.getenv("NVIM_DATA_HOME") .. "/junk"
+        require("junkfile").setup({
+          directory = os.getenv("NVIM_DATA_HOME") .. "/junk",
+        })
       end,
     })
 
@@ -841,10 +871,6 @@ return require("packer").startup({
       end,
     })
 
-    -- Make blockwise Visual mode more useful
-    --   https://github.com/kana/vim-niceblock
-    use("kana/vim-niceblock")
-
     -- Enhanced jump and change list navigation commands.
     --   https://github.com/inkarkat/vim-EnhancedJumps
     use({ "inkarkat/vim-EnhancedJumps", requires = { "inkarkat/vim-ingo-library" } })
@@ -863,7 +889,7 @@ return require("packer").startup({
       "AaronLasseigne/yank-code",
       config = function()
         -- Yank visual selection unindented
-        vim.keymap.set("x", "Y", "<Plug>YankCode")
+        vim.keymap.set("x", "Y", "<Plug>YankCode", { noremap = true })
       end,
     })
 
@@ -875,7 +901,7 @@ return require("packer").startup({
       config = function()
         vim.g.ZoomWinTabHideTabBar = false
 
-        vim.keymap.set("n", "\\\\", [[<Cmd>silent! ZoomWinTabToggle<CR>]], { silent = true })
+        vim.keymap.set("n", "\\\\", [[<Cmd>silent! ZoomWinTabToggle<CR>]], { noremap = true, silent = true })
       end,
     })
 
@@ -896,12 +922,15 @@ return require("packer").startup({
       end,
     })
 
+    -- A port of the Vim plugin vim-lastplace. It uses the same logic as vim-lastplace, but leverages the Neovim Lua API.
     -- Intelligently reopen files at your last edit position in Vim.
-    --   https://github.com/farmergreg/vim-lastplace
+    --   https://github.com/vladdoster/remember.nvim
     use({
-      "farmergreg/vim-lastplace",
+      "vladdoster/remember.nvim",
       config = function()
-        vim.g.lastplace_open_folds = false
+        require("remember").setup({
+          open_folds = false,
+        })
       end,
     })
 
@@ -924,6 +953,15 @@ return require("packer").startup({
         vim.keymap.set("x", "<Left>", "<Plug>(textmanip-move-left)", { remap = true })
         vim.keymap.set("x", "<Right>", "<Plug>(textmanip-move-right)", { remap = true })
       end,
+    })
+
+    -- VS Code-like renaming UI for Neovim, writen in Lua
+    --   https://github.com/filipdutescu/renamer.nvim
+    use({
+      "filipdutescu/renamer.nvim",
+      branch = "master",
+      requires = { { "nvim-lua/plenary.nvim" } },
+      config = require("0x2a.plugins.renamer").config,
     })
 
     -- A vim plugin that simplifies the transition between multiline and single-line code
@@ -978,13 +1016,31 @@ return require("packer").startup({
         require("toggleterm").setup({})
         require("0x2a.abolish").command("ToggleTerm", "TT")
 
-        vim.keymap.set("n", "<Leader>tt", "<Cmd>ToggleTerm<CR>")
+        vim.keymap.set("n", "<Leader>tt", "<Cmd>ToggleTerm<CR>", { noremap = true })
       end,
     })
 
     -- Run your tests at the speed of thought
     --   https://github.com/vim-test/vim-test
     use({ "vim-test/vim-test", after = "toggleterm.nvim" })
+
+    -- A Neovim wrapper for running tests
+    --   https://github.com/klen/nvim-test
+    use({
+      "klen/nvim-test",
+      disable = true,
+      config = function()
+        require("nvim-test").setup({
+          term = "toggleterm",
+          runners = {
+            ["rspec.ruby"] = "0x2a.plugins.nvim-test.runners.rspec",
+          },
+          termOpts = {
+            direction = "float",
+          },
+        })
+      end,
+    })
 
     -- Highlights terminal color code numbers (0-255)
     --   https://github.com/sunaku/vim-hicterm
@@ -1007,10 +1063,6 @@ return require("packer").startup({
     -- Better whitespace highlighting for Vim
     --   https://github.com/ntpeters/vim-better-whitespace
     use({ "ntpeters/vim-better-whitespace", config = require("0x2a.plugins.vim-better-whitespace").config })
-
-    -- Quickly highlight <cword> or visually selected word
-    --   https://github.com/t9md/vim-quickhl
-    use("t9md/vim-quickhl")
 
     -- Highlight insecure SSL configuration in Vim
     --   https://github.com/chr4/sslsecure.vim
@@ -1077,8 +1129,8 @@ return require("packer").startup({
       "RobertAudi/bannerizor.vim",
       keys = { "\\1", "\\2" },
       config = function()
-        vim.keymap.set("n", "\\1", [[<Cmd>call bannerizor#titleize("=")<CR>]], { silent = true })
-        vim.keymap.set("n", "\\2", [[<Cmd>call bannerizor#titleize("-")<CR>]], { silent = true })
+        vim.keymap.set("n", "\\1", [[<Cmd>call bannerizor#titleize("=")<CR>]], { noremap = true, silent = true })
+        vim.keymap.set("n", "\\2", [[<Cmd>call bannerizor#titleize("-")<CR>]], { noremap = true, silent = true })
       end,
     })
 
@@ -1093,8 +1145,28 @@ return require("packer").startup({
       "segeljakt/vim-silicon",
       cmd = "Silicon",
       opt = true,
+
       cond = function()
         return vim.fn.executable("silicon") > 0
+      end,
+
+      config = function()
+        vim.g.silicon = {
+          ["theme"] = "TwoDark",
+          ["font"] = "JetBrains Mono",
+          ["background"] = "#A8C3E1",
+          ["shadow-color"] = "#555555",
+          ["line-pad"] = 2,
+          ["pad-horiz"] = 80,
+          ["pad-vert"] = 100,
+          ["shadow-blur-radius"] = 0,
+          ["shadow-offset-x"] = 0,
+          ["shadow-offset-y"] = 0,
+          ["line-number"] = true,
+          ["round-corner"] = true,
+          ["window-controls"] = true,
+          ["default-file-pattern"] = "~/Pictures/Screenshots/silicon-{time:%Y-%m-%d-%H%M%S}.png",
+        }
       end,
     })
 
@@ -1105,6 +1177,48 @@ return require("packer").startup({
     -- Translating plugin for Vim/Neovim
     --   https://github.com/voldikss/vim-translator
     use({ "voldikss/vim-translator", disable = true })
+
+    -- 🔎 Neovim plugin for viewing all the URLs in a buffer
+    --   https://github.com/axieax/urlview.nvim
+    use({ "axieax/urlview.nvim", config = require("0x2a.plugins.urlview").config })
+
+    -- Auto-Focusing and Auto-Resizing Splits/Windows
+    --   https://github.com/beauwilliams/focus.nvim
+    use({ "beauwilliams/focus.nvim", config = require("0x2a.plugins.focus").config })
+
+    -- Key mapping hints in a floating window
+    --   https://github.com/linty-org/key-menu.nvim
+    use({
+      "linty-org/key-menu.nvim",
+
+      config = function()
+        require("key-menu").set("n", "<Leader>", { noremap = true })
+        require("key-menu").set("n", "<LocalLeader>", { noremap = true })
+      end,
+    })
+
+    -- Readline motions and deletions in Neovim
+    --   https://github.com/linty-org/readline.nvim
+    use({
+      "linty-org/readline.nvim",
+      config = function()
+        local readline = require("readline")
+
+        vim.keymap.set("c", "<M-f>", readline.forward_word, { noremap = true })
+        vim.keymap.set("c", "<M-b>", readline.backward_word, { noremap = true })
+        vim.keymap.set("c", "<C-a>", readline.beginning_of_line, { noremap = true })
+        vim.keymap.set("c", "<C-e>", readline.end_of_line, { noremap = true })
+        vim.keymap.set("c", "<M-d>", readline.kill_word, { noremap = true })
+        vim.keymap.set("c", "<C-w>", readline.backward_kill_word, { noremap = true })
+        vim.keymap.set("c", "<M-BS>", readline.backward_kill_word, { noremap = true })
+        vim.keymap.set("c", "<C-k>", readline.kill_line, { noremap = true })
+        vim.keymap.set("c", "<C-u>", readline.backward_kill_line, { noremap = true })
+      end,
+    })
+
+    -- Enhanced increment/decrement plugin for Neovim
+    --   https://github.com/monaqa/dial.nvim
+    use({ "monaqa/dial.nvim", config = require("0x2a.plugins.dial").config })
   end,
 
   config = {

@@ -8,7 +8,7 @@ local notifications = require("0x2a.notifications")
 
 local M = {}
 
-local dotfiles_dir = os.getenv("DOTFILES_DIR") or vim.fn.expand("~/.dotfiles")
+local dotfiles_dir = os.getenv("DOTFILES_DIR") or vim.fn.expand("~/.dotfiles", false, false)
 
 if not utils.is_empty(dotfiles_dir) then
   dotfiles_dir = string.gsub(dotfiles_dir, "/$", "")
@@ -49,9 +49,9 @@ M.move_to_sanbox = function(opts)
     return false
   end
 
-  local file_name = vim.fn.expand("%:t")
-  local file_path = vim.fn.expand("%:p")
-  local file_dir = vim.fn.expand("%:p:h")
+  local file_name = vim.fn.expand("%:t", false, false)
+  local file_path = vim.fn.expand("%:p", false, false)
+  local file_dir = vim.fn.expand("%:p:h", false, false)
   local sandbox = sandbox_path(file_dir)
   local sandbox_file_path = sandbox .. "/" .. file_name
 

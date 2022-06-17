@@ -1,0 +1,7 @@
+#autoload
+
+if is-callable rails ; then
+  direnv_exec command rails "$@"
+else
+  command-not-found "rails"
+fi

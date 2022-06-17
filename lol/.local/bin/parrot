@@ -1,5 +1,10 @@
 #!/usr/bin/env zsh
 
 # Display an animated party parrot
-curl -q parrot.live
+if type terminal-parrot &> /dev/null; then
+  terminal-parrot
+else
+  curl -q parrot.live
+fi
+
 echo

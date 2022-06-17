@@ -6,22 +6,34 @@
 local M = {}
 
 M.config = function()
-  vim.g.indent_blankline_char = "│"
+  require("indent_blankline").setup({
+    char = "│",
 
-  vim.g.indent_blankline_filetype_exclude = {
-    "NvimTree",
-    "Trouble",
-    "aerial",
-    "TelescopePrompt",
-    "TelescopeResults",
-    "toggleterm",
-    "gitblame",
-    "git",
-    "ctrlsf",
-  }
+    bufname_exclude = {},
+    buftype_exclude = { "terminal", "telescope", "nofile" },
+    filetype_exclude = {
+      "Float",
+      "NvimTree",
+      "TelescopePrompt",
+      "TelescopeResults",
+      "Trouble",
+      "Trouble",
+      "aerial",
+      "ctrlsf",
+      "git",
+      "gitblame",
+      "help",
+      "packer",
+      "toggleterm",
+    },
 
-  vim.g.indent_blankline_bufname_exclude = {}
-  vim.g.indent_blankline_buftype_exclude = { "terminal" }
+    show_trailing_blankline_indent = false,
+    use_treesitter = true,
+    show_current_context = true,
+    show_current_context_start = false,
+    show_end_of_line = false,
+    space_char_blankline = " ",
+  })
 end
 
 return M

@@ -61,6 +61,9 @@ M.config = function()
         {
           "tabs",
           mode = 2,
+          max_length = function()
+            return vim.o.columns
+          end,
 
           tabs_color = {
             active = "lualine_x_normal",

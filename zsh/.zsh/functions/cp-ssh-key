@@ -1,6 +1,13 @@
 #autoload
 
-local key="${1:=id_rsa}"
-  (silent copy < "$HOME/.ssh/$key.pub") && \
+local key
+
+if [[ -z "$1" ]] ; then
+  key="$(command ls -1 ~/.ssh/*.pub | rev | cut -d/ -f1 | rev | sed 's/\.pub$//g' | fzf)"
+else
+  key="${1/.pub}"
+fi
+
+(silent copy < "$HOME/.ssh/$key.pub") && \
   print-success "Copied SSH key: '$key'" || \
   print-error "Failed to copy SSH key: '$key'"

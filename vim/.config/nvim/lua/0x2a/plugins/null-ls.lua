@@ -27,8 +27,6 @@ M.config = function()
         },
       }),
 
-      null_ls.builtins.formatting.rustfmt,
-
       -- Makefiles
       null_ls.builtins.diagnostics.checkmake,
 

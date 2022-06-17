@@ -23,5 +23,3 @@ highlight def link gitignoreDirectory Constant
 highlight def link gitignoreFile Type
 
 let b:current_syntax = 'gitignore'
-
-setlocal commentstring=#%s

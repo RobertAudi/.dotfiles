@@ -6,7 +6,7 @@ setopt local_options no_glob_subst no_posix_builtins pipefail 2> /dev/null
 
 local -a selected
 local ret
-selected=($(fc -rl 1 | perl -pe 's/^\s*\d+\s+//g' | smart-fzf --tiebreak=index --bind=ctrl-r:toggle-sort --query="${LBUFFER}" +m))
+selected=($(fc -rl 1 | smart-fzf --tiebreak=index --bind=ctrl-r:toggle-sort --query="${LBUFFER}" +m))
 ret=$status
 
 if (( ${#selected} )); then

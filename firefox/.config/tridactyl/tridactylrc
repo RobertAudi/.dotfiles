@@ -1,0 +1,147 @@
+" Uncomment to reset the config to the ones in this file
+sanitise tridactyllocal tridactylsync
+
+" Just use a blank page for new tab. It would be nicer to use the standard
+" Firefox homepage, but Tridactyl doesn't support this yet.
+set newtab about:blank
+
+" Profile directory to use with native messenger
+set profiledir default
+
+colourscheme default
+
+" Key bindings {{{
+" -------------------------------------------------------------------------------
+
+" Unbind annoying mappings {{{
+" ----------------------------
+
+" close all tabs and windows
+unbind ZZ
+
+" increment the current URL by 1
+unbind ]c
+
+" decrement the current URL by 1
+unbind [c
+
+" open Firefox reader mode
+unbind gr
+
+" Go to home
+unbind gh
+unbind gH
+
+" zoom in
+unbind zi
+
+" zoom out
+unbind zo
+
+" reset zoom
+unbind zz
+
+" jump to the next part of the page
+unbind <C-f>
+
+" jump to the previous part of the page
+unbind <C-b>
+
+" bookmark the current page
+unbind A
+
+" bookmark the current page, but allow the URL to be modified first
+unbind a
+
+" ---------------------------- }}}
+
+" Next/Previous tab
+bind <C-n> tabnext_gt
+bind <C-p> tabprev
+
+" Go to the last visited tab
+bind <C-o> tab #
+
+# Move tab relative to the next/previous tab
+bind gL tabmove +1
+bind gH tabmove \-1
+
+bind <C-b> fillcmdline tab
+bind <C-t> fillcmdline tabopen
+
+" Duplicate tab
+bind gd tabduplicate
+bind D tabduplicate
+
+" Move current tab to new window
+bind gw tabdetach
+
+" Pin current tab
+bind gp pin
+
+" copy (yank) link's target to clipboard
+bind Y hint -p
+
+" Git{Hub,Lab} git clone via SSH yank
+bind yg composite js document.location.href.replace(/https?:\/\//, "git@").replace("/", ":").replace(/$/, ".git") | clipboard yank
+
+" Ex-mode bindings {{{
+" --------------------
+
+bind --mode=ex <C-n> ex.next_completion
+bind --mode=ex <C-p> ex.prev_completion
+
+" -------------------- }}}
+
+" Ignore mode on GitHub
+bindurl github.com --mode=normal <S-I> mode ignore
+bindurl github.com --mode=ignore <S-I> mode normal
+
+" ------------------------------------------------------------------------------- }}}
+
+" Make gu take you back to subreddit from comments
+bindurl reddit.com gu urlparent 4
+
+" Only hint search results on Google
+bindurl www.google.com f hint -Jc .rc > .r > a
+bindurl www.google.com F hint -Jtc .rc>.r>a
+
+" Don't display the mode indicator.
+set modeindicator true
+
+" Sane hinting mode
+set hintfiltermode vimperator-reflow
+set hintnames numeric
+
+" Make Tridactyl work on more sites at the expense of some security
+set csp clobber
+fixamo_quiet
+
+" Search engines {{{
+" -------------------------------------------------------------------------------
+
+" GitHub
+set searchurls.gh https://github.com/search?q=%s
+
+" Google Translate
+set searchurls.translate https://translate.google.com/?source=osdd#auto|auto|%s
+
+" StackOverflow
+set searchurls.so https://stackoverflow.com/search?q=%s
+
+" YouTube
+set searchurls.yt https://www.youtube.com/results?search_query=%s
+
+" IMDB
+set searchurls.imdb https://www.imdb.com/find?s=all&q=%s
+
+" ------------------------------------------------------------------------------- }}}
+
+" URL redirects
+" -------------------------------------------------------------------------------
+
+" New reddit is bad
+autocmd DocStart /^(https?:\/\/)?www.reddit.com/ js tri.excmds.urlmodify("-t", "www", "old")
+
+" Modeline {{{
+" vim: set filetype=vim foldmarker={{{,}}} foldlevel=0 foldmethod=marker : }}}

@@ -85,6 +85,13 @@ M.browse = function(opts)
     return
   end
 
+  local ok, urlview = pcall(require, "urlview.utils")
+
+  if ok then
+    urlview.navigate_url(file_link)
+    return
+  end
+
   local browser = os.getenv("BROWSER")
 
   if utils.is_empty(browser) then

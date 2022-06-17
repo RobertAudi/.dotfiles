@@ -63,8 +63,8 @@ let g:switch_custom_definitions =
       \   ['left', 'right'],
       \   ['signed', 'unsigned'],
       \   ['!=', '=='],
+      \   ['!==', '==='],
       \   ['show', 'hide'],
-      \   ['top', 'bottom'],
       \   ['min', 'max']
       \ ]
 
@@ -75,7 +75,8 @@ let s:switch_filetype_definitions = {}
 
 let s:switch_filetype_definitions.css =
       \ [
-      \    ['padding', 'margin']
+      \    ['padding', 'margin'],
+      \    ['top', 'right', 'bottom', 'left'],
       \ ]
 
 " ------------------------------------------------------------------------------ }}}
@@ -92,6 +93,7 @@ let s:switch_filetype_definitions.ruby +=
       \   s:switch_builtins.ruby_array_shorthand,
       \   s:switch_builtins.ruby_fetch,
       \   ['raise', 'fail'],
+      \   ['it', 'specify'],
       \   ['be_truthy', 'be_falsey'],
       \   {
       \     '\.to ': '.to_not ',

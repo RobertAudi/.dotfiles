@@ -108,21 +108,39 @@ do_sudo() {
 
 # Better tree command
 tree() {
-  # Options:
-  #   -C             Colors
-  #   -A             ANSI line graphics
-  #   -F             Classify (directory: /, executable file: *, etc.)
-  #   -a             All files (including hidden files, but not "." and "..")
-  #   -I pattern     Don't list files matching the pattern
-  #   --dirsfirst    List directories before files
-  #   -L level       Max depth
-  local treeopts="-CAFa -I \"rhel.*.*.package|.git|.gem\" --dirsfirst"
-  if [[ "$1" =~ "^[1-9][0-9]*$" ]]; then
-    treeopts="$treeopts -L $1"
-    shift
-  fi
+  if is-callable exa ; then
+    # Options:
+    #   -a             All files (including hidden files, but not "." and "..")
+    #   -F             Classify (directory: /, executable file: *, etc.)
+    #   -T             Recurse into directories as a tree
+    #   -I pattern     Don't list files matching the pattern
+    #   -L level       Max depth
+    local exaopts="--time-style=long-iso --group-directories-first --colour=always -aFT -I \"rhel.*.*.package|.git|.gem\""
 
-  command tree $=treeopts "$@"
+    if [[ "$1" =~ "^[1-9][0-9]*$" ]]; then
+      exaopts="$exaopts -L $1"
+      shift
+    fi
+
+    command exa $=exaopts "$@"
+  else
+    # Options:
+    #   -C             Colors
+    #   -A             ANSI line graphics
+    #   -F             Classify (directory: /, executable file: *, etc.)
+    #   -a             All files (including hidden files, but not "." and "..")
+    #   -I pattern     Don't list files matching the pattern
+    #   --dirsfirst    List directories before files
+    #   -L level       Max depth
+    local treeopts="-CAFa -I \"rhel.*.*.package|.git|.gem\" --dirsfirst"
+
+    if [[ "$1" =~ "^[1-9][0-9]*$" ]]; then
+      treeopts="$treeopts -L $1"
+      shift
+    fi
+
+    command tree $=treeopts "$@"
+  fi
 }
 
 # Disable globbing.

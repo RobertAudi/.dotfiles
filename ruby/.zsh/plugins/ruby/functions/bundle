@@ -9,7 +9,7 @@ case "$1" in
 
     shift
 
-    command bundle config --local gemfile "Gemfile.local"
+    direnv_exec command bundle config --local gemfile "Gemfile.local"
 
     [[ -f "Gemfile.lock" ]] && cp -f "Gemfile.lock" "Gemfile.local.lock"
 
@@ -32,14 +32,14 @@ if [[ -z "$1" || "$1" =~ "install|update" ]]; then
   if [[ -f "Gemfile.local.lock" ]]; then
     builtin print -P -- "[%F{032}INFO%f] Running %Bbundle $@%b using the regular Gemfile..."
 
-    command bundle config --local gemfile "Gemfile"
+    direnv_exec command bundle config --local gemfile "Gemfile"
 
-    command bundle $@
+    direnv_exec command bundle $@
 
-    command bundle config --local gemfile "Gemfile.local"
+    direnv_exec command bundle config --local gemfile "Gemfile.local"
 
     [[ -f "Gemfile.lock" ]] && cp -f "Gemfile.lock" "Gemfile.local.lock"
   fi
 fi
 
-command bundle "$@"
+direnv_exec command bundle "$@"
