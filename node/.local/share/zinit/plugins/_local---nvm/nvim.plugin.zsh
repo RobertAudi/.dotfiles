@@ -1,1 +1,0 @@
-../../../../../.zsh/plugins/nvm/init.zsh

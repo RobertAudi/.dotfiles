@@ -1,4 +1,0 @@
-#autoload
-
-# checks if the port is in use
-lsof -n -i4TCP:"$1"

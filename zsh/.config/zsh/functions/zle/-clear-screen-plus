@@ -1,0 +1,9 @@
+#autoload
+
+command clear
+
+if [[ -z "$NVIM" ]]; then
+  cd .
+fi
+
+zle reset-prompt

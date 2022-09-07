@@ -2,11 +2,11 @@ local Runner = require("nvim-test.runner")
 
 local command = "rspec"
 
-if require("0x2a.utils.files").file_exists("Gemfile") then
+if require("0x2a.utils.fs").file_exists("Gemfile") then
   command = "bundle exec " .. command
 end
 
-if require("0x2a.utils.files").file_exists(".envrc") then
+if require("0x2a.utils.fs").file_exists(".envrc") then
   command = "DIRENV_LOG_FORMAT= direnv exec . " .. command
 end
 

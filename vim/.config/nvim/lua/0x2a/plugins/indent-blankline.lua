@@ -2,12 +2,22 @@
 -- Plugin: lukas-reineke/indent-blankline.nvim
 -- Description: Indent guides for Neovim
 -- URL: https://github.com/lukas-reineke/indent-blankline.nvim
+-- Requires:
+--   - 0x2a.symbols
 
 local M = {}
 
 M.config = function()
+  local ok, _ = pcall(require, "indent_blankline")
+
+  if not ok then
+    return
+  end
+
+  local symbols = require("0x2a.symbols")
+
   require("indent_blankline").setup({
-    char = "│",
+    char = symbols.separators.vertical,
 
     bufname_exclude = {},
     buftype_exclude = { "terminal", "telescope", "nofile" },

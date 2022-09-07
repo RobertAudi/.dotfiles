@@ -1,1 +1,1 @@
-../../../../../.zsh/plugins/macos/init.zsh
+../../../../../.config/zsh/plugins/macos/init.zsh

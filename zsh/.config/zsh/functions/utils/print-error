@@ -1,0 +1,12 @@
+#autoload
+
+local errorPrefix
+
+if [[ "$1" == "-q" ]]; then
+  shift
+else
+  errorPrefix="[%F{red}ERROR%f] "
+fi
+
+builtin print -u 2 -P -- "${errorPrefix}${@}"
+return 1

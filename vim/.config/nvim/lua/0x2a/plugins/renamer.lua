@@ -2,6 +2,8 @@
 -- Plugin: filipdutescu/renamer.nvim
 -- Description: VS Code-like renaming UI for Neovim, writen in Lua
 -- URL: https://github.com/filipdutescu/renamer.nvim
+-- Requires:
+--   - 0x2a.symbols
 
 local M = {}
 
@@ -12,6 +14,7 @@ M.config = function()
     return
   end
 
+  local symbols = require("0x2a.symbols")
   local mappings_utils = require("renamer.mappings.utils")
 
   renamer.setup({
@@ -36,7 +39,16 @@ M.config = function()
     border = true,
 
     -- The characters which make up the border
-    border_chars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
+    border_chars = {
+      symbols.separators.horizontal,
+      symbols.separators.vertical,
+      symbols.separators.horizontal,
+      symbols.separators.vertical,
+      symbols.corners.top_left,
+      symbols.corners.top_right,
+      symbols.corners.bottom_right,
+      symbols.corners.bottom_left,
+    },
 
     -- Whether or not to highlight the current word references through LSP
     show_refs = true,
@@ -61,12 +73,9 @@ M.config = function()
     handler = nil,
   })
 
-  vim.keymap.set(
-    { "n", "x" },
-    "<LocalLeader>rr",
-    [[<Cmd>lua require("renamer").rename()<CR>]],
-    { noremap = true, silent = true }
-  )
+  vim.keymap.set({ "n", "x" }, "<LocalLeader>rr", function()
+    require("renamer").rename()
+  end, { noremap = true, silent = true, desc = "Rename word under the cursor" })
 end
 
 return M

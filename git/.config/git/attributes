@@ -27,7 +27,6 @@
 *.png  binary
 *.psb  binary
 *.psd  binary
-# *.svg  text -crlf
 *.svgz binary
 *.tif  binary
 *.tiff binary
@@ -87,6 +86,9 @@
 *.docx diff=astextplain
 *.DOCX diff=astextplain
 
+# Text files where line endings should be preserved
+*.patch    -text
+
 # Yarn lockfile
 yarn.lock linguist-generated
 
@@ -98,8 +100,11 @@ yarn.lock linguist-generated
 *.mobileprovision diff=provision
 *.scpt diff=applescript
 Gemfile.lock linguist-generated
+yarn.lock linguist-generated
+package-lock.json linguist-generated
 db/schema.rb merge=railsschema linguist-generated
 *.rb diff=ruby
 *.rake diff=ruby
 *_spec.rb diff=rspec
 vendor/* linguist-vendored
+*.swift text diff=swift

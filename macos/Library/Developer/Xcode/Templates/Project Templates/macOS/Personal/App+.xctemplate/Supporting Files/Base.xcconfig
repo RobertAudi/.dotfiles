@@ -1,0 +1,15 @@
+//
+//  Base.xcconfig
+//  ___PROJECTNAME___
+//
+//  Created by ___FULLUSERNAME___ on ___DATE___.
+//  Copyright © ___YEAR___ ___FULLUSERNAME___. All rights reserved.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+#include "XcodeWarnings.xcconfig"
+
+// Whether to precompile the prefix header (if one is specified)
+GCC_PRECOMPILE_PREFIX_HEADER = YES

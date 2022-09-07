@@ -1,0 +1,173 @@
+#!/usr/bin/env zsh
+
+emulate -L zsh
+
+function print-error {
+  builtin print -P -u 2 -- "[%F{red}ERROR%f] $@"
+  return 1
+}
+
+function internal-error {
+  builtin print -P -u 2 -- "[%F{red}Internal Error%f] $@"
+}
+
+function command-not-found {
+  print-error -q "୧( ಠ Д ಠ )୨ command not found: $1"
+  return 127
+}
+
+function wrong-number-of-arguments {
+  if (( $# != 2 )) || [[ -z "$1" || -z "$2" ]]; then
+    internal-error "%Bwrong number of arguments.%b Expected 2 but received $#: $@"
+  else
+    print-error "%Bwrong number of arguments.%b Expected $1 but received $2"
+  fi
+}
+
+function is-callable {
+  (( $+1 )) || {
+    print-error "[Internal Error] is-callable: not enough arguments"
+    return 1
+  }
+
+  (( $+builtins[$1] )) || (( $+functions[$1] )) || (( $+aliases[$1] )) || (( $+commands[$1] ))
+}
+
+function print-usage {
+  local cmd_name
+  cmd_name="${${(%):-%x}:A:t}"
+
+  if (( $# != 1 )); then
+    if (( $# > 0 )); then
+      internal-error "%Bwrong number of arguments.%b Expected 0-1 but received $#: $@"
+    fi
+
+    builtin print -u 2 -l -- "Usage:" \
+      "    $cmd_name               List open ports" \
+      "    $cmd_name list          List open ports" \
+      "    $cmd_name all           List all ports" \
+      "    $cmd_name check PORT    Check if the port is in use" \
+      "    $cmd_name next          Show next available port" \
+      "    $cmd_name help          Show help"
+  elif [[ "$1" == "list" ]]; then
+    builtin print -u 2 -- "Usage: $cmd_name list"
+  elif [[ "$1" == "all" ]]; then
+    builtin print -u 2 -l -- "Usage: $cmd_name all"
+  elif [[ "$1" == "check" ]]; then
+    builtin print -u 2 -l -- "Usage: $cmd_name check PORT"
+  elif [[ "$1" == "next" ]]; then
+    builtin print -u 2 -l -- "Usage: $cmd_name next"
+  elif [[ "$1" == "help" ]]; then
+    print-usage
+  else
+    print-usage
+  fi
+}
+
+local cmd_prefix
+cmd_prefix=""
+
+if is-callable grc ; then
+  cmd_prefix="grc --stderr --stdout --colour=on"
+fi
+
+local scope
+
+if (( $# == 0 )); then
+  scope="list"
+else
+  scope="$1"; shift
+fi
+
+case "$scope" in
+  list)
+    if ! is-callable nmap ; then
+      command-not-found nmap
+      return $status
+    fi
+
+    if (( $# > 0 )); then
+      wrong-number-of-arguments 0 $#
+      print-usage "list"
+      return 64
+    fi
+
+    ${=cmd_prefix} nmap --open 127.0.0.1 | tail -n +5 | head -n -2
+    return $status
+    ;;
+  all)
+    if ! is-callable lsof ; then
+      command-not-found lsof
+      return $status
+    fi
+
+    if (( $# > 0 )); then
+      wrong-number-of-arguments 0 $#
+      print-usage "all"
+      return 64
+    fi
+
+    ${=cmd_prefix} lsof -n -P -V -i 4TCP@127.0.0.1
+    return $status
+    ;;
+  check)
+    if ! is-callable lsof ; then
+      command-not-found lsof
+      return $status
+    fi
+
+    if (( $# > 1 )); then
+      wrong-number-of-arguments 1 $#
+      print-usage "check"
+      return 64
+    fi
+
+    local port
+    port="$1"; shift
+
+    ${=cmd_prefix} lsof -n -P -V -i 4TCP:"$port"
+    return $status
+    ;;
+  next)
+    if ! is-callable netstat ; then
+      command-not-found netstat
+      return $status
+    fi
+
+    if (( $# > 0 )); then
+      wrong-number-of-arguments 0 $#
+      print-usage "next"
+      return 64
+    fi
+
+    # Source: https://unix.stackexchange.com/a/358101/645
+    netstat -aln | awk '
+      $6 == "LISTEN" {
+        if ($4 ~ "[.:][0-9]+$") {
+          split($4, a, /[:.]/);
+          port = a[length(a)];
+          p[port] = 1
+        }
+      }
+      END {
+        for (i = 3000; i < 65000 && p[i]; i++){};
+        if (i == 65000) {exit 1};
+        print i
+      }
+    '
+    return $status
+    ;;
+  help)
+    print-usage "help"
+    return 0
+    ;;
+  *)
+    print-error "%BInvalid scope:%b $scope"
+
+    if (( $# > 0 )); then
+      print-error "%BInvalid arguments:%b $@"
+    fi
+
+    print-usage
+    return 64
+esac

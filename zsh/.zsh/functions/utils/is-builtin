@@ -1,8 +1,0 @@
-#autoload
-
-(( $+1 )) || {
-  print-error 'is-builtin: not enough arguments'
-  return 1
-}
-
-(( $+builtins[$1] )) &>/dev/null

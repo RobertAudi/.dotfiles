@@ -4,14 +4,12 @@
 -- URL: https://github.com/neovim/nvim-lspconfig
 -- Requires:
 --   - 0x2a.symbols
---   - 0x2a.utils
 
 -- Source: https://github.com/akinsho/dotfiles/blob/4dde1e4e80b7ac3207e113f34994afa06a12bb62/.config/nvim/plugin/lsp.lua#L80,107
 --- Restricts nvim's diagnostic signs to only the single most severe one per line
 --- @see `:help vim.diagnostic`
 
 local symbols = require("0x2a.symbols")
-local utils = require("0x2a.utils")
 
 local ns = vim.api.nvim_create_namespace("severe-diagnostics")
 
@@ -52,14 +50,14 @@ M.config = {
     severity = {
       min = vim.diagnostic.severity.WARN,
     },
-  },
 
-  virtual_text = {
-    prefix = require("0x2a.symbols").codicon.DEBUG .. " ",
+    virtual_text = {
+      prefix = require("0x2a.symbols").codicon.DEBUG .. " ",
 
-    -- Show virtual text only for errors
-    severity = {
-      min = vim.diagnostic.severity.ERROR,
+      -- Show virtual text only for errors
+      severity = {
+        min = vim.diagnostic.severity.ERROR,
+      },
     },
   },
 

@@ -1,0 +1,34 @@
+#!/usr/bin/env zsh
+
+local -a pathsToRemove
+pathsToRemove=(
+  /opt/homebrew/opt/binutils/bin
+  /opt/homebrew/opt/coreutils/libexec/gnubin
+  /opt/homebrew/opt/m4/bin
+  /opt/homebrew/opt/make/libexec/gnubin
+  /opt/homebrew/opt/openssl/bin
+  /opt/homebrew/opt/libxml2/bin
+  /opt/homebrew/opt/libxslt/bin
+)
+
+local -a pkgConfigPathsToRemove
+pkgConfigPathsToRemove=(
+  /opt/homebrew/opt/openssl/lib/pkgconfig
+  /opt/homebrew/opt/libffi/lib/pkgconfig
+  /opt/homebrew/opt/libxml2/lib/pkgconfig
+  /opt/homebrew/opt/libxslt/lib/pkgconfig
+)
+
+# Remove some paths to use native build libs
+for pathToRemove in $pathsToRemove[@]; do
+  path=("${(@)path:#$pathToRemove}")
+done
+
+for pkgConfigPathToRemove in $pkgConfigPathsToRemove[@]; do
+  pkg_config_path=("${(@)pkg_config_path:#$pkgConfigPathToRemove}")
+done
+
+export CPPFLAGS=
+export LDFLAGS=
+
+command bundle $=@

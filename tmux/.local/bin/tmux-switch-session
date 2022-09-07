@@ -23,7 +23,7 @@ else
   local status_code
   local session
 
-  session=$(builtin print -l -- "${sessions[@]}" | command grep -v "^${current_session}\$" | fzf --height="100%")
+  session=$(builtin print -l -- "${sessions[@]}" | command grep -v "^${current_session}\$" | fzf ${=FZF_DEFAULT_OPTS} +m --height="100%")
   status_code=$?
 
   if (( $status_code != 0 )) || [[ -z "$session" ]]; then

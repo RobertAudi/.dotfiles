@@ -1,8 +1,8 @@
 -- Module: 0x2a.theme
 
-local utils = require("0x2a.colors.utils")
+vim.g.default_colorscheme = "railscasts"
 
-utils.use("railscasts")
+local utils = require("0x2a.colors.utils")
 
 utils.highlight("VertSplit", { ctermfg = 237, fg = "#393939" }) -- deprecated
 utils.highlight("WinSeparator", { ctermfg = 237, fg = "#393939" })

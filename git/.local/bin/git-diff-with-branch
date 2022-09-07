@@ -1,0 +1,27 @@
+#!/usr/bin/env zsh
+
+if ! in-git-repo; then
+  builtin print -u 2 -- "\e[1;41;97m ERROR \e[0m Not a repository: $PWD"
+  return 1
+fi
+
+# FIXME: Don't hardcode the remote
+local remoteName
+remoteName="origin"
+
+local targetBranch
+
+if [[ -n "$1" ]] && git local-branch-exists "$1" ; then
+  targetBranch="$1"
+elif git local-branch-exists "main" ;  then
+  targetBranch="main"
+elif git local-branch-exists "master" ;  then
+  targetBranch="master"
+else
+  targetBranch="$(git default-branch)"
+fi
+
+# Source: https://github.com/brandon-rhodes/homedir/blob/2caffde3b080a1f1e320299550d79537ebeb0310/.gitconfig#L19
+#
+# FIXME: Don't hardcode path
+git diff -M $(git merge-base HEAD ${remoteName}/${targetBranch}) -- .

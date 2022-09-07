@@ -26,6 +26,8 @@ M.config = function()
     group = packer_autocmd_group,
     pattern = { "PackerCompileDone" },
     callback = function()
+      vim.cmd.doautocmd("User AlphaReady")
+
       require("0x2a.notifications").info("PackerCompile done.", { title = "Packer" }, "bottom_up")
     end,
   })

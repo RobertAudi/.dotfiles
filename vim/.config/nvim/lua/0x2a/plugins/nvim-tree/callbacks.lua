@@ -5,7 +5,7 @@
 
 local tree = require("nvim-tree")
 local tree_diagnostics = require("nvim-tree.diagnostics")
-local tree_movements = require("nvim-tree.actions.movements")
+local tree_parent_node = require("nvim-tree.actions.moves.parent").fn
 local tree_lib = require("nvim-tree.lib")
 local tree_renderer = require("nvim-tree.renderer")
 local tree_view = require("nvim-tree.view")
@@ -41,13 +41,13 @@ M.collapse = function(node)
   end
 
   if node.nodes == nil then
-    tree_movements.parent_node(false)(node)
+    tree_parent_node(false)(node)
   elseif node.open then
     node.open = false
     tree_renderer.draw()
     tree_diagnostics.update()
   else
-    tree_movements.parent_node(false)(node)
+    tree_parent_node(false)(node)
   end
 end
 
@@ -76,24 +76,17 @@ M.quit_or_close_help = function(node)
   end
 end
 
--- Improvements:
---
--- - Support other markdown extentions
--- - Support other filetypes with exceptions:
---   - the file is a non-binary readable file (ie: not a directory)
---   - the file is not too big
--- - Open the file if it's not previewable but is readable
--- - Expand/collapse directories
+-- Open markdown file using Marked 2 or preview node using QuickLook
 M.preview = function(node)
   node = node or tree_lib.get_node_at_cursor()
+  local node_path = node.absolute_path
 
-  if not string.match(node.name, ".+%.md$") then
-    tree_utils.warn("E000: Not a markdown file")
+  if string.match(node_path, ".+%.md$") and os.execute("marked " .. node_path .. " &> /dev/null")  then
     return
   end
 
-  if not os.execute("marked " .. node.name .. " &> /dev/null") then
-    tree_utils.warn("E000: Unable to preview markdown file")
+  if not os.execute("qlmanage -p " .. node_path .. " &> /dev/null") then
+    tree_utils.notify.warn("E000: Unable to preview file")
   end
 end
 

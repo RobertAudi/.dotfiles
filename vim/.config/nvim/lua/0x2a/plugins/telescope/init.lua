@@ -3,33 +3,43 @@
 -- Description: Find, Filter, Preview, Pick. All lua, all the time.
 -- URL: https://github.com/nvim-telescope/telescope.nvim
 -- Requires:
---   - stevearc/aerial.nvim
+--   - 0x2a.symbols
 
 local M = {}
 
 M.config = function()
-  local telescope = require("telescope")
+  local telescope = prequire("telescope")
+
+  if not telescope then
+    return
+  end
+
+  local symbols = require("0x2a.symbols").telescope
 
   telescope.setup({
     defaults = {
-      prompt_prefix = "❯ ",
-      selection_caret = "❯ ",
-      borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
+      prompt_prefix = symbols.prompt,
+      selection_caret = symbols.selection,
+      borderchars = symbols.borders,
+      winblend = 10,
       sorting_strategy = "ascending",
-      layout_strategy = "horizontal",
+      layout_strategy = "flex",
       layout_config = {
-        prompt_position = "top",
-        height = 0.5,
-        width = 0.75,
+        flex = {
+          flip_columns = 120,
+        },
+
         horizontal = {
-          width_padding = 0.04,
-          height_padding = 0.1,
-          preview_width = 0,
+          prompt_position = "top",
+          height = 0.75,
+          width = 0.85,
+          preview_width = 0.5,
         },
         vertical = {
-          width_padding = 0.05,
-          height_padding = 1,
-          preview_width = 0,
+          prompt_position = "bottom",
+          width = 0.85,
+          height = 0.85,
+          preview_height = 0.65,
         },
       },
     },
@@ -37,6 +47,16 @@ M.config = function()
     pickers = {
       find_files = {
         find_command = { "fd", "--type", "f", "--hidden", "--strip-cwd-prefix" },
+        mappings = {
+          i = {
+            ["<Esc>"] = "close",
+          },
+        },
+      },
+
+      buffers = {
+        show_all_buffers = true,
+        sort_lastused = true,
       },
 
       symbols = {
@@ -59,11 +79,13 @@ M.config = function()
   })
 
   telescope.load_extension("fzf")
-  telescope.load_extension("ui-select")
 
-  if pcall(require, "urlview") then
+  if prequire("urlview") then
     telescope.load_extension("urlview")
   end
+
+  telescope.load_extension("conflicts")
+  telescope.load_extension("tabs")
 
   vim.keymap.set("n", "<C-p>", [[<Cmd>lua require("telescope.builtin").find_files()<CR>]], { noremap = true })
   vim.keymap.set("n", "<C-b>", [[<Cmd>lua require("telescope.builtin").buffers()<CR>]], { noremap = true })

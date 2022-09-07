@@ -1,14 +1,23 @@
+local validate = require("validate")
+
 local layoutCache = {}
 local layoutIterator = nil
 
 local function tablelength(t)
   local i = 0
-  for _ in pairs(t) do i = i + 1 end
+
+  for _ in pairs(t) do
+    i = i + 1
+  end
+
   return i
 end
 
 local function tablemerge(t1, t2)
-  for k,v in pairs(t2) do t1[k] = v end
+  for k, v in pairs(t2) do
+    t1[k] = v
+  end
+
   return t1
 end
 
@@ -41,12 +50,14 @@ local function centerWindow()
 end
 
 local function layoutSequenceIterator()
-  if layoutIterator then return layoutIterator end
+  if layoutIterator then
+    return layoutIterator
+  end
 
   local sequence = hs.geometry.unitrect
   local layoutSequences = {
-    left   = { sequence(0.00, 0, 0.35, 1), sequence(0.0, 0, 0.5, 1), sequence(0.00, 0, 0.75, 1) },
-    right  = { sequence(0.65, 0, 0.35, 1), sequence(0.5, 0, 0.5, 1), sequence(0.25, 0, 0.75, 1) }
+    left = { sequence(0.00, 0, 0.35, 1), sequence(0.0, 0, 0.5, 1), sequence(0.00, 0, 0.75, 1) },
+    right = { sequence(0.65, 0, 0.35, 1), sequence(0.5, 0, 0.5, 1), sequence(0.25, 0, 0.75, 1) },
   }
 
   layoutIterator = function(win, pos, reverse)
@@ -74,7 +85,9 @@ end
 
 local centerLayoutIterator = nil
 local function centerLayoutIteration()
-  if centerLayoutIterator then return centerLayoutIterator end
+  if centerLayoutIterator then
+    return centerLayoutIterator
+  end
 
   local layouts = { min = 0.33, max = 1, initial = 0.45 }
   local factors = { min = 0.05, max = 0.75, multiplier = 1.5 }
@@ -133,6 +146,46 @@ local function toggleApplication(applicationName)
   end
 end
 
+local remapKey = function(opts)
+  validate({
+    opts = { opts, "table" },
+    from = { opts.from, "table" },
+    to = { opts.to, "table" },
+    app = { opts.app, { "string", "nil" } },
+  })
+
+  validate({
+    from_key = { opts.from.key, "string" },
+    to_key = { opts.to.key, "string" },
+  })
+
+  hs.hotkey.bind(opts.from.modifiers or {}, opts.from.key, function()
+    local app = hs.application.frontmostApplication()
+
+    if opts.app and app:bundleID() == opts.app then
+      hs.eventtap.keyStroke(opts.to.modifiers or {}, opts.to.key, 0, app)
+    else
+      hs.eventtap.keyStroke(opts.from.modifiers or {}, opts.from.key, 0, app)
+    end
+  end)
+end
+
+local remapKeys = function(keys, opts)
+  validate({
+    keys = { keys, "table" },
+    opts = { opts, "table" },
+    app = { opts.app, { "string", "nil" } },
+  })
+
+  for _, key in pairs(keys) do
+    if not key.app and opts.app then
+      key.app = opts.app
+    end
+
+    remapKey(key)
+  end
+end
+
 -- Disable animations
 hs.window.animationDuration = 0
 
@@ -141,6 +194,7 @@ require("hs.ipc")
 
 local hyper = { "Shift", "Cmd", "Alt", "Ctrl" }
 
+-- stylua: ignore start
 hs.hotkey.bind(hyper, "Left",  function() cycleLayout("Left")  end)
 hs.hotkey.bind(hyper, "Right", function() cycleLayout("Right") end)
 
@@ -154,14 +208,85 @@ hs.hotkey.bind(hyper, "F", function() hs.application.launchOrFocus("Finder") end
 hs.hotkey.bind(hyper, "N", function() toggleApplication("Numi") end)
 hs.hotkey.bind(hyper, "M", function() hs.application.launchOrFocus("MailMate") end)
 hs.hotkey.bind(hyper, "Q", function() hs.application.launchOrFocus("Quiver") end)
-hs.hotkey.bind(hyper, "A", function() hs.application.launchOrFocus("Alacritty") end)
 hs.hotkey.bind(hyper, "I", function() hs.application.launchOrFocus("iTerm") end)
 hs.hotkey.bind(hyper, "T", function() hs.application.launchOrFocus("Things3") end)
 hs.hotkey.bind(hyper, "S", function() hs.application.launchOrFocus("System Preferences") end)
-hs.hotkey.bind(hyper, "1", function() hs.application.launchOrFocus("1Password 7") end)
+hs.hotkey.bind(hyper, "1", function() hs.application.launchOrFocus("1Password") end)
 hs.hotkey.bind(hyper, "2", function() hs.application.launchOrFocus("Authy Desktop") end)
 hs.hotkey.bind(hyper, "`", function() hs.application.launchOrFocus("Launchpad") end)
 hs.hotkey.bind(hyper, "Space", function() toggleApplication("Dash") end)
+-- stylua: ignore end
+
+remapKeys({
+  {
+    from = { modifiers = { "Cmd" }, key = "h" },
+    to = { modifiers = { "Ctrl" }, key = "h" },
+  },
+  {
+    from = { modifiers = { "Cmd" }, key = "j" },
+    to = { modifiers = { "Ctrl" }, key = "j" },
+  },
+  {
+    from = { modifiers = { "Cmd" }, key = "k" },
+    to = { modifiers = { "Ctrl" }, key = "k" },
+  },
+  {
+    from = { modifiers = { "Cmd" }, key = "l" },
+    to = { modifiers = { "Ctrl" }, key = "l" },
+  },
+
+  -- Undo
+  {
+    from = { modifiers = { "Cmd" }, key = "z" },
+    to = { modifiers = { "Ctrl" }, key = "-" },
+  },
+
+  -- Redo
+  -- NOTE: For zsh the following binding must be defined:
+  --         bindkey -M emacs "$key_info[Escape]-" redo
+  {
+    from = { modifiers = { "Cmd", "Shift" }, key = "z" },
+    to = { modifiers = { "Option" }, key = "-" },
+  },
+
+  -- Go to previous word
+  {
+    from = { modifiers = { "Option" }, key = "Left" },
+    to = { modifiers = { "Option" }, key = "b" },
+  },
+
+  -- Go to next word
+  {
+    from = { modifiers = { "Option" }, key = "Right" },
+    to = { modifiers = { "Option" }, key = "f" },
+  },
+
+  -- Delete previous word
+  {
+    from = { modifiers = { "Option" }, key = "Delete" },
+    to = { modifiers = { "Ctrl" }, key = "w" },
+  },
+
+  -- Go to beginning of line
+  {
+    from = { modifiers = { "Command" }, key = "Left" },
+    to = { modifiers = { "Ctrl" }, key = "a" },
+  },
+
+  -- Go to end of line
+  {
+    from = { modifiers = { "Command" }, key = "Right" },
+    to = { modifiers = { "Ctrl" }, key = "e" },
+  },
+
+  -- Delete to the beginning of line
+  -- NOTE: For zsh the following binding must be defined:
+  --         bindkey -M emacs "$key_info[Control]U" backward-kill-line
+  {
+    from = { modifiers = { "Command" }, key = "Delete" },
+    to = { modifiers = { "Ctrl", "Shift" }, key = "u" },
+  },
+}, { app = "com.googlecode.iterm2" })
 
 hs.loadSpoon("WifiNotifier")
 spoon.WifiNotifier:start()

@@ -1,0 +1,30 @@
+#autoload
+
+if (( $# != 2 )); then
+  print-error "wrong number of arguments. Expected 2 but received $#"
+  print-usage "${${(%):-%x}:A:t} PACKAGE PLUGIN_NAME"
+  return 64
+fi
+
+local package plugin
+package=$1 ; shift
+plugin_name=$1 ; shift
+
+local dotfiles_dir
+dotfiles_dir=${DOTFILES_DIR:-$HOME/.dotfiles}
+
+local package_dir package_plugin_dir plugin_file manifest_dir manifest_file zinit_dir zinit_file
+package_dir="$dotfiles_dir/${package}"
+package_plugin_dir="$package_dir/.config/zsh/plugins"
+plugin_dir="$package_plugin_dir/$plugin_name"
+plugin_file="$plugin_dir/init.zsh"
+manifest_dir="$package_plugin_dir/zinit.d"
+manifest_file="$manifest_dir/$plugin_name.zinit.zsh"
+zinit_dir="$package_dir/.local/share/zinit/plugins/_local---$plugin_name"
+
+mkdir -vp $package_dir $package_plugin_dir $plugin_dir $manifest_dir $zinit_dir
+touch "$plugin_file" "$manifest_file"
+
+print -l -- "# local plugins" "zinit load _local/$plugin_name" >> "$manifest_file"
+
+(cd -q $zinit_dir; ln -sfv "../../../../../.config/zsh/plugins/${plugin_name}/init.zsh" "$plugin_name.plugin.zsh")

@@ -1,1 +1,1 @@
-../../../../../.zsh/plugins/spectrum/init.zsh
+../../../../../.config/zsh/plugins/spectrum/init.zsh

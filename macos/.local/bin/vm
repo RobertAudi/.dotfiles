@@ -1,0 +1,31 @@
+#!/usr/bin/env zsh
+
+if (( $# == 0 )) ; then
+  builtin print -u 2 -- "An action is required"
+  builtin print -u 2 -- "Available actions: start, stop, status"
+  return 1
+fi
+
+local action
+action="$1"
+shift
+
+case "$action" in
+  start)
+    vm-start
+    ;;
+
+  stop)
+    vm-stop
+    ;;
+
+  status)
+    vm-status $=@
+    ;;
+
+  *)
+    builtin print -u 2 -- "Invalid action: $action"
+    builtin print -u 2 -- "Available actions: start, stop, status"
+    return 1
+  ;;
+esac

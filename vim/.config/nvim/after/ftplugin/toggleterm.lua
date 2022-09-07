@@ -4,3 +4,4 @@
 
 vim.keymap.set("n", "q", "<Cmd>ToggleTerm<CR>", { buffer = true, noremap = true })
 vim.keymap.set("n", "<Esc>", "<Cmd>ToggleTerm<CR>", { buffer = true, noremap = true })
+vim.keymap.set("t", "<C-t>", "<Cmd>ToggleTerm<CR>", { buffer = true, noremap = true })

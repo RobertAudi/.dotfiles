@@ -22,6 +22,7 @@ vim.filetype.add({
     Rakefile = "ruby.rake",
     [".Brewfile"] = "brewfile.ruby",
     [".bash_profile"] = "sh",
+    [".bashenv"] = "sh",
     [".editorconfig"] = "dosini",
     [".env"] = "sh",
     [".jsbeautifyrc"] = "json",

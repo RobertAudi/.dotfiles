@@ -1,0 +1,28 @@
+//
+//  Release.xcconfig
+//  ___PROJECTNAME___
+//
+//  Created by ___FULLUSERNAME___ on ___DATE___.
+//  Copyright © ___YEAR___ ___FULLUSERNAME___. All rights reserved.
+//
+
+#include "Base.xcconfig"
+
+// Whether warnings are treated as errors
+GCC_TREAT_WARNINGS_AS_ERRORS = YES
+SWIFT_TREAT_WARNINGS_AS_ERRORS = YES
+
+// The optimization level (0, 1, 2, 3, s) for the produced binary
+GCC_OPTIMIZATION_LEVEL = s
+
+// Preproccessor definitions to apply to each file compiled
+GCC_PREPROCESSOR_DEFINITIONS = NDEBUG=1
+
+// Whether to strip debugging symbols when copying the built product to its
+// final installation location
+STRIP_INSTALLED_PRODUCT = YES
+
+// Whether to compile assertions in. This value is set to YES in Common.xcconfig,
+// but the release configuration is an exception: default value in Xcode 10.1 (10B61)
+// is YES for debug configuration and NO for release configuration
+ENABLE_NS_ASSERTIONS = NO

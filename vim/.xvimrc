@@ -9,8 +9,8 @@ set number
 set laststatus=2
 set nostartofline
 
-nnoremap <CR> <Nop>
-vnoremap <CR> <Nop>
+nnoremap <Enter> <Nop>
+vnoremap <Enter> <Nop>
 
 nnoremap H ^
 nnoremap L $

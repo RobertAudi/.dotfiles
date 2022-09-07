@@ -138,6 +138,9 @@ function __update::commands::zsh {
 }
 
 function __update::commands::nvim {
+  __update::utils::log::error "BROKEN"
+  return 128
+
   if __update::utils::is-callable nvim ; then
     nvim -e +PlugInstall +PlugUpgrade +PlugUpdate +PlugClean! +qall &>/dev/null
   fi
@@ -189,8 +192,8 @@ function __update::commands::brew {
 function __update::commands::pip {
   local env_vars="${(j: :)_UPDATE_CUSTOM_ENV_VARIABLES}"
 
-  __update::utils::log::info "pip install --upgrade --upgrade-strategy eager --progress-bar pretty pip setuptools wheel"
-  env $=env_vars pip install --upgrade --upgrade-strategy eager --progress-bar pretty pip setuptools wheel || return $status
+  __update::utils::log::info "pip install --upgrade --upgrade-strategy eager --progress-bar on pip setuptools wheel"
+  env $=env_vars pip install --upgrade --upgrade-strategy eager --progress-bar on pip setuptools wheel || return $status
 
   local outdated_packages="$(pip list --outdated --format freeze | cut -d'=' -f1 | tr '\n' ' ')"
 
@@ -199,8 +202,8 @@ function __update::commands::pip {
     return
   fi
 
-  __update::utils::log::info "pip install --upgrade --upgrade-strategy eager --progress-bar pretty \"$outdated_packages\""
-  env $=env_vars pip install --upgrade --upgrade-strategy eager --progress-bar pretty $=outdated_packages
+  __update::utils::log::info "pip install --upgrade --upgrade-strategy eager --progress-bar on \"$outdated_packages\""
+  env $=env_vars pip install --upgrade --upgrade-strategy eager --progress-bar on $=outdated_packages
 }
 
 function __update::run-command {

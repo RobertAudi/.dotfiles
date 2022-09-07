@@ -1,9 +1,0 @@
-#autoload
-
-(( $+1 )) || {
-  print-error 'is-autoloadable: not enough arguments'
-  return 1
-}
-
-# Checks if a file can be autoloaded by trying to load it in a subshell.
-( unfunction $1 ; autoload -U +X $1 ) &> /dev/null

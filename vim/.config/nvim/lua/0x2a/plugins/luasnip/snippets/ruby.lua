@@ -6,11 +6,24 @@ local ls = require("luasnip")
 local snip = ls.snippet
 local text = ls.text_node
 local insert = ls.insert_node
+local choice = ls.choice_node
+local node = ls.snippet_node
 local fmt = require("luasnip.extras.fmt").fmt
 
 ls.add_snippets("ruby", {
   snip(
-    { trig = "module", name = "module ... end", dscr = "Module" },
+    { trig = "req", name = "require file" },
+    fmt([[require{} "{}"]], {
+      choice(1, {
+        text(""),
+        text("_relative"),
+      }),
+      insert(0),
+    })
+  ),
+
+  snip(
+    { trig = "mod", name = "module ... end", dscr = "Module" },
     fmt(
       [[
         module {}
@@ -21,8 +34,9 @@ ls.add_snippets("ruby", {
     )
   ),
 
+  -- TODO: Add a choice node for inheritance
   snip(
-    { trig = "class", name = "class ... end", dscr = "Class" },
+    { trig = "cla", name = "class ... end", dscr = "Class" },
     fmt(
       [[
         class {}
@@ -106,6 +120,8 @@ ls.add_snippets("ruby", {
     )
   ),
 
+  -- TODO: Add a choice node for class methods
+  -- TODO: Add a choice node for params
   snip(
     { trig = "def", hidden = true },
     fmt(
@@ -118,6 +134,7 @@ ls.add_snippets("ruby", {
     )
   ),
 
+  -- TODO: Add a choice node for params
   snip(
     { trig = "init", name = "def initialize", dscr = "" },
     fmt(
@@ -143,7 +160,32 @@ ls.add_snippets("ruby", {
     )
   ),
 
-  snip("pry", text("binding.pry")),
-  snip("pry!", text("require \"pry\"; binding.pry")),
+  snip(
+    { trig = "begin", name = "begin ... {rescue} ... end" },
+    fmt(
+      [[
+        begin
+          {}{}
+        end
+      ]],
+      {
+        insert(2),
+        choice(1, {
+          text(""),
+          text({ "", "rescue" }),
+          text({ "", "rescue => e" }),
+          node(nil, fmt("\nrescue {} => e", { insert(1) }, { trim_empty = false })),
+        }),
+      }
+    )
+  ),
+
+  snip("pry", {
+    choice(1, {
+      text("binding.pry"),
+      text([[require "pry"; binding.pry]]),
+    }),
+  }),
+
   snip("#frozen", text("# frozen_string_literal: true")),
 })

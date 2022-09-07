@@ -1,0 +1,8 @@
+#autoload
+
+(( $+1 )) || {
+  print-error 'is-command: not enough arguments'
+  return 128
+}
+
+(( $+commands[$1] )) &>/dev/null

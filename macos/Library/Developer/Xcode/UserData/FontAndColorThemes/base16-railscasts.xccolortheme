@@ -5,31 +5,29 @@
 	<key>DVTConsoleDebuggerInputTextColor</key>
 	<string>0.976471 0.968627 0.952941 1</string>
 	<key>DVTConsoleDebuggerInputTextFont</key>
-	<string>JetBrainsMono-Bold - 12.0</string>
+	<string>JetBrainsMonoNerdFontComplete-Bold - 12.0</string>
 	<key>DVTConsoleDebuggerOutputTextColor</key>
 	<string>0.956863 0.945098 0.929412 1</string>
 	<key>DVTConsoleDebuggerOutputTextFont</key>
-	<string>JetBrainsMono-Regular - 12.0</string>
+	<string>JetBrainsMonoNerdFontComplete-Regular - 12.0</string>
 	<key>DVTConsoleDebuggerPromptTextColor</key>
 	<string>0.427451 0.611765 0.745098 1</string>
 	<key>DVTConsoleDebuggerPromptTextFont</key>
-	<string>JetBrainsMono-Bold - 12.0</string>
+	<string>JetBrainsMonoNerdFontComplete-Bold - 12.0</string>
 	<key>DVTConsoleExectuableInputTextColor</key>
 	<string>0.976471 0.968627 0.952941 1</string>
 	<key>DVTConsoleExectuableInputTextFont</key>
-	<string>JetBrainsMono-Regular - 12.0</string>
+	<string>JetBrainsMonoNerdFontComplete-Regular - 12.0</string>
 	<key>DVTConsoleExectuableOutputTextColor</key>
 	<string>0.956863 0.945098 0.929412 1</string>
 	<key>DVTConsoleExectuableOutputTextFont</key>
-	<string>JetBrainsMono-Bold - 12.0</string>
+	<string>JetBrainsMonoNerdFontComplete-Bold - 12.0</string>
 	<key>DVTConsoleTextBackgroundColor</key>
 	<string>0.168627 0.168627 0.168627 1</string>
 	<key>DVTConsoleTextInsertionPointColor</key>
 	<string>0.956863 0.945098 0.929412 1</string>
 	<key>DVTConsoleTextSelectionColor</key>
 	<string>0.227451 0.25098 0.333333 1</string>
-	<key>DVTDebuggerInstructionPointerColor</key>
-	<string>0.647059 0.760784 0.380392 1</string>
 	<key>DVTFontAndColorVersion</key>
 	<integer>1</integer>
 	<key>DVTLineSpacing</key>
@@ -43,33 +41,33 @@
 	<key>DVTMarkupTextEmphasisColor</key>
 	<string>0.956863 0.945098 0.929412 1</string>
 	<key>DVTMarkupTextEmphasisFont</key>
-	<string>.SFNS-RegularItalic - 13.0</string>
+	<string>.SFNS-RegularItalic - 12.0</string>
 	<key>DVTMarkupTextInlineCodeColor</key>
 	<string>0.956863 0.945098 0.929412 0.7</string>
 	<key>DVTMarkupTextLinkColor</key>
 	<string>0.956863 0.945098 0.929412 1</string>
 	<key>DVTMarkupTextLinkFont</key>
-	<string>.SFNS-Regular - 13.0</string>
+	<string>.SFNS-Regular - 12.0</string>
 	<key>DVTMarkupTextNormalColor</key>
 	<string>0.956863 0.945098 0.929412 1</string>
 	<key>DVTMarkupTextNormalFont</key>
-	<string>.SFNS-Regular - 13.0</string>
+	<string>.SFNS-Regular - 12.0</string>
 	<key>DVTMarkupTextOtherHeadingColor</key>
 	<string>0.956863 0.945098 0.929412 0.5</string>
 	<key>DVTMarkupTextOtherHeadingFont</key>
-	<string>.SFNS-Regular - 18.2</string>
+	<string>.SFNS-Regular - 16.8</string>
 	<key>DVTMarkupTextPrimaryHeadingColor</key>
 	<string>0.956863 0.945098 0.929412 1</string>
 	<key>DVTMarkupTextPrimaryHeadingFont</key>
-	<string>.SFNS-Regular - 31.2</string>
+	<string>.SFNS-Regular - 28.8</string>
 	<key>DVTMarkupTextSecondaryHeadingColor</key>
 	<string>0.956863 0.945098 0.929412 1</string>
 	<key>DVTMarkupTextSecondaryHeadingFont</key>
-	<string>.SFNS-Regular - 23.4</string>
+	<string>.SFNS-Regular - 21.6</string>
 	<key>DVTMarkupTextStrongColor</key>
 	<string>0.956863 0.945098 0.929412 1</string>
 	<key>DVTMarkupTextStrongFont</key>
-	<string>.SFNS-Bold - 13.0</string>
+	<string>.SFNS-Bold - 12.0</string>
 	<key>DVTScrollbarMarkerAnalyzerColor</key>
 	<string>0.403922 0.372549 1 1</string>
 	<key>DVTScrollbarMarkerBreakpointColor</key>
@@ -156,59 +154,59 @@
 	<key>DVTSourceTextSyntaxFonts</key>
 	<dict>
 		<key>xcode.syntax.attribute</key>
-		<string>JetBrainsMono-Medium - 13.0</string>
+		<string>JetBrainsMonoNerdFontComplete-Medium - 13.0</string>
 		<key>xcode.syntax.character</key>
-		<string>JetBrainsMono-Medium - 13.0</string>
+		<string>JetBrainsMonoNerdFontComplete-Medium - 13.0</string>
 		<key>xcode.syntax.comment</key>
-		<string>JetBrainsMono-Medium - 13.0</string>
+		<string>JetBrainsMonoNerdFontComplete-Medium - 13.0</string>
 		<key>xcode.syntax.comment.doc</key>
-		<string>JetBrainsMono-Regular - 13.0</string>
+		<string>JetBrainsMonoNerdFontComplete-Regular - 13.0</string>
 		<key>xcode.syntax.comment.doc.keyword</key>
-		<string>JetBrainsMono-Bold - 13.0</string>
+		<string>JetBrainsMonoNerdFontComplete-Bold - 13.0</string>
 		<key>xcode.syntax.declaration.other</key>
-		<string>JetBrainsMono-Medium - 13.0</string>
+		<string>JetBrainsMonoNerdFontComplete-Medium - 13.0</string>
 		<key>xcode.syntax.declaration.type</key>
-		<string>JetBrainsMono-Medium - 13.0</string>
+		<string>JetBrainsMonoNerdFontComplete-Medium - 13.0</string>
 		<key>xcode.syntax.identifier.class</key>
-		<string>JetBrainsMono-Medium - 13.0</string>
+		<string>JetBrainsMonoNerdFontComplete-Medium - 13.0</string>
 		<key>xcode.syntax.identifier.class.system</key>
-		<string>JetBrainsMono-Medium - 13.0</string>
+		<string>JetBrainsMonoNerdFontComplete-Medium - 13.0</string>
 		<key>xcode.syntax.identifier.constant</key>
-		<string>JetBrainsMono-Medium - 13.0</string>
+		<string>JetBrainsMonoNerdFontComplete-Medium - 13.0</string>
 		<key>xcode.syntax.identifier.constant.system</key>
-		<string>JetBrainsMono-Medium - 13.0</string>
+		<string>JetBrainsMonoNerdFontComplete-Medium - 13.0</string>
 		<key>xcode.syntax.identifier.function</key>
-		<string>JetBrainsMono-Medium - 13.0</string>
+		<string>JetBrainsMonoNerdFontComplete-Medium - 13.0</string>
 		<key>xcode.syntax.identifier.function.system</key>
-		<string>JetBrainsMono-Medium - 13.0</string>
+		<string>JetBrainsMonoNerdFontComplete-Medium - 13.0</string>
 		<key>xcode.syntax.identifier.macro</key>
-		<string>JetBrainsMono-Medium - 13.0</string>
+		<string>JetBrainsMonoNerdFontComplete-Medium - 13.0</string>
 		<key>xcode.syntax.identifier.macro.system</key>
-		<string>JetBrainsMono-Medium - 13.0</string>
+		<string>JetBrainsMonoNerdFontComplete-Medium - 13.0</string>
 		<key>xcode.syntax.identifier.type</key>
-		<string>JetBrainsMono-Medium - 13.0</string>
+		<string>JetBrainsMonoNerdFontComplete-Medium - 13.0</string>
 		<key>xcode.syntax.identifier.type.system</key>
-		<string>JetBrainsMono-Medium - 13.0</string>
+		<string>JetBrainsMonoNerdFontComplete-Medium - 13.0</string>
 		<key>xcode.syntax.identifier.variable</key>
-		<string>JetBrainsMono-Medium - 13.0</string>
+		<string>JetBrainsMonoNerdFontComplete-Medium - 13.0</string>
 		<key>xcode.syntax.identifier.variable.system</key>
-		<string>JetBrainsMono-Medium - 13.0</string>
+		<string>JetBrainsMonoNerdFontComplete-Medium - 13.0</string>
 		<key>xcode.syntax.keyword</key>
-		<string>JetBrainsMono-Bold - 13.0</string>
+		<string>JetBrainsMonoNerdFontComplete-Bold - 13.0</string>
 		<key>xcode.syntax.mark</key>
-		<string>JetBrainsMono-Bold - 13.0</string>
+		<string>JetBrainsMonoNerdFontComplete-Bold - 13.0</string>
 		<key>xcode.syntax.markup.code</key>
-		<string>SFMono-Medium - 13.0</string>
+		<string>JetBrainsMonoNerdFontComplete-Medium - 13.0</string>
 		<key>xcode.syntax.number</key>
-		<string>JetBrainsMono-Medium - 13.0</string>
+		<string>JetBrainsMonoNerdFontComplete-Medium - 13.0</string>
 		<key>xcode.syntax.plain</key>
-		<string>JetBrainsMono-Medium - 13.0</string>
+		<string>JetBrainsMonoNerdFontComplete-Medium - 13.0</string>
 		<key>xcode.syntax.preprocessor</key>
-		<string>JetBrainsMono-Medium - 13.0</string>
+		<string>JetBrainsMonoNerdFontComplete-Medium - 13.0</string>
 		<key>xcode.syntax.string</key>
-		<string>JetBrainsMono-Medium - 13.0</string>
+		<string>JetBrainsMonoNerdFontComplete-Medium - 13.0</string>
 		<key>xcode.syntax.url</key>
-		<string>JetBrainsMono-Medium - 13.0</string>
+		<string>JetBrainsMonoNerdFontComplete-Medium - 13.0</string>
 	</dict>
 </dict>
 </plist>

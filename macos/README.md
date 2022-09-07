@@ -5,7 +5,7 @@
 ```
 
 MailMate
-========
+--------
 
 > MailMate is an IMAP email client for macOS
 
@@ -17,6 +17,6 @@ MailMate's preferences are under `macos/Library/Application Support/MailMate/Res
 - The Conversation Threads layout (aka Correspondence Arcs 1) was created by [Max Masnick](http://protips.maxmasnick.com/mailmate-combination-of-conversation-and-thread-arc-views)
 
 Scrips
-======
+------
 
 - [`flu.sh`](.local/bin/flu.sh): Flushes the DNS cache on macOS without pain (_[Source](https://github.com/eventi/noreallyjustfuckingstopalready)_)

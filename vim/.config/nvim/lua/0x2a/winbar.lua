@@ -1,6 +1,7 @@
 -- Module: 0x2a.winbar
 -- Requires:
---   - 0x2a.utils
+--   - 0x2a.utils.fs
+--   - 0x2a.utils.table
 --   - nvim-lua/plenary.nvim
 
 local ignored_filetypes = {
@@ -33,31 +34,37 @@ local special_filenames = {
 local M = {}
 
 M.get = function()
-  local filepath = ""
-  local filename = vim.fn.expand("%:t", false, false)
-  local filetype = vim.bo.filetype
-  local utils = require("0x2a.utils")
+  if require("0x2a.utils.plugins").luapad.is_active() then
+    return "Luapad"
+  end
 
-  if utils.table_has_key(special_filenames, filename) then
-    filepath = special_filenames[filename]
-  elseif utils.table_has_key(special_filetypes, filetype) then
+  local fsutils = require("0x2a.utils.fs")
+  local table_utils = require("0x2a.utils.table")
+
+  local filepath = ""
+  local filetype = vim.bo.filetype
+  local current_file = fsutils.current_file()
+
+  if filetype == "alpha" then
+    return ""
+  end
+
+  if table_utils.has_key(special_filenames, current_file.name) then
+    filepath = special_filenames[current_file.name]
+  elseif table_utils.has_key(special_filetypes, filetype) then
     filepath = special_filetypes[filetype]
-  elseif utils.table_has_value(ignored_filetypes, filetype) then
+  elseif table_utils.has_value(ignored_filetypes, filetype) then
     filepath = ""
   else
-    local fileutils = require("0x2a.utils.files")
-
-    filepath = vim.fn.expand("%", false, false)
-
-    if fileutils.file_exists(filepath) then
+    if fsutils.file_exists(current_file.path) then
       if vim.fn.winwidth(0) < 72 then
-        if string.find(vim.fn.fnamemodify(filepath, ":p"), vim.fn.getcwd(), 1, true) then
-          filepath = vim.fn.fnamemodify(filepath, ":t")
+        if string.find(current_file.path, vim.fn.getcwd(), 1, true) then
+          filepath = current_file.name
         else
-          filepath = fileutils.shorten_path(filepath)
+          filepath = fsutils.shorten_path(current_file.path)
         end
       else
-        filepath = fileutils.relative_path(filepath)
+        filepath = fsutils.relative_path(current_file.path)
       end
 
       if vim.bo.modified then
@@ -70,7 +77,11 @@ M.get = function()
     end
   end
 
-  return filepath
+  if vim.t.maximized then
+    return "   " .. filepath
+  else
+    return filepath
+  end
 end
 
 M.setup = function()

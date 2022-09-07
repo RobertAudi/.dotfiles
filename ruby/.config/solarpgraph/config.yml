@@ -6,3 +6,7 @@ exclude:
   - "vendor/**/*"
   - ".bundle/**/*"
 max_files: 5000
+reporter:
+  - require_not_found
+  - typecheck
+  - update_errors

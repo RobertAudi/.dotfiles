@@ -1,0 +1,8 @@
+#!/usr/bin/env zsh
+
+if ! type ghorg > /dev/null ; then
+  builtin print -u 2 -- "command not found: ghorg"
+  return 127
+fi
+
+ghorg clone $=@

@@ -120,6 +120,10 @@ cargoPackages+=("cargo-play")
 #   https://github.com/mazznoer/lolcrab
 cargoPackages+=("lolcrab")
 
+# A Rust library and tool to colorize paths using LS_COLORS
+#   https://github.com/sharkdp/lscolors
+cargoPackages+=("lscolors")
+
 # ------------------------------------------------------------------------------
 
 builtin print -P -- "%F{blue}==>%f Installing or updating cargo packages:"

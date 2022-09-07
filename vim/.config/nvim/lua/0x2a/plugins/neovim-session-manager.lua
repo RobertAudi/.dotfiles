@@ -6,6 +6,12 @@
 local M = {}
 
 M.config = function()
+  local ok, _ = pcall(require, "session_manager")
+
+  if not ok then
+    return
+  end
+
   local Path = require("plenary.path")
 
   require("session_manager").setup({

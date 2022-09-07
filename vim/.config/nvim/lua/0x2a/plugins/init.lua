@@ -2,7 +2,7 @@
 -- Requires:
 --   - 0x2a.symbols
 --   - 0x2a.utils
---   - 0x2a.utils.files
+--   - 0x2a.utils.fs
 --   - wbthomason/packer.nvim
 
 local symbols = require("0x2a.symbols")
@@ -26,11 +26,6 @@ return require("packer").startup({
     --   https://github.com/nanotee/luv-vimdocs
     --   https://github.com/luvit/luv/blob/master/docs.md
     use("nanotee/luv-vimdocs")
-
-    -- Neovim plugin for building a sync base16 colorscheme.
-    -- Includes support for Treesitter and LSP highlight groups.
-    --   https://github.com/RRethy/nvim-base16
-    use({ "RRethy/nvim-base16", after = "packer.nvim", disable = true })
 
     -- FileType plugins {{{
     -- ------------------------------------------------------------------------------
@@ -144,6 +139,7 @@ return require("packer").startup({
         require("luapad").setup({
           count_limit = 150000,
           split_orientation = "horizontal",
+          preview = false,
         })
       end,
     })
@@ -167,14 +163,6 @@ return require("packer").startup({
       end,
     })
 
-    -- A neovim plugin that helps managing crates.io dependencies
-    --   https://github.com/Saecki/crates.nvim
-    use({
-      "saecki/crates.nvim",
-      requires = { "nvim-lua/plenary.nvim" },
-      config = require("0x2a.plugins.crates").config,
-    })
-
     -- SQL {{{
     -- ------------------------------------------------------------------------------
 
@@ -194,10 +182,10 @@ return require("packer").startup({
     use({
       "b4b4r07/vim-sqlfmt",
       config = function()
-        if require("0x2a.utils.files").is_executable("sqlfmt") then
+        if require("0x2a.utils.fs").is_executable("sqlfmt") then
           vim.g.sqlfmt_command = "sqlfmt"
           vim.g.sqlfmt_options = ""
-        elseif require("0x2a.utils.files").is_executable("sqlformat") then
+        elseif require("0x2a.utils.fs").is_executable("sqlformat") then
           vim.g.sqlfmt_command = "sqlformat"
           vim.g.sqlfmt_options = "-r -k upper"
         end
@@ -362,7 +350,7 @@ return require("packer").startup({
       opt = true,
 
       setup = function()
-        require("0x2a.utils").packer_lazy_load("gitsigns.nvim")
+        require("0x2a.utils.plugins").packer_lazy_load("gitsigns.nvim")
       end,
 
       config = require("0x2a.plugins.gitsigns").config,
@@ -381,7 +369,7 @@ return require("packer").startup({
     use({
       "rhysd/committia.vim",
       cond = function()
-        return vim.fn.expand("%:t", false, false) == "COMMIT_EDITMSG"
+        return vim.fn.expand("%:t") == "COMMIT_EDITMSG"
       end,
     })
 
@@ -391,7 +379,7 @@ return require("packer").startup({
       "RobertAudi/git-blame.vim",
       cmd = "GBlame",
       config = function()
-        vim.g.gitblame_mappings = { previewCommit = "<CR>", close = "q" }
+        vim.g.gitblame_mappings = { previewCommit = "<Enter>", close = "q" }
 
         vim.api.nvim_create_user_command("GBlame", "call gitblame#blame()", { nargs = 0 })
       end,
@@ -464,7 +452,42 @@ return require("packer").startup({
 
     -- Seamless navigation between tmux panes and vim splits
     --   https://github.com/christoomey/vim-tmux-navigator
-    use("christoomey/vim-tmux-navigator")
+    use({
+      "christoomey/vim-tmux-navigator",
+      setup = function()
+        vim.g.tmux_navigator_no_mappings = true
+      end,
+
+      config = function()
+        vim.keymap.set(
+          { "n", "x" },
+          "<C-h>",
+          "<Cmd>TmuxNavigateLeft<CR>",
+          { noremap = true, desc = "Move to the split on the left" }
+        )
+
+        vim.keymap.set(
+          { "n", "x" },
+          "<C-j>",
+          "<Cmd>TmuxNavigateDown<CR>",
+          { noremap = true, desc = "Move to the split below" }
+        )
+
+        vim.keymap.set(
+          { "n", "x" },
+          "<C-k>",
+          "<Cmd>TmuxNavigateUp<CR>",
+          { noremap = true, desc = "Move to the split above" }
+        )
+
+        vim.keymap.set(
+          { "n", "x" },
+          "<C-l>",
+          "<Cmd>TmuxNavigateRight<CR>",
+          { noremap = true, desc = "Move to the split on the right" }
+        )
+      end,
+    })
 
     -- ------------------------------------------------------------------------------ }}}
 
@@ -493,7 +516,7 @@ return require("packer").startup({
         { "nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter" },
       },
 
-      config = require("0x2a.plugins.nvim-treesitter").config,
+      config = require("0x2a.plugins.treesitter").config,
     })
 
     -- Quoting/parenthesizing made simple
@@ -550,17 +573,6 @@ return require("packer").startup({
     --   https://github.com/kreskij/Repeatable.vim
     use("kreskij/Repeatable.vim")
 
-    -- Changes Vim working directory to project root
-    -- (identified by presence of known directory or file).
-    --   https://github.com/airblade/vim-rooter
-    use({
-      "airblade/vim-rooter",
-      config = function()
-        -- Stop vim-rooter changing directory automatically
-        vim.g.rooter_manual_only = 1
-      end,
-    })
-
     -- Secure load local config files for neovim
     --   https://github.com/klen/nvim-config-local
     use({
@@ -570,10 +582,6 @@ return require("packer").startup({
       end,
     })
 
-    -- Multiple cursors plugin for vim/neovim
-    --   https://github.com/mg979/vim-visual-multi
-    use({ "mg979/vim-visual-multi" })
-
     -- Completion, Snippets, LSP {{{
     -- ------------------------------------------------------------------------------
 
@@ -581,10 +589,27 @@ return require("packer").startup({
     --   https://github.com/L3MON4D3/LuaSnip
     use({ "L3MON4D3/LuaSnip", config = require("0x2a.plugins.luasnip").config })
 
+    -- Easy and high speed coding method
+    --   https://github.com/mattn/vim-sonictemplate
+    use({
+      "mattn/vim-sonictemplate",
+      config = function()
+        local nvim_data_home = (os.getenv("NVIM_DATA_HOME") or vim.fn.expand("~/.local/share/nvim"))
+        local template_dir = nvim_data_home .. "/templates"
+
+        os.execute("mkdir -p " .. template_dir)
+
+        vim.g.sonictemplate_vim_template_dir = template_dir
+      end,
+    })
+
     -- Use Neovim as a language server to inject LSP diagnostics,
     -- code actions, and more via Lua.
     --   https://github.com/jose-elias-alvarez/null-ls.nvim
-    use({ "jose-elias-alvarez/null-ls.nvim", config = require("0x2a.plugins.null-ls").config })
+    use({
+      "jose-elias-alvarez/null-ls.nvim",
+      config = require("0x2a.plugins.null-ls").config,
+    })
 
     -- 🚦 A pretty diagnostics, references, telescope results,
     --    quickfix and location list to help you solve all the
@@ -600,18 +625,32 @@ return require("packer").startup({
     --   https://github.com/stevearc/aerial.nvim
     use({
       "stevearc/aerial.nvim",
-      requires = { "nvim-treesitter/nvim-treesitter", "neovim/nvim-lspconfig" },
+      requires = {
+        -- Nvim Treesitter configurations and abstraction layer
+        --   https://github.com/nvim-treesitter/nvim-treesitter
+        "nvim-treesitter/nvim-treesitter",
+
+        -- Quickstart configurations for the Nvim LSP client
+        --   https://github.com/neovim/nvim-lspconfig
+        "neovim/nvim-lspconfig",
+      },
       module = "aerial",
       config = require("0x2a.plugins.aerial").config,
     })
 
-    -- Simple statusline component that shows what scope you are working inside
-    --   https://github.com/SmiteshP/nvim-gps
+    -- Simple winbar/statusline plugin that shows your current code context
+    --   https://github.com/SmiteshP/nvim-navic
     use({
-      "SmiteshP/nvim-gps",
-      requires = "nvim-treesitter/nvim-treesitter",
-      module = "nvim-gps",
-      config = require("0x2a.plugins.nvim-gps").config,
+      "SmiteshP/nvim-navic",
+      module = "nvim-navic",
+      config = require("0x2a.plugins.nvim-navic").config,
+    })
+
+    -- Virtual text context for neovim treesitter
+    --   https://github.com/haringsrob/nvim_context_vt
+    use({
+      "haringsrob/nvim_context_vt",
+      config = require("0x2a.plugins.nvim_context_vt").config,
     })
 
     -- Complete whole lines from any partial therein
@@ -623,13 +662,50 @@ return require("packer").startup({
     use({
       "hrsh7th/nvim-cmp",
       requires = {
+        -- nvim-cmp source for neovim's built-in language server client
+        --   https://github.com/hrsh7th/cmp-nvim-lsp
         { "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp" },
+
+        -- nvim-cmp source for buffer words
+        --   https://github.com/hrsh7th/cmp-buffer
         { "hrsh7th/cmp-buffer", after = "nvim-cmp" },
+
+        -- nvim-cmp source for filesystem paths
+        --   https://github.com/hrsh7th/cmp-path
         { "hrsh7th/cmp-path", after = "nvim-cmp" },
+
+        -- nvim-cmp source for neovim Lua API
+        --   https://github.com/hrsh7th/cmp-nvim-lua
         { "hrsh7th/cmp-nvim-lua", after = "nvim-cmp" },
-        { "quangnguyen30192/cmp-nvim-tags", after = "nvim-cmp" },
-        { "saadparwaiz1/cmp_luasnip", requires = { "L3MON4D3/LuaSnip" } },
+
+        -- A source for nvim-cmp to gather candidates from Universal Ctags
+        --   https://github.com/delphinus/cmp-ctags
+        { "delphinus/cmp-ctags", after = "nvim-cmp" },
+
+        -- luasnip completion source for nvim-cmp
+        --   https://github.com/saadparwaiz1/cmp_luasnip
+        {
+          "saadparwaiz1/cmp_luasnip",
+          requires = {
+            -- Snippet Engine for Neovim written in Lua.
+            --   https://github.com/L3MON4D3/LuaSnip
+            "L3MON4D3/LuaSnip",
+          },
+        },
+
+        -- nvim-cmp source for Neovim plugins
+        --   https://github.com/KadoBOT/cmp-plugins
+        {
+          "KadoBOT/cmp-plugins",
+          after = "nvim-cmp",
+          config = function()
+            require("cmp-plugins").setup({
+              files = { "lua/0x2a/.*\\.lua$" }, -- default
+            })
+          end,
+        },
       },
+
       after = "LuaSnip",
       config = require("0x2a.plugins.nvim-cmp").config,
     })
@@ -650,11 +726,30 @@ return require("packer").startup({
       config = require("0x2a.plugins.lsp_signature").config,
     })
 
+    -- lsp_lines is a simple neovim plugin that renders diagnostics
+    -- using virtual lines on top of the real line of code.
+    --   https://git.sr.ht/~whynothugo/lsp_lines.nvim
+    use({
+      "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+      after = "nvim-lspconfig",
+      config = function()
+        require("lsp_lines").setup()
+      end,
+      cond = function()
+        return false
+      end,
+    })
+
     -- Standalone UI for nvim-lsp progress
     --   https://github.com/j-hui/fidget.nvim
     use({
       "j-hui/fidget.nvim",
-      requires = "neovim/nvim-lspconfig",
+      requires = {
+        -- Quickstart configurations for the Nvim LSP client
+        --   https://github.com/neovim/nvim-lspconfig
+        "neovim/nvim-lspconfig",
+      },
+
       after = "nvim-lspconfig",
       config = require("0x2a.plugins.fidget").config,
     })
@@ -718,34 +813,53 @@ return require("packer").startup({
     use({
       "nvim-telescope/telescope.nvim",
       requires = {
+        -- full; complete; entire; absolute; unqualified.
+        -- All the lua functions I don't want to write twice.
+        --   https://github.com/nvim-lua/plenary.nvim
         { "nvim-lua/plenary.nvim" },
-        {
-          -- FZF sorter for telescope written in c
-          --   https://github.com/nvim-telescope/telescope-fzf-native.nvim
-          "nvim-telescope/telescope-fzf-native.nvim",
-          run = "make",
-        },
-        { "nvim-telescope/telescope-ui-select.nvim" },
+
+        -- FZF sorter for telescope written in c
+        --   https://github.com/nvim-telescope/telescope-fzf-native.nvim
+        { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
       },
-      keys = { "<C-p>", "<C-b>", "<C-Space>" },
+
+      setup = function()
+        require("0x2a.utils.plugins").packer_lazy_load("telescope.nvim")
+      end,
+
       config = require("0x2a.plugins.telescope").config,
     })
+
+    -- Neovim plugin to improve the default vim.ui interfaces
+    --   https://github.com/stevearc/dressing.nvim
+    use({ "stevearc/dressing.nvim", config = require("0x2a.plugins.dressing").config })
 
     -- A blazing fast and easy to configure neovim statusline plugin written in pure lua.
     --   https://github.com/nvim-lualine/lualine.nvim
     use({
       "nvim-lualine/lualine.nvim",
-      requires = { "SmiteshP/nvim-gps" },
+      requires = {
+        -- Simple winbar/statusline plugin that shows your current code context
+        --   https://github.com/SmiteshP/nvim-navic
+        "SmiteshP/nvim-navic",
+      },
+
       config = require("0x2a.plugins.lualine").config,
     })
 
     -- Show / hide cursorline automatically
     --   https://github.com/delphinus/vim-auto-cursorline
-    use({ "delphinus/vim-auto-cursorline", config = require("0x2a.plugins.vim-auto-cursorline").config })
+    use({
+      "delphinus/vim-auto-cursorline",
+      config = require("0x2a.plugins.vim-auto-cursorline").config,
+    })
 
     -- Underlines the word under the cursor
     --   https://github.com/itchyny/vim-cursorword
-    use({ "itchyny/vim-cursorword", event = { "BufRead" } })
+    use({
+      "itchyny/vim-cursorword",
+      event = { "BufRead" },
+    })
 
     -- Indent guides for Neovim
     --   https://github.com/lukas-reineke/indent-blankline.nvim
@@ -764,6 +878,7 @@ return require("packer").startup({
     use("romainl/vim-qf")
 
     -- Hlsearch Lens for Neovim
+    --   https://github.com/kevinhwang91/nvim-hlslens
     use({
       "kevinhwang91/nvim-hlslens",
       requires = {
@@ -780,7 +895,10 @@ return require("packer").startup({
     use({
       "windwp/nvim-autopairs",
       config = function()
-        require("nvim-autopairs").setup({})
+        require("nvim-autopairs").setup({
+          check_ts = true, -- check treesitter
+          disable_in_macro = true, -- disable when recording or executing a macro
+        })
       end,
     })
 
@@ -817,6 +935,7 @@ return require("packer").startup({
         "JunkfileVsplitSave",
         "JunkfileTabSave",
       },
+
       config = function()
         require("junkfile").setup({
           directory = os.getenv("NVIM_DATA_HOME") .. "/junk",
@@ -824,17 +943,18 @@ return require("packer").startup({
       end,
     })
 
-    -- A neovim plugin to run lines/blocs of code (independently of the
-    -- rest of the file), supporting multiples languages
-    --   https://github.com/michaelb/sniprun
-    use({ "michaelb/sniprun", run = "bash install.sh" })
-
     -- A simple wrapper around :mksession
     --   https://github.com/Shatur/neovim-session-manager
     use({
       "Shatur/neovim-session-manager",
       after = "plenary.nvim",
-      requires = { "nvim-lua/plenary.nvim" },
+      requires = {
+        -- full; complete; entire; absolute; unqualified.
+        -- All the lua functions I don't want to write twice.
+        --   https://github.com/nvim-lua/plenary.nvim
+        "nvim-lua/plenary.nvim",
+      },
+
       config = require("0x2a.plugins.neovim-session-manager").config,
     })
 
@@ -843,9 +963,11 @@ return require("packer").startup({
     use({
       "andymass/vim-matchup",
       opt = true,
+
       setup = function()
-        require("0x2a.utils").packer_lazy_load("vim-matchup")
+        require("0x2a.utils.plugins").packer_lazy_load("vim-matchup")
       end,
+
       config = function()
         vim.g.matchup_motion_enabled = true
         vim.g.matchup_text_obj_enabled = false
@@ -858,30 +980,23 @@ return require("packer").startup({
 
         -- Don't match anything within strings and comments
         vim.g.matchup_delim_noskips = true
-
-        vim.api.nvim_create_autocmd("ColorScheme", {
-          group = vim.api.nvim_create_augroup("RAPluginsMatchup", { clear = true }),
-          pattern = "*",
-          callback = function()
-            vim.cmd(
-              "highlight MatchParen term=underline cterm=underline ctermfg=196 ctermbg=NONE gui=underline guifg=#ff4500 guibg=NONE"
-            )
-          end,
-        })
       end,
     })
 
-    -- Enhanced jump and change list navigation commands.
-    --   https://github.com/inkarkat/vim-EnhancedJumps
-    use({ "inkarkat/vim-EnhancedJumps", requires = { "inkarkat/vim-ingo-library" } })
-
     -- Repeat command extended to visual mode.
     --   https://github.com/inkarkat/vim-visualrepeat
-    use({ "inkarkat/vim-visualrepeat", requires = { "tpope/vim-repeat", "inkarkat/vim-ingo-library" } })
+    use({
+      "inkarkat/vim-visualrepeat",
+      requires = {
+        -- Enable repeating supported plugin maps with "."
+        --   https://github.com/tpope/vim-repeat
+        "tpope/vim-repeat",
 
-    -- Preserve missing EOL at the end of text files.
-    --   https://github.com/inkarkat/vim-PreserveNoEOL
-    use({ "inkarkat/vim-PreserveNoEOL", requires = { "inkarkat/vim-ingo-library" } })
+        -- Vimscript library of common functions
+        --   https://github.com/inkarkat/vim-ingo-library
+        "inkarkat/vim-ingo-library",
+      },
+    })
 
     -- A vim plugin to yank code.
     --   https://github.com/AaronLasseigne/yank-code
@@ -892,22 +1007,6 @@ return require("packer").startup({
         vim.keymap.set("x", "Y", "<Plug>YankCode", { noremap = true })
       end,
     })
-
-    -- Simple plugin to zoom windows
-    --   https://github.com/RobertAudi/ZoomWinTab
-    use({
-      "RobertAudi/ZoomWinTab",
-      keys = { "\\\\" },
-      config = function()
-        vim.g.ZoomWinTabHideTabBar = false
-
-        vim.keymap.set("n", "\\\\", [[<Cmd>silent! ZoomWinTabToggle<CR>]], { noremap = true, silent = true })
-      end,
-    })
-
-    -- Delete buffers and close files in Vim without closing your windows or messing up your layout.
-    --   https://github.com/RobertAudi/vim-bbye
-    use("RobertAudi/vim-bbye")
 
     -- Land on window you chose like tmux's 'display-pane'
     --   https://github.com/t9md/vim-choosewin
@@ -920,6 +1019,14 @@ return require("packer").startup({
 
         vim.keymap.set("n", "<C-w>/", "<Plug>(choosewin)", { remap = true })
       end,
+    })
+
+    -- Simple window picker for Neovim
+    --   https://codeberg.org/gbrlsnchs/winpick.nvim
+    --   https://github.com/gbrlsnchs/winpick.nvim
+    use({
+      "https://codeberg.org/gbrlsnchs/winpick.nvim",
+      config = require("0x2a.plugins.winpick").config,
     })
 
     -- A port of the Vim plugin vim-lastplace. It uses the same logic as vim-lastplace, but leverages the Neovim Lua API.
@@ -948,6 +1055,8 @@ return require("packer").startup({
       "t9md/vim-textmanip",
       config = function()
         -- use allow key to force replace movement
+        vim.keymap.set("n", "<A-Up>", "<Plug>(textmanip-move-up)", { remap = true })
+        vim.keymap.set("n", "<A-Down>", "<Plug>(textmanip-move-down)", { remap = true })
         vim.keymap.set("x", "<Up>", "<Plug>(textmanip-move-up)", { remap = true })
         vim.keymap.set("x", "<Down>", "<Plug>(textmanip-move-down)", { remap = true })
         vim.keymap.set("x", "<Left>", "<Plug>(textmanip-move-left)", { remap = true })
@@ -960,8 +1069,23 @@ return require("packer").startup({
     use({
       "filipdutescu/renamer.nvim",
       branch = "master",
-      requires = { { "nvim-lua/plenary.nvim" } },
+      requires = {
+        -- full; complete; entire; absolute; unqualified.
+        -- All the lua functions I don't want to write twice.
+        --   https://github.com/nvim-lua/plenary.nvim
+        "nvim-lua/plenary.nvim",
+      },
+
       config = require("0x2a.plugins.renamer").config,
+    })
+
+    -- Nvim-plugin for doing the opposite of join-line (J) of arguments, powered by treesitter
+    --   https://github.com/AckslD/nvim-trevJ.lua
+    use({
+      "AckslD/nvim-trevJ.lua",
+      config = function()
+        require("trevj").setup()
+      end,
     })
 
     -- A vim plugin that simplifies the transition between multiline and single-line code
@@ -1017,6 +1141,7 @@ return require("packer").startup({
         require("0x2a.abolish").command("ToggleTerm", "TT")
 
         vim.keymap.set("n", "<Leader>tt", "<Cmd>ToggleTerm<CR>", { noremap = true })
+        vim.keymap.set("n", "<C-t>", "<Cmd>ToggleTerm<CR>", { noremap = true })
       end,
     })
 
@@ -1071,24 +1196,6 @@ return require("packer").startup({
     -- Stop Unicode trolls from messing with your code.
     --   https://github.com/vim-utils/vim-troll-stopper
     use("vim-utils/vim-troll-stopper")
-
-    -- Open URI with your favorite browser from your most favorite editor
-    --   https://github.com/tyru/open-browser.vim
-    use({
-      "tyru/open-browser.vim",
-      requires = {
-        -- Open GitHub URL of current file, etc. from Vim editor
-        --   https://github.com/tyru/open-browser-github.vim
-        { "tyru/open-browser-github.vim", after = "open-browser.vim" },
-
-        -- Open fileformat.info page about character on current cursor / given character
-        --   https://github.com/tyru/open-browser-unicode.vim
-        { "tyru/open-browser-unicode.vim", after = "open-browser.vim" },
-      },
-      config = function()
-        vim.keymap.set({ "n", "x" }, "<Leader>o", "<Plug>(openbrowser-smart-search)", { remap = true })
-      end,
-    })
 
     -- ANSI escape sequences concealed, but highlighted as specified (conceal)
     --   https://github.com/powerman/vim-plugin-AnsiEsc
@@ -1182,15 +1289,45 @@ return require("packer").startup({
     --   https://github.com/axieax/urlview.nvim
     use({ "axieax/urlview.nvim", config = require("0x2a.plugins.urlview").config })
 
-    -- Auto-Focusing and Auto-Resizing Splits/Windows
-    --   https://github.com/beauwilliams/focus.nvim
-    use({ "beauwilliams/focus.nvim", config = require("0x2a.plugins.focus").config })
+    -- Neovim plugin to stabilize window open/close events.
+    --   https://github.com/luukvbaal/stabilize.nvim
+    use({
+      "luukvbaal/stabilize.nvim",
+      config = function()
+        require("stabilize").setup({
+          force = true, -- stabilize window even when current cursor position will be hidden behind new window
+          forcemark = nil, -- set context mark to register on force event which can be jumped to with '<forcemark>
+          ignore = { -- do not manage windows matching these file/buftypes
+            filetype = { "help", "list", "Trouble" },
+            buftype = { "terminal", "quickfix", "loclist" },
+          },
+          nested = "QuickFixCmdPost,DiagnosticChanged *", -- comma-separated list of autocmds that wil trigger the plugins window restore function
+        })
+      end,
+    })
+
+    -- Peek lines just when you intend
+    --   https://github.com/nacro90/numb.nvim
+    use({
+      "nacro90/numb.nvim",
+      config = function()
+        require("numb").setup({
+          show_numbers = true, -- Enable 'number' for the window while peeking
+          show_cursorline = true, -- Enable 'cursorline' for the window while peeking
+          number_only = true, -- Peek only when the command is only a number instead of when it starts with a number
+          centered_peeking = true, -- Peeked line will be centered relative to window
+        })
+      end,
+    })
+
+    -- Always have a nice view for vim split windows!
+    --   https://github.com/RobertAudi/GoldenView.vim
+    use({ "RobertAudi/GoldenView.vim", config = require("0x2a.plugins.GoldenView").config })
 
     -- Key mapping hints in a floating window
     --   https://github.com/linty-org/key-menu.nvim
     use({
       "linty-org/key-menu.nvim",
-
       config = function()
         require("key-menu").set("n", "<Leader>", { noremap = true })
         require("key-menu").set("n", "<LocalLeader>", { noremap = true })
@@ -1218,10 +1355,104 @@ return require("packer").startup({
 
     -- Enhanced increment/decrement plugin for Neovim
     --   https://github.com/monaqa/dial.nvim
-    use({ "monaqa/dial.nvim", config = require("0x2a.plugins.dial").config })
+    use({
+      "monaqa/dial.nvim",
+      opt = true,
+      setup = function()
+        require("0x2a.utils.plugins").packer_lazy_load("dial.nvim")
+      end,
+
+      config = require("0x2a.plugins.dial").config,
+    })
+
+    -- ✨ Clarify and beautify your comments using boxes and lines.
+    --   https://github.com/LudoPinelli/comment-box.nvim
+    use({ "LudoPinelli/comment-box.nvim", config = require("0x2a.plugins.comment-box").config })
+
+    -- Sorting plugin for Neovim that supports line-wise and delimiter sorting.
+    --   https://github.com/sQVe/sort.nvim
+    use({
+      "sQVe/sort.nvim",
+      cmd = "Sort",
+      config = function()
+        require("sort").setup({})
+      end,
+    })
+
+    -- Bind a bunch of key bindings together.
+    -- Create custom submodes
+    --   https://github.com/anuvyklack/hydra.nvim
+    use({
+      "anuvyklack/hydra.nvim",
+      opt = true,
+      requires = {
+        -- Create a key layer in Neovim
+        --   https://github.com/anuvyklack/keymap-layer.nvim
+        "anuvyklack/keymap-layer.nvim",
+      },
+
+      setup = function()
+        require("0x2a.utils.plugins").packer_lazy_load("hydra.nvim")
+      end,
+
+      config = require("0x2a.plugins.hydra").config,
+    })
+
+    -- Magit for Neovim
+    -- Complete text-based user interface to Git
+    --   https://github.com/TimUntersberger/neogit
+    use({
+      "TimUntersberger/neogit",
+      requires = {
+        {
+          -- full; complete; entire; absolute; unqualified.
+          -- All the lua functions I don't want to write twice.
+          --   https://github.com/nvim-lua/plenary.nvim
+          "nvim-lua/plenary.nvim",
+        },
+      },
+
+      module = "neogit",
+      command = "Neogit",
+
+      setup = function()
+        require("0x2a.utils.plugins").packer_lazy_load("neogit")
+      end,
+
+      config = require("0x2a.plugins.neogit").config,
+    })
+
+    use({
+      "xbase-lab/xbase",
+      run = "make install",
+      requires = {
+        -- full; complete; entire; absolute; unqualified.
+        -- All the lua functions I don't want to write twice.
+        --   https://github.com/nvim-lua/plenary.nvim
+        "nvim-lua/plenary.nvim",
+
+        -- Find, Filter, Preview, Pick. All lua, all the time.
+        --   https://github.com/nvim-telescope/telescope.nvim
+        "nvim-telescope/telescope.nvim",
+
+        -- Quickstart configurations for the Nvim LSP client
+        --   https://github.com/neovim/nvim-lspconfig
+        "neovim/nvim-lspconfig",
+      },
+      config = function()
+        require("xbase").setup({
+          mappings = {
+            enable = true,
+          },
+        })
+      end,
+    })
   end,
 
   config = {
+    ensure_dependencies = true,
+    compile_on_sync = true,
+
     max_jobs = 50,
     auto_clean = true,
     autoremove = true,

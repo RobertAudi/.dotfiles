@@ -1,1 +1,1 @@
-../../../../../.zsh/plugins/hammerspoon/init.zsh
+../../../../../.config/zsh/plugins/hammerspoon/init.zsh

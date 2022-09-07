@@ -64,7 +64,7 @@ hexToRgb() {
     a=${color:0:2}
     b=${color:2:2}
     c=${color:4:2}
-    printf "#$color -> rgb(%d, %d, %d)\n" 0x${a} 0x${b} 0x${c} 
+    printf "#$color -> rgb(%d, %d, %d)\n" 0x${a} 0x${b} 0x${c}
   fi
 }
 

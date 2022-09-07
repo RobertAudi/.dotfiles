@@ -9,6 +9,37 @@
 local M = {}
 
 M.config = function()
+  local lspconfig = prequire("lspconfig")
+
+  if not lspconfig then
+    return
+  end
+
+  -- ---
+
+  local attach_navic = function(client, bufnr)
+    local navic = prequire("nvim-navic")
+
+    if navic then
+      navic.attach(client, bufnr)
+    end
+  end
+
+  local attach_aerial = function(client, bufnr)
+    local aerial = prequire("aerial")
+
+    if aerial then
+      aerial.on_attach(client, bufnr)
+    end
+  end
+
+  local set_keymaps = function(client, bufnr)
+    vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { buffer = bufnr, noremap = true, desc = "next diagnostic" })
+    vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { buffer = bufnr, noremap = true, desc = "previous diagnostic" })
+  end
+
+  -- ---
+
   local diagnostics = require("0x2a.plugins.lspconfig.diagnostics")
 
   diagnostics.setup_signs_column_symbols()
@@ -17,24 +48,34 @@ M.config = function()
 
   -- ---
 
-  local lspconfig = require("lspconfig")
-  local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  local cmp_nvim_lsp = prequire("cmp_nvim_lsp")
+  local capabilities
+
+  if cmp_nvim_lsp then
+    capabilities = cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  else
+    capabilities = vim.lsp.protocol.make_client_capabilities()
+  end
+
+  -- local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
   capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-  vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-    vim.lsp.diagnostic.on_publish_diagnostics,
-    diagnostics.config
-  )
+  vim.lsp.handlers["textDocument/publishDiagnostics"] =
+    vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, diagnostics.config)
 
   -- Ruby
   -- https://solargraph.org/
   lspconfig.solargraph.setup({
     capabilities = capabilities,
-    init_options = { formatting = false },
+    init_options = {
+      autoformat = false,
+      formatting = false,
+    },
     on_attach = function(client, bufnr)
       vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
-      require("aerial").on_attach(client, bufnr)
+      set_keymaps(client, bufnr)
+      attach_aerial(client, bufnr)
     end,
   })
 
@@ -53,6 +94,9 @@ M.config = function()
     },
     on_attach = function(client, bufnr)
       vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+
+      set_keymaps(client, bufnr)
+      attach_navic(client, bufnr)
     end,
   })
 
@@ -63,6 +107,9 @@ M.config = function()
     },
     on_attach = function(client, bufnr)
       vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+
+      set_keymaps(client, bufnr)
+      attach_navic(client, bufnr)
     end,
   })
 
@@ -90,6 +137,21 @@ M.config = function()
     },
   })
 
+  -- XML
+  lspconfig.lemminx.setup({
+    capabilities = capabilities,
+    on_attach = function(client, bufnr)
+      set_keymaps(client, bufnr)
+      attach_navic(client, bufnr)
+      attach_aerial(client, bufnr)
+    end,
+  })
+
+  -- Swift and Objective-C.
+  lspconfig.sourcekit.setup({
+    root_dir = require("lspconfig.util").root_pattern("Package.swift", ".git", "*.xcodeproj"),
+  })
+
   -- Lua
   -- https://github.com/sumneko/lua-language-server
   local sumneko_binary = os.getenv("LUA_LSP_HOME") .. "/bin/lua-language-server"
@@ -102,6 +164,13 @@ M.config = function()
     cmd = { sumneko_binary, "-E", os.getenv("LUA_LSP_HOME") .. "/main.lua" },
     settings = {
       Lua = {
+        IntelliSense = {
+          traceLocalSet = true,
+          traceReturn = true,
+          traceBeSetted = true,
+          traceFieldInject = true,
+        },
+
         runtime = {
           -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
           version = "LuaJIT",
@@ -111,7 +180,14 @@ M.config = function()
 
         diagnostics = {
           -- Get the language server to recognize the `vim` global
-          globals = { "vim", "use", "hs", "spoon" },
+          globals = { "vim", "use", "hs", "spoon", "use_rocks", "prequire", "packer_plugins" },
+
+          disable = {
+            "unused-local",
+            "missing-parameter", -- HACK: for vim.fn.expand()
+            "redundant-parameter", -- HACK: return function
+            "need-check-nil", -- HACK: return tbl, err
+          },
         },
 
         format = {
@@ -141,7 +217,9 @@ M.config = function()
 
       vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
-      require("aerial").on_attach(client, bufnr)
+      set_keymaps(client, bufnr)
+      attach_navic(client, bufnr)
+      attach_aerial(client, bufnr)
     end,
   })
 
@@ -162,7 +240,9 @@ M.config = function()
     on_attach = function(client, bufnr)
       vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
-      require("aerial").on_attach(client, bufnr)
+      set_keymaps(client, bufnr)
+      attach_navic(client, bufnr)
+      attach_aerial(client, bufnr)
     end,
   })
 
@@ -173,7 +253,9 @@ M.config = function()
     on_attach = function(client, bufnr)
       vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
-      require("aerial").on_attach(client, bufnr)
+      set_keymaps(client, bufnr)
+      attach_navic(client, bufnr)
+      attach_aerial(client, bufnr)
     end,
   })
 end

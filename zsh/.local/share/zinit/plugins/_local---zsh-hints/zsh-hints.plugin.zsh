@@ -1,1 +1,1 @@
-../../../../../.zsh/plugins/zsh-hints/init.zsh
+../../../../../.config/zsh/plugins/zsh-hints/init.zsh

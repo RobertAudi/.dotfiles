@@ -6,11 +6,10 @@
 
 vim.api.nvim_create_autocmd("FileChangedShell", {
   group = vim.api.nvim_create_augroup("RAPluginsInterruptless", { clear = true }),
-  pattern = "*",
   callback = function()
     vim.v.fcs_choice = "just do nothing"
 
-    local filename = vim.fn.expand("<afile>", false, false)
+    local filename = vim.fn.expand("<afile>")
 
     if vim.v.fcs_reason == "conflict" then
       require("0x2a.notifications").warning(

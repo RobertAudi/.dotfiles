@@ -8,6 +8,12 @@
 local M = {}
 
 M.config = function()
+  local ok, _ = pcall(require, "gitsigns")
+
+  if not ok then
+    return
+  end
+
   local symbols = require("0x2a.symbols")
 
   require("gitsigns").setup({

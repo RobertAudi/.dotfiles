@@ -220,6 +220,19 @@ let s:switch_filetype_definitions.javascript =
 
 " ------------------------------------------------------------------------------ }}}
 
+" Lua definitions {{{
+" ------------------------------------------------------------------------------
+
+let s:switch_filetype_definitions.lua =
+      \ [
+      \   ['and', 'or'],
+      \   ['==', '~='],
+      \   ['vim.opt.', 'vim.opt_local.', 'vim.opt_global.'],
+      \   [':append', ':prepend', ':remove'],
+      \ ]
+
+" ------------------------------------------------------------------------------ }}}
+
 " Vim definitions {{{
 " ------------------------------------------------------------------------------
 
@@ -267,6 +280,19 @@ let s:switch_filetype_definitions.zsh =
 
 " ------------------------------------------------------------------------------ }}}
 
+" tmux definitions {{{
+" ------------------------------------------------------------------------------
+
+let s:switch_filetype_definitions.tmux =
+      \ [
+      \   ['set-option', 'set-window-option'],
+      \   ['on', 'off'],
+      \   ['bind-key', 'unbind-key'],
+      \   ['next-window', 'previous-window', 'last-window'],
+      \ ]
+
+" ------------------------------------------------------------------------------ }}}
+
 " ============================================================================== }}}
 
 augroup RAPluginsSwitch
@@ -275,11 +301,14 @@ augroup RAPluginsSwitch
   autocmd FileType css,scss   let b:switch_custom_definitions = s:switch_filetype_definitions.css
   autocmd FileType gitrebase  let b:switch_custom_definitions = s:switch_filetype_definitions.gitrebase
   autocmd FileType javascript let b:switch_custom_definitions = s:switch_filetype_definitions.javascript
+  autocmd FileType lua        let b:switch_custom_definitions = s:switch_filetype_definitions.lua
   autocmd FileType ruby       let b:switch_custom_definitions = s:switch_filetype_definitions.ruby
   autocmd FileType eruby      let b:switch_custom_definitions = s:switch_filetype_definitions.eruby
   autocmd FileType haml       let b:switch_custom_definitions = s:switch_filetype_definitions.haml
   autocmd FileType slim       let b:switch_custom_definitions = s:switch_filetype_definitions.slim
   autocmd FileType vim        let b:switch_custom_definitions = s:switch_filetype_definitions.vim
+  autocmd FileType zsh        let b:switch_custom_definitions = s:switch_filetype_definitions.zsh
+  autocmd FileType tmux       let b:switch_custom_definitions = s:switch_filetype_definitions.tmux
 augroup END
 
 " Modeline {{{

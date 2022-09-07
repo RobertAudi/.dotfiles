@@ -263,3 +263,26 @@ tap "sstadick/hck"
 brew "hck"
 
 # ------------------------------------------------------------------------------ }}}
+
+# Charm
+# ------------------------------------------------------------------------------ {{{
+
+# We build tools to make the command line glamorous.
+#   https://charm.sh/
+#   https://github.com/charmbracelet
+tap "charmbracelet/tap"
+
+# A tool for glamorous shell scripts 🎀
+#   https://github.com/charmbracelet/gum
+brew "charmbracelet/tap/gum"
+# ------------------------------------------------------------------------------ }}}
+
+# TEMPLATE
+# ------------------------------------------------------------------------------ {{{
+
+# tap "foo/bar"
+
+# Description
+#   https://URL
+# brew "foo/bar/cmd"
+# ------------------------------------------------------------------------------ }}}

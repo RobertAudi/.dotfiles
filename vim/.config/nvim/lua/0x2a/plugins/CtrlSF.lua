@@ -19,7 +19,7 @@ M.config = function()
   vim.g.ctrlsf_auto_focus = { at = "start", duration_less_than = 1000 }
   vim.g.ctrlsf_extra_backend_args = { ag = "--hidden", rg = "--hidden" }
   vim.g.ctrlsf_mapping = {
-    open = { "<CR>", "o" },
+    open = { "<Enter>", "o" },
     openb = "O",
     split = "<C-O>",
     vsplit = "<C-v>",

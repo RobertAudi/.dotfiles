@@ -1,1 +1,1 @@
-../../../../../.zsh/plugins/vim/init.zsh
+../../../../../.config/zsh/plugins/vim/init.zsh

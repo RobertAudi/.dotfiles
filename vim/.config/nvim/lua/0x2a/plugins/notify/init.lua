@@ -11,7 +11,12 @@
 local M = {}
 
 M.config = function()
-  local notify = require("notify")
+  local notify = prequire("notify")
+
+  if not notify then
+    return
+  end
+
   local symbols = require("0x2a.symbols")
 
   notify.setup({

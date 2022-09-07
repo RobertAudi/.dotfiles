@@ -1,1 +1,1 @@
-../../../../../.zsh/plugins/grc/init.zsh
+../../../../../.config/zsh/plugins/grc/init.zsh

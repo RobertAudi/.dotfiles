@@ -4,6 +4,9 @@ emulate -L zsh
 
 setopt pipe_fail
 
+# Dependencies {{{
+# ------------------------------------------------------------------------------------
+
 if ! type gh &>/dev/null ; then
   builtin print -P -- "[%F{032}INFO%f] gh not installed."
   builtin print -P -- "[%F{032}INFO%f] Trying to install gh..."
@@ -35,7 +38,10 @@ if ! type fontforge &>/dev/null ; then
 
   command brew install fontforge || return $status
 fi
+# ------------------------------------------------------------------------------------ }}}
 
+# Nerd fonts {{{
+# ------------------------------------------------------------------------------------
 command ghq get --update https://github.com/ryanoasis/nerd-fonts.git
 
 local nerd_fonts_root=$(command ghq list --exact --full-path github.com/ryanoasis/nerd-fonts)
@@ -48,46 +54,58 @@ font_patcher="${nerd_fonts_root}/font-patcher"
 [[ -f $font_patcher ]] || return 1
 
 command chmod +x $font_patcher
+# ------------------------------------------------------------------------------------ }}}
 
-local download_tmpdir
-download_tmpdir=$(command mktemp --directory --quiet 2> /dev/null) || return $status
+# JetBrains Mono {{{
+# ------------------------------------------------------------------------------------
+command ghq get --update https://github.com/JetBrains/JetBrainsMono.git
 
-command gh release download \
-  --repo JetBrains/JetBrainsMono \
-  --pattern "JetBrainsMono-*.zip" \
-  --dir $download_tmpdir || return $status
+local jetbrains_mono_font_root=$(command ghq list --exact --full-path github.com/JetBrains/JetBrainsMono)
 
-local font_archive
-font_archive="$(command find $download_tmpdir -maxdepth 1 -type f -iname "JetBrainsMono-*.zip" -print -quit)" || return $status
+[[ -d "$jetbrains_mono_font_root" ]] || return 1
+# ------------------------------------------------------------------------------------ }}}
 
+# Patch fonts {{{
+# ------------------------------------------------------------------------------------
 local destination_dir
 destination_dir="${XDG_DOWNLOAD_DIR-:$HOME/downloads}/fonts"
 
-command mkdir -p $destination_dir
+for font_type in "otf" "ttf"; do
+  local font_dir="${jetbrains_mono_font_root}/fonts/${font_type}"
 
-command unar -force-directory -output-directory $download_tmpdir $font_archive || return $status
+  if ! [[ -d "$font_dir" ]]; then
+    builtin print -u 2 -- "Skipping font type: ${(U)font_type}"
+    continue
+  fi
 
-local font_dir
-fond_dir="${font_archive:r}/fonts/ttf"
+  local font_type_destination_dir="${destination_dir}/${(U)font_type}"
 
-[[ -d $fond_dir ]] || return 1
+  command mkdir -p "$font_type_destination_dir"
 
-command find $fond_dir -maxdepth 1 -type f -iname "JetBrainsMonoNL-*.ttf" -delete || return $status
+  for f in $(command find $font_dir -maxdepth 1 -type f -iname "*.${font_type}") ; do
+    builtin print -- "Patching ${f:t}\n"
 
-for f in $(command find $fond_dir -maxdepth 1 -type f -iname "*.ttf") ; do
-  builtin print -- "Patching ${f:t}\n\n"
+  #  --complete              Add all available Glyphs
+  #  --adjust-line-height    Whether to adjust line heights (attempt to center powerline separators more evenly)
+  #  --careful               Do not overwrite existing glyphs if detected
+  #  --progressbars          Show percentage completion progress bars per Glyph Set
+  #  --ext otf               Create OTF font
+  #  --out [DIR]             Save fonts in [DIR]
+  #
+  #  Also hide the fontforge warnings
+  fontforge -quiet -script $font_patcher \
+    --complete \
+    --adjust-line-height \
+    --careful \
+    --progressbars \
+    -ext ${font_type} \
+    -out $font_type_destination_dir \
+    $f 2> /dev/null
 
-fontforge -script $font_patcher \
-  --adjust-line-height \
-  --careful \
-  -ext ttf \
-  -out $destination_dir \
-  --progressbars \
-  --complete \
-  $f
-
-  builtin print -- "DONE Patching ${f:t}"
-  builtin print -- "\n------------------------\n"
+    builtin print -- "DONE Patching ${f:t}"
+    builtin print -- "\n------------------------\n"
+  done
 done
+# ------------------------------------------------------------------------------------ }}}
 
-rm -rf $download_tmpdir
+builtin print -P -- "[%F{034}SUCCESS%f] All fonts patched"

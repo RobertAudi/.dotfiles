@@ -10,7 +10,7 @@ M.config = function()
 
   vim.api.nvim_create_autocmd({ "FileType" }, {
     group = vim.api.nvim_create_augroup("RAPluginsVimAutoCursoline", { clear = true }),
-    pattern = { "aerial", "TelescopePrompt", "TelescopeResults", "gitblame", "git", "ctrlsf", "help" },
+    pattern = { "alpha", "aerial", "TelescopePrompt", "TelescopeResults", "gitblame", "git", "ctrlsf", "help" },
     callback = function()
       vim.b.auto_cursorline_disabled = true
     end,

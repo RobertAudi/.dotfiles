@@ -371,6 +371,11 @@ brew "yamllint"
 #   https://stedolan.github.io/jq/
 brew "jq"
 
+# jless — a command-line JSON viewer
+#   https://jless.io/
+#   https://github.com/PaulJuliusMartinez/jless
+brew "jless"
+
 # Json incremental digger
 #   https://github.com/simeji/jid
 brew "jid"

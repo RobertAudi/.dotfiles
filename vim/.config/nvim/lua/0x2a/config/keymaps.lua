@@ -1,3 +1,7 @@
+-- Module: 0x2a.config.keymaps
+-- Requires:
+--   - 0x2a.utils.buffer
+
 vim.g.mapleader = ","
 
 -- Disabled keys {{{
@@ -28,11 +32,22 @@ vim.keymap.set("n", "ZQ", "<Nop>", { noremap = true, desc = "Disabled" })
 vim.keymap.set({ "n", "x" }, "c", [["_c]], { noremap = true })
 vim.keymap.set({ "n", "x" }, "C", [["_C]], { noremap = true })
 
+-- Use the black hole register if deleting a blank line
+--
+-- Source: https://www.reddit.com/r/neovim/comments/w0jzzv/smart_dd/igfjx5y/
+vim.keymap.set({ "n" }, "dd", function()
+  if vim.api.nvim_get_current_line():match("^%s*$") then
+    return "\"_dd"
+  else
+    return "dd"
+  end
+end, { noremap = true, expr = true, silent = true })
+
 -- Get more information from ctrl-g:
 vim.keymap.set("n", "<C-g>", "2<C-g>", { noremap = true, desc = "Get more information from ctrl-g" })
 
 -- Alternate buffer
-vim.keymap.set("n", "<C-e>", "<C-^>", { noremap = true, desc = "Alternate buffer" })
+vim.keymap.set("n", "g<C-b>", "<C-^>", { noremap = true, desc = "Alternate buffer" })
 
 -- Universal opposite of J
 vim.keymap.set(
@@ -122,8 +137,8 @@ vim.keymap.set("n", "gzl", "L", { noremap = true, desc = "Position the cursor at
 vim.keymap.set("n", "gI", "`.i", { noremap = true, desc = "Move to the last change" })
 
 -- Repeat f/t/F/T movements without ,/;
-vim.keymap.set({ "n", "v" }, "f<CR>", ";", { noremap = true, desc = "Repeat the last f movement" })
-vim.keymap.set({ "n", "v" }, "t<CR>", ";", { noremap = true, desc = "Repeat the last t movement" })
+vim.keymap.set({ "n", "v" }, "f<Enter>", ";", { noremap = true, desc = "Repeat the last f movement" })
+vim.keymap.set({ "n", "v" }, "t<Enter>", ";", { noremap = true, desc = "Repeat the last t movement" })
 vim.keymap.set({ "n", "v" }, "f<BS>", ",", { noremap = true, desc = "Repeat the last F movement" })
 vim.keymap.set({ "n", "v" }, "t<BS>", ",", { noremap = true, desc = "Repeat the last T movement" })
 
@@ -138,16 +153,6 @@ vim.keymap.set(
   "l",
   "x2a#folding#can_open_fold('.') ? 'zo' : 'l'",
   { noremap = true, expr = true, desc = "Open fold" }
-)
-
--- Toggle fold
-vim.keymap.set(
-  "n",
-  "<Space>",
-  [[x2a#folding#can_toggle_fold(".") ? "za" : "]]
-    .. vim.api.nvim_replace_termcodes("<Space>", true, true, true)
-    .. [["]],
-  { noremap = true, expr = true, desc = "Toggle fold" }
 )
 
 -- Double-click to toggle folds
@@ -183,7 +188,7 @@ vim.keymap.set(
   "v",
   "v",
   [[mode() == "v" ? '<C-v>' : 'v']],
-  { noremap = true, expr = true, desc = "Toggle between visual mode and visual block mode" }
+  { noremap = true, expr = true, replace_keycodes = false, desc = "Toggle between visual mode and visual block mode" }
 )
 
 vim.keymap.set("v", "<C-v>", "<Esc>", { noremap = true, desc = "Get out of visual mode" })
@@ -242,7 +247,7 @@ vim.keymap.set(
 -- clear any message already displayed.
 vim.keymap.set(
   "n",
-  "<CR>",
+  "<Enter>",
   "<Cmd>nohlsearch<Bar>match<Bar>echo<CR>",
   { noremap = true, silent = true, desc = "Remove search highlight and clear any message already displayed." }
 )
@@ -265,7 +270,7 @@ vim.keymap.set("n", "c*", "*Ncgn", { noremap = true, desc = "Change current word
 vim.keymap.set(
   "n",
   "<Leader>a",
-  "<Cmd>silent! call x2a#buffers#Select()<CR>",
+  require("0x2a.utils.buffer").select,
   { noremap = true, silent = true, desc = "Select the entire file" }
 )
 
@@ -273,7 +278,7 @@ vim.keymap.set(
 vim.keymap.set(
   "n",
   "<Leader>y",
-  "<Cmd>YankBuffer<CR>",
+  require("0x2a.utils.buffer").yank,
   { noremap = true, silent = true, desc = "Yank the entire file" }
 )
 
@@ -322,8 +327,8 @@ vim.keymap.set(
 vim.keymap.set("n", "<leader>gt", "gt", { noremap = true, desc = "Got to tab by index/number" })
 
 -- Next/Previous buffer
-vim.keymap.set("n", "]b", "<Cmd>bnext<CR>", { noremap = true, silent = true, desc = "Next buffer" })
-vim.keymap.set("n", "[b", "<Cmd>bprevious<CR>", { noremap = true, silent = true, desc = "Previous buffer" })
+vim.keymap.set("n", "gb", "<Cmd>bnext<CR>", { noremap = true, silent = true, desc = "Next buffer" })
+vim.keymap.set("n", "gB", "<Cmd>bprevious<CR>", { noremap = true, silent = true, desc = "Previous buffer" })
 
 -- Delete the contents of a line but not the line itself
 vim.keymap.set(
@@ -360,6 +365,3 @@ vim.keymap.set("n", "Q", "@@", { noremap = true, desc = "reapeat the last macro"
 vim.keymap.set("v", "@", ":normal @", { noremap = true, desc = "Repeats macro on every line" })
 
 -- ------------------------------------------------------------------------------ }}}
-
--- Use escape to get out of insert mode in terminals
-vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], { noremap = true, desc = "get out of insert mode in terminals" })

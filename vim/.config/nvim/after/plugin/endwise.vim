@@ -3,4 +3,4 @@
 " URL: https://github.com/tpope/vim-endwise
 
 " This is dog shit but the autocompletion mappings break endwise
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR><Plug>DiscretionaryEnd"
+inoremap <expr> <Enter> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR><Plug>DiscretionaryEnd"

@@ -6,7 +6,13 @@
 local M = {}
 
 M.config = function()
-  require("Comment").setup({
+  local comment = prequire("Comment")
+
+  if not comment then
+    return
+  end
+
+  comment.setup({
     -- Add a space b/w comment and the line
     padding = true,
 
@@ -75,11 +81,21 @@ M.config = function()
       end
 
       return require("ts_context_commentstring.internal").calculate_commentstring({
-        key = ctx.ctype == U.ctype.line and "__default" or "__multiline",
+        key = ctx.ctype == "__default",
         location = location,
       })
     end,
   })
+
+  local ft = require("Comment.ft")
+
+  ft.set("yaml", { "# %s" })
+  ft.set("gitconfig", { "# %s" })
+  ft.set("gitignore", { "# %s" })
+  ft.set("dosini", { "# %s" })
+  ft.set("cfg", { "# %s" })
+  ft.set("zinit", { "// %s" })
+  ft.set("objc", { "// %s" })
 
   vim.keymap.set("n", "gx", "gccyypgcc", { remap = true, desc = "Duplicate line and comment out the original" })
 end

@@ -6,6 +6,12 @@
 local M = {}
 
 M.config = function()
+  local ok, _ = pcall(require, "fidget")
+
+  if not ok then
+    return
+  end
+
   require("fidget").setup({
     text = {
       spinner = "dots",

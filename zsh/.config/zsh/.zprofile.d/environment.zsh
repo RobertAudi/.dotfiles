@@ -1,0 +1,375 @@
+# XDG {{{
+# ---------------------------------------------------------------------
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_BIN_HOME="$HOME/.local/bin"
+export XDG_LIB_HOME="$HOME/.local/lib"
+export XDG_STATE_HOME="$HOME/.local/state"
+
+# Full credits to @tsutsu
+#   https://github.com/tsutsu
+#   https://gist.github.com/tsutsu/2c11fc0a36000a46566e9fd62c60dea4
+export XDG_CACHE_HOME="$HOME/Library/Caches/org.freedesktop"
+
+export XDG_RUNTIME_DIR="$XDG_CACHE_HOME"
+export XDG_DESKTOP_DIR="$HOME/Desktop"
+export XDG_DOCUMENTS_DIR="$HOME/Documents"
+export XDG_DOWNLOAD_DIR="$HOME/Downloads"
+export XDG_DEVELOPER_DIR="$HOME/Developer"
+export XDG_MUSIC_DIR="$HOME/Music"
+export XDG_PICTURES_DIR="$HOME/Pictures"
+export XDG_PUBLICSHARE_DIR="$HOME/Public"
+export XDG_VIDEOS_DIR="$HOME/Videos"
+# --------------------------------------------------------------------- }}}
+
+# Terminfo
+# ---------------------------------------------------------------------
+
+export TERMINFO="$XDG_DATA_HOME/terminfo"
+export TERMINFO_DIRS="$XDG_DATA_HOME/terminfo:/opt/homebrew/opt/ncurses/share/terminfo:/usr/share/terminfo"
+
+# --------------------------------------------------------------------- }}}
+
+export VIMPAGER_RC="$XDG_CONFIG_HOME/vimpager/vimpagerrc"
+
+export DOTFILES_DIR="$HOME/.dotfiles"
+export STOW_DIR="$DOTFILES_DIR"
+export GOPATH="$XDG_DEVELOPER_DIR/go"
+
+# ZSH {{{
+# ---------------------------------------------------------------------
+: ${ZDOTDIR:=$XDG_CONFIG_HOME/zsh}
+export ZSH_HOME="$ZDOTDIR"
+export ZSH_CACHE_DIR="$XDG_CACHE_HOME/zsh"
+export ZSH_TMP_DIR="$TMPDIR/zsh"
+export ZSH_LOCAL_DIR="$HOME/.local/zsh"
+export ZSH_COMPDUMP="$ZSH_CACHE_DIR/zcompdump"
+export ZSH_COMPCACHE="$ZSH_CACHE_DIR/zcompcache"
+
+# Where Zinit lives
+# See: https://github.com/zdharma-continuum/zinit
+export ZINIT_HOME="$XDG_DATA_HOME/zinit/zinit.git"
+export ZINIT_LOADFILE="$ZSH_HOME/plugins/zinit.zsh"
+# --------------------------------------------------------------------- }}}
+
+# Watch for everybody but me
+# And check every 5 min for login/logout activity
+watch=(notme)
+export LOGCHECK=302
+export WATCHFMT='%n %a %l from %m at %t.'
+
+# Less {{{
+# ---------------------------------------------------------------------
+# Set the Less input preprocessor.
+typeset -g -a LESS_OPTIONS=(
+  # Make the search smart case sensitive.
+  --ignore-case
+
+  # Disable EOF tilde (~) characters and use blank lines instead.
+  --tilde
+
+  # Truncate long lines and do not wrap them.
+  --chop-long-lines
+
+  # Display a status column at left edge of the screen.
+  --status-column
+
+  # Make status column more verbose.
+  --LONG-PROMPT
+
+  # Make target line the tenth line from top.
+  --jump-target=10
+
+  # Make the window scroll size 4 lines less than the current screen size
+  --window=-4
+
+  # Output ANSI escape sequences in their raw form.
+  --RAW-CONTROL-CHARS
+
+  # First line of the text should be always on top.
+  --clear-screen
+
+  # Highlight last match
+  --hilite-search
+
+  # Disable bell and use visual bell if available.
+  --silent
+
+  # Set tab length.
+  --tabs=4
+
+  # Specifies the default number of positions to scroll horizontally.
+  --shift=5
+
+  # Prompt format
+  --prompt='?f%f:(stdin). ?lb%lb?L/%L.. [?eEOF:?pb%pb\%..]'
+)
+
+# Set options as string and remove temporary array.
+export LESS="${LESS_OPTIONS[@]}" && unset LESS_OPTIONS
+
+# First try to use lesspipe.sh provided by Homebrew
+#   Install with: brew install lesspipe
+# If that doesn't work, try both `lesspipe` and `lesspipe.sh` as either might exist on a system.
+if [[ -f "/opt/homebrew/bin/lesspipe.sh" ]]; then
+  export LESS="$LESS -X"
+  export LESSOPEN="| /opt/homebrew/bin/lesspipe.sh %s"
+  export LESS_ADVANCED_PREPROCESSOR=1
+elif (( $#commands[(i)lesspipe(|.sh)] )); then
+  export LESS="$LESS -X"
+  export LESSOPEN="| /usr/bin/env $commands[(i)lesspipe(|.sh)] %s 2>&-"
+fi
+
+# History file
+export LESSHISTFILE="$XDG_DATA_HOME/lesshst"
+
+export LESSCHARSET="utf-8"
+export LESSSECURE=1
+export LESS_TERMCAP_mb=$(tput bold; tput setaf 1)            # Begins blinking.
+export LESS_TERMCAP_md=$(tput bold; tput setaf 1)            # Turn on bold mode.
+export LESS_TERMCAP_me=$(tput sgr0)                          # Turn off all attributes.
+export LESS_TERMCAP_se=$(tput rmso; tput sgr0)               # Exit standout mode.
+export LESS_TERMCAP_so=$(tput bold; tput setaf 3)            # Begin standout mode.
+export LESS_TERMCAP_us=$(tput smul; tput bold; tput setaf 2) # Begin underline mode.
+export LESS_TERMCAP_ue=$(tput rmul; tput sgr0)               # Exit underline mode.
+export LESS_TERMCAP_mr=$(tput rev)                           # Turn on reverse video mode.
+export LESS_TERMCAP_mh=$(tput dim)                           # Turn on half-bright mode.
+export LESS_TERMCAP_ZN=$(tput ssubm)                         # Enter subscript mode.
+export LESS_TERMCAP_ZV=$(tput rsubm)                         # End subscript mode.
+export LESS_TERMCAP_ZO=$(tput ssupm)                         # Enter superscript mode.
+export LESS_TERMCAP_ZW=$(tput rsupm)                         # End superscript mode.
+# --------------------------------------------------------------------- }}}
+
+# Grep {{{
+# ---------------------------------------------------------------------
+# Grep (BSD)
+export GREP_COLOR='37;45' # 1;37
+
+# Grep (GNU)
+# Setting 'mt' is equivalent to setting both 'ms=' and 'mc=' at once to the same value.
+export GREP_COLORS="mt=$GREP_COLOR:sl=:cx=:fn=1;33:ln=1;36:bn=1;35:se=1;30"
+# --------------------------------------------------------------------- }}}
+
+# Language {{{
+# ---------------------------------------------------------------------
+#
+# I don't like the new locale settings.  If your distribution changes
+# your locale, you will notice things like 'ls' are different.
+#
+# To see what you are currently using, type 'locale' in a console.
+#
+# LC_COLLATE affects the way 'ls' displays items.  If you leave it as
+# en_US then it will intermix different cases and dot files.
+#
+# LC_TIME affects the way 'ls -l' displays items:
+#
+# This is using 'LC_TIME=en_US'
+# -rw-r--r--  1 zyrnix zyrnix 144508 2005-04-04 04:49 Debian.jpg
+#
+# This is using the older style 'LC_TIME=C'
+# -rw-r--r--  1 zyrnix zyrnix 144508 Apr  4  04:49 Debian.jpg
+#
+# These environment variables affect each locale categories for all
+# locale-aware programs:
+#
+# LC_CTYPE           Character classification and case conversion.
+# LC_COLLATE         Collation order.
+# LC_TIME            Date and time formats.
+# LC_NUMERIC         Non-monetary numeric formats.
+# LC_MONETARY        Monetary formats.
+# LC_MESSAGES        Formats of informative and diagnostic messages and
+#                    interactive responses.
+# LC_PAPER           Paper size.
+# LC_NAME            Name formats.
+# LC_ADDRESS         Address formats and location information.
+# LC_TELEPHONE       Telephone number formats.
+# LC_MEASUREMENT     Measurement units (Metric or Other).
+# LC_IDENTIFICATION  Metadata about the locale information.
+# LOCPATH            The directory where locale data is stored.
+#                    The default is /usr/lib/locale.
+export LANG=en_US.UTF-8
+export LC_LANG=$LANG
+export LC_CTYPE=$LANG
+export LC_ALL=$LANG
+export LC_COLLATE=C   # Display the old 'ls -a' formatting.
+export LC_TIME=C      # Display the old 'ls -l' formatting.
+# --------------------------------------------------------------------- }}}
+
+# History {{{
+# ---------------------------------------------------------------------
+
+export HISTFILE="$ZSH_CACHE_DIR/history"
+
+# Keep histsize a bit larger than savehist, to give the
+# history deduplication room to actually work.
+export SAVEHIST=$(( 20 << 12 ))
+export HISTSIZE=$(( $SAVEHIST + (10 << 10) ))
+
+# --------------------------------------------------------------------- }}}
+
+# The format of process time reports with the time builtin.
+#     %%     A `%'.
+#     %U     CPU seconds spent in user mode.
+#     %S     CPU seconds spent in kernel mode.
+#     %E     Elapsed time in seconds.
+#     %P     The CPU percentage, computed as  (%U+%S)/%E.
+#     %J     The name of this job.
+#
+# Default is:
+#     %E real  %U user  %S system   %P  %J
+export TIMEFMT="%E real        %U user        %S sys"
+
+# Report time statistics for commands
+# that take too long to run
+export REPORTTIME=30
+
+# Limit this fuckung "zsh: do you wish to see all NNN possibilities (NNN
+# lines)?" downward (default is 100). Only ask before displaying
+# completions if doing so would scroll.
+export LISTMAX=200
+
+# Treat these characters as part of a word.
+export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>|'
+
+# Use 1024-byte (1-Kbyte) blocks, rather than the default (512-byte).
+# Used by df and du
+export BLOCKSIZE=k
+
+# Character set for tree to use in HTML mode.
+export TREE_CHARSET=UTF-8
+
+# Editor {{{
+# ---------------------------------------------------------------------
+export EDITOR="${VIM_COMMAND:-vim}"
+export VISUAL="$EDITOR"
+export GIT_EDITOR="$VISUAL"
+export SUDO_EDITOR="$VISUAL"
+export BUNDLER_EDITOR="$VISUAL"
+export GEMEDITOR="$VISUAL"
+# --------------------------------------------------------------------- }}}
+
+if [[ -z "$HELPDIR" && -d "/opt/homebrew/share/zsh/help" ]]; then
+  export HELPDIR=/opt/homebrew/share/zsh/help
+fi
+
+# ENV variables
+export CHEATCOLORS=true
+export CLICOLOR=true
+export PAGER="smartless"
+export MANPAGER="less"
+export BROWSER="open"
+export IMAGE_VIEWER="open"
+export PDF_READER="open"
+export DOWNLOADS_DIR="$HOME/Downloads/_hazel"
+export QT_STYLE_OVERRIDE=adwaita
+export WALLPAPER="$XDG_DATA_HOME/resources/wallpaper.png"
+export PROJECTS="$HOME/Developer"
+
+unset DISPLAY
+
+export LUA_LSP_HOME="$HOME/.local/opt/lua-language-server"
+
+# If we're 64bit, let everything know!
+case "$(/usr/bin/uname -m)" in
+  "x86_64")
+    export ARCHFLAGS="-arch x86_64 ${ARCHFLAGS}"
+    ;;
+  "arm64")
+    export ARCHFLAGS="-arch arm64 ${ARCHFLAGS}"
+    ;;
+esac
+
+# Readline config
+export INPUTRC="$XDG_CONFIG_HOME/readline/inputrc"
+
+# Ack config file path
+export ACKRC="$XDG_CONFIG_HOME/ack/ackrc"
+
+# ripgrep (rg) config file path
+export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/ripgreprc"
+
+# cURL config file assuming XDG Base Directory setup
+export CURL_HOME="$XDG_CONFIG_HOME/curl"
+
+# Specifies the directory in which the database is stored.
+export _ZO_DATA_DIR="$XDG_DATA_HOME"
+
+# Rust paths
+export CARGO_HOME="${XDG_DATA_HOME}/cargo"
+export RUSTUP_HOME="${XDG_DATA_HOME}/rustup"
+
+export AWS_CONFIG_FILE="$XDG_CONFIG_HOME/aws/config"
+
+export DOCKER_CONFIG="$XDG_CONFIG_HOME/docker"
+
+# Homebrew {{{
+# ---------------------------------------------------------------------
+# Text printed before the installation summary of each successful build.
+export HOMEBREW_INSTALL_BADGE="🔮✨"
+
+# Do not use the GitHub API for e.g searches or fetching relevant issues on a failed install.
+export HOMEBREW_NO_GITHUB_API=1
+
+# Do not send analytics
+export HOMEBREW_NO_ANALYTICS=1
+
+# Do not auto-update before running brew install, brew upgrade or brew tap.
+export HOMEBREW_NO_AUTO_UPDATE=1
+
+# Do not permit redirects from secure HTTPS to insecure HTTP.
+export HOMEBREW_NO_INSECURE_REDIRECT=1
+
+# Never cleanup automatically after running brew install/upgrade/reinstall
+export HOMEBREW_NO_INSTALL_CLEANUP=1
+
+# Do not disable the use of curlrc.
+export HOMEBREW_CURLRC=1
+
+# Print install times for each formula at the end of the run
+export HOMEBREW_DISPLAY_INSTALL_TIMES=1
+
+# Editor to use when editing formulae
+# Note: Use vim "unaliased"
+export HOMEBREW_EDITOR="\\vim"
+
+# Always use a Homebrew-installed curl rather than the system version
+export HOMEBREW_FORCE_BREWED_CURL=1
+
+# Always use a Homebrew-installed git rather than the system version
+export HOMEBREW_FORCE_BREWED_GIT=1
+
+# Don't generate lock files when running `brew bundle install`
+export HOMEBREW_BUNDLE_NO_LOCK=1
+
+typeset -a formulas
+formulas=(
+  curl
+  openssl
+  libffi
+  binutils
+  libxml2
+  libxslt
+  gumbo-parser
+)
+
+for formula in ${formulas[@]}; do
+  if [[ -d "/opt/homebrew/opt/${formula}/lib" ]]; then
+    LDFLAGS="$LDFLAGS -L/opt/homebrew/opt/${formula}/lib"
+  fi
+
+  if [[ -d "/opt/homebrew/opt/${formula}/include" ]]; then
+    CPPFLAGS="$CPPFLAGS -I/opt/homebrew/opt/${formula}/include"
+  fi
+done
+
+unset formulas
+
+# --------------------------------------------------------------------- }}}
+
+# JAVA home
+if [[ -f /usr/libexec/java_home ]]; then
+  export JAVA_HOME=$(/usr/libexec/java_home)
+fi
+
+# Modeline {{{
+# vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker : }}}

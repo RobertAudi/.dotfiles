@@ -4,5 +4,13 @@ return {
   ignored_special_filetypes = { "help", "qf", "man" },
   ignored_plugin_filetypes = { "NvimTree", "fzf", "ctrlsf", "aerial" },
   special_filetypes = { help = "Help", qf = "Quickfix", man = "Man" },
-  plugin_filetypes = { NvimTree = "Tree", fzf = "FZF", ctrlsf = "CtrlSF", aerial = "Symbols" },
+  terminal_filetypes = { terminal = "", toggleterm = "ToggleTerm" },
+
+  plugin_filetypes = {
+    NvimTree = "Tree",
+    TelescopePrompt = "Telescope",
+    fzf = "FZF",
+    ctrlsf = "CtrlSF",
+    aerial = "Symbols",
+  },
 }

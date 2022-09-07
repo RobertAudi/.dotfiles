@@ -6,7 +6,7 @@ function! x2a#breakhere#BreakHere() abort
   let l:view = winsaveview()
 
   " input the linebreak itself
-  execute "keepjumps normal! i\<CR>\<Esc>"
+  execute "keepjumps normal! i\<Enter>\<Esc>"
 
   " hop back up a (visual) line and trim trailing whitespace
   execute 'keepjumps normal! gk'

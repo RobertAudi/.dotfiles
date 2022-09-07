@@ -4,21 +4,58 @@
 
 local ls = require("luasnip")
 local snip = ls.snippet
+local text = ls.text_node
 local insert = ls.insert_node
+local choice = ls.choice_node
 local fmt = require("luasnip.extras.fmt").fmt
 
 ls.filetype_extend("rspec", { "ruby" })
 
 ls.add_snippets("rspec", {
   snip(
-    { trig = "desc", name = "describe", dscr = "Example group" },
+    { trig = "Desc", name = "RSpec.describe", dscr = "RSpec group" },
     fmt(
       [[
-        describe "{}" do
+        require "{}_helper.rb"
+
+        RSpec.describe {}{} do
           {}
         end
       ]],
-      { insert(1), insert(0) }
+      {
+        choice(1, { text("spec"), text("rails") }),
+        insert(2),
+        choice(3, {
+          fmt(", type: :{}", { insert(1) }),
+          text(""),
+          text(", type: :model"),
+          text(", type: :controller"),
+          text(", type: :request"),
+          text(", type: :job"),
+          text(", type: :policy"),
+        }),
+
+        insert(0)
+      }
+    )
+  ),
+
+  snip(
+    { trig = "desc", name = "describe", dscr = "Example group" },
+    fmt(
+      [[
+        {} do
+          {}
+        end
+      ]],
+      {
+        choice(1, {
+          fmt([[describe "{}"]], { insert(1) }),
+          fmt([[context "{}"]], { insert(1) }),
+        }),
+
+        insert(0)
+      }
     )
   ),
 
@@ -38,11 +75,18 @@ ls.add_snippets("rspec", {
     { trig = "it", name = "Example", dscr = "" },
     fmt(
       [[
-        it "{}" do
+        {} do
           {}
         end
       ]],
-      { insert(1), insert(0) }
+      {
+        choice(1, {
+          fmt([[it "{}"]], { insert(1) }),
+          fmt([[specify "{}"]], { insert(1) }),
+        }),
+
+        insert(0)
+      }
     )
   ),
 

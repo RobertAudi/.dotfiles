@@ -8,6 +8,12 @@
 local M = {}
 
 M.config = function()
+  local ok, _ = pcall(require, "hlslens")
+
+  if not ok then
+    return
+  end
+
   require("hlslens").setup({
     calm_down = true,
     nearest_only = true,

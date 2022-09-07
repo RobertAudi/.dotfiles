@@ -1,0 +1,8 @@
+#autoload
+
+(( $+1 )) || {
+  print-error 'is-function: not enough arguments'
+  return 128
+}
+
+(( $+functions[$1] )) &>/dev/null

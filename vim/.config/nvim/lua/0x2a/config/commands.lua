@@ -1,32 +1,73 @@
+-- Module: 0x2a.config.commands
+-- Requires:
+--   - 0x2a.utils
+--   - 0x2a.utils.fs
+
 -- Buffers {{{
 -- ------------------------------------------------------------------------------
 
-vim.api.nvim_create_user_command("YankBuffer", "silent! call x2a#utils#Preserve('x2a#buffers#Yank')", { nargs = 0 })
-
-vim.api.nvim_create_user_command("BufOnly", "call x2a#buffers#BufOnly(<bang>0)", { nargs = 0, bang = true })
 vim.api.nvim_create_user_command(
   "BufDeleteInactive",
   "call x2a#buffers#BufDeleteInactive(<bang>0)",
   { nargs = 0, bang = true }
 )
-vim.api.nvim_create_user_command("BufDeleteAll", "call x2a#buffers#BufDeleteAll(<bang>0)", { nargs = 0, bang = true })
+
+vim.api.nvim_create_user_command("BufDeleteAll", function(args)
+  require("0x2a.utils.buffer").close_all({ force = args.bang })
+end, { nargs = 0, bang = true, desc = "Delete all buffers" })
+
+vim.api.nvim_create_user_command("BufDelete", function(args)
+  require("0x2a.utils.buffer").close({ buffer = args.args, force = args.bang })
+end, {
+  nargs = "?",
+  bang = true,
+  complete = "buffer",
+  desc = "Delete a buffer and preserve the window layout",
+})
+
+vim.api.nvim_create_user_command("BufWipeout", function(args)
+  require("0x2a.utils.buffer").close({ buffer = args.args, wipeout = true, force = args.bang })
+end, {
+  nargs = "?",
+  bang = true,
+  complete = "buffer",
+  desc = "Wipeout a buffer and preserve the window layout",
+})
+
+vim.api.nvim_create_user_command("BufOnly", function(args)
+  require("0x2a.utils.buffer").close_all({ except = vim.api.nvim_get_current_buf(), force = args.bang })
+end, { nargs = 0, bang = true, desc = "Delete all buffers except the current one" })
+
+-- Source: https://github.com/gametaro/dotfiles/blob/2ea8d00111ddaea1e02d25eeb28e1a57816154f5/home/dot_config/nvim/plugin/command.lua
+vim.api.nvim_create_user_command("FloatWinCloseAll", function()
+  local wins = vim.api.nvim_list_wins()
+
+  for _, win in ipairs(wins) do
+    if vim.api.nvim_win_get_config(win).relative ~= "" then
+      vim.api.nvim_win_close(win, true)
+    end
+  end
+end, { nargs = 0 })
 
 -- ------------------------------------------------------------------------------ }}}
 
 -- Files {{{
 -- ------------------------------------------------------------------------------
 
--- Copy (to the system clipboard) the path to current file
 vim.api.nvim_create_user_command(
   "CopyFullFilePath",
-  "call x2a#file#CopyFullPath()",
+  function()
+    require("0x2a.utils.fs").copy_absolute_file_path()
+  end,
   { nargs = 0, desc = "Copy the full path to the current file" }
 )
 
 vim.api.nvim_create_user_command(
   "CopyRelativeFilePath",
-  "call x2a#file#CopyRelativePath()",
-  { nargs = 0, desc = "Copy the relative path to the current file" }
+  function()
+    require("0x2a.utils.fs").copy_relative_file_path()
+  end,
+  { nargs = 0, desc = "Copy the relative path to the current file (relative to $PWD)" }
 )
 
 vim.api.nvim_create_user_command(
@@ -47,17 +88,13 @@ vim.api.nvim_create_user_command(
   { bang = true, nargs = 1, complete = "custom,x2a#file#Rename#complete", desc = "Rename the current file" }
 )
 
-vim.api.nvim_create_user_command(
-  "Delete",
-  "call x2a#file#Delete(<q-bang>, v:false)",
-  { bang = true, nargs = 0, desc = "Delete a file and its buffer" }
-)
+vim.api.nvim_create_user_command("Delete", function(args)
+  require("0x2a.utils.buffer").delete_active_file({ keep_layout = false, force = args.bang })
+end, { bang = true, nargs = 0, desc = "Delete a file and its buffer" })
 
-vim.api.nvim_create_user_command(
-  "Remove",
-  "call x2a#file#Delete(<q-bang>, v:true)",
-  { bang = true, nargs = 0, desc = "Delete a file and its buffer while preserving the windows layout" }
-)
+vim.api.nvim_create_user_command("Remove", function(args)
+  require("0x2a.utils.buffer").delete_active_file({ keep_layout = true, force = args.bang })
+end, { bang = true, nargs = 0, desc = "Delete a file and its buffer while preserving the windows layout" })
 
 -- ------------------------------------------------------------------------------ }}}
 
@@ -76,13 +113,13 @@ vim.api.nvim_create_user_command(
 -- ------------------------------------------------------------------------------
 
 -- Change the filetype of the current buffer
-vim.api.nvim_create_user_command(
-  "SetFiletype",
-  "call x2a#filetypes#SetFileType(<bang>0, <f-args>)",
-  { bang = true, complete = "filetype", nargs = 1 }
-)
+vim.api.nvim_create_user_command("SetFiletype", function(args)
+  require("0x2a.utils.filetype").set(args.args, args.bang)
+end, { bang = true, complete = "filetype", nargs = 1 })
 
-vim.api.nvim_create_user_command("ReloadFiletype", "call x2a#filetypes#ReloadFiletype()", { nargs = 0 })
+vim.api.nvim_create_user_command("ReloadFiletype", function()
+  require("0x2a.utils.filetype").reload()
+end, { nargs = 0 })
 
 -- ------------------------------------------------------------------------------ }}}
 
@@ -102,7 +139,7 @@ if require("0x2a.utils").is_mac() then
     { nargs = 0, desc = "Preview file in QuickLook" }
   )
 
-  if require("0x2a.utils.files").is_executable("mate") then
+  if require("0x2a.utils.fs").is_executable("mate") then
     vim.api.nvim_create_user_command(
       "TextMate",
       "silent! call x2a#TextMate#Open(<f-args>)",

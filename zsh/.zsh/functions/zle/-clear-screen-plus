@@ -1,5 +1,0 @@
-#autoload
-
-command clear
-cd .
-zle reset-prompt

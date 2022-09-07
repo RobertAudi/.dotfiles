@@ -6,43 +6,51 @@
 --   - 0x2a.symbols
 --   - 0x2a.plugins.lualine.components
 --   - 0x2a.plugins.lualine.themes.eighties
---   - SmiteshP/nvim-gps
 
 local M = {}
 
 M.config = function()
+  local lualine = prequire("lualine")
+
+  if not lualine then
+    return
+  end
+
   local symbols = require("0x2a.symbols")
   local components = require("0x2a.plugins.lualine.components")
-
-  local gps = require("nvim-gps")
 
   -- Don't show the current mode
   -- Let lualine take care of that
   vim.api.nvim_set_option("showmode", false)
 
-  require("lualine").setup({
+  lualine.setup({
     options = {
       icons_enabled = true,
       theme = require("0x2a.plugins.lualine.themes.eighties"),
       component_separators = { left = symbols.separators.vertical, right = symbols.separators.vertical },
       section_separators = { left = "", right = "" },
-      disabled_filetypes = {},
+      disabled_filetypes = { "alpha" },
       always_divide_middle = true,
       globalstatus = true,
     },
 
+    extensions = { "aerial", "man", "fzf", "quickfix" },
+
     sections = {
-      lualine_a = { components.mode },
+      lualine_a = { components.mode }, -- TODO: Set custom colors for plugins and Hydra submodes
       lualine_b = { components.paste },
       lualine_c = {
-        { "branch", icon = symbols.git.repo },
-
+        components.git,
         components.filename,
         components.filetype,
-        { gps.get_location, cond = gps.is_available },
+        components.navic,
       },
 
-      lualine_x = {},
+      lualine_x = {
+        components.diff,
+        components.diagnostics,
+      },
+
       lualine_y = { components.progress },
       lualine_z = { components.location },
     },

@@ -1,1 +1,1 @@
-../../../../../.zsh/plugins/python/init.zsh
+../../../../../.config/zsh/plugins/python/init.zsh

@@ -1,0 +1,10 @@
+#!/usr/bin/env zsh
+
+# Source: https://github.com/brandon-rhodes/homedir/blob/2caffde3b080a1f1e320299550d79537ebeb0310/.gitconfig#L14
+
+if ! in-git-repo; then
+  builtin print -u 2 -- "\e[1;41;97m ERROR \e[0m Not a repository: $PWD"
+  return 1
+fi
+
+command git cherry-pick --no-commit --allow-empty "$@" && git reset HEAD

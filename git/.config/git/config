@@ -287,7 +287,7 @@
   shallow-clone = clone --depth=1
 
   # Show verbose output about tags and branches
-  tags = tag -n1 --list
+  tags = tag --list --sort=-creatordate --format='%(align:22)%(color:bold yellow)%(refname:short)%(color:reset)%(end) %(contents:subject)'
   branches = branch --all --verbose --verbose
 
   stash-all = stash push --no-keep-index --include-untracked
@@ -299,7 +299,7 @@
   ui = gui
 
   # Source: https://carolynvanslyck.com/blog/2020/12/git-wip/
-  my-branches = for-each-ref --sort='authordate:iso8601' --format=' %(color:green)%(authordate:relative)%09%(color:white)%(refname:short)' refs/heads
+  my-branches = for-each-ref --sort='authordate:iso8601' --format=' %(color:green)%(authordate:relative)%09%(color:white)%(refname:short)%(color:reset)' refs/heads
 
 [url "https://github.com/"]
   insteadOf = "gh:"
@@ -307,7 +307,6 @@
 [url "git@github.com:"]
   pushInsteadOf = "gh:"
   insteadOf = "git://github.com/"
-  insteadOf = "https://github.com/"
 
 [url "https://gist.github.com/"]
   insteadOf = "gist:"
@@ -324,7 +323,7 @@
 [include]
   path = ~/.config/git/config.private
   path = ~/.config/git/config.local
-  path = ~/.config/git/config.local.d/*.config
+  path = ~/.config/git/config.local.d/macos.config
 
 # ------------------------------------------------------------------------------ }}}
 

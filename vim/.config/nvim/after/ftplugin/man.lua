@@ -12,8 +12,8 @@ vim.opt_local.colorcolumn = nil
 vim.keymap.set("n", "q", "<Cmd>quit<CR>", { buffer = true, noremap = true, silent = true })
 vim.keymap.set("n", "Q", "<Cmd>bwipeout!<CR>", { buffer = true, noremap = true, silent = true })
 
-vim.keymap.set("n", "<CR>", "<C-]>", { buffer = true, remap = true, silent = true })
-vim.keymap.set("n", "<CR>", "<Cmd>nohlsearch<Bar>echo<CR>", { buffer = true, remap = true, silent = true })
+vim.keymap.set("n", "<Enter>", "<C-]>", { buffer = true, remap = true, silent = true })
+vim.keymap.set("n", "<Enter>", "<Cmd>nohlsearch<Bar>echo<CR>", { buffer = true, remap = true, silent = true })
 
 vim.keymap.set("n", "<Space>", "<Cmd>nohlsearch<Bar>echo<CR>", { buffer = true, noremap = true, silent = true })
 vim.keymap.set("n", "<S-Space>", "<Cmd>nohlsearch<Bar>echo<CR>", { buffer = true, noremap = true, silent = true })

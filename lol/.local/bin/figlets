@@ -1,0 +1,20 @@
+#!/usr/bin/env zsh
+
+local text
+
+if [[ -z "$1" ]]; then
+  text="Figlet"
+else
+  text="$1"
+fi
+
+local figlet_fontdir
+figlet_fontdir="$(brew --prefix figlet)/share/figlet/fonts"
+
+for f in ${figlet_fontdir}/*.{f,t}lf(.N-) ${figlet_fontdir}/*.{t,f}lf(@N-); do
+  builtin print -- "==== ${f:t} ====\n"
+  figlet -f $f $text
+  builtin print
+done
+
+unset text figlet_fontdir f

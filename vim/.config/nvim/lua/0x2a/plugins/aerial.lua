@@ -8,13 +8,19 @@
 local M = {}
 
 M.config = function()
+  local aerial = prequire("aerial")
+
+  if not aerial then
+    return
+  end
+
   local symbols = require("0x2a.symbols")
 
   -- Call the setup function to change the default behavior
-  require("aerial").setup({
+  aerial.setup({
     -- Priority list of preferred backends for aerial.
     -- This can be a filetype map (see :help aerial-filetype-map)
-    backends = { "treesitter", "lsp", "markdown" },
+    backends = { "lsp", "treesitter", "markdown" },
 
     -- Enum: persist, close, auto, global
     --   persist - aerial window will stay open until closed

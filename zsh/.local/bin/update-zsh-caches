@@ -1,10 +1,17 @@
 #!/usr/bin/env zsh -i
 
+if [[ -v ZSH_COMPDUMP && -f "${ZSH_COMPDUMP}" ]]; then
+  command rm -f $ZSH_COMPDUMP
+fi
+
+if [[ -v ZSH_COMPCACHE && -d "${ZSH_COMPCACHE}" ]]; then
+  command rm -f ${ZSH_COMPCACHE}/*(-N.)
+fi
+
 if zuncompile-all && zrecompile-all ; then
-  (cd -q ~dotfiles && stow alacritty fzf git grc macos python ruby tmux vim zsh)
+  (cd -q ~dotfiles && stow alacritty fzf git grc node macos python ruby tmux vim zsh)
 fi
 
 zinit compile --all
 
-(cd -q "${ZINIT[HOME_DIR]:-$HOME/.zinit}/plugins/skywind3000---z.lua" &&
-  source $ZDOTDIR/setup/plugins/skywind3000/z/atclone.zsh)
+compinit -i -u -d "$ZSH_COMPDUMP"

@@ -90,3 +90,9 @@ brew "itchyny/tap/git-branch-name"
 #   https://github.com/gesquive/git-user
 tap "gesquive/tap"
 brew "git-user"
+
+# Quickly clone an entire org/users repositories into one directory
+# Supports GitHub, GitLab, Bitbucket, and more 🥚
+#   https://github.com/gabrie30/ghorg
+tap "gabrie30/utils"
+brew "gabrie30/utils/ghorg"

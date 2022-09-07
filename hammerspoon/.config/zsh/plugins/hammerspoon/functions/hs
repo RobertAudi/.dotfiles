@@ -1,0 +1,76 @@
+#autoload
+
+function main {
+  if ! is-command hs ; then
+    command-not-found "hs"
+    return $status
+  fi
+
+  if (( $# == 0 )) ; then
+    command hs
+    return $status
+  fi
+
+  local code
+  local message
+
+  case "$1" in
+    "reload")
+      code="hs.reload()"
+      message="Hammerspoon config reloaded."
+      shift
+      ;;
+    "console")
+      if [[ -z "$2" ]]; then
+        code="hs.openConsole(true)"
+      else
+        shift
+        case "$1" in
+          "open")
+            code="hs.openConsole(true)"
+            ;;
+          "close")
+            code="hs.closeConsole()"
+            ;;
+          "toggle")
+            code="hs.toggleConsole()"
+            ;;
+          "clear")
+            code="hs.console.clearConsole()"
+            message="Hammerspoon console cleared."
+            ;;
+          *)
+            print-error "hs console subcommand not found: $1"
+            return 127
+            ;;
+        esac
+      fi
+      shift
+      ;;
+    *)
+      command hs $=@
+      return $status
+  esac
+
+  local hsStatus
+  command hs -A -q -c "${code}" &> /dev/null
+  hsStatus=$status
+
+  if (( $hsStatus == 0 )); then
+    if [[ -n $message ]]; then
+      print-success "$message"
+    fi
+  else
+    case $hsStatus in
+      65) print-error "A Hammerspoon or Lua error occured when attempting to execute code in a non-interactive mode." ;;
+      66) print-error "There was an error reading from stdin or /path/file ." ;;
+      75) print-error "Hammerspoon is not running and -a was specified to prevent autolaunch or prompting the user." ;;
+      69) print-error "Hammerspoon is not running, the hs.ipc module is not loaded, or there was a problem with connecting to the specified message port." ;;
+      64) print-error "An invalid argument or combination of arguments was specified." ;;
+    esac
+  fi
+
+  return $hsStatus
+}
+
+main $=@

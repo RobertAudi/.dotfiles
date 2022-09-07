@@ -1,1 +1,1 @@
-../../../../../.zsh/plugins/git/init.zsh
+../../../../../.config/zsh/plugins/git/init.zsh

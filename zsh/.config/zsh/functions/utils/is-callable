@@ -1,0 +1,8 @@
+#autoload
+
+(( $+1 )) || {
+  print-error "is-callable: not enough arguments"
+  return 128
+}
+
+(( $+builtins[$1] )) || (( $+functions[$1] )) || (( $+aliases[$1] )) || (( $+commands[$1] ))

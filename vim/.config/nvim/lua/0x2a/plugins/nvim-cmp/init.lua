@@ -3,23 +3,41 @@
 -- Description: A completion plugin for neovim coded in Lua.
 -- URL: https://github.com/hrsh7th/nvim-cmp
 -- Requires:
+--   - 0x2a.symbols
 --   - L3MON4D3/LuaSnip
 --   - windwp/nvim-autopairs
 
 local M = {}
 
 M.config = function()
-  local cmp = require("cmp")
-  local autopairs = require("nvim-autopairs.completion.cmp")
+  local cmp = prequire("cmp")
+
+  if not cmp then
+    return
+  end
+
   local symbols = require("0x2a.symbols")
+  local sources = require("0x2a.plugins.nvim-cmp.sources")
 
   cmp.setup({
+    preselect = cmp.PreselectMode.None,
+
     formatting = {
       format = require("0x2a.plugins.nvim-cmp.formatting").format,
     },
 
     completion = {
-      border = { "┌", "─", "┐", "│", "┘", "─", "└", "│" },
+      border = {
+        symbols.corners.top_left,
+        symbols.separators.horizontal,
+        symbols.corners.top_right,
+        symbols.separators.vertical,
+        symbols.corners.bottom_right,
+        symbols.separators.horizontal,
+        symbols.corners.bottom_left,
+        symbols.separators.vertical,
+      },
+
       scrollbar = "║",
     },
 
@@ -36,22 +54,60 @@ M.config = function()
     mapping = require("0x2a.plugins.nvim-cmp.mapping"),
 
     sources = cmp.config.sources({
-      { name = "luasnip", priority = 5 },
-      { name = "nvim_lsp", priority = 8 },
-      { name = "treesitter", priority = 7 },
-      { name = "path", priority = 4 },
-      { name = "nvim_lua", priority = 5 },
-      { name = "buffer", priority = 7, keyword_length = 5 },
-      { name = "crates" },
+      sources.source("nvim_lsp", { priority = 100, group_index = 1 }),
+      sources.source("treesitter", { priority = 95, group_index = 1 }),
+      sources.source("ctags", { priority = 95, group_index = 1 }),
+      sources.source("luasnip", { priority = 90, group_index = 2 }),
+      sources.source("buffer", { priority = 80, autocomplete = false, group_index = 3 }),
+      sources.source("path", { priority = 70, group_index = 3 }),
     }),
   })
 
-  cmp.event:on(
-    "confirm_done",
-    autopairs.on_confirm_done({
-      map_char = { tex = "" },
-    })
-  )
+  cmp.setup.filetype("lua", {
+    sources = cmp.config.sources({
+      sources.source("nvim_lsp", { priority = 100, group_index = 1 }),
+      sources.source("nvim_lua", { priority = 100, group_index = 1 }),
+      sources.source("treesitter", { priority = 95, group_index = 1 }),
+      sources.source("luasnip", { priority = 90, group_index = 2 }),
+      sources.source("buffer", { priority = 80, autocomplete = false, group_index = 3 }),
+      sources.source("path", { priority = 70, group_index = 3 }),
+      sources.source("plugins", { priority = 60, group_index = 3 }),
+    }),
+  })
+
+  cmp.setup.filetype("ruby", {
+    sources = cmp.config.sources({
+      sources.source("nvim_lsp", { priority = 100, group_index = 1 }),
+      sources.source("treesitter", { priority = 95, group_index = 1 }),
+      sources.source("ctags", { priority = 95, group_index = 1 }),
+      sources.source("luasnip", { priority = 90, group_index = 2 }),
+      sources.source("buffer", { priority = 80, autocomplete = false, group_index = 3 }),
+      sources.source("path", { priority = 70, group_index = 3 }),
+    }),
+  })
+
+  cmp.setup.filetype("toml", {
+    sources = cmp.config.sources({
+      sources.source("nvim_lsp", { priority = 100, group_index = 1 }),
+      sources.source("treesitter", { priority = 100, group_index = 1 }),
+      sources.source("ctags", { priority = 95, group_index = 1 }),
+      sources.source("luasnip", { priority = 90, group_index = 2 }),
+      sources.source("buffer", { priority = 80, autocomplete = false, group_index = 3 }),
+      sources.source("path", { priority = 70, group_index = 3 }),
+      sources.source("crates", { priority = 60, group_index = 3 }),
+    }),
+  })
+
+  local autopairs = prequire("nvim-autopairs.completion.cmp")
+
+  if autopairs then
+    cmp.event:on(
+      "confirm_done",
+      autopairs.on_confirm_done({
+        map_char = { tex = "" },
+      })
+    )
+  end
 end
 
 return M

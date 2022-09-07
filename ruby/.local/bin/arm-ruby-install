@@ -1,0 +1,36 @@
+#!/usr/bin/env zsh
+
+local -a pathsToRemove
+pathsToRemove=(
+  /opt/homebrew/opt/binutils/bin
+  /opt/homebrew/opt/coreutils/libexec/gnubin
+  /opt/homebrew/opt/m4/bin
+  /opt/homebrew/opt/make/libexec/gnubin
+  /opt/homebrew/opt/openssl/bin
+  /opt/homebrew/opt/libxml2/bin
+  /opt/homebrew/opt/libxslt/bin
+)
+
+# Remove some paths to use native build libs
+for pathToRemove in $pathsToRemove[@]; do
+  path=("${(@)path:#$pathToRemove}")
+done
+
+# ruby-install: Remove sources, archives, and all that shit.
+#
+# Options:
+#   --jobs=JOBS         Number of jobs to run in parallel when compiling
+#   --src-dir DIR       Directory to download source-code into
+#   --cleanup           Remove archive and unpacked source-code after installation
+#   --no-reinstall      Skip installation if another Ruby is detected in same location
+env RUBY_CONFIGURE_OPTS="--with-openssl-dir=/opt/homebrew/opt/openssl@1.1" \
+  LDFLAGS="-L/opt/homebrew/opt/openssl@1.1/lib -L/opt/homebrew/opt/readline/lib -L/opt/homebrew/opt/libffi/lib" \
+  CPPFLAGS="-I/opt/homebrew/opt/openssl@1.1/include -I/opt/homebrew/opt/readline/include -I/opt/homebrew/opt/libffi/include" \
+  PKG_CONFIG_PATH="/opt/homebrew/opt/openssl@1.1/lib/pkgconfig:/opt/homebrew/opt/readline/lib/pkgconfig:/opt/homebrew/opt/libffi/lib/pkgconfig" \
+  optflags="-Wno-error=implicit-function-declaration" \
+  command ruby-install \
+  --jobs=$(sysctl -n hw.ncpu) \
+  --src-dir ${XDG_CACHE_HOME:-$HOME/.cache}/rubies \
+  --cleanup \
+  --no-reinstall \
+  $=@

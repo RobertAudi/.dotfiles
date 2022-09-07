@@ -6,7 +6,6 @@
 local ls = require("luasnip")
 local snip = ls.snippet
 local node = ls.snippet_node
-local text = ls.text_node
 local choice = ls.choice_node
 local insert = ls.insert_node
 local func = ls.function_node
@@ -35,7 +34,7 @@ end
 local plugin_from_clipboard = function(_, _, opts)
   local clipboard = lsutils.CLIPBOARD({ strip = true })
 
-  if not clipboard then
+  if utils.is_blank(clipboard) or not clipboard:match("^https?://github%.com/") then
     return ""
   end
 
@@ -50,8 +49,8 @@ local plugin_from_clipboard = function(_, _, opts)
   return plugin
 end
 
-local module_name = function(_, snip, _)
-  local filename = snip.env.TM_FILENAME
+local module_name = function(_, snippet, _)
+  local filename = snippet.env.TM_FILENAME
 
   if string_utils.ends_with(filename, "init.lua") then
     local parent = vim.fn.fnamemodify(Path:new(filename):parent().filename, ":t")
@@ -66,19 +65,19 @@ local module_name = function(_, snip, _)
   return filename
 end
 
-local plugin_header_component = function(_, snip, opts)
+local plugin_header_component = function(_, snippet, opts)
   opts = utils.normalize_options(opts)
 
   if opts.component == "module" then
     local name = plugin_from_clipboard(_, _, { only_repo = true })
 
     if utils.is_empty(name) then
-      name = module_name(_, snip, _)
+      name = module_name(_, snippet, _)
     end
 
     return "0x2a.plugins." .. name
   elseif opts.component == "plugin" then
-    plugin = plugin_from_clipboard(_, _, _)
+    local plugin = plugin_from_clipboard(_, _, _)
 
     if utils.is_empty(plugin) then
       plugin = "NAME/REPO"
@@ -112,6 +111,9 @@ ls.add_snippets("lua", {
       { func(TM_FILENAME(), {}), func(TM_FILENAME(), {}), insert(0) }
     )
   ),
+
+  snip({ trig = "pp", name = "Pretty print" }, fmt("print(vim.inspect({}))", insert(1))),
+  snip({ trig = "validate" }, fmt("vim.validate({{ {} }})", insert(1))),
 
   snip(
     { trig = "mod", name = "Lua module" },
@@ -159,26 +161,70 @@ ls.add_snippets("lua", {
 
   snip(
     { trig = "fun", name = "function", dscr = "Lua function" },
-    fmt(
-      [[
-        function {}({})
-          {}
-        end
-      ]],
-      { insert(1), insert(2), insert(0) }
-    )
+    fmt("{}", {
+      choice(1, {
+        fmt(
+          [[
+            function({})
+              {}
+            end
+          ]],
+          { insert(1), insert(2) }
+        ),
+
+        fmt(
+          [[
+            {} = function({})
+              {}
+            end
+          ]],
+          { insert(1), insert(2), insert(3) }
+        ),
+
+        fmt(
+          [[
+            local {} = function({})
+              {}
+            end
+          ]],
+          { insert(1), insert(2), insert(3) }
+        ),
+      }),
+    })
   ),
 
   snip(
-    { trig = "fun", name = "anonymous function", dscr = "Lua anonymous function" },
-    fmt(
-      [[
-        function({})
-          {}
-        end
-      ]],
-      { insert(1), insert(0) }
-    )
+    { trig = "for", name = "for loop", dscr = "Lua for loop" },
+    fmt("{}", {
+      choice(1, {
+        fmt(
+          [[
+            for {}, {} in pairs({}) do
+              {}
+            end
+          ]],
+          { insert(1, "key"), insert(2, "value"), insert(3, "t"), insert(0) }
+        ),
+
+        fmt(
+          [[
+            for {}, {} in ipairs({}) do
+              {}
+            end
+          ]],
+          { insert(1, "index"), insert(2, "value"), insert(3, "t"), insert(0) }
+        ),
+
+        fmt(
+          [[
+            for {} = {}, {} do
+              {}
+            end
+          ]],
+          { insert(1, "i"), insert(2, "1"), insert(3, "10"), insert(0) }
+        ),
+      }),
+    })
   ),
 
   snip(
@@ -194,12 +240,37 @@ ls.add_snippets("lua", {
       [[
         -- PLUGIN DESCRIPTION
         --   {}
-        use({{ "{}", config = require("0x2a.plugins.{}").config }})
+        {}
       ]],
       {
         func(lsutils.CLIPBOARD, {}, { user_args = { { strip = true } } }),
-        func(plugin_from_clipboard, {}),
-        func(plugin_from_clipboard, {}, { user_args = { { only_repo = true } } }),
+        choice(1, {
+          fmt([[use({{ "{}" }}){}]], {
+            func(plugin_from_clipboard, {}),
+            insert(1),
+          }),
+
+          fmt([[use({{ "{}", config = require("0x2a.plugins.{}").config }}){}]], {
+            func(plugin_from_clipboard, {}),
+            func(plugin_from_clipboard, {}, { user_args = { { only_repo = true } } }),
+            insert(1),
+          }),
+
+          fmt(
+            [[
+              use({{
+                "{}",
+                config = function()
+                  {}
+                end
+              }})
+            ]],
+            {
+              func(plugin_from_clipboard, {}),
+              insert(1),
+            }
+          ),
+        }),
       }
     )
   ),

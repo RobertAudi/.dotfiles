@@ -7,25 +7,21 @@
 local M = {}
 
 M.config = function()
-  local null_ls = require("null-ls")
+  local ok, null_ls = pcall(require, "null-ls")
+
+  if not ok then
+    return
+  end
 
   null_ls.setup({
     sources = {
       null_ls.builtins.formatting.stylua,
       null_ls.builtins.diagnostics.luacheck.with({
-        extra_args = { "--default-config", os.getenv("XDG_CONFIG_HOME") .. "/luacheck/.luacheckrc" }
+        extra_args = { "--default-config", os.getenv("XDG_CONFIG_HOME") .. "/luacheck/.luacheckrc" },
       }),
 
       null_ls.builtins.formatting.standardrb,
       null_ls.builtins.diagnostics.standardrb,
-      null_ls.builtins.diagnostics.erb_lint.with({
-        args = {
-          "--format",
-          "json",
-          "--stdin",
-          "$FILENAME",
-        },
-      }),
 
       -- Makefiles
       null_ls.builtins.diagnostics.checkmake,

@@ -1,0 +1,24 @@
+#autoload
+# Quick un-smart function to prepend file:// to local requests
+
+if (( $# > 0 )); then
+  local -a uris
+  uris=()
+  local file
+
+  for file in $@; do
+    if [[ -e $PWD/$file ]]; then
+      file="$PWD/$file"
+    fi
+
+    if [[ -e $file && (-f $file || -d $file || -L $file) ]]; then
+      uris+=("file://${file:A}")
+    else
+      print-error "File not found: '$file'"
+    fi
+  done
+
+  builtin print -l -- $uris[@]
+else
+  builtin print -- "file://${PWD:A}"
+fi

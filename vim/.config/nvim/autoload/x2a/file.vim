@@ -1,31 +1,7 @@
-" Description: Get the full path to current file
-function! x2a#file#GetFullPath() abort
-  return expand('%:p')
-endfunction
-
-" Description: Get the path to current file (relative to PWD)
-function! x2a#file#GetRelativePath() abort
-  return substitute(expand('%'), getcwd() . '/', '', '')
-endfunction
-
 " Description: Get the path to current file (relative to PWD)
 "              with the line number ('my_folder/myfile:12')
 function! x2a#file#GetRelativePathWithLineNumber() abort
   return expand('%') . ':' . line('.')
-endfunction
-
-" Description: Copy (to the system clipboard) the full path to current file
-function! x2a#file#CopyFullPath() abort
-  let l:path = x2a#file#GetFullPath()
-  call setreg('+', l:path)
-  echo 'Copied file path to system clipboard: ' . l:path
-endfunction
-
-" Description: Copy (to the system clipboard) the path to current file (relative to PWD)
-function! x2a#file#CopyRelativePath() abort
-  let l:path = x2a#file#GetRelativePath()
-  call setreg('+', l:path)
-  echo 'Copied file path to system clipboard: ' . l:path
 endfunction
 
 " Description: Copy (to the system clipboard) the path to current file (relative to PWD)
@@ -40,7 +16,7 @@ endfunction
 " Credits:     Tim Pope <http://tpo.pe/>
 " URL:         https://github.com/tpope/vim-eunuch
 function! x2a#file#Rename(name, bang) abort
-  let l:src = x2a#file#GetFullPath()
+  let l:src = expand('%:p')
   let l:dst = fnamemodify(expand('%:h') . '/' . a:name, ':p')
 
   if isdirectory(l:dst) || l:dst[-1:-1] =~# '[\\/]'
@@ -61,7 +37,7 @@ function! x2a#file#Rename(name, bang) abort
 
     execute 'keepalt saveas! ' . fnameescape(l:dst)
 
-    if l:src !=# x2a#file#GetFullPath()
+    if l:src !=# expand('%:p')
       execute 'bwipeout ' . fnameescape(l:src)
     endif
 
@@ -115,26 +91,5 @@ function! x2a#file#Chmod(bang, perm, ...) abort
   if v:shell_error
     let l:errormsg = empty(l:out) ? 'Could not change file permissions' : l:out
     call x2a#utils#echo#Error(l:errormsg)
-  endif
-endfunction
-
-" Description: Delete a file and its buffer
-" Credits:     Tim Pope <http://tpo.pe/>
-" URL:         https://github.com/tpope/vim-eunuch
-function! x2a#file#Delete(bang, keeplayout) abort
-  let l:file = fnamemodify(bufname('%'), ':p')
-  let l:directory = fnamemodify(l:file, ':h')
-
-  if a:keeplayout
-    call bbye#bwipeout(a:bang, '')
-  else
-    execute 'bwipeout' . a:bang
-  endif
-
-  if !bufloaded(l:file) && delete(l:file)
-    call x2a#utils#echo#FatalError('Failed to delete "' . l:file . '"')
-  else
-    call x2a#utils#echo#Message('Deleted file: ' . l:file)
-    silent! NvimTreeRefresh
   endif
 endfunction

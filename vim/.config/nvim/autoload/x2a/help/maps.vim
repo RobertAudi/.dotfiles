@@ -10,7 +10,7 @@ endfunction
 
 function! x2a#help#maps#enable() abort
   " jump to the subject (topic) under the cursor.
-  nnoremap <buffer> <silent> <CR> :nohlsearch<Bar>echo<CR><C-]>:call x2a#movements#window#CenterCursorAesthetically()<CR>
+  nnoremap <buffer> <silent> <Enter> :nohlsearch<Bar>echo<CR><C-]>:call x2a#movements#window#CenterCursorAesthetically()<CR>
 
   " return from the last jump.
   nnoremap <buffer> <silent> <BS> :nohlsearch<Bar>echo<CR><C-T>:call x2a#movements#window#CenterCursorAesthetically()<CR>
@@ -31,7 +31,7 @@ function! x2a#help#maps#enable() abort
 endfunction
 
 function! x2a#help#maps#disable() abort
-  silent! nunmap <buffer> <CR>
+  silent! nunmap <buffer> <Enter>
   silent! nunmap <buffer> <BS>
   silent! unmap  <buffer> d
   silent! unmap  <buffer> u

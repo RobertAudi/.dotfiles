@@ -1,5 +1,5 @@
 {
   std = {
-    read_globals = {"vim", "use", "packer_plugins"}
+    read_globals = {"vim", "use", "use_rocks", "prequire", "packer_plugins"}
   }
 }

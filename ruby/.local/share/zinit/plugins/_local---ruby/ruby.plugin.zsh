@@ -1,1 +1,1 @@
-../../../../../.zsh/plugins/ruby/init.zsh
+../../../../../.config/zsh/plugins/ruby/init.zsh

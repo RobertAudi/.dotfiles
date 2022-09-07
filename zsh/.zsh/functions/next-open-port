@@ -1,3 +1,0 @@
-#autoload
-
-netstat -tan | awk '$1 == "tcp" && $4 ~ /:/ { port=$4; sub(/^[^:]+:/, "", port); used[int(port)] = 1; } END { for (p = 32768; p <= 61000; ++p) if (! (p in used)) { print p; exit(0); }; exit(1); }'

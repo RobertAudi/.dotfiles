@@ -8,6 +8,12 @@
 local M = {}
 
 M.config = function()
+  local ok, _ = pcall(require, "lsp_signature")
+
+  if not ok then
+    return
+  end
+
   local symbols = require("0x2a.symbols")
 
   require("lsp_signature").setup({
@@ -33,7 +39,7 @@ M.config = function()
     floating_window_off_x = 1,
 
     -- adjust float windows y position.
-    floating_window_off_y = 1,
+    floating_window_off_y = 0,
 
     -- set to true, the floating window will not auto-close until finish all parameters
     fix_pos = false,

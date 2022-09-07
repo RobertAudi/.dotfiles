@@ -1,0 +1,19 @@
+#!/usr/bin/env zsh
+
+if ! in-git-repo; then
+  builtin print -u 2 -- "\e[1;41;97m ERROR \e[0m Not a repository: $PWD"
+  return 1
+fi
+
+# FIXME: Don't hardcode the remote
+local remoteName
+remoteName="origin"
+
+local defaultBranch
+defaultBranch="$(git remote show -n $remoteName | sed -n '/HEAD branch/s/.*: //p')"
+
+if [[ "$defaultBranch" == "(not queried)" ]] ; then
+  defaultBranch="$(git remote show $remoteName | sed -n '/HEAD branch/s/.*: //p')"
+fi
+
+builtin print -- "$defaultBranch"

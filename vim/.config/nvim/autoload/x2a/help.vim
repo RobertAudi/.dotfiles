@@ -37,10 +37,11 @@ function! x2a#help#alternate(bang, ...) abort
   normal! 0
 
   if a:bang
-    call x2a#help#maps#disable_q_mappings()
+    silent! nunmap <buffer> q
+    silent! nunmap <buffer> Q
   endif
 
-  call x2a#vim#remove_timeout()
+  set timeoutlen=0
 endfunction
 
 function! x2a#help#GoToTableOfContent() abort

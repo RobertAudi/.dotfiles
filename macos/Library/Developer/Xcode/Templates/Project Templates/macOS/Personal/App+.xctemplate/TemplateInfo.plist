@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Kind</key>
+    <string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
+    <key>Identifier</key>
+    <string>com.robertaudi.xcode.macOSAppPlus</string>
+    <key>Concrete</key>
+    <true/>
+    <key>Ancestors</key>
+    <array>
+        <string>com.apple.dt.unit.cocoaApplication</string>
+    </array>
+    <key>Project</key>
+    <dict>
+      <key>BasedOn</key>
+      <dict>
+        <key>Debug</key>
+        <string>./Supporting Files/Debug.xcconfig</string>
+        <key>Release</key>
+        <string>./Supporting Files/Release.xcconfig</string>
+      </dict>
+    </dict>
+    <key>Nodes</key>
+    <array>
+        <string>./Supporting Files/XcodeWarnings.xcconfig</string>
+        <string>./Supporting Files/Base.xcconfig</string>
+        <string>./Supporting Files/Debug.xcconfig</string>
+        <string>./Supporting Files/Release.xcconfig</string>
+        <string>./Build-Phases/SwiftLint.sh</string>
+    </array>
+    <key>Definitions</key>
+    <dict>
+        <key>./Supporting Files/XcodeWarnings.xcconfig</key>
+        <dict>
+            <key>Path</key>
+            <string>./Supporting Files/XcodeWarnings.xcconfig</string>
+            <key>Group</key>
+            <string>Supporting Files</string>
+        </dict>
+        <key>./Supporting Files/Base.xcconfig</key>
+        <dict>
+            <key>Path</key>
+            <string>./Supporting Files/Base.xcconfig</string>
+            <key>Group</key>
+            <string>Supporting Files</string>
+        </dict>
+        <key>./Supporting Files/Debug.xcconfig</key>
+        <dict>
+            <key>Path</key>
+            <string>./Supporting Files/Debug.xcconfig</string>
+            <key>Group</key>
+            <string>Supporting Files</string>
+        </dict>
+        <key>./Supporting Files/Release.xcconfig</key>
+        <dict>
+            <key>Path</key>
+            <string>./Supporting Files/Release.xcconfig</string>
+            <key>Group</key>
+            <string>Supporting Files</string>
+        </dict>
+        <key>./Build-Phases/SwiftLint.sh</key>
+        <dict>
+            <key>Path</key>
+            <string>./Build-Phases/SwiftLint.sh</string>
+            <key>Group</key>
+            <string>Build-Phases</string>
+        </dict>
+    </dict>
+    <key>Targets</key>
+    <array>
+        <dict>
+            <key>BuildPhases</key>
+            <array>
+                <dict>
+                    <key>Class</key>
+                    <string>ShellScript</string>
+                    <key>ShellPath</key>
+                    <string>/bin/sh</string>
+                    <key>Name</key>
+                    <string>SwiftLint</string>
+                    <key>ShellScript</key>
+                    <string>export PATH="$PATH:/opt/homebrew/bin"
+if which swiftlint > /dev/null; then
+  swiftlint
+else
+  echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
+fi
+                    </string>
+                </dict>
+            </array>
+        </dict>
+    </array>
+</dict>
+</plist>

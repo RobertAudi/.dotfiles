@@ -1,1 +1,1 @@
-../../../../../.zsh/plugins/tmux/init.zsh
+../../../../../.config/zsh/plugins/tmux/init.zsh

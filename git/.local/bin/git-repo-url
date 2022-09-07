@@ -1,0 +1,21 @@
+#!/usr/bin/env zsh
+
+if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) != 'true' ]]; then
+  print -u 2 -- "Error: Not in a git repository"
+  return 1
+fi
+
+local remoteRef="$(git for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD))"
+local remote="$(echo "$remoteRef" | cut -d/ -f1)"
+local remoteURL="$(git ls-remote --get-url $remote)"
+
+if [[ "$remoteURL" =~ "^git@" ]]; then
+  echo "$remoteURL" | sed -E 's#^git@([^:]+):(.+)#https://\1/\2#;s/\.git$//'
+elif [[ "$remoteURL" =~ "^git://" ]]; then
+  echo "$remoteURL" | sed 's#^git#https#;s/\.git$//'
+elif [[ "$remoteURL" =~ "^https?://" ]]; then
+  echo "$remoteURL" | sed 's/\.git$//'
+else
+  print -u 2 -- "Error: Unable to parse remote URL"
+  return 1
+fi

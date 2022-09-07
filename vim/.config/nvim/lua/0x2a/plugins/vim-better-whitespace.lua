@@ -31,7 +31,7 @@ M.config = function()
     pattern = { "*" },
     callback = function()
       if vim.bo.readonly or not vim.bo.modifiable then
-        vim.cmd("DisableWhitespace")
+        vim.cmd.DisableWhitespace()
       end
     end,
   })

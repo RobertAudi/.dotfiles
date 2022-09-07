@@ -1,1 +1,1 @@
-../../../../../.zsh/plugins/zsh-git-escape-magic/init.zsh
+../../../../../.config/zsh/plugins/zsh-git-escape-magic/init.zsh

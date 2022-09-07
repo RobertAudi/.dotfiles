@@ -1,6 +1,6 @@
-local highlight = require("0x2a.colors.utils").highlight
+local M = {}
 
-local colors = { -- {{{
+M.scheme = { -- {{{
   ["0"] = "#2b2b2b",
   ["1"] = "#333435",
   ["2"] = "#3a4055",
@@ -17,38 +17,34 @@ local colors = { -- {{{
   ["D"] = "#6d9cbe",
   ["E"] = "#b6b3eb",
   ["F"] = "#bc9458",
+}
 
-  error = "#d94a39",
-  warning = "#ffa500",
-  info = "#6d9cbe",
-  hint = "#d783ff",
-} -- }}}
+M.scheme.black = M.scheme["0"]
+M.scheme.white = M.scheme["7"]
+M.scheme.red = M.scheme["8"]
+M.scheme.blue = M.scheme["D"]
+M.scheme.green = M.scheme["B"]
+M.scheme.yellow = M.scheme["A"]
+M.scheme.orange = "#ffa500"
+M.scheme.teal = M.scheme["C"]
+M.scheme.pink = "#d783ff"
+M.scheme.amaranth = "#d94a39"
 
--- Neovim terminal colours {{{
-vim.g.terminal_color_0 = colors["0"]
-vim.g.terminal_color_1 = colors["8"]
-vim.g.terminal_color_2 = colors["B"]
-vim.g.terminal_color_3 = colors["A"]
-vim.g.terminal_color_4 = colors["D"]
-vim.g.terminal_color_5 = colors["E"]
-vim.g.terminal_color_6 = colors["C"]
-vim.g.terminal_color_7 = colors["5"]
-vim.g.terminal_color_8 = colors["3"]
-vim.g.terminal_color_9 = colors["8"]
-vim.g.terminal_color_10 = colors["B"]
-vim.g.terminal_color_11 = colors["A"]
-vim.g.terminal_color_12 = colors["D"]
-vim.g.terminal_color_13 = colors["E"]
-vim.g.terminal_color_14 = colors["C"]
-vim.g.terminal_color_15 = colors["7"]
-vim.g.terminal_color_background = vim.g.terminal_color_0
-vim.g.terminal_color_foreground = vim.g.terminal_color_5
+M.scheme.error = "#d94a39"
+M.scheme.warning = M.scheme.orange
+M.scheme.info = "#6d9cbe"
+M.scheme.hint = M.scheme.pink
+
+M.scheme.standout = { fg = "#ff4500", bg = "#eeee00" }
 -- }}}
 
-vim.o.background = "dark"
-vim.o.termguicolors = true
+M.options = { -- {{{
+  background = "dark",
+  termguicolors = true,
+} -- }}}
 
-vim.g.fzf_colors = { -- {{{
+-- FZF -- {{{
+M.fzf = {
   ["fg"] = { "fg", "Normal" },
   ["bg"] = { "bg", "Normal" },
   ["hl"] = { "fg", "Comment" },
@@ -64,355 +60,412 @@ vim.g.fzf_colors = { -- {{{
   ["header"] = { "fg", "Comment" },
 } -- }}}
 
+-- Neovim terminal colours -- {{{
+M.terminal = {
+  color_0 = M.scheme["0"],
+  color_1 = M.scheme["8"],
+  color_2 = M.scheme["B"],
+  color_3 = M.scheme["A"],
+  color_4 = M.scheme["D"],
+  color_5 = M.scheme["E"],
+  color_6 = M.scheme["C"],
+  color_7 = M.scheme["5"],
+  color_8 = M.scheme["3"],
+  color_9 = M.scheme["8"],
+  color_10 = M.scheme["B"],
+  color_11 = M.scheme["A"],
+  color_12 = M.scheme["D"],
+  color_13 = M.scheme["E"],
+  color_14 = M.scheme["C"],
+  color_15 = M.scheme["7"],
+}
+
+M.terminal.color_background = M.terminal.color_0
+M.terminal.color_foreground = M.terminal.color_5
+-- }}}
+
+M.colors = {}
+
 -- Vim editor colors {{{
-highlight("Normal", { fg = colors["5"], bg = colors["0"] })
-highlight("Bold", { bold = true })
-highlight("Debug", { fg = colors["8"] })
-highlight("Directory", { fg = colors["D"] })
-highlight("Error", { fg = "NONE", bg = "NONE", sp = "NONE" })
-highlight("ErrorMsg", { fg = colors["8"], bg = colors["0"] })
-highlight("Exception", { fg = colors["8"] })
-highlight("FoldColumn", { fg = colors["C"], bg = colors["1"] })
-highlight("Folded", { fg = colors["3"], bg = colors["1"] })
-highlight("IncSearch", { fg = colors["1"], bg = colors["9"] })
-highlight("Italic", { italic = true })
-highlight("Macro", { fg = colors["8"] })
-highlight("MatchParen", { bg = colors["3"] })
-highlight("ModeMsg", { fg = colors["B"] })
-highlight("MoreMsg", { fg = colors["B"] })
-highlight("Question", { fg = colors["D"] })
-highlight("Search", { fg = colors["1"], bg = colors["A"] })
-highlight("Substitute", { fg = colors["1"], bg = colors["A"] })
-highlight("SpecialKey", { fg = colors["3"] })
-highlight("TooLong", { fg = colors["8"] })
-highlight("Underlined", { fg = colors["8"] })
-highlight("Visual", { bg = colors["2"] })
-highlight("VisualNOS", { fg = colors["8"] })
-highlight("WarningMsg", { fg = colors["8"] })
-highlight("WildMenu", { fg = colors["8"], bg = colors["A"] })
-highlight("Title", { fg = colors["D"] })
-highlight("Conceal", { fg = colors["D"], bg = colors["0"] })
-highlight("Cursor", { fg = colors["0"], bg = colors["5"] })
-highlight("NonText", { fg = colors["3"] })
-highlight("LineNr", { fg = colors["3"], bg = colors["1"] })
-highlight("SignColumn", { bg = colors["1"] })
-highlight("StatusLine", { fg = colors["4"], bg = colors["2"] })
-highlight("StatusLineNC", { fg = colors["3"], bg = colors["1"] })
-highlight("VertSplit", { fg = colors["2"], bg = "NONE" }) -- deprecated
-highlight("WinSeparator", { fg = colors["2"], bg = "NONE" })
-highlight("ColorColumn", { bg = colors["1"] })
-highlight("CursorColumn", { bg = colors["1"] })
-highlight("CursorLine", { bg = colors["1"] })
-highlight("CursorLineNr", { fg = colors["4"], bg = colors["1"] })
-highlight("QuickFixLine", { bg = colors["1"] })
-highlight("PMenu", { fg = colors["5"], bg = colors["1"] })
-highlight("PMenuSel", { fg = colors["1"], bg = colors["5"] })
-highlight("TabLine", { fg = colors["3"], bg = colors["1"] })
-highlight("TabLineFill", { fg = colors["3"], bg = colors["1"] })
-highlight("TabLineSel", { fg = colors["B"], bg = colors["1"] })
-highlight("NvimInternalError", { fg = colors["0"], bg = colors["8"] })
-highlight("NormalFloat", { fg = colors["5"], bg = colors["0"] })
-highlight("FloatBorder", { fg = colors["5"], bg = colors["0"] })
-highlight("NormalNC", { fg = colors["5"], bg = colors["0"] })
-highlight("TermCursor", { fg = colors["0"], bg = colors["5"] })
-highlight("TermCursorNC", { fg = colors["0"], bg = colors["5"] })
+M.colors["Normal"] = { fg = M.scheme["5"], bg = M.scheme["0"] }
+M.colors["NormalNC"] = { link = "Normal" }
+M.colors["NormalSB"] = { link = "Normal" }
+M.colors["Variable"] = { link = "Normal" }
+M.colors["Bold"] = { bold = true }
+M.colors["Italic"] = { italic = true }
+M.colors["Underlined"] = { fg = M.scheme["8"] }
+M.colors["Debug"] = { fg = M.scheme["8"] }
+M.colors["Directory"] = { fg = M.scheme["D"] }
+M.colors["Error"] = { fg = "NONE", bg = "NONE", sp = "NONE" }
+M.colors["ErrorMsg"] = { fg = M.scheme["error"], bg = M.scheme["0"] }
+M.colors["Exception"] = { fg = M.scheme["error"] }
+M.colors["NvimInternalError"] = { fg = M.scheme["0"], bg = M.scheme["8"] }
+M.colors["FoldColumn"] = { fg = M.scheme["C"], bg = M.scheme["1"] }
+M.colors["Folded"] = { fg = M.scheme["3"], bg = M.scheme["1"] }
+M.colors["Search"] = { fg = M.scheme["1"], bg = M.scheme["A"] }
+M.colors["CurSearch"] = { link = "Search" }
+M.colors["IncSearch"] = { fg = M.scheme["1"], bg = M.scheme["9"] }
+M.colors["Macro"] = { fg = M.scheme["8"] }
+M.colors["MatchParen"] = { bg = M.scheme["8"], underline = true }
+M.colors["ModeMsg"] = { fg = M.scheme["B"] }
+M.colors["MoreMsg"] = { fg = M.scheme["B"] }
+M.colors["Question"] = { fg = M.scheme["D"] }
+M.colors["Substitute"] = { fg = M.scheme["1"], bg = M.scheme["A"] }
+M.colors["NonText"] = { fg = M.scheme["3"] }
+M.colors["SpecialKey"] = { link = "NonText" }
+M.colors["Ignore"] = { link = "NonText" }
+M.colors["TooLong"] = { fg = M.scheme["8"] }
+M.colors["Visual"] = { bg = M.scheme["2"] }
+M.colors["VisualNOS"] = { fg = M.scheme["8"] }
+M.colors["WarningMsg"] = { fg = M.scheme["8"] }
+M.colors["WildMenu"] = { fg = M.scheme["8"], bg = M.scheme["A"] }
+M.colors["Title"] = { fg = M.scheme["D"] }
+M.colors["Conceal"] = { fg = M.scheme["D"], bg = M.scheme["0"] }
+M.colors["LineNr"] = { fg = M.scheme["3"], bg = M.scheme["1"] }
+M.colors["SignColumn"] = { bg = M.scheme["1"] }
+M.colors["SignColumnSB"] = { link = "SignColumn" }
+M.colors["StatusLine"] = { fg = M.scheme["4"], bg = M.scheme["2"] }
+M.colors["StatusLineNC"] = { fg = M.scheme["3"], bg = M.scheme["1"] }
+M.colors["TabLine"] = { fg = M.scheme["3"], bg = M.scheme["1"] }
+M.colors["TabLineFill"] = { fg = M.scheme["3"], bg = M.scheme["1"] }
+M.colors["TabLineSel"] = { fg = M.scheme["B"], bg = M.scheme["1"] }
+M.colors["VertSplit"] = { fg = M.scheme["2"], bg = "NONE" } -- deprecated
+M.colors["WinSeparator"] = { fg = M.scheme["2"], bg = "NONE" }
+M.colors["Cursor"] = { fg = M.scheme["0"], bg = M.scheme["5"] }
+M.colors["lCursor"] = { link = "Cursor" }
+M.colors["CursorIM"] = { link = "Cursor" }
+M.colors["CursorLine"] = { bg = M.scheme["1"] }
+M.colors["CursorLineNr"] = { fg = M.scheme["4"], bg = M.scheme["1"] }
+M.colors["CursorColumn"] = { bg = M.scheme["1"] }
+M.colors["ColorColumn"] = { link = "CursorLine" }
+M.colors["QuickFixLine"] = { bg = M.scheme["1"] }
+M.colors["PMenu"] = { fg = M.scheme["5"], bg = M.scheme["1"] }
+M.colors["PMenuSel"] = { fg = M.scheme["1"], bg = M.scheme["5"] }
+M.colors["PmenuSbar"] = { link = "Pmenu" }
+M.colors["NvimInternalError"] = { fg = M.scheme["0"], bg = M.scheme["8"] }
+M.colors["NormalFloat"] = { fg = M.scheme["5"], bg = M.scheme["0"] }
+M.colors["FloatBorder"] = { fg = M.scheme["5"], bg = M.scheme["0"] }
+M.colors["TermCursor"] = { fg = M.scheme["0"], bg = M.scheme["5"] }
+M.colors["TermCursorNC"] = { fg = M.scheme["0"], bg = M.scheme["5"] }
 -- }}}
 
 -- Standard syntax highlighting {{{
-highlight("Boolean", { fg = colors["9"] })
-highlight("Character", { fg = colors["8"] })
-highlight("Comment", { fg = colors["3"], italic = true })
-highlight("Conditional", { fg = colors["E"] })
-highlight("Constant", { fg = colors["9"] })
-highlight("Define", { fg = colors["E"] })
-highlight("Delimiter", { fg = colors["F"] })
-highlight("Float", { fg = colors["9"] })
-highlight("Function", { fg = colors["D"] })
-highlight("Identifier", { fg = colors["8"] })
-highlight("Include", { fg = colors["D"] })
-highlight("Keyword", { fg = colors["E"] })
-highlight("Label", { fg = colors["A"] })
-highlight("Number", { fg = colors["9"] })
-highlight("Operator", { fg = colors["5"] })
-highlight("PreProc", { fg = colors["A"] })
-highlight("Repeat", { fg = colors["A"] })
-highlight("Special", { fg = colors["C"] })
-highlight("SpecialChar", { fg = colors["F"] })
-highlight("Statement", { fg = colors["8"] })
-highlight("StorageClass", { fg = colors["A"] })
-highlight("String", { fg = colors["B"] })
-highlight("Structure", { fg = colors["E"] })
-highlight("Tag", { fg = colors["A"] })
-highlight("Todo", { fg = colors["A"], bg = colors["1"] })
-highlight("Type", { fg = colors["A"] })
-highlight("Typedef", { fg = colors["A"] })
+M.colors["Boolean"] = { fg = M.scheme["9"] }
+M.colors["Character"] = { fg = M.scheme["8"] }
+M.colors["Comment"] = { fg = M.scheme["3"], italic = true }
+M.colors["Conditional"] = { fg = M.scheme["E"] }
+M.colors["Constant"] = { fg = M.scheme["9"] }
+M.colors["Define"] = { fg = M.scheme["E"] }
+M.colors["Delimiter"] = { fg = M.scheme["F"] }
+M.colors["Float"] = { fg = M.scheme["9"] }
+M.colors["Function"] = { fg = M.scheme["D"] }
+M.colors["Identifier"] = { fg = M.scheme["8"] }
+M.colors["Include"] = { fg = M.scheme["D"] }
+M.colors["Keyword"] = { fg = M.scheme["E"] }
+M.colors["Label"] = { fg = M.scheme["A"] }
+M.colors["Number"] = { fg = M.scheme["9"] }
+M.colors["Operator"] = { fg = M.scheme["5"] }
+M.colors["PreCondit"] = { link = "Conditional" }
+M.colors["PreProc"] = { fg = M.scheme["A"] }
+M.colors["Repeat"] = { fg = M.scheme["A"] }
+M.colors["Special"] = { fg = M.scheme["C"] }
+M.colors["SpecialChar"] = { fg = M.scheme["F"] }
+M.colors["Statement"] = { fg = M.scheme["8"] }
+M.colors["StorageClass"] = { fg = M.scheme["A"] }
+M.colors["String"] = { fg = M.scheme["B"] }
+M.colors["Structure"] = { fg = M.scheme["E"] }
+M.colors["Tag"] = { fg = M.scheme["A"] }
+M.colors["Todo"] = M.scheme.standout
+M.colors["Type"] = { fg = M.scheme["A"] }
+M.colors["Typedef"] = { fg = M.scheme["A"] }
 -- }}}
 
 -- Diagnostics highlighting {{{
-highlight("DiagnosticError", { fg = colors["error"] })
-highlight("DiagnosticWarn", { fg = colors["warning"] })
-highlight("DiagnosticInfo", { fg = colors["info"] })
-highlight("DiagnosticHint", { fg = colors["hint"] })
+M.colors["DiagnosticError"] = { fg = M.scheme["error"] }
+M.colors["DiagnosticWarn"] = { fg = M.scheme["warning"] }
+M.colors["DiagnosticInfo"] = { fg = M.scheme["info"] }
+M.colors["DiagnosticHint"] = { fg = M.scheme["hint"] }
 
-highlight("DiagnosticSignError", { fg = colors["error"], bg = colors["1"] })
-highlight("DiagnosticSignWarn", { fg = colors["warning"], bg = colors["1"] })
-highlight("DiagnosticSignInfo", { fg = colors["info"], bg = colors["1"] })
-highlight("DiagnosticSignHint", { fg = colors["hint"], bg = colors["1"] })
+M.colors["DiagnosticSignError"] = { fg = M.scheme["error"], bg = M.scheme["1"] }
+M.colors["DiagnosticSignWarn"] = { fg = M.scheme["warning"], bg = M.scheme["1"] }
+M.colors["DiagnosticSignInfo"] = { fg = M.scheme["info"], bg = M.scheme["1"] }
+M.colors["DiagnosticSignHint"] = { fg = M.scheme["hint"], bg = M.scheme["1"] }
 
-highlight("DiagnosticUnderlineError", { undercurl = true, sp = colors["error"] })
-highlight("DiagnosticUnderlineWarning", { undercurl = true, sp = colors["warning"] })
-highlight("DiagnosticUnderlineWarn", { undercurl = true, sp = colors["warning"] })
-highlight("DiagnosticUnderlineInformation", { undercurl = true, sp = colors["info"] })
-highlight("DiagnosticUnderlineHint", { undercurl = true, sp = colors["hint"] })
+M.colors["DiagnosticUnderlineError"] = { undercurl = true, sp = M.scheme["error"] }
+M.colors["DiagnosticUnderlineWarning"] = { undercurl = true, sp = M.scheme["warning"] }
+M.colors["DiagnosticUnderlineWarn"] = { undercurl = true, sp = M.scheme["warning"] }
+M.colors["DiagnosticUnderlineInformation"] = { undercurl = true, sp = M.scheme["info"] }
+M.colors["DiagnosticUnderlineHint"] = { undercurl = true, sp = M.scheme["hint"] }
 -- }}}
 
 -- LSP highlighting {{{
-highlight("LspReferenceText", { underline = true, sp = colors["4"] })
-highlight("LspReferenceRead", { underline = true, sp = colors["4"] })
-highlight("LspReferenceWrite", { underline = true, sp = colors["4"] })
+M.colors["LspReferenceText"] = { underline = true, sp = M.scheme["4"] }
+M.colors["LspReferenceRead"] = { underline = true, sp = M.scheme["4"] }
+M.colors["LspReferenceWrite"] = { underline = true, sp = M.scheme["4"] }
 
-highlight("LspDiagnosticsDefaultError", { link = "DiagnosticError" })
-highlight("LspDiagnosticsDefaultWarning", { link = "DiagnosticWarn" })
-highlight("LspDiagnosticsDefaultInformation", { link = "DiagnosticInfo" })
-highlight("LspDiagnosticsDefaultHint", { link = "DiagnosticHint" })
-highlight("LspDiagnosticsUnderlineError", { link = "DiagnosticUnderlineError" })
-highlight("LspDiagnosticsUnderlineWarning", { link = "DiagnosticUnderlineWarning" })
-highlight("LspDiagnosticsUnderlineInformation", { link = "DiagnosticUnderlineInformation" })
-highlight("LspDiagnosticsUnderlineHint", { link = "DiagnosticUnderlineHint" })
+M.colors["LspDiagnosticsDefaultError"] = { link = "DiagnosticError" }
+M.colors["LspDiagnosticsDefaultWarning"] = { link = "DiagnosticWarn" }
+M.colors["LspDiagnosticsDefaultInformation"] = { link = "DiagnosticInfo" }
+M.colors["LspDiagnosticsDefaultHint"] = { link = "DiagnosticHint" }
+M.colors["LspDiagnosticsUnderlineError"] = { link = "DiagnosticUnderlineError" }
+M.colors["LspDiagnosticsUnderlineWarning"] = { link = "DiagnosticUnderlineWarning" }
+M.colors["LspDiagnosticsUnderlineInformation"] = { link = "DiagnosticUnderlineInformation" }
+M.colors["LspDiagnosticsUnderlineHint"] = { link = "DiagnosticUnderlineHint" }
 -- }}}
 
 -- Treesitter highlighting {{{
-highlight("TSAnnotation", { fg = colors["F"] })
-highlight("TSAttribute", { fg = colors["A"] })
-highlight("TSBoolean", { fg = colors["9"] })
-highlight("TSCharacter", { fg = colors["8"] })
-highlight("TSComment", { fg = colors["3"], italic = true })
-highlight("TSConstructor", { fg = colors["D"] })
-highlight("TSConditional", { fg = colors["E"] })
-highlight("TSConstant", { fg = colors["9"] })
-highlight("TSConstBuiltin", { fg = colors["9"], italic = true })
-highlight("TSConstMacro", { fg = colors["8"] })
-highlight("TSError", { fg = colors["8"] })
-highlight("TSException", { fg = colors["8"] })
-highlight("TSField", { fg = colors["5"] })
-highlight("TSFloat", { fg = colors["9"] })
-highlight("TSFunction", { fg = colors["D"] })
-highlight("TSFuncBuiltin", { fg = colors["D"], italic = true })
-highlight("TSFuncMacro", { fg = colors["8"] })
-highlight("TSInclude", { fg = colors["D"] })
-highlight("TSKeyword", { fg = colors["E"] })
-highlight("TSKeywordFunction", { fg = colors["E"] })
-highlight("TSKeywordOperator", { fg = colors["E"] })
-highlight("TSLabel", { fg = colors["A"] })
-highlight("TSMethod", { fg = colors["D"] })
-highlight("TSNamespace", { fg = colors["8"] })
-highlight("TSNONE", { fg = colors["5"] })
-highlight("TSNumber", { fg = colors["9"] })
-highlight("TSOperator", { fg = colors["5"] })
-highlight("TSParameter", { fg = colors["5"] })
-highlight("TSParameterReference", { fg = colors["5"] })
-highlight("TSProperty", { fg = colors["5"] })
-highlight("TSPunctDelimiter", { fg = colors["F"] })
-highlight("TSPunctBracket", { fg = colors["5"] })
-highlight("TSPunctSpecial", { fg = colors["5"] })
-highlight("TSRepeat", { fg = colors["A"] })
-highlight("TSString", { fg = colors["B"] })
-highlight("TSStringRegex", { fg = colors["C"] })
-highlight("TSStringEscape", { fg = colors["C"] })
-highlight("TSSymbol", { fg = colors["B"] })
-highlight("TSTag", { fg = colors["A"] })
-highlight("TSTagDelimiter", { fg = colors["F"] })
-highlight("TSText", { fg = colors["5"] })
-highlight("TSStrong", { bold = true })
-highlight("TSEmphasis", { fg = colors["9"], italic = true })
-highlight("TSUnderline", { fg = colors["0"], underline = true })
-highlight("TSStrike", { fg = colors["0"], strikethrough = true })
-highlight("TSTitle", { fg = colors["D"] })
-highlight("TSLiteral", { fg = colors["9"] })
-highlight("TSURI", { fg = colors["9"], underline = true })
-highlight("TSType", { fg = colors["A"] })
-highlight("TSTypeBuiltin", { fg = colors["A"], italic = true })
-highlight("TSVariable", { fg = colors["8"] })
-highlight("TSVariableBuiltin", { fg = colors["8"], italic = true })
-highlight("TSDefinition", { underline = true, sp = colors["4"] })
-highlight("TSDefinitionUsage", { underline = true, sp = colors["4"] })
-highlight("TSCurrentScope", { bold = true })
-highlight("TreesitterContext", { bg = colors["1"], italic = true })
+M.colors["TSAnnotation"] = { fg = M.scheme["F"] }
+M.colors["TSAttribute"] = { fg = M.scheme["A"] }
+M.colors["TSBoolean"] = { link = "Boolean" }
+M.colors["TSCharacter"] = { link = "Character" }
+M.colors["TSCharacterSpecial"] = { link = "SpecialChar" }
+M.colors["TSComment"] = { link = "Comment" }
+M.colors["TSConditional"] = { link = "Conditional" }
+M.colors["TSConstBuiltin"] = { fg = M.colors["Constant"].fg, italic = true }
+M.colors["TSConstMacro"] = { fg = M.scheme["8"] }
+M.colors["TSConstant"] = { link = "Constant" }
+M.colors["TSConstructor"] = { fg = M.scheme["D"] }
+M.colors["TSCurrentScope"] = { bold = true }
+M.colors["TSDanger"] = { link = "Error" }
+M.colors["TSDebug"] = { link = "Debug" }
+M.colors["TSDefine"] = { link = "Define" }
+M.colors["TSEmphasis"] = { link = "Italic" }
+M.colors["TSEnvironment"] = { link = "Keyword" }
+M.colors["TSEnvironmentName"] = { link = "Typedef" }
+M.colors["TSError"] = { fg = M.scheme["error"] }
+M.colors["TSException"] = { link = "Exception" }
+M.colors["TSField"] = { fg = M.scheme["5"] }
+M.colors["TSFloat"] = { link = "Float" }
+M.colors["TSFuncBuiltin"] = { fg = M.colors["Float"].fg, italic = true }
+M.colors["TSFuncMacro"] = { link = "Function" }
+M.colors["TSFunction"] = { link = "Function" }
+M.colors["TSInclude"] = { link = "Include" }
+M.colors["TSKeyword"] = { link = "Keyword" }
+M.colors["TSKeywordFunction"] = { link = "Keyword" }
+M.colors["TSKeywordOperator"] = { link = "Keyword" }
+M.colors["TSLabel"] = { link = "Label" }
+M.colors["TSLiteral"] = { fg = M.scheme["9"] }
+M.colors["TSMath"] = { fg = M.scheme["A"] }
+M.colors["TSMethod"] = { link = "Function" }
+M.colors["TSNamespace"] = { fg = M.scheme["8"] }
+M.colors["TSNone"] = { fg = M.scheme["5"] }
+M.colors["TSNote"] = { fg = M.scheme["info"] }
+M.colors["TSNumber"] = { link = "Number" }
+M.colors["TSOperator"] = { link = "Operator" }
+M.colors["TSParameter"] = { fg = M.scheme["5"] }
+M.colors["TSParameterReference"] = { fg = M.scheme["5"] }
+M.colors["TSPreProc"] = { link = "PreProc" }
+M.colors["TSProperty"] = { fg = M.scheme["5"] }
+M.colors["TSPunctBracket"] = { link = "Delimiter" }
+M.colors["TSPunctDelimiter"] = { link = "Delimiter" }
+M.colors["TSPunctSpecial"] = { link = "Delimiter" }
+M.colors["TSRepeat"] = { link = "Repeat" }
+M.colors["TSStorageClass"] = { link = "StorageClass" }
+M.colors["TSStrike"] = { strikethrough = true }
+M.colors["TSString"] = { link = "String" }
+M.colors["TSStringEscape"] = { link = "String" }
+M.colors["TSStringRegex"] = { link = "String" }
+M.colors["TSStringSpecial"] = { link = "SpecialChar" }
+M.colors["TSStrong"] = { link = "Bold" }
+M.colors["TSSymbol"] = { link = "String" }
+M.colors["TSTag"] = { link = "Tag" }
+M.colors["TSTagAttribute"] = { fg = M.scheme["A"] }
+M.colors["TSTagDelimiter"] = { fg = M.scheme["F"] }
+M.colors["TSText"] = { link = "Normal" }
+M.colors["TSTextReference"] = { fg = M.scheme["8"] }
+M.colors["TSTitle"] = { link = "Title" }
+M.colors["TSTodo"] = { fg = M.scheme["hint"] }
+M.colors["TSType"] = { link = "Type" }
+M.colors["TSTypeBuiltin"] = { fg = M.colors["Type"].fg, italic = true }
+M.colors["TSTypeDefinition"] = { link = "Typedef" }
+M.colors["TSTypeQualifier"] = { fg = M.scheme["A"] }
+M.colors["TSURI"] = { fg = M.scheme["9"], underline = true }
+M.colors["TSUnderline"] = { link = "Underlined" }
+M.colors["TSVariable"] = { link = "Variable" }
+M.colors["TSVariableBuiltin"] = { fg = M.colors["Variable"].fg, italic = true }
+M.colors["TSWarning"] = { fg = M.scheme["warning"] }
 -- }}}
 
 -- User highlights {{{
-highlight("User1", { fg = colors["8"], bg = colors["2"] })
-highlight("User2", { fg = colors["E"], bg = colors["2"] })
-highlight("User3", { fg = colors["5"], bg = colors["2"] })
-highlight("User4", { fg = colors["C"], bg = colors["2"] })
-highlight("User5", { fg = colors["1"], bg = colors["2"] })
-highlight("User6", { fg = colors["5"], bg = colors["2"] })
-highlight("User7", { fg = colors["5"], bg = colors["2"] })
-highlight("User8", { fg = colors["0"], bg = colors["2"] })
-highlight("User9", { fg = colors["0"], bg = colors["2"] })
+M.colors["User1"] = { fg = M.scheme["8"], bg = M.scheme["2"] }
+M.colors["User2"] = { fg = M.scheme["E"], bg = M.scheme["2"] }
+M.colors["User3"] = { fg = M.scheme["5"], bg = M.scheme["2"] }
+M.colors["User4"] = { fg = M.scheme["C"], bg = M.scheme["2"] }
+M.colors["User5"] = { fg = M.scheme["1"], bg = M.scheme["2"] }
+M.colors["User6"] = { fg = M.scheme["5"], bg = M.scheme["2"] }
+M.colors["User7"] = { fg = M.scheme["5"], bg = M.scheme["2"] }
+M.colors["User8"] = { fg = M.scheme["0"], bg = M.scheme["2"] }
+M.colors["User9"] = { fg = M.scheme["0"], bg = M.scheme["2"] }
 -- }}}
 
 -- Diff highlighting {{{
-highlight("DiffAdd", { fg = colors["B"], bg = colors["1"] })
-highlight("DiffChange", { fg = colors["3"], bg = colors["1"] })
-highlight("DiffChange", { fg = colors["D"], bg = colors["1"] })
-highlight("DiffChangeDelete", { fg = colors["E"], bg = colors["1"] })
-highlight("DiffDelete", { fg = colors["8"], bg = colors["1"] })
-highlight("DiffText", { fg = colors["D"], bg = colors["1"] })
-highlight("DiffAdded", { fg = colors["B"], bg = colors["0"] })
-highlight("DiffFile", { fg = colors["8"], bg = colors["0"] })
-highlight("DiffNewFile", { fg = colors["B"], bg = colors["0"] })
-highlight("DiffLine", { fg = colors["D"], bg = colors["0"] })
-highlight("DiffRemoved", { fg = colors["8"], bg = colors["0"] })
+M.colors["DiffAdd"] = { fg = M.scheme["B"], bg = M.scheme["1"] }
+M.colors["DiffChange"] = { fg = M.scheme["3"], bg = M.scheme["1"] }
+M.colors["DiffChange"] = { fg = M.scheme["D"], bg = M.scheme["1"] }
+M.colors["DiffChangeDelete"] = { fg = M.scheme["E"], bg = M.scheme["1"] }
+M.colors["DiffDelete"] = { fg = M.scheme["8"], bg = M.scheme["1"] }
+M.colors["DiffText"] = { fg = M.scheme["D"], bg = M.scheme["1"] }
+M.colors["DiffAdded"] = { fg = M.scheme["B"], bg = M.scheme["0"] }
+M.colors["DiffFile"] = { fg = M.scheme["8"], bg = M.scheme["0"] }
+M.colors["DiffNewFile"] = { fg = M.scheme["B"], bg = M.scheme["0"] }
+M.colors["DiffLine"] = { fg = M.scheme["D"], bg = M.scheme["0"] }
+M.colors["DiffRemoved"] = { fg = M.scheme["8"], bg = M.scheme["0"] }
 -- }}}
 
 -- Git highlighting {{{
-highlight("gitcommitOverflow", { fg = colors["8"] })
-highlight("gitcommitSummary", { fg = colors["B"] })
-highlight("gitcommitComment", { fg = colors["3"] })
-highlight("gitcommitUntracked", { fg = colors["3"] })
-highlight("gitcommitDiscarded", { fg = colors["3"] })
-highlight("gitcommitSelected", { fg = colors["3"] })
-highlight("gitcommitHeader", { fg = colors["E"] })
-highlight("gitcommitSelectedType", { fg = colors["D"] })
-highlight("gitcommitUnmergedType", { fg = colors["D"] })
-highlight("gitcommitDiscardedType", { fg = colors["D"] })
-highlight("gitcommitBranch", { fg = colors["9"], bold = true })
-highlight("gitcommitUntrackedFile", { fg = colors["A"] })
-highlight("gitcommitUnmergedFile", { fg = colors["8"], bold = true })
-highlight("gitcommitDiscardedFile", { fg = colors["8"], bold = true })
-highlight("gitcommitSelectedFile", { fg = colors["B"], bold = true })
+M.colors["gitcommitOverflow"] = { fg = M.scheme["8"] }
+M.colors["gitcommitSummary"] = { fg = M.scheme["B"] }
+M.colors["gitcommitComment"] = { fg = M.scheme["3"] }
+M.colors["gitcommitUntracked"] = { fg = M.scheme["3"] }
+M.colors["gitcommitDiscarded"] = { fg = M.scheme["3"] }
+M.colors["gitcommitSelected"] = { fg = M.scheme["3"] }
+M.colors["gitcommitHeader"] = { fg = M.scheme["E"] }
+M.colors["gitcommitSelectedType"] = { fg = M.scheme["D"] }
+M.colors["gitcommitUnmergedType"] = { fg = M.scheme["D"] }
+M.colors["gitcommitDiscardedType"] = { fg = M.scheme["D"] }
+M.colors["gitcommitBranch"] = { fg = M.scheme["9"], bold = true }
+M.colors["gitcommitUntrackedFile"] = { fg = M.scheme["A"] }
+M.colors["gitcommitUnmergedFile"] = { fg = M.scheme["8"], bold = true }
+M.colors["gitcommitDiscardedFile"] = { fg = M.scheme["8"], bold = true }
+M.colors["gitcommitSelectedFile"] = { fg = M.scheme["B"], bold = true }
 -- }}}
 
 -- C highlighting {{{
-highlight("cOperator", { fg = colors["C"] })
-highlight("cPreCondit", { fg = colors["E"] })
+M.colors["cOperator"] = { fg = M.scheme["C"] }
+M.colors["cPreCondit"] = { fg = M.scheme["E"] }
 -- }}}
 
 -- C# highlighting {{{
-highlight("csClass", { fg = colors["A"] })
-highlight("csAttribute", { fg = colors["A"] })
-highlight("csModifier", { fg = colors["E"] })
-highlight("csType", { fg = colors["8"] })
-highlight("csUnspecifiedStatement", { fg = colors["D"] })
-highlight("csContextualStatement", { fg = colors["E"] })
-highlight("csNewDecleration", { fg = colors["8"] })
+M.colors["csClass"] = { fg = M.scheme["A"] }
+M.colors["csAttribute"] = { fg = M.scheme["A"] }
+M.colors["csModifier"] = { fg = M.scheme["E"] }
+M.colors["csType"] = { fg = M.scheme["8"] }
+M.colors["csUnspecifiedStatement"] = { fg = M.scheme["D"] }
+M.colors["csContextualStatement"] = { fg = M.scheme["E"] }
+M.colors["csNewDecleration"] = { fg = M.scheme["8"] }
 -- }}}
 
 -- CSS highlighting {{{
-highlight("cssBraces", { fg = colors["5"] })
-highlight("cssClassName", { fg = colors["E"] })
-highlight("cssColor", { fg = colors["C"] })
+M.colors["cssBraces"] = { fg = M.scheme["5"] }
+M.colors["cssClassName"] = { fg = M.scheme["E"] }
+M.colors["cssColor"] = { fg = M.scheme["C"] }
 -- }}}
 
 -- HTML highlighting {{{
-highlight("htmlBold", { fg = colors["A"] })
-highlight("htmlItalic", { fg = colors["E"] })
-highlight("htmlEndTag", { fg = colors["5"] })
-highlight("htmlTag", { fg = colors["5"] })
+M.colors["htmlBold"] = { fg = M.scheme["A"] }
+M.colors["htmlItalic"] = { fg = M.scheme["E"] }
+M.colors["htmlEndTag"] = { fg = M.scheme["5"] }
+M.colors["htmlTag"] = { fg = M.scheme["5"] }
 -- }}}
 
 -- JavaScript highlighting {{{
-highlight("javaScript", { fg = colors["5"] })
-highlight("javaScriptBraces", { fg = colors["5"] })
-highlight("javaScriptNumber", { fg = colors["9"] })
+M.colors["javaScript"] = { fg = M.scheme["5"] }
+M.colors["javaScriptBraces"] = { fg = M.scheme["5"] }
+M.colors["javaScriptNumber"] = { fg = M.scheme["9"] }
 -- }}}
 
 -- pangloss/vim-javascript highlighting {{{
-highlight("jsOperator", { fg = colors["D"] })
-highlight("jsStatement", { fg = colors["E"] })
-highlight("jsReturn", { fg = colors["E"] })
-highlight("jsThis", { fg = colors["8"] })
-highlight("jsClassDefinition", { fg = colors["A"] })
-highlight("jsFunction", { fg = colors["E"] })
-highlight("jsFuncName", { fg = colors["D"] })
-highlight("jsFuncCall", { fg = colors["D"] })
-highlight("jsClassFuncName", { fg = colors["D"] })
-highlight("jsClassMethodType", { fg = colors["E"] })
-highlight("jsRegexpString", { fg = colors["C"] })
-highlight("jsGlobalObjects", { fg = colors["A"] })
-highlight("jsGlobalNodeObjects", { fg = colors["A"] })
-highlight("jsExceptions", { fg = colors["A"] })
-highlight("jsBuiltins", { fg = colors["A"] })
+M.colors["jsOperator"] = { fg = M.scheme["D"] }
+M.colors["jsStatement"] = { fg = M.scheme["E"] }
+M.colors["jsReturn"] = { fg = M.scheme["E"] }
+M.colors["jsThis"] = { fg = M.scheme["8"] }
+M.colors["jsClassDefinition"] = { fg = M.scheme["A"] }
+M.colors["jsFunction"] = { fg = M.scheme["E"] }
+M.colors["jsFuncName"] = { fg = M.scheme["D"] }
+M.colors["jsFuncCall"] = { fg = M.scheme["D"] }
+M.colors["jsClassFuncName"] = { fg = M.scheme["D"] }
+M.colors["jsClassMethodType"] = { fg = M.scheme["E"] }
+M.colors["jsRegexpString"] = { fg = M.scheme["C"] }
+M.colors["jsGlobalObjects"] = { fg = M.scheme["A"] }
+M.colors["jsGlobalNodeObjects"] = { fg = M.scheme["A"] }
+M.colors["jsExceptions"] = { fg = M.scheme["A"] }
+M.colors["jsBuiltins"] = { fg = M.scheme["A"] }
 -- }}}
 
 -- Mail highlighting {{{
-highlight("mailQuoted1", { fg = colors["A"] })
-highlight("mailQuoted2", { fg = colors["B"] })
-highlight("mailQuoted3", { fg = colors["E"] })
-highlight("mailQuoted4", { fg = colors["C"] })
-highlight("mailQuoted5", { fg = colors["D"] })
-highlight("mailQuoted6", { fg = colors["A"] })
-highlight("mailURL", { fg = colors["D"] })
-highlight("mailEmail", { fg = colors["D"] })
+M.colors["mailQuoted1"] = { fg = M.scheme["A"] }
+M.colors["mailQuoted2"] = { fg = M.scheme["B"] }
+M.colors["mailQuoted3"] = { fg = M.scheme["E"] }
+M.colors["mailQuoted4"] = { fg = M.scheme["C"] }
+M.colors["mailQuoted5"] = { fg = M.scheme["D"] }
+M.colors["mailQuoted6"] = { fg = M.scheme["A"] }
+M.colors["mailURL"] = { fg = M.scheme["D"] }
+M.colors["mailEmail"] = { fg = M.scheme["D"] }
 -- }}}
 
 -- Markdown highlighting {{{
-highlight("markdownCode", { fg = colors["B"] })
-highlight("markdownError", { fg = colors["5"], bg = colors["0"] })
-highlight("markdownCodeBlock", { fg = colors["B"] })
-highlight("markdownHeadingDelimiter", { fg = colors["D"] })
+M.colors["markdownCode"] = { fg = M.scheme["B"] }
+M.colors["markdownError"] = { fg = M.scheme["5"], bg = M.scheme["0"] }
+M.colors["markdownCodeBlock"] = { fg = M.scheme["B"] }
+M.colors["markdownHeadingDelimiter"] = { fg = M.scheme["D"] }
 -- }}}
 
 -- PHP highlighting {{{
-highlight("phpMemberSelector", { fg = colors["5"] })
-highlight("phpComparison", { fg = colors["5"] })
-highlight("phpParent", { fg = colors["5"] })
-highlight("phpMethodsVar", { fg = colors["C"] })
+M.colors["phpMemberSelector"] = { fg = M.scheme["5"] }
+M.colors["phpComparison"] = { fg = M.scheme["5"] }
+M.colors["phpParent"] = { fg = M.scheme["5"] }
+M.colors["phpMethodsVar"] = { fg = M.scheme["C"] }
 -- }}}
 
 -- Python highlighting {{{
-highlight("pythonOperator", { fg = colors["E"] })
-highlight("pythonRepeat", { fg = colors["E"] })
-highlight("pythonInclude", { fg = colors["E"] })
-highlight("pythonStatement", { fg = colors["E"] })
+M.colors["pythonOperator"] = { fg = M.scheme["E"] }
+M.colors["pythonRepeat"] = { fg = M.scheme["E"] }
+M.colors["pythonInclude"] = { fg = M.scheme["E"] }
+M.colors["pythonStatement"] = { fg = M.scheme["E"] }
 -- }}}
 
 -- Ruby highlighting {{{
-highlight("rubyAttribute", { fg = colors["D"] })
-highlight("rubyConstant", { fg = colors["A"] })
-highlight("rubyInterpolationDelimiter", { fg = colors["F"] })
-highlight("rubyRegexp", { fg = colors["C"] })
-highlight("rubySymbol", { fg = colors["B"] })
-highlight("rubyStringDelimiter", { fg = colors["B"] })
+M.colors["rubyAttribute"] = { fg = M.scheme["D"] }
+M.colors["rubyConstant"] = { fg = M.scheme["A"] }
+M.colors["rubyInterpolationDelimiter"] = { fg = M.scheme["F"] }
+M.colors["rubyRegexp"] = { fg = M.scheme["C"] }
+M.colors["rubySymbol"] = { fg = M.scheme["B"] }
+M.colors["rubyStringDelimiter"] = { fg = M.scheme["B"] }
 -- }}}
 
 -- SASS highlighting {{{
-highlight("sassidChar", { fg = colors["8"] })
-highlight("sassClassChar", { fg = colors["9"] })
-highlight("sassInclude", { fg = colors["E"] })
-highlight("sassMixing", { fg = colors["E"] })
-highlight("sassMixinName", { fg = colors["D"] })
+M.colors["sassidChar"] = { fg = M.scheme["8"] }
+M.colors["sassClassChar"] = { fg = M.scheme["9"] }
+M.colors["sassInclude"] = { fg = M.scheme["E"] }
+M.colors["sassMixing"] = { fg = M.scheme["E"] }
+M.colors["sassMixinName"] = { fg = M.scheme["D"] }
 -- }}}
 
 -- Spelling highlighting {{{
-highlight("SpellBad", { undercurl = true, sp = colors["8"] })
-highlight("SpellLocal", { undercurl = true, sp = colors["C"] })
-highlight("SpellCap", { undercurl = true, sp = colors["D"] })
-highlight("SpellRare", { undercurl = true, sp = colors["E"] })
+M.colors["SpellBad"] = { undercurl = true, sp = M.scheme["8"] }
+M.colors["SpellLocal"] = { undercurl = true, sp = M.scheme["C"] }
+M.colors["SpellCap"] = { undercurl = true, sp = M.scheme["D"] }
+M.colors["SpellRare"] = { undercurl = true, sp = M.scheme["E"] }
 -- }}}
 
 -- Java highlighting {{{
-highlight("javaOperator", { fg = colors["D"] })
+M.colors["javaOperator"] = { fg = M.scheme["D"] }
 -- }}}
 
-highlight("HighlightedyankRegion", { fg = colors["0"], bg = colors["A"] })
+M.colors["HighlightedyankRegion"] = { fg = M.scheme["0"], bg = M.scheme["A"] }
 
 -- Git conflict markers {{{
-highlight("ConflictMarkerBegin", { fg = colors["7"], bg = colors["error"] })
-highlight("ConflictMarkerEnd", { fg = colors["7"], bg = colors["error"] })
-highlight("ConflictMarkerSeparator", { fg = colors["7"], bg = colors["error"] })
+M.colors["ConflictMarkerBegin"] = { fg = M.scheme["7"], bg = M.scheme["error"] }
+M.colors["ConflictMarkerEnd"] = { fg = M.scheme["7"], bg = M.scheme["error"] }
+M.colors["ConflictMarkerSeparator"] = { fg = M.scheme["7"], bg = M.scheme["error"] }
+-- }}}
+
+-- Hydra {{{
+M.colors["HydraRed"] = { fg = M.scheme.red }
+M.colors["HydraBlue"] = { fg = M.scheme.blue }
+M.colors["HydraAmaranth"] = { fg = M.scheme.amaranth }
+M.colors["HydraTeal"] = { fg = M.scheme.teal }
+M.colors["HydraPink"] = { fg = M.scheme.pink }
 -- }}}
 
 -- FIXME: FIX THAT SHIT
 -- -- Tasks comments {{{
--- highlight("TasksFixme", { fg = colors["7"], bg = colors["error"],  gui = "NONE" })
--- highlight("TasksTodo", { fg = colors["7"], bg = colors["hint"],  gui = "NONE" })
--- highlight("TasksHack", { fg = colors["7"], bg = colors["hint"],  gui = "NONE" })
--- highlight("TasksWarn", { fg = colors["7"], bg = colors["warning"],  gui = "NONE" })
--- highlight("TasksPerf", { fg = colors["7"], bg = colors["warning"],  gui = "NONE" })
--- highlight("TasksNote", { fg = colors["7"], bg = colors["info"],  gui = "NONE" })
--- }}}
+-- M.colors["TasksFixme"] = { fg = M.scheme["7"], bg = M.scheme["error"], gui = "NONE" }
+-- M.colors["TasksTodo"] = { fg = M.scheme["7"], bg = M.scheme["hint"], gui = "NONE" }
+-- M.colors["TasksHack"] = { fg = M.scheme["7"], bg = M.scheme["hint"], gui = "NONE" }
+-- M.colors["TasksWarn"] = { fg = M.scheme["7"], bg = M.scheme["warning"], gui = "NONE" }
+-- M.colors["TasksPerf"] = { fg = M.scheme["7"], bg = M.scheme["warning"], gui = "NONE" }
+-- M.colors["TasksNote"] = { fg = M.scheme["7"], bg = M.scheme["info"], gui = "NONE" }
+-- -- }}}
 
--- Modeline {{{
--- vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker : }}}
+return M

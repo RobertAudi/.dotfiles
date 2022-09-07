@@ -1,0 +1,31 @@
+#compdef hs
+#autoload
+
+local context state line curcontext="$curcontext" ret=1
+local -a cmds
+cmds=("reload" "console")
+
+_arguments -C \
+  "1:hs command:->subcommand" \
+  "*:: :->args" \
+  && ret=0
+
+case $state in
+  subcommand)
+    _describe -t commands "Subcommands" cmds && ret=0
+    ;;
+esac
+
+case "$line[1]" in
+  restart)
+    _message -e "no more arguments" && ret=1
+    ;;
+  console)
+    local -a actions
+    actions=("open" "close" "toggle" "clear")
+
+    _values "Actions" $actions && ret=0
+    ;;
+esac
+
+return ret

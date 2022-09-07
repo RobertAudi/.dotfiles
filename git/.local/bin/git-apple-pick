@@ -8,7 +8,7 @@ git-apple-pick-help() {
 
 git-apple-pick() {
   if ! in-git-repo; then
-    echo -e "\e[1;41;97m ERROR \e[0m Not a repository: $PWD" >&2
+    builtin print -u 2 -- "\e[1;41;97m ERROR \e[0m Not a repository: $PWD"
     return 1
   fi
 
@@ -17,7 +17,7 @@ git-apple-pick() {
 
     return
   elif (( $# < 2 )); then
-    echo -e "\e[1;41;97m ERROR \e[0m branch and commits required" >&2
+    builtin print -u 2 -- "\e[1;41;97m ERROR \e[0m branch and commits required"
 
     git-apple-pick-help
 
@@ -29,7 +29,7 @@ git-apple-pick() {
 
   if ! git local-branch-exists $branch; then
     echo "FIXME"
-    echo -e "\e[1;41;97m ERROR \e[0m Invalid branch: ${branch}" >&2
+    builtin print -u 2 -- "\e[1;41;97m ERROR \e[0m Invalid branch: ${branch}"
     return 1
   fi
 
@@ -37,7 +37,7 @@ git-apple-pick() {
   current_branch="$(git current-branch)"
 
   if (( $status != 0 )) ; then
-    echo -e "\e[1;41;97m ERROR \e[0m Unable to find current branch name" >&2
+    builtin print -u 2 -- "\e[1;41;97m ERROR \e[0m Unable to find current branch name"
     return 1
   fi
 

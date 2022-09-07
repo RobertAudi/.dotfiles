@@ -5,22 +5,8 @@ if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) != 'true' ]]; then
   return 1
 fi
 
+local repoURL="$(git-repo-url)" || return $status
 local remoteRef="$(git for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD))"
-local remote="$(echo "$remoteRef" | cut -d/ -f1)"
-local remoteURL="$(git ls-remote --get-url $remote)"
-
-local repoURL
-
-if [[ "$remoteURL" =~ "^git@" ]]; then
-  repoURL="$(echo "$remoteURL" | sed -E 's#^git@([^:]+):(.+)#https://\1/\2#;s/\.git$//')"
-elif [[ "$remoteURL" =~ "^git://" ]]; then
-  repoURL="$(echo "$remoteURL" | sed 's#^git#https#;s/\.git$//')"
-elif [[ "$remoteURL" =~ "^https?://" ]]; then
-  repoURL="$(echo "$remoteURL" | sed 's/\.git$//')"
-else
-  echo "Error: Unable to parse remote URL" >&2
-  return 1
-fi
 
 local rev
 

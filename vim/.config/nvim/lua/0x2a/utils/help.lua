@@ -7,7 +7,7 @@ M.keyword = function(word)
   local original_iskeyword = vim.bo.iskeyword
 
   vim.bo.iskeyword = vim.bo.iskeyword .. ",."
-  word = word or vim.fn.expand("<cword>", false, false)
+  word = word or vim.fn.expand("<cword>")
 
   vim.bo.iskeyword = original_iskeyword
 
@@ -15,19 +15,19 @@ M.keyword = function(word)
     local _, finish = string.find(word, "vim.api.")
     local api_function = string.sub(word, finish + 1)
 
-    vim.cmd(string.format("help %s", api_function))
+    vim.cmd.help(api_function)
   elseif string.find(word, "vim.fn") then
     local _, finish = string.find(word, "vim.fn.")
     local api_function = string.sub(word, finish + 1) .. "()"
 
-    vim.cmd(string.format("help %s", api_function))
+    vim.cmd.help(api_function)
   else
     local ok = pcall(vim.cmd, string.format("help %s", word))
 
     if not ok then
       local split_word = vim.split(word, ".", true)
 
-      ok = pcall(vim.cmd, string.format("help %s", split_word[#split_word]))
+      ok = pcall(vim.cmd.help, split_word[#split_word])
     end
 
     if not ok then

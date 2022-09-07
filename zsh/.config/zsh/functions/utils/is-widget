@@ -1,0 +1,8 @@
+#autoload
+
+(( $+1 )) || {
+  print-error 'is-widget: not enough arguments'
+  return 128
+}
+
+(( $+widgets[$1] )) &>/dev/null

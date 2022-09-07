@@ -10,9 +10,15 @@
 local M = {}
 
 M.config = function()
+  local ok, trouble = pcall(require, "trouble")
+
+  if not ok then
+    return
+  end
+
   local symbols = require("0x2a.symbols")
 
-  require("trouble").setup({
+  trouble.setup({
     position = "bottom",
     height = 10,
     width = 50,
@@ -27,7 +33,7 @@ M.config = function()
       close = "q",
       cancel = "<Esc>",
       refresh = "r",
-      jump = { "<CR>", "<Tab>" },
+      jump = { "<Enter>", "<Tab>" },
       open_split = { "<C-x>" },
       open_vsplit = { "<C-v>" },
       open_tab = { "<C-t>" },

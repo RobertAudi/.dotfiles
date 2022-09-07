@@ -1,7 +1,0 @@
-#autoload
-
-if is-callable grunt ; then
-  grunt --list
-else
-  command-not-found "grunt"
-fi

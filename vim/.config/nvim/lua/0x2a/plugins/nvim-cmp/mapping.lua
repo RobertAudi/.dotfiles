@@ -16,7 +16,7 @@ local mapping = {
   ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
   ["<C-y>"] = cmp.config.disable,
   ["<C-e>"] = cmp.config.disable,
-  ["<CR>"] = cmp.mapping.confirm({ select = true }),
+  ["<Enter>"] = cmp.mapping.confirm({ select = false }),
 
   ["<Tab>"] = cmp.mapping(function(fallback)
     local luasnip = require("luasnip")

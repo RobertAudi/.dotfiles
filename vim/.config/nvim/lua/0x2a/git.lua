@@ -1,16 +1,37 @@
 -- Module: 0x2a.git
 -- Requires:
+--   - git
+--   - git-permalink
+--   - git-repo-url
 --   - 0x2a.utils
---   - 0x2a.utils.files
+--   - 0x2a.utils.fs
 --   - 0x2a.notifications
 --   - nvim-lua/plenary.nvim
 
 local utils = require("0x2a.utils")
-local futils = require("0x2a.utils.files")
+local fsutils = require("0x2a.utils.fs")
 local notifications = require("0x2a.notifications")
 local Job = require("plenary.job")
 
 local M = {}
+
+M.repo_url = function()
+  if not fsutils.is_executable("git-repo-url") then
+    notifications.error("Command not found: git-repo-url")
+    return ""
+  end
+
+  local result = vim.api.nvim_exec("echo substitute(system('git-repo-url'), '\\v\\n$', '', '')", true)
+
+  if vim.api.nvim_get_vvar("shell_error") == 0 then
+    return result
+  else
+    vim.api.nvim_err_writeln(result)
+    vim.v.errmsg = result
+
+    return ""
+  end
+end
 
 M.link = function(opts)
   if vim.api.nvim_buf_get_option(0, "buftype") ~= "" then
@@ -18,7 +39,7 @@ M.link = function(opts)
     return ""
   end
 
-  if not futils.is_executable("git-permalink") then
+  if not fsutils.is_executable("git-permalink") then
     notifications.error("Command not found: git-permalink")
     return ""
   end
@@ -60,7 +81,7 @@ M.link = function(opts)
 
   local result = vim.api.nvim_exec("echo substitute(system('" .. cmd .. "'), '\\v\\n$', '', '')", true)
 
-  if vim.api.nvim_get_vvar("shell_error") then
+  if vim.api.nvim_get_vvar("shell_error") == 0 then
     if opts.verbose then
       notifications.info(result, { title = "Git link" })
     end
@@ -85,60 +106,7 @@ M.browse = function(opts)
     return
   end
 
-  local ok, urlview = pcall(require, "urlview.utils")
-
-  if ok then
-    urlview.navigate_url(file_link)
-    return
-  end
-
-  local browser = os.getenv("BROWSER")
-
-  if utils.is_empty(browser) then
-    if futils.is_executable("launch") then
-      browser = "launch"
-    elseif futils.is_executable("open") then
-      browser = "open"
-    else
-      notifications.warning("Unable to resolve web browser or URL handler")
-      return
-    end
-  end
-
-  if not futils.is_executable(browser) then
-    notifications.warning("Web browser or URL handler not executable: " .. browser)
-    return
-  end
-
-  local args = {}
-
-  if opts.background then
-    if browser == "launch" then
-      table.insert(args, "-b")
-    elseif browser == "open" then
-      table.insert(args, "-g")
-    else
-      opts.background = false
-    end
-  end
-
-  table.insert(args, file_link)
-
-  Job
-    :new({
-      command = browser,
-      args = args,
-      on_exit = function(_, return_val)
-        if return_val == 0 then
-          if opts.background then
-            notifications.info(file_link, { title = "File opened in the browser" })
-          end
-        else
-          notifications.error("Unable to open file in the browser")
-        end
-      end,
-    })
-    :sync()
+  utils.browse(file_link, opts)
 end
 
 M.copy_link = function(opts)
@@ -165,13 +133,44 @@ M.copy_link = function(opts)
       local message = "Git file " .. link_type .. " copied to the system clipboard"
       message = message .. "\n\n  " .. file_link .. "\n"
 
-      notifications.success(message, { title = "Git link copied" })
+      notifications.success(message, { title = "Git link copied", echo = "Git link copied: " .. file_link })
     end,
 
     failure = function()
       notifications.error("Failed to copy git link")
     end,
   })
+end
+
+M.conflicts = function()
+  local job = Job:new({ command = "git", args = { "diff", "--name-only", "--diff-filter=U", "--relative" } })
+  job:sync()
+
+  local result = nil
+
+  if job.code == 0 then
+    result = require("0x2a.utils.string").trim_lines(table.concat(job:result(), "\n"))
+  else
+    vim.defer_fn(function()
+      result = job:result()
+
+      if utils.is_blank(result) then
+        result = job:stderr_result()
+      end
+
+      if utils.is_present(result) then
+        return utils.fatal(table.concat(result, "\n"))
+      end
+    end, 100)
+  end
+
+  local files = {}
+
+  for token in string.gmatch(result, "[^%s]+") do
+    table.insert(files, token)
+  end
+
+  return files
 end
 
 return M

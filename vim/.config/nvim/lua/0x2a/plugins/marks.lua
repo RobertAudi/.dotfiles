@@ -6,6 +6,12 @@
 local M = {}
 
 M.config = function()
+  local ok, _ = pcall(require, "marks")
+
+  if not ok then
+    return
+  end
+
   require("marks").setup({
     -- whether to map keybinds or not. default true
     default_mappings = true,

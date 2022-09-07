@@ -16,7 +16,8 @@ vim.api.nvim_exec([[
 ]], true)
 -- stylua: ignore end
 
-vim.cmd("packadd packer.nvim")
+-- Packer
+vim.cmd.packadd("packer.nvim")
 
 require("0x2a.plugins")
 require("0x2a.config.options")
@@ -24,7 +25,10 @@ require("0x2a.config.options")
 vim.g.foldutilFoldText = "AwesomeFoldText#foldtext()"
 
 -- Easy shebang
-vim.cmd("iabbrev #! #!/usr/bin/env")
+vim.cmd.iabbrev("#! #!/usr/bin/env")
+
+-- Colorscheme
+vim.cmd.colorscheme("railscasts")
 
 require("0x2a.colors")
 require("0x2a.config.commands")

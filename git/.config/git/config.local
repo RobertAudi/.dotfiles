@@ -14,23 +14,11 @@
 [commit]
   template = ~/.config/git/commit.txt
 
-[diff]
-  tool = GitDiffTool
-
-[merge]
-  tool = GitMergeTool
-
 [alias]
   ls-conflicts = conflicts
 
   # git tower
   tower = gui
-
-[difftool "GitDiffTool"]
-  cmd = ~/.local/bin/difftool --local \"$LOCAL\" --remote \"$REMOTE\" --base \"$BASE\"
-
-[mergetool "GitMergeTool"]
-  cmd = ~/.local/bin/mergetool --local \"$LOCAL\" --remote \"$REMOTE\" --merged \"$MERGED\" --base \"$BASE\"
 
 # External commands {{{
 # ------------------------------------------------------------------------------

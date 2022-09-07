@@ -1,5 +1,13 @@
+-- Module: 0x2a.config.options
+-- Requires:
+--   - 0x2a.utils
+--   - 0x2a.utils.fs
+--   - 0x2a.symbols
+--   - 0x2a.winbar
+
 local utils = require("0x2a.utils")
-local file_utils = require("0x2a.utils.files")
+local fsutils = require("0x2a.utils.fs")
+local symbols = require("0x2a.symbols")
 
 -- Setup {{{
 -- ------------------------------------------------------------------------------
@@ -133,19 +141,23 @@ vim.o.splitright = true
 vim.o.cmdheight = 2
 vim.o.cmdwinheight = 3
 vim.o.more = false
+vim.g.default_cmdheight = vim.o.cmdheight
 
 -- Show the current file's name at the top of buffers
 require("0x2a.winbar").setup()
 
 -- Always show status line.
-vim.o.laststatus = 2
+vim.o.laststatus = 3
+vim.g.default_laststatus = vim.o.laststatus
 
 -- Show open tabs. Always.
 vim.o.showtabline = 2
+vim.g.default_showtabline = vim.o.showtabline
 
 -- Display an incomplete command in the
 -- lower right corner of the Vim window
 vim.o.showcmd = true
+vim.g.default_showcmd = vim.o.showcmd
 
 -- Pop-up menu's line height
 vim.o.pumheight = 20
@@ -172,7 +184,7 @@ vim.o.number = false
 vim.o.relativenumber = false
 
 -- Resize to accommodate multiple signs up to 4 signs
-vim.o.signcolumn = "auto:2"
+vim.o.signcolumn = "auto:3"
 
 -- ------------------------------------------------------------------------------ }}}
 
@@ -186,18 +198,50 @@ vim.o.linespace = 2
 -- Don't highlight the current line
 vim.o.cursorline = false
 
--- Do not redraw the screen until whatever is being done is finished
-vim.o.lazyredraw = true
+vim.opt.guicursor = {
+  -- Block cursor in normal and visual modes
+  -- set |'showmatch'| in insert mode
+  "n-v-c-sm:block",
+
+  -- Vertical line cursor in insert and command-line insert modes
+  "i-ci-ve:ver25",
+
+  -- Underbar cursor in replace, command-line replace and operator-pending modes
+  "r-cr-o:hor20"
+}
+
+-- Don't delay redrawing
+vim.o.lazyredraw = false
 
 -- Show matching brackets.
 vim.o.showmatch = true
 vim.opt.matchpairs = { "(:)", "[:]", "{:}", "《:》", "〈:〉", "「:」", "『:』", "‘:’", "“:”" }
 
 vim.o.list = true
-vim.opt.listchars = { extends = "…", nbsp = "⦸", precedes = "…", tab = "▸ ", trail = "·" }
-vim.opt.fillchars = { diff = "⣿", fold = "-", vert = "│" }
+vim.opt.listchars = {
+  extends = symbols.word.truncate,
+  nbsp = symbols.whitespace.nbsp,
+  precedes = symbols.word.truncate,
+  tab = symbols.whitespace.tab,
+  trail = symbols.whitespace.trailing,
+}
 
-vim.opt.showbreak = "↳  "
+vim.opt.fillchars = {
+  diff = "⣿",
+  fold = "-",
+  foldopen = symbols.fold.open,
+  foldclose = symbols.fold.closed,
+  horiz = symbols.separators.horizontal,
+  horizup = symbols.separators.horizontal_up,
+  horizdown = symbols.separators.horizontal_down,
+  vert = symbols.separators.vertical,
+  vertleft = symbols.separators.vertical_left,
+  vertright = symbols.separators.vertical_right,
+  verthoriz = symbols.separators.vertical_horizontal,
+  eob = symbols.infinity,
+}
+
+vim.opt.showbreak = symbols.word["break"]
 vim.o.ambiwidth = "single"
 
 -- Whitespace {{{
@@ -383,16 +427,16 @@ vim.o.incsearch = true
 vim.o.gdefault = true
 vim.o.inccommand = "nosplit"
 
-if file_utils.is_executable("rg") then
-  vim.o.grepprg = "rg --smart-case --vimgrep"
+if fsutils.is_executable("rg") then
+  vim.o.grepprg = "rg --hidden --smart-case --vimgrep"
   vim.o.grepformat = "%f:%l:%c:%m"
 
-  vim.api.nvim_command("cnoreabbrev rg grep")
-elseif file_utils.is_executable("ag") then
-  vim.o.grepprg = "ag --smart-case --vimgrep"
+  vim.cmd.cnoreabbrev("rg grep")
+elseif fsutils.is_executable("ag") then
+  vim.o.grepprg = "ag --hidden --smart-case --vimgrep"
   vim.o.grepformat = "%f:%l:%c:%m"
 
-  vim.api.nvim_command("cnoreabbrev ag grep")
+  vim.cmd.cnoreabbrev("ag grep")
 end
 
 -- ------------------------------------------------------------------------------ }}}
@@ -420,7 +464,7 @@ vim.o.sidescroll = 1
 vim.opt.backspace = { "indent", "eol", "start" }
 
 -- Enable to select past the end of line in blockwise visual mode
-vim.o.virtualedit = block
+vim.o.virtualedit = "block"
 
 -- Do not fucking move the cursor for no fucking reason!!!
 vim.o.whichwrap = ""

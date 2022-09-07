@@ -15,7 +15,7 @@ local function clear_commandline()
 
     timer = vim.defer_fn(function()
       if vim.fn.mode() == "n" then
-        vim.cmd("echon ''")
+        vim.cmd.echon("''")
       end
     end, 10000)
   end

@@ -1,0 +1,8 @@
+#autoload
+
+(( $+1 )) || {
+  print-error 'is-alias: not enough arguments'
+  return 128
+}
+
+(( $+aliases[$1] )) &>/dev/null

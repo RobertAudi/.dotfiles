@@ -42,7 +42,7 @@ endfunction
 
 function! x2a#vim#backslash#map_o() abort
   if <SID>is_continuous()
-    return ":\<C-u>call x2a#vim#backslash#smart_o()\<CR>"
+    return ":\<C-u>call x2a#vim#backslash#smart_o()\<Enter>"
   else
     return 'o'
   endif
@@ -50,8 +50,8 @@ endfunction
 
 function! x2a#vim#backslash#map_CR_i() abort
   if <SID>is_continuous()
-    return "\<Esc>:\<C-u>call x2a#vim#backslash#smart_CR_i()\<CR>"
+    return "\<Esc>:\<C-u>call x2a#vim#backslash#smart_CR_i()\<Enter>"
   else
-    return "\<CR>"
+    return "\<Enter>"
   endif
 endfunction

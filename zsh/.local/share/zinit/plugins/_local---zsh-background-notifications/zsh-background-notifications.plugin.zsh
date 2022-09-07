@@ -1,1 +1,1 @@
-../../../../../.zsh/plugins/zsh-background-notifications/init.zsh
+../../../../../.config/zsh/plugins/zsh-background-notifications/init.zsh
